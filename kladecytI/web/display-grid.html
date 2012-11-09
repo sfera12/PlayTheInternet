@@ -75,44 +75,7 @@
 			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer'
 		}).disableSelection();
 	});
-	
-	var urlParams = {};
-	(function () {
-	    var e,
-	        a = /\+/g,  // Regex for replacing addition symbol with a space
-	        r = /([^&=]+)=?([^&]*)/g,
-	        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
-	        q = window.location.search.substring(1);
-	
-	    while (e = r.exec(q))
-	       urlParams[d(e[1])] = d(e[2]);
-	})();
-	//alert(urlParams["auth"]);
 
-	function convert(duration) {
-		var tbl = [
-				    [ 7*24*60*60, 'week' ],
-				    [ 24*60*60, 'day' ],
-				    [ 60*60, 'hour' ],
-				    [ 60, 'minute' ],
-				    [ 1, 'second' ]
-		];
-	    var t = parseInt(duration);
-	    var r = '';
-	    var out = [];
-	    for (var i = 0; i < tbl.length; i++) {
-	        var d = tbl[i];
-	        if (t > d[0]) {
-                var u = Math.floor(t / d[0]);
-                t -= u * d[0];
-                u < 10 ? out.push('0' + u) : out.push(u)
-	        } else if (i >= 3 ) {
-	        	out.push('00')
-	        }
-	    }
-		return out.join(":")
-	}
-		
 	var i = 0;
 	var aSuccess = function(data) {
 		// alert('success')
@@ -124,46 +87,11 @@
 		$('#ulFirst').empty();
 		$('#iStatus').attr('value', i++)
 		$.each(data.data.items, function(index, item) {
-            videoFeeds.push(new VideoFeed(item))
+            var videoFeed = new VideoFeed(item)
+            videoFeeds.push(videoFeed)
 			// alert(index)
-			var div	 = $('<div/>')
-			div.addClass('ui-state-default')
-			div.attr('id', 'f' + item.id)
-			div.attr('vId', item.id)
-			div.attr('duration', item.duration)
-			div.attr('duration-caption', convert(item.duration))
-			div.attr('t', item.title)
-			div.attr('a', item.uploader)
-			div.attr('tD', item.thumbnail.sqDefault)
-			var durationCaption = $('<div/>')
-			durationCaption.addClass('duration-caption')
-			durationCaption.text(div.attr('duration-caption'))
-			
-			var imgDiv = $('<div/>')
-			imgDiv.addClass('image-div')
-			
-			var img = $('<img/>')
-			img.attr('src', div.attr('td'))
-			
-			var span = $('<span/>')
-			var b = $('<b>').text(div.attr('t'))
-			span.append(b)
-			span.append("<br>by " + div.attr('a')) 
-			
-			imgDiv.append(img)
-			imgDiv.append(durationCaption)
-			div.append(imgDiv)	
-			div.append(span)
-			$("#ulFirst").append(div)
-			
-			
-			div.click(function() {
-				$('#iCriteria').attr('value', div.attr('vId'))
-				$('#iTitle').attr('value', div.attr('t') + '\t' + div.attr('vId'))
-			})
-			durationCaption.css('left', 120 - durationCaption.width() - 3)
-			durationCaption.css('top', 90 - durationCaption.height() -3)
-		});
+            $("#ulFirst").append(new VideoElement(videoFeed))
+        });
 	}
 	var aError = function(data) {
 		alert("error")
@@ -250,20 +178,7 @@
 		}
 	}
 	
-  Array.prototype.unique =
-	  function() {
-	    var a = [];
-	    var l = this.length;
-	    for(var i=0; i<l; i++) {
-	      for(var j=i+1; j<l; j++) {
-	        // If this[i] is found later in the array
-	        if (this[i] === this[j])
-	          j = ++i;
-	      }
-	      a.push(this[i]);
-	    }
-	    return a;
-  };
+
 
 	var addSongs = function(data) {
 		currLength++
