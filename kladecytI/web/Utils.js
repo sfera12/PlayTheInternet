@@ -12,13 +12,6 @@ function VideoFeed (item, parent) {
 function VideoElement(videoFeed) {
     var div	 = $('<div/>')
     div.addClass('ui-state-default')
-//    div.attr('id', 'f' + videoFeed.videoId)
-//    div.attr('vId', videoFeed.videoId)
-//    div.attr('duration', videoFeed.duration)
-//    div.attr('duration-caption', convert(videoFeed.duration))
-//    div.attr('t', videoFeed.title)
-//    div.attr('a', videoFeed.uploader)
-//    div.attr('tD', videoFeed.thumbnail)
     var durationCaption = $('<div/>')
     durationCaption.addClass('duration-caption')
     durationCaption.text(div.attr('duration-caption'))

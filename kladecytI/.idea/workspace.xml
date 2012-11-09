@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="f0790886-13bc-40f9-8aea-54865a44585e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/TempUtils.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Utils.js" afterPath="$PROJECT_DIR$/web/Utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/display-grid.html" afterPath="$PROJECT_DIR$/web/display-grid.html" />
     </list>
     <ignored path="kladecyt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,7 +64,7 @@
       <file leaf-file-name="display-grid.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/display-grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="61" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.4850843">
+            <state line="113" column="0" selection-start="7307" selection-end="7734" vertical-scroll-proportion="0.38261998">
               <folding />
             </state>
           </provider>
@@ -75,7 +73,7 @@
       <file leaf-file-name="Utils.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/Utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="14" selection-start="1589" selection-end="1589" vertical-scroll-proportion="0.0">
+            <state line="30" column="11" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -442,6 +440,11 @@
       <created>1352456051514</created>
       <updated>1352456051514</updated>
     </task>
+    <task id="LOCAL-00001" summary="moved VideoFeed, VideoElement to Utils">
+      <created>1352467481124</created>
+      <updated>1352467481124</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -594,14 +597,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/Utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="14" selection-start="1589" selection-end="1589" vertical-scroll-proportion="0.0">
+        <state line="30" column="11" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/display-grid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="61" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.4850843">
+        <state line="113" column="0" selection-start="7307" selection-end="7734" vertical-scroll-proportion="0.38261998">
           <folding />
         </state>
       </provider>
