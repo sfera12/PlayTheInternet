@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Sortable - Display as grid</title>
+<!-- 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css"> -->
+	<script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
+	<link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+	<script type="text/javascript" src="jqC/development-bundle/jquery.jOrgChart.js"></script>
+	<link rel="stylesheet" href="jqC/css/jquery.jOrgChart.css"/>
+</head>
+<style>
+		body { height: 100%; }
+		.exclude { background-color: yellow; }
+		.dInputs { text-align:center; float: left; margin-right: 5px; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+		.font { font-family: Arial, Helvetica, sans-serif; font-size: 11px;  }
+		#dTextInput { width: 100%; }
+		#iCriteria, #iTitle { width: 100%; }		
+		#dMenu { float: left;  width: 100px; height: 100%; }
+		#dPLists { position:absolute; float: left; left: 100px; width: auto; height: 99%; }
+		#firstView, #secondView, #treeView { float: left; width: 50%; height: 100%; }
+		#ulFirst, #ulSecond { float: left; width: 100%; height: 100%; overflow-x: hidden; overflow-y: scroll; }
+/*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
+		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.7%; height: 90px;  }
+		.image-div { float: left; position: relative; width: 123px; height: 90px; }
+		#ulFirst img, #ulSecond img { float: left; height: 90px; }
+		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; } 
+		#ulFirst span, #ulSecond span { left: 128px; top: 5px; word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
+
+</style>
+<body>
+	<div id="dInputs">
+		<input class="dInputs" id="iLogin" type="button" value="Login"/>
+		<input class="dInputs" id="iToken" type="button"/>
+		<input class="dInputs" id="iRelated" type="button" value="Build Tree"/>
+		<label class="dInputs" for="dSearchQuery">Video Id</label>
+		<input class="dInputs" id="dSearchQuery" value="E0sT7xfC3QY"/>
+		<label class="dInputs" for="iRecWidth">Search Width</label>
+		<input class="dInputs" id="iRecWidth" size="5" value="3"/>
+		<label class="dInputs" for="iRecDepth">Search Depth</label>
+		<input class="dInputs" id="iRecDepth" size="5" value="2"/>
+		<div class="dInputs" id="dTreeLength" size="50">TreeLength: 0</div>
+	</div>
+	<div id="orgChart">
+	</div>
+<script>
+
+	jQuery(document).ready(function() {
+/*	    $("#org").jOrgChart();*/
+/*	    alert('yo')*/
+	});
+	
+	function convert(duration) {
+		var tbl = [
+				    [ 7*24*60*60, 'week' ],
+				    [ 24*60*60, 'day' ],
+				    [ 60*60, 'hour' ],
+				    [ 60, 'minute' ],
+				    [ 1, 'second' ]
+		];
+	    var t = parseInt(duration);
+	    var r = '';
+	    var out = [];
+	    for (var i = 0; i < tbl.length; i++) {
+	        var d = tbl[i];
+	        if (t > d[0]) {
+                var u = Math.floor(t / d[0]);
+                t -= u * d[0];
+                u < 10 ? out.push('0' + u) : out.push(u)
+	        } else if (i >= 3 ) {
+	        	out.push('00')
+	        }
+	    }
+		return out.join(":")
+	}
+	
+	var related = function(gRecWidth) {
+		if(gRecDepth > 0) {
+			$.each(gCurrIteration, function(index, currVideo) {
+				var currId = currVideo.vId
+				$.ajax({
+					// async: false,
+					// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+					url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + gRecWidth,
+					// dataType : 'json',
+					context: currVideo,
+					success : addSongs,
+					error : aError
+				})				 
+			});
+		} else {
+			traverseTreeWidth(new Array(gRootVideoFeed))
+			console.log(gRootVideoFeed)
+			parseRootToDrawTree(gRootVideoFeed, gRootElement)
+			setTimeout("draw()", 500)
+			/*console.log(gSongs.length)
+			console.log(gSongs.unique().length)
+			gSongs = gSongs.unique()*/
+		}
+	}
+	
+	var addSongs = function(data) {
+		var parentVideoFeed = this
+		gCurrLength++
+		$.each(data.data.items, function(index, item) {
+			var relatedVideo = new VideoFeed(item, parentVideoFeed)
+			parentVideoFeed.childs.push(relatedVideo)
+			gSongs.push(item.id)	
+			gNextIteration.push(relatedVideo)
+		})
+		if(gCurrLength == gCurrIteration.length) {
+			gCurrLength = 0
+			gRecDepth--
+			gCurrIteration = gNextIteration
+			gNextIteration = new Array()
+			related(gRecWidth)
+		}	
+	}
+	
+	var aError = function() {
+		alert('error')
+	}
+	
+    Array.prototype.unique = function() {
+	var a = [];
+	    var l = this.length;
+	    for(var i=0; i<l; i++) {
+	      for(var j=i+1; j<l; j++) {
+	        // If this[i] is found later in the array
+	        if (this[i] === this[j])
+	          j = ++i;
+	      }
+	      a.push(this[i]);
+	    }
+	    return a;
+  	};
+
+	function VideoFeed (item, parent) {
+		if(item == null) throw "kladecyt: null vId argument in VideoFeed Constructor"
+		this.vId = item.id
+		this.duration = item.duration
+		this.durationCaption = convert(item.duration)
+		this.t = item.title
+		this.a = item.uploader
+		this.tD = item.thumbnail.sqDefault
+		parent != null ? this.parent = parent : this.parent = null
+		this.childs = new Array()
+		gSongFeeds.push(this)
+	}
+	
+	var createDiv = function(videoFeed) {
+		var div	 = $('<div/>')
+		div.addClass('ui-state-default')
+		div.addClass('hook')
+		div.attr('uId', videoFeed.uId)
+		div.attr('id', 'f' + videoFeed.vId)
+		div.attr('vId', videoFeed.vId)
+		div.attr('duration', videoFeed.duration)
+		div.attr('duration-caption', videoFeed.durationCaption)
+		div.attr('t', videoFeed.t)
+		div.attr('a', videoFeed.a)
+		div.attr('tD', videoFeed.tD)
+		var durationCaption = $('<div/>')
+		durationCaption.addClass('duration-caption')
+		durationCaption.text(div.attr('duration-caption'))
+		
+		var imgDiv = $('<div/>')
+		imgDiv.addClass('image-div')
+		
+		var img = $('<img/>')
+		img.attr('src', div.attr('td'))
+		
+		var span = $('<span/>')
+		var b = $('<b>').text(div.attr('t'))
+		span.append(b)
+		span.append("<br>by " + div.attr('a')) 
+		
+		imgDiv.append(img)
+		imgDiv.append(durationCaption)
+		
+		var controls = $('<div/>').attr('uId', videoFeed.uId)
+		var uId = $('<label class="font">'+videoFeed.uId+'</label>')
+		var includeTree = $('<input/>', {
+			'type': 'button',
+			'class': 'includeTree',
+			'value': 'IncludeTree'
+		})
+		var excludeTree = $('<input/>', {
+			'type': 'button',
+			'class': 'excludeTree',
+			'value': 'ExcludeTree'
+		})		
+		
+		controls.append(uId)
+		controls.append(includeTree)
+		controls.append(excludeTree)
+			
+		div.append(controls)
+		div.append(imgDiv)	
+		div.append(span)
+		$("#ulFirst").append(div)
+		
+		durationCaption.css('left', 120 - durationCaption.width() - 3)
+		durationCaption.css('top', 90 - durationCaption.height() -3)
+
+		return div
+	}
+	
+	var parseRootToDrawTree = function(root,rootUL) {
+		var rootLI = $('<li/>')
+		rootLI.append(createDiv(root))
+		rootUL.append(rootLI)
+		if(root.childs.length > 0) {
+			var childUL = $('<ul/>')
+			rootLI.append(childUL) 
+			$.each(root.childs, function(index, childFeed) {
+				parseRootToDrawTree(childFeed, childUL)
+			});
+		}
+	}	
+	
+	var traverseTreeWidth = function(queue) {
+		while(queue.length > 0) {
+			var root = (queue.splice(0,1))[0]
+			root.uId = gUniqueId++
+			$.each(root.childs, function(index, child) {
+				queue.push(child)
+			})
+		}
+	}
+	
+	var excludeTreeFunc = function(rootVideoFeed) {
+		$(findFeedElement(rootVideoFeed.uId)).toggleClass("exclude")
+		$.each(rootVideoFeed.childs, function(index, childVideoFeed) {
+			if(childVideoFeed.includeTree != 'true') {
+				excludeTreeFunc(childVideoFeed)
+			}
+		})
+	}
+	
+	var findFeedElement = function(uId) {
+		return gDivElements[uId]
+	}
+	
+	var draw = function() {
+		$('body').append(gRootElement)
+		$("#gRootElement").jOrgChart({
+			chartElement: '#orgChart'
+		});
+		$('#gRootElement').remove()
+		
+		$('.hook').each(function() {
+			gDivElements[$(this).attr('uId')] = $(this)
+		})
+
+		$(".includeTree").click(function() {
+			var videoFeed = findFeed(gSongFeeds, $(this).parent().attr('uId'))
+			videoFeed.includeTree = true
+			delete videoFeed.excludeTree
+			
+			if(gIncludeTree.indexOf(videoFeed) == -1 ) gIncludeTree.push(videoFeed)
+			if(gExcludeTree.indexOf(videoFeed) > -1 ) gExcludeTree.splice(gExcludeTree.indexOf(videoFeed), 1)
+		})
+		$(".excludeTree").click(function() {
+			var videoFeed = findFeed(gSongFeeds, $(this).parent().attr('uId'))
+			excludeTreeFunc(videoFeed)
+			videoFeed.excludeTree = true
+			delete videoFeed.includeTree
+			
+			if (gExcludeTree.indexOf(videoFeed) == -1 ) gExcludeTree.push(videoFeed)
+			if (gIncludeTree.indexOf(videoFeed) > -1 ) gIncludeTree.remove(gIncludeTree.indexOf(videoFeed), 1)
+		})
+	}
+	
+	Array.prototype.remove = function(from, to) {
+	  var rest = this.slice((to || from) + 1 || this.length);
+	  this.length = from < 0 ? this.length + from : from;
+	  return this.push.apply(this, rest);
+	};
+	
+	var findFeed = function(songFeeds, uId) {
+		for(var i=0; i<songFeeds.length; i++) {
+			if (songFeeds[i].uId == uId) return songFeeds[i]
+		}
+	}
+
+	//global variables
+	var gVId = $("#dSearchQuery").attr('value')
+	var	gRecDepth = parseInt($("#iRecDepth").attr('value'))
+	var	gRecWidth = parseInt($("#iRecWidth").attr('value'))
+	var gTreeLength = function() {
+		var result = 0
+		for(var i = 1; i <= gRecDepth; i++) {
+			result = result + Math.pow(gRecWidth, i)
+		}	
+		return result + 1
+	}
+	var gCurrLength
+	var gNextIteration
+	var gCurrIteration 
+	var gSongs
+	var gSongFeeds
+	var gRootElement
+	var gRootVideoFeed
+	var gUniqueId
+	var gIncludeTree
+	var gExcludeTree
+	gTreeLength()
+	var gDivElements
+
+	$("#iRelated").click(function() {
+		$('#orgChart').empty()
+		$('#gRootElement').remove()
+		gCurrLength = 0
+		gRecDepth = parseInt($("#iRecDepth").attr('value'))
+		gRecWidth = parseInt($("#iRecWidth").attr('value'))
+		gNextIteration = new Array()
+		gCurrIteration = new Array()
+		gSongs = new Array()
+		gSongFeeds = new Array()
+		gRootElement = $('<ul/>')
+		gRootElement.attr('id', 'gRootElement')
+		gRootElement.css('display', 'none')
+		gUniqueId = 0;
+		gIncludeTree = new Array()
+		gExcludeTree = new Array()
+		gDivElements = new Object()
+		gSongs.push(gVId)
+		$.ajax({
+			url: 'https://gdata.youtube.com/feeds/api/videos?v=2&max-results=' + Math.floor((Math.random()*50)+1) + '&alt=jsonc&q=' + gVId,
+			dataType : 'json',
+			success : function(data) {
+				gRootVideoFeed = new VideoFeed(data.data.items[0])
+				gCurrIteration.push(gRootVideoFeed)
+				related(gRecWidth)
+			},
+			error : aError
+		})
+	});
+	var eventNames = "keyup focus" 
+	$(".dInputs").bind(eventNames, function() {$("#dTreeLength").text("TreeLength: " + gTreeLength())})
+	$("#iRecDepth").bind(eventNames, function() {
+		gRecDepth = parseInt($("#iRecDepth").attr('value'))
+		$("#dTreeLength").text("TreeLength: " + gTreeLength())
+	})
+	$("#iRecWidth").bind(eventNames, function() {
+		gRecWidth = parseInt($("#iRecWidth").attr('value'))
+		$("#dTreeLength").text("TreeLength: " + gTreeLength())
+	})
+	$("#dTreeLength").text("TreeLength: " + gTreeLength())
+	$("#dSearchQuery").bind(eventNames, function() {
+		gVId = $("#dSearchQuery").attr('value')
+	})
+	$("#iLogin").click(function() {
+	    var a = window,
+	        b = document,
+	        c = encodeURIComponent,
+/*	        d = a.open('http://localhost:8888/oauth2callback#access_token=123', 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');*/
+	        d = a.open('https://accounts.google.com/o/oauth2/auth?client_id=267971422557.apps.googleusercontent.com&redirect_uri=http://localhost:8888/oauth2callback.html&scope=https://gdata.youtube.com&response_type=token', 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');
+	    a.setTimeout(function () {
+	        d.focus()
+	    }, 300)
+	})
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Sortable - Display as grid</title>
+	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
+	<script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>
+	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
+    <script src="Utils.js"></script>
+	<link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+	<style>
+		/*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
+		#first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+		#firstView, #secondView { width: 80%; background-color: red }*/
+/*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
+		body { height: 100%; }
+		#dTextInput { width: 100%; }
+		#iCriteria, #iTitle { width: 100%; }		
+		#dMenu { float: left;  width: 100px; height: 100%; }
+		#dPLists { position:absolute; float: left; left: 100px; width: auto; height: 99%; }
+		#firstView, #secondView { float: left; width: 50%; height: 100%; }
+		#ulFirst, #ulSecond { float: left; width: 100%; height: 100%; overflow-x: hidden; overflow-y: scroll; }
+/*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
+		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
+		.image-div { float: left; position: relative; width: 123px; height: 90px; }
+		#ulFirst img, #ulSecond img { float: left; height: 90px; }
+		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; } 
+		#ulFirst span, #ulSecond span { left: 128px; top: 5px; word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
+	</style>
+	<script>
+
+	</script>
+</head>
+<body>
+<div id="dTextInput">
+	<input id="iCriteria" value="CDvC3VmaGpY"/>
+	<input id="iTitle"/>		
+</div>
+<div id="dMenu">
+	<div id="dMenu">
+		<input id="iRelated" type="button" value="Related"/>
+		<input id="iStatus"/>
+		<input id="iUploadVideo" type="button" value="UploadVideo"/>
+	</div>	
+</div>
+<!-- <div id="dPLists" class="demo"> -->
+<div id="dPLists">
+	<div id="firstView">
+		<div id="ulFirst" class="connectedSortable">
+		</div>
+	</div>
+	
+	<div id="secondView">
+		<div id="ulSecond" class="connectedSortable">
+			<div class="ui-state-default"><div class="duration-caption">12:12:12</div></div>
+			<div class="ui-state-default">2</div>
+			<div class="ui-state-default">3</div>
+			<div class="ui-state-default">4</div>
+			<div class="ui-state-default">5</div>
+			<div class="ui-state-default">6</div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+    var videoFeeds = new Array()
+
+	$(function() {
+		$( "#ulFirst, #ulSecond" ).sortable({
+			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer'
+		}).disableSelection();
+	});
+	
+	var urlParams = {};
+	(function () {
+	    var e,
+	        a = /\+/g,  // Regex for replacing addition symbol with a space
+	        r = /([^&=]+)=?([^&]*)/g,
+	        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+	        q = window.location.search.substring(1);
+	
+	    while (e = r.exec(q))
+	       urlParams[d(e[1])] = d(e[2]);
+	})();
+	//alert(urlParams["auth"]);
+
+	function convert(duration) {
+		var tbl = [
+				    [ 7*24*60*60, 'week' ],
+				    [ 24*60*60, 'day' ],
+				    [ 60*60, 'hour' ],
+				    [ 60, 'minute' ],
+				    [ 1, 'second' ]
+		];
+	    var t = parseInt(duration);
+	    var r = '';
+	    var out = [];
+	    for (var i = 0; i < tbl.length; i++) {
+	        var d = tbl[i];
+	        if (t > d[0]) {
+                var u = Math.floor(t / d[0]);
+                t -= u * d[0];
+                u < 10 ? out.push('0' + u) : out.push(u)
+	        } else if (i >= 3 ) {
+	        	out.push('00')
+	        }
+	    }
+		return out.join(":")
+	}
+		
+	var i = 0;
+	var aSuccess = function(data) {
+		// alert('success')
+		// $.each(data, function(key, element) {
+    	// alert('key: ' + key + '\n' + 'value: ' + element);
+		// });
+		// alert(data.feed.title.$t)
+		// alert(data.data.items[0].id)
+		$('#ulFirst').empty();
+		$('#iStatus').attr('value', i++)
+		$.each(data.data.items, function(index, item) {
+            videoFeeds.push(new VideoFeed(item))
+			// alert(index)
+			var div	 = $('<div/>')
+			div.addClass('ui-state-default')
+			div.attr('id', 'f' + item.id)
+			div.attr('vId', item.id)
+			div.attr('duration', item.duration)
+			div.attr('duration-caption', convert(item.duration))
+			div.attr('t', item.title)
+			div.attr('a', item.uploader)
+			div.attr('tD', item.thumbnail.sqDefault)
+			var durationCaption = $('<div/>')
+			durationCaption.addClass('duration-caption')
+			durationCaption.text(div.attr('duration-caption'))
+			
+			var imgDiv = $('<div/>')
+			imgDiv.addClass('image-div')
+			
+			var img = $('<img/>')
+			img.attr('src', div.attr('td'))
+			
+			var span = $('<span/>')
+			var b = $('<b>').text(div.attr('t'))
+			span.append(b)
+			span.append("<br>by " + div.attr('a')) 
+			
+			imgDiv.append(img)
+			imgDiv.append(durationCaption)
+			div.append(imgDiv)	
+			div.append(span)
+			$("#ulFirst").append(div)
+			
+			
+			div.click(function() {
+				$('#iCriteria').attr('value', div.attr('vId'))
+				$('#iTitle').attr('value', div.attr('t') + '\t' + div.attr('vId'))
+			})
+			durationCaption.css('left', 120 - durationCaption.width() - 3)
+			durationCaption.css('top', 90 - durationCaption.height() -3)
+		});
+	}
+	var aError = function(data) {
+		alert("error")
+	}
+	$.ajax({
+		url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+		// url : 'https://gdata.youtube.com/feeds/api/videos/8_E8x15wkAo/related?v=2&alt=jsonc&max-results=3',
+		dataType : 'json',
+		success : aSuccess,
+		error : aError
+	})
+	
+
+</script>
+
+<script>
+	var gAuth = "ya29.AHES6ZRJAemB5cj_n1I1H0oqR2d6G-dp814wOAN2Hk77izkPkJHrES8"
+	var uploadVideo = function() {
+		var feedRequest = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry></feed>'
+		$.ajax({
+			// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+			// url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+			url : 'kladecyt',
+			type: 'POST',
+			headers: { 'Bearer': gAuth},
+			data: feedRequest,
+			success : function(){ alert('success')},
+			error : aError
+		})	
+	}
+
+	var batchWrapper = function() {
+		setTimeout(batch, "60000")
+	}
+
+	var batchI = 0;
+	var batch = function() {
+		if(batchI < 200 && batchI < songs.length) {
+			console.log('batchI ' + batchI)
+			console.log('songs.length ' + songs.length)
+			var feedStart = '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/>'
+			var feedEnd = '</feed>'
+			var end = batchI + 40
+			for (var i=batchI; i < end && i < songs.length && i < 200; i++, batchI++) {
+				var entry = '<entry><batch:operation type="insert"/><id>' + songs[i] + '</id></entry>'
+				feedStart += entry
+			};
+			console.log(feedStart + feedEnd)
+			$.ajax({
+				// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+				// url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+				url : 'kladecyt',
+				type: 'POST',
+				headers: { 'Bearer': gAuth},
+				data: feedStart + feedEnd,
+				success : batchWrapper,
+				error : aError
+			})	
+		} else {
+			console.log('done with')
+			console.log('batchI ' + batchI)
+			console.log('songs.length ' + songs.length)
+		}	
+	}
+	
+	var related = function(maxRes) {
+		if(recDepth > 0) {
+			$.each(currIteration, function(index, currId) {
+				// console.log('related ' + currIteration.length)
+				$.ajax({
+					// async: false,
+					// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+					url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+					// dataType : 'json',
+					success : addSongs,
+					error : aError
+				})				 
+			});
+		} else {
+			console.log(songs.length)
+			console.log(songs.unique().length)
+			songs = songs.unique()
+			batch(0)
+		}
+	}
+	
+  Array.prototype.unique =
+	  function() {
+	    var a = [];
+	    var l = this.length;
+	    for(var i=0; i<l; i++) {
+	      for(var j=i+1; j<l; j++) {
+	        // If this[i] is found later in the array
+	        if (this[i] === this[j])
+	          j = ++i;
+	      }
+	      a.push(this[i]);
+	    }
+	    return a;
+  };
+
+	var addSongs = function(data) {
+		currLength++
+		$.each(data.data.items, function(index, item) {
+			songs.push(item.id)	
+			nextIteration.push(item.id)	
+			console.log(item.id)
+		})
+		// console.log('addSongs ' + currIteration.length)
+		if(currLength == currIteration.length) {
+			currLength = 0
+			console.log('currIteration')
+			recDepth--
+			currIteration = nextIteration
+			nextIteration = []
+			related(maxRes)
+		}		
+	}
+	
+	var vId = $('#iCriteria').attr('value')
+	var maxRes = 15;
+	var recDepth = 2;
+
+	var currIteration = []
+	var currLength = 0;
+	var nextIteration = []
+	var songs = new Array()
+	
+	songs.push(vId)
+	currIteration.push(vId)
+	$("#iRelated").click(function() {
+		related(maxRes)
+	});
+	
+	$("#iUploadVideo").click(function() {
+		uploadVideo()		
+	});
+
+</script>
+</body>
+</html>
