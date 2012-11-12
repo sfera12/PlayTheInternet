@@ -21,7 +21,7 @@ function VideoElement(videoFeed) {
     this.fillDiv = function(videoFeed) {
         var durationCaption = $('<div/>')
         durationCaption.addClass('duration-caption')
-        durationCaption.text(this.div.attr('duration-caption'))
+        durationCaption.text(videoFeed.durationCaption)
 
         var imgDiv = $('<div/>')
         imgDiv.addClass('image-div')
