@@ -21,7 +21,7 @@
 		#dTextInput { width: 100%; }
 		#iCriteria, #iTitle { width: 100%; }		
 		#dMenu { float: left;  width: 100px; height: 100%; }
-		#dPLists { position:absolute; float: left; left: 100px; width: auto; height: 99%; }
+		#dPLists { position:absolute; float: left; left: 100px; width: 100%; height: 99%; }
 		#firstView, #secondView { float: left; width: 50%; height: 100%; }
 		#ulFirst, #ulSecond { float: left; width: 100%; height: 100%; overflow-x: hidden; overflow-y: scroll; }
 /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
@@ -90,7 +90,8 @@
             var videoFeed = new VideoFeed(item)
             videoFeeds.push(videoFeed)
 			// alert(index)
-            $("#ulFirst").append(new VideoElement(videoFeed))
+            var videoElement = new VideoElement(videoFeed)
+            $("#ulFirst").append(videoElement.div)
         });
 	}
 	var aError = function(data) {

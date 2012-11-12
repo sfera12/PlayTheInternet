@@ -10,35 +10,47 @@ function VideoFeed (item, parent) {
 }
 
 function VideoElement(videoFeed) {
-    var div	 = $('<div/>')
-    div.addClass('ui-state-default')
-    var durationCaption = $('<div/>')
-    durationCaption.addClass('duration-caption')
-    durationCaption.text(div.attr('duration-caption'))
+    this.createDiv = function(videoFeed) {
+        this.div = $('<div/>')
+        this.div.addClass('ui-state-default')
+        if(videoFeed != null) {
+            this.fillDiv(videoFeed)
+        }
+    }
 
-    var imgDiv = $('<div/>')
-    imgDiv.addClass('image-div')
+    this.fillDiv = function(videoFeed) {
+        var durationCaption = $('<div/>')
+        durationCaption.addClass('duration-caption')
+        durationCaption.text(this.div.attr('duration-caption'))
 
-    var img = $('<img/>')
-    img.attr('src', videoFeed.thumbnail)
+        var imgDiv = $('<div/>')
+        imgDiv.addClass('image-div')
 
-    var span = $('<span/>')
-    var b = $('<b>').text(videoFeed.title)
-    span.append(b)
-    span.append("<br>by " + videoFeed.uploader)
+        var img = $('<img/>')
+        img.attr('src', videoFeed.thumbnail)
 
-    imgDiv.append(img)
-    imgDiv.append(durationCaption)
-    div.append(imgDiv)
-    div.append(span)
-    div.click(function() {
-        $('#iCriteria').attr('value', videoFeed.videoId)
-        $('#iTitle').attr('value', videoFeed.title + '\t' + videoFeed.videoId)
-    })
-    durationCaption.css('left', 120 - durationCaption.width() - 3)
-    durationCaption.css('top', 90 - durationCaption.height() -3)
+        var span = $('<span/>')
+        var b = $('<b>').text(videoFeed.title)
+        span.append(b)
+        span.append("<br>by " + videoFeed.uploader)
 
-    return div
+        imgDiv.append(img)
+        imgDiv.append(durationCaption)
+        this.div.append(imgDiv)
+        this.div.append(span)
+        this.div.click(function() {
+            $('#iCriteria').attr('value', videoFeed.videoId)
+            $('#iTitle').attr('value', videoFeed.title + '\t' + videoFeed.videoId)
+        })
+        durationCaption.css('left', 120 - durationCaption.width() - 3)
+        durationCaption.css('top', 90 - durationCaption.height() -3)
+
+        return this.div
+    }
+
+    this.createDiv(videoFeed)
+
+    return this
 }
 
 function convert(duration) {
