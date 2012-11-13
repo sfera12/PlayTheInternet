@@ -18,12 +18,14 @@
 		#firstView, #secondView { width: 80%; background-color: red }*/
 /*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
 		body { height: 100%; }
+        .taArea {width: 100%; height: 85%; }
+        .auto {width: auto; height: auto;}
 		#dTextInput { width: 100%; }
 		#iCriteria, #iTitle { width: 100%; }		
 		#dMenu { float: left;  width: 100px; height: 100%; }
 		#dPLists { position:absolute; float: left; left: 100px; width: 100%; height: 99%; }
 		#firstView, #secondView { float: left; width: 50%; height: 100%; }
-		#ulFirst, #ulSecond { float: left; width: 100%; height: 100%; overflow-x: hidden; overflow-y: scroll; }
+		.internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
 /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
 		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
 		.image-div { float: left; position: relative; width: 123px; height: 90px; }
@@ -50,7 +52,11 @@
 <!-- <div id="dPLists" class="demo"> -->
 <div id="dPLists">
 	<div id="firstView">
-		<div id="ulFirst" class="connectedSortable">
+        <div id="taFirst" class="internalFrame">
+            <textarea id="taArea" class="taArea"></textarea>
+            <input id="taAreaButton" type="button" value="Parse Links"/>
+        </div>
+		<div id="ulFirst" class="connectedSortable internalFrame">
 		</div>
 	</div>
 	
@@ -75,6 +81,15 @@
 			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer'
 		}).disableSelection();
 	});
+
+    $("#taAreaButton").click(function() {
+        var youtube = /((youtu.be\/)|(watch[^ \"\'<>]+v=))([^ &\"\'<>\/\\]+)/g
+        var textArea = $("#taArea").val()
+        var youtubeLinks = textArea.match(youtube)
+        youtubeLinks.forEach(function(item) {
+            console.log(item.replace(youtube, "$4"))
+        })
+    })
 
 	var i = 0;
 	var aSuccess = function(data) {
