@@ -89,9 +89,7 @@
 		$.each(data.data.items, function(index, item) {
             var videoFeed = new VideoFeed(item)
             videoFeeds.push(videoFeed)
-			// alert(index)
-            var videoElement = new VideoElement(videoFeed)
-            $("#ulFirst").append(videoElement.div)
+            new VideoElement(videoFeed, "#ulFirst")
         });
 	}
 	var aError = function(data) {

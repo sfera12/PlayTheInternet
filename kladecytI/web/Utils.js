@@ -9,10 +9,11 @@ function VideoFeed (item, parent) {
     this.thumbnail = item.thumbnail.sqDefault
 }
 
-function VideoElement(videoFeed) {
+function VideoElement(videoFeed, appendTo) {
     this.createDiv = function(videoFeed) {
         this.div = $('<div/>')
         this.div.addClass('ui-state-default')
+        $(appendTo).append(this.div)
         if(videoFeed != null) {
             this.fillDiv(videoFeed)
         }
