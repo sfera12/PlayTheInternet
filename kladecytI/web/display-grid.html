@@ -11,7 +11,8 @@
 	<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
     <script src="Utils.js"></script>
-	<link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+    <script type="text/javascript" src="swfobject.js"></script>
+    <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
 	<style>
 		/*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
 		#first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
@@ -104,12 +105,28 @@
 
 <script>
     var videoFeeds = new Array()
+    var videoElements = new Array()
 
 	$(function() {
 		$( "#ulFirst, #ulSecond" ).sortable({
 			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer'
 		}).disableSelection();
 	});
+
+    function onYouTubePlayerReady(playerId) {
+        ytp = document.getElementById("ytplayer");
+        ytp.playVideo()
+    }
+
+    var drawPlayer = function() {
+        var playList = $("#ulFirst div").filter(function(index, item) {
+            return $(item).data("videoFeed") != null
+        })
+        var videoFeed = $(playList[0]).data("videoFeed")
+        var params = { allowScriptAccess: "always" };
+        var atts = { id: "ytplayer" };
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", "taFirst", "425", "356", "8", null, null, params, atts);
+    }
 
     $("#taAreaButton").click(function() {
         var youtube = /((youtu.be\/)|(watch[^ \"\'<>]+v=))([^ &\"\'<>\/\\]+)/g
@@ -120,13 +137,24 @@
         youtubeLinks = youtubeLinks.map(function(item) {
             return item.replace(youtube, "$4")
         }).unique()
+        var responseCounter = 0
+        var playListFinishedLoading = function(playListSize, current) {
+            if(playListSize == current) {
+                drawPlayer()
+            }
+        }
         youtubeLinks.forEach(function(videoId) {
             var videoElement = new VideoElement(null, "#ulFirst")
+            videoElements.push(videoElement)
             $.ajax({
                 url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=json",
                 success: function(data) {
                     var videoFeed = new VideoFeed(data.entry)
                     this.fillDiv(videoFeed)
+                    playListFinishedLoading(youtubeLinks.length, ++responseCounter)
+                },
+                error: function(data) {
+                    playListFinishedLoading(youtubeLinks.length, ++responseCounter)
                 },
                 context: videoElement
             })

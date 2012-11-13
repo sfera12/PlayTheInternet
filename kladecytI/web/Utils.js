@@ -16,6 +16,7 @@ function VideoFeed (item, parent) {
         this.uploader = item.author[0].name.$t
         this.thumbnail = item.media$group.media$thumbnail[0].url
     }  else {
+        this.error = "incompatible type"
         console.log("incompatible type" + item)
     }
 }
@@ -56,6 +57,8 @@ function VideoElement(videoFeed, appendTo) {
         })
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() -3)
+
+        this.div.data("videoFeed", videoFeed)
 
         return this.div
     }
