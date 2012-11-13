@@ -53,7 +53,36 @@
 <div id="dPLists">
 	<div id="firstView">
         <div id="taFirst" class="internalFrame">
-            <textarea id="taArea" class="taArea"></textarea>
+            <textarea id="taArea" class="taArea">AdData not defined.
+                http://youtube.com/watch?v=qREKP9oijWI watch:1
+                http://youtube.com/watch?v=qREKP9oijWI watch:1
+                http://youtube.com/watch?v=True watch:1
+                http://youtube.com/watch?v=True watch:1
+                http://youtube.com/watch?v=r20110914 watch:1
+                http://youtube.com/watch?v=zmPzbZVUp3g watch:1
+                http://youtube.com/watch?v=73bcKmn7NHA watch:1
+                http://youtube.com/watch?v=jKCyFB5LmPo watch:1
+                http://youtube.com/watch?v=II5rFkdEGfQ watch:1
+                http://youtube.com/watch?v=wOrfpzPfVXA watch:1
+                http://youtube.com/watch?v=qycqF1CWcXg watch:1
+                http://youtube.com/watch?v=uRhoWQX2OF8 watch:1
+                http://youtube.com/watch?v=zmG8JYiYvgg watch:1
+                http://youtube.com/watch?v=OG2eGVt6v2o watch:1
+                http://youtube.com/watch?v=4tY3culIYsE watch:1
+                http://youtube.com/watch?v=R0x7ZsTioCQ watch:1
+                http://youtube.com/watch?v=6zqpDVyCB2Y watch:1
+                http://youtube.com/watch?v=w1CHztjRkyc watch:1
+                http://youtube.com/watch?v=LUXuiCkoUFc watch:1
+                http://youtube.com/watch?v=8jYrr952vbg watch:1
+                http://youtube.com/watch?v=KuVcuTYWPHE watch:1
+                http://youtube.com/watch?v=QQLsQJF_aRY watch:1
+                http://youtube.com/watch?v=Sgk4cIELMHg watch:1
+                http://youtube.com/watch?v=IUMhauUDeWQ watch:1
+                http://youtube.com/watch?v=7apji-hg5j4 watch:1
+                http://youtube.com/watch?v=__video_id__ watch:1
+                http://youtube.com/watch?v=__playlist_video_id__ watch:1
+                http://youtube.com/watch?v=1;dc_dedup=1;k21=1;k5=3_14_35_59_67_208;kage=26;kar=4;kauth=1;kclt=1;kcr=us;kga=1002;kgender=m;kgg=1;klg=en;ko=y;kr=H;kvz=203;longform=1;tves=1;yt_vrallowed=1;ytcat=24;ytdevice=1;ytexp=907605.906373.910102.900305.922401.920704.912806.927201.922403.925003.913546.913556.916805.920201.901451;ytps=default;ytvt=w;!c=1358;k2=3;k2=14;k2=35;k2=59;k2=67;k2=208;kvlg=en; watch:1
+                http://youtube.com/watch?v=qREKP9oijWI </textarea>
             <input id="taAreaButton" type="button" value="Parse Links"/>
         </div>
 		<div id="ulFirst" class="connectedSortable internalFrame">
@@ -86,8 +115,21 @@
         var youtube = /((youtu.be\/)|(watch[^ \"\'<>]+v=))([^ &\"\'<>\/\\]+)/g
         var textArea = $("#taArea").val()
         var youtubeLinks = textArea.match(youtube)
-        youtubeLinks.forEach(function(item) {
-            console.log(item.replace(youtube, "$4"))
+        $('#ulFirst').empty()
+        console.log("--------------------------------------------")
+        youtubeLinks = youtubeLinks.map(function(item) {
+            return item.replace(youtube, "$4")
+        }).unique()
+        youtubeLinks.forEach(function(videoId) {
+            var videoElement = new VideoElement(null, "#ulFirst")
+            $.ajax({
+                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=json",
+                success: function(data) {
+                    var videoFeed = new VideoFeed(data.entry)
+                    this.fillDiv(videoFeed)
+                },
+                context: videoElement
+            })
         })
     })
 

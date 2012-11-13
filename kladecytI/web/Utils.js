@@ -1,12 +1,23 @@
 
 function VideoFeed (item, parent) {
     if(item == null) throw "kladecyt: null vId argument in VideoFeed Constructor"
-    this.videoId = item.id
-    this.duration = item.duration
-    this.durationCaption = convert(item.duration)
-    this.title = item.title
-    this.uploader = item.uploader
-    this.thumbnail = item.thumbnail.sqDefault
+    if(item.thumbnail != null) {
+        this.videoId = item.id
+        this.duration = item.duration
+        this.durationCaption = convert(item.duration)
+        this.title = item.title
+        this.uploader = item.uploader
+        this.thumbnail = item.thumbnail.sqDefault
+    } else if(item.id.$t != "") {
+        this.videoId = item.id.$t.replace(/.*video\:(.*)/, "$1")
+        this.duration = item.media$group.media$content[0].duration
+        this.durationCapption = item.media$group.media$thumbnail[0].time.replace(/(.*)\.\d+/, "$1")
+        this.title = item.title.$t
+        this.uploader = item.author[0].name.$t
+        this.thumbnail = item.media$group.media$thumbnail[0].url
+    }  else {
+        console.log("incompatible type" + item)
+    }
 }
 
 function VideoElement(videoFeed, appendTo) {
