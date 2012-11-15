@@ -107,12 +107,9 @@ function YoutubePlayer(ytp) {
     }
 
     this.playNextVideo = function() {
-        console.log("nextVideo" + this.nextVideo(playList, currSong))
-        var index = this.nextVideo(playList, currSong)
-//        currSong = playList[index]
-//        this.playVideoDiv(currSong)
+        console.log("nextVideo" + this.nextVideo())
+        var index = this.nextVideo()
         this.playVideoDiv(playList[index])
-//        return currSong
     }
 
     this.nextVideo = function() {
@@ -123,7 +120,6 @@ function YoutubePlayer(ytp) {
     this.onStateChange = function(state) {
         console.log("change " + state)
         if(state == 0) {
-//            currSong = this.playNextVideo(playList, currSong)
             this.playNextVideo(playList, currSong)
         }
     }
