@@ -54,7 +54,8 @@ function VideoElement(videoFeed, appendTo) {
         this.div.click(function() {
             $('#iCriteria').attr('value', videoFeed.videoId)
             $('#iTitle').attr('value', videoFeed.title + '\t' + videoFeed.videoId)
-        })
+            yte.playVideoDiv(this.div)
+        }.bind(this))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() -3)
 
@@ -66,6 +67,63 @@ function VideoElement(videoFeed, appendTo) {
     this.createDiv(videoFeed)
 
     return this
+}
+
+function YoutubePlayer(ytp) {
+    var ytp
+
+    if(ytp != null) {
+        this.setPlayer(ytp)
+    }
+
+    this.setPlayer = function(ytp) {
+        if(ytp != null) {
+            this.ytp = ytp
+            this.ytp.playVideo()
+        }
+    }
+
+    this.drawPlayer = function(appendTo) {
+        playList = $("#ulFirst div").filter(function(index, item) {
+            return $(item).data("videoFeed") != null
+        })
+        currSong = playList[0]
+        var videoFeed = $(currSong).data("videoFeed")
+        var params = { allowScriptAccess: "always" };
+        var atts = { id: "ytplayer" };
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, "425", "356", "8", null, null, params, atts);
+    }
+
+    this.playVideoDiv = function (videoDiv) {
+        currSong = videoDiv[0]
+        var videoFeed = $(videoDiv).data('videoFeed')
+        this.playVideoFeed(videoFeed)
+    }
+
+    this.playVideoFeed = function (videoFeed) {
+        var videoId = videoFeed.videoId
+        this.ytp.loadVideoById(videoId)
+    }
+
+    this.playNextVideo = function(playList, currSong) {
+        console.log("nextVideo" + this.nextVideo(playList, currSong))
+        var index = this.nextVideo(playList, currSong)
+        currSong = playList[index]
+        this.playVideoDiv(currSong)
+        return currSong
+    }
+
+    this.nextVideo = function(playList, currSong) {
+        var index = playList.toArray().indexOf(currSong)
+        return (index >= playList.length - 1 ? 0 : ++index)
+    }
+
+    this.onStateChange = function(state) {
+        console.log("change " + state)
+        if(state == 0) {
+            currSong = this.playNextVideo(playList, currSong)
+        }
+    }
 }
 
 function convert(duration) {

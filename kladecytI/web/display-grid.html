@@ -106,48 +106,21 @@
 		}).disableSelection();
 	});
 
+    var yte = new YoutubePlayer()
+
     function onYouTubePlayerReady(playerId) {
-        ytp = document.getElementById("ytplayer");
+        ytPlayer = document.getElementById("ytplayer");
+        yte.setPlayer(ytPlayer)
         console.log("youtube Ready")
-        ytp.playVideo()
-        ytp.addEventListener("onStateChange", "change")
+        yte.ytp.addEventListener("onStateChange", "change")
     }
 
     function change(state) {
-        console.log("change " + state)
-        if(state == 0) {
-            console.log("nextVideo" + nextVideo(playList, currSong))
-            var index = nextVideo(playList, currSong)
-            currSong = playList[index]
-            var videoId = $(currSong).data('videoFeed').videoId
-            ytp.loadVideoById(videoId)
-        }
-    }
-
-    function nextVideo(playList, currSong) {
-        var index = playList.toArray().indexOf(currSong)
-        if(index >= playList.length - 1) {
-            return 0
-        } else {
-            return ++index
-        }
-
+        yte.onStateChange(state)
     }
 
     var playList
     var currSong
-
-    var drawPlayer = function() {
-        playList = $("#ulFirst div").filter(function(index, item) {
-            return $(item).data("videoFeed") != null
-        })
-        currSong = playList[0]
-        var videoFeed = $(currSong).data("videoFeed")
-        var params = { allowScriptAccess: "always" };
-        var atts = { id: "ytplayer" };
-        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", "taFirst", "425", "356", "8", null, null, params, atts);
-
-    }
 
     $("#taAreaButton").click(function() {
         var youtube = /((youtu.be\/)|(watch[^ \"\'<>]+v=))([^ &\"\'<>\/\\]+)/g
@@ -161,7 +134,7 @@
         var responseCounter = 0
         var playListFinishedLoading = function(playListSize, current) {
             if(playListSize == current) {
-                drawPlayer()
+                yte.drawPlayer("taFirst")
             }
         }
         youtubeLinks.forEach(function(videoId) {
