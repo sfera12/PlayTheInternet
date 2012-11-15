@@ -97,7 +97,6 @@ function YoutubePlayer(ytp) {
     this.playVideoDiv = function (videoDiv) {
         currSong = videoDiv
         var videoFeed = $(videoDiv).data('videoFeed')
-//        var videoFeed = videoDiv.data('videoFeed')
         this.playVideoFeed(videoFeed)
     }
 
