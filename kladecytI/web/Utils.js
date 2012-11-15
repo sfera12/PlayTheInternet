@@ -54,7 +54,7 @@ function VideoElement(videoFeed, appendTo) {
         this.div.click(function() {
             $('#iCriteria').attr('value', videoFeed.videoId)
             $('#iTitle').attr('value', videoFeed.title + '\t' + videoFeed.videoId)
-            yte.playVideoDiv(this.div)
+            yte.playVideoDiv(this.div[0])
         }.bind(this))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() -3)
@@ -95,8 +95,9 @@ function YoutubePlayer(ytp) {
     }
 
     this.playVideoDiv = function (videoDiv) {
-        currSong = videoDiv[0]
+        currSong = videoDiv
         var videoFeed = $(videoDiv).data('videoFeed')
+//        var videoFeed = videoDiv.data('videoFeed')
         this.playVideoFeed(videoFeed)
     }
 
@@ -105,15 +106,16 @@ function YoutubePlayer(ytp) {
         this.ytp.loadVideoById(videoId)
     }
 
-    this.playNextVideo = function(playList, currSong) {
+    this.playNextVideo = function() {
         console.log("nextVideo" + this.nextVideo(playList, currSong))
         var index = this.nextVideo(playList, currSong)
-        currSong = playList[index]
-        this.playVideoDiv(currSong)
-        return currSong
+//        currSong = playList[index]
+//        this.playVideoDiv(currSong)
+        this.playVideoDiv(playList[index])
+//        return currSong
     }
 
-    this.nextVideo = function(playList, currSong) {
+    this.nextVideo = function() {
         var index = playList.toArray().indexOf(currSong)
         return (index >= playList.length - 1 ? 0 : ++index)
     }
@@ -121,7 +123,8 @@ function YoutubePlayer(ytp) {
     this.onStateChange = function(state) {
         console.log("change " + state)
         if(state == 0) {
-            currSong = this.playNextVideo(playList, currSong)
+//            currSong = this.playNextVideo(playList, currSong)
+            this.playNextVideo(playList, currSong)
         }
     }
 }
