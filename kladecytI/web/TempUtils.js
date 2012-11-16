@@ -9,4 +9,5 @@ var urlParams = {};
     while (e = r.exec(q))
         urlParams[d(e[1])] = d(e[2]);
 })();
+//window.location.hash.match(/(#|;)([^=]+)=([^;]+)/g)
 //alert(urlParams["auth"]);

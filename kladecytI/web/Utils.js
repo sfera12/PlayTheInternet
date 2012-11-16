@@ -11,7 +11,7 @@ function VideoFeed (item, parent) {
     } else if(item.id.$t != "") {
         this.videoId = item.id.$t.replace(/.*video\:(.*)/, "$1")
         this.duration = item.media$group.media$content[0].duration
-        this.durationCapption = item.media$group.media$thumbnail[0].time.replace(/(.*)\.\d+/, "$1")
+        this.durationCaption = convert(this.duration)
         this.title = item.title.$t
         this.uploader = item.author[0].name.$t
         this.thumbnail = item.media$group.media$thumbnail[0].url
@@ -22,6 +22,8 @@ function VideoFeed (item, parent) {
 }
 
 function VideoElement(videoFeed, appendTo) {
+    var div
+
     this.createDiv = function(videoFeed) {
         this.div = $('<div/>')
         this.div.addClass('ui-state-default')
