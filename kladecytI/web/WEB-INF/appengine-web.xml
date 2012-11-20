@@ -3,4 +3,8 @@
     <application></application>
     <version>1</version>
     <threadsafe>true</threadsafe>
+    <inbound-services>
+        <service>channel_presence</service>
+    </inbound-services>
+    <sessions-enabled>true</sessions-enabled>
 </appengine-web-app>

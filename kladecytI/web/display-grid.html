@@ -122,8 +122,12 @@
     var playList
     var currSong
 
+    if(window.location.hash) {
+        $("#taArea").val(window.location.hash)
+    }
+
     $("#taAreaButton").click(function() {
-        var youtube = /((youtu.be\/)|(watch[^ \"\'<>]+v=))([^ &\"\'<>\/\\]+)/g
+        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
         var textArea = $("#taArea").val()
         var youtubeLinks = textArea.match(youtube)
         $('#ulFirst').empty()
@@ -131,6 +135,10 @@
         youtubeLinks = youtubeLinks.map(function(item) {
             return item.replace(youtube, "$4")
         }).unique()
+        loadPlayList(youtubeLinks)
+    })
+
+    function loadPlayList(youtubeLinks) {
         var responseCounter = 0
         var playListFinishedLoading = function(playListSize, current) {
             if(playListSize == current) {
@@ -153,7 +161,7 @@
                 context: videoElement
             })
         })
-    })
+    }
 
 	var i = 0;
 	var aSuccess = function(data) {

@@ -91,7 +91,7 @@ function YoutubePlayer(ytp) {
         })
         currSong = playList[0]
         var videoFeed = $(currSong).data("videoFeed")
-        var params = { allowScriptAccess: "always" };
+        var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
         swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, "425", "356", "8", null, null, params, atts);
     }
