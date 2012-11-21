@@ -49,3 +49,5 @@ socket.onmessage = onMessage;
 
 var channel = new goog.appengine.Channel(token);
 var socket = channel.open();
+
+// http://www.iconarchive.com/show/nod-icons-by-rimshotdesign/Network-icon.html
