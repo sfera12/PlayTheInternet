@@ -81,7 +81,7 @@ function YoutubePlayer(ytp) {
     this.setPlayer = function(ytp) {
         if(ytp != null) {
             this.ytp = ytp
-            this.ytp.playVideo()
+            this.playVideoDiv(currSong)
         }
     }
 
@@ -98,6 +98,8 @@ function YoutubePlayer(ytp) {
 
     this.playVideoDiv = function (videoDiv) {
         currSong = videoDiv
+        $(playList).removeClass("selected")
+        $(currSong).addClass("selected")
         var videoFeed = $(videoDiv).data('videoFeed')
         this.playVideoFeed(videoFeed)
     }
