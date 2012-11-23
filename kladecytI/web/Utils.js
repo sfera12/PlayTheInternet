@@ -101,6 +101,7 @@ function YoutubePlayer(ytp) {
         $(playList).removeClass("selected")
         $(currSong).addClass("selected")
         var videoFeed = $(videoDiv).data('videoFeed')
+        document.title = 'Play - ' + videoFeed.title
         this.playVideoFeed(videoFeed)
     }
 
