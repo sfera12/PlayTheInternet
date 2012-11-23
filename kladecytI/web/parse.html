@@ -3,15 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<title>jQuery UI Sortable - Display as grid</title>
-	<script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
 </head>
 <body>
     <a id="proceed" href="" target="_blank"></a>
     <script>
             var hash = window.location.hash;
-            var domain = "http://localhost:8888"
-            var link = domain+"/display-grid.html" + hash
-            $("#proceed").attr("href", link).text(link)
+            var link = "/display-grid.html" + hash
+            var proceed = $("#proceed")
+            proceed.attr("href", link).text(link)
+            proceed.click(function() {
+                setTimeout(function() {
+                    window.close()
+                }, 1000)
+            })
     </script>
 </body>
 </html>
