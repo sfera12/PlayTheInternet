@@ -9,6 +9,7 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
     <title>Hello App Engine</title>
   </head>
 
@@ -20,10 +21,71 @@
         <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
       </tr>
       <tr>
-          <a href="javascript: (function () { function playTheInternetParse() { document.getHTML = function (who, deep) { if (!who || !who.tagName) return ''; var txt, el = document.createElement('div'); el.appendChild(who.cloneNode(deep)); txt = el.innerHTML; el = null; return txt; }; Array.prototype.unique = function (a) { return function () { return this.filter(a) } }(function (a, b, c) { return c.indexOf(a, b + 1) < 0 }); var html = document.getElementsByTagName('html')[0]; var htmlText = document.getHTML(html, true); var youtube = /((youtu.be\/)|(watch[^ \'\'<>]+v=))([^ &\'\'<>\/\\]+)/g; var youtubeLinks = htmlText.match(youtube); var uTubeLinks = youtubeLinks.unique(); var result = ''; for (var i = 0; i < uTubeLinks.length; i++) { result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$4') + ','; } return result; } if (typeof (playTheInternetParse) == 'undefined') { console.log('first time'); var parse = document.createElement('script'); parse.src = 'http://localhost:8888/parse.js'; document.getElementsByTagName('head')[0].appendChild(parse); } function parsePage() { setTimeout(function () { if (typeof (playTheInternetParse) != 'undefined') { openWindow(playTheInternetParse()); } else { console.log('undefined'); parsePage(); } }, 0) } function openWindow(links) { var a = window, b = document, c = encodeURIComponent, /* d = a.open('http://localhost:8888/oauth2callback#access_token=123', 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');*/ d = a.open('http://localhost:8888/parse.html#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1'); a.setTimeout(function () { d.focus(); }, 300) } parsePage(); })();">LOCAL</a>
+          <a id="local">LOCAL</a>
           <br>
-          <a href="javascript: (function () { function playTheInternetParse() { document.getHTML = function (who, deep) { if (!who || !who.tagName) return ''; var txt, el = document.createElement('div'); el.appendChild(who.cloneNode(deep)); txt = el.innerHTML; el = null; return txt; }; Array.prototype.unique = function (a) { return function () { return this.filter(a) } }(function (a, b, c) { return c.indexOf(a, b + 1) < 0 }); var html = document.getElementsByTagName('html')[0]; var htmlText = document.getHTML(html, true); var youtube = /((youtu.be\/)|(watch[^ \'\'<>]+v=))([^ &\'\'<>\/\\]+)/g; var youtubeLinks = htmlText.match(youtube); var uTubeLinks = youtubeLinks.unique(); var result = ''; for (var i = 0; i < uTubeLinks.length; i++) { result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$4') + ','; } return result; } if (typeof (playTheInternetParse) == 'undefined') { console.log('first time'); var parse = document.createElement('script'); parse.src = 'http://playtheinternet.appspot.com/parse.js'; document.getElementsByTagName('head')[0].appendChild(parse); } function parsePage() { setTimeout(function () { if (typeof (playTheInternetParse) != 'undefined') { openWindow(playTheInternetParse()); } else { console.log('undefined'); parsePage(); } }, 0) } function openWindow(links) { var a = window, b = document, c = encodeURIComponent, /* d = a.open('http://playtheinternet.appspot.com/oauth2callback#access_token=123', 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');*/ d = a.open('http://playtheinternet.appspot.com/parse.html#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1'); a.setTimeout(function () { d.focus(); }, 300) } parsePage(); })();">PlayTheInternet</a>
+          <a id="production">PlayTheInternet</a>
+
+          <a id="holder" style="visibility: hidden;" href="javascript: (function () {
+    function playTheInternetParse() {
+        document.getHTML = function (who, deep) {
+            if (!who || !who.tagName) return '';
+            var txt, el = document.createElement('div');
+            el.appendChild(who.cloneNode(deep));
+            txt = el.innerHTML;
+            el = null;
+            return txt;
+        };
+        Array.prototype.unique = function (a) {
+            return function () {
+                return this.filter(a)
+            }
+        }(function (a, b, c) {
+            return c.indexOf(a) == b
+        });
+        var html = document.getElementsByTagName('html')[0];
+        var htmlText = document.getHTML(html, true);
+        var youtube = /((youtu.be\/)|(watch[^ \'\'<>]+v=))([^ &\'\'<>\/\\]+)/g;
+        var youtubeLinks = htmlText.match(youtube);
+        var uTubeLinks = youtubeLinks.unique();
+        var result = '';
+        for (var i = 0; i < uTubeLinks.length; i++) {
+            result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$4') + ',';
+        }
+        return result;
+    }
+    if (typeof (playTheInternetParse) == 'undefined') {
+        console.log('first time');
+        var parse = document.createElement('script');
+        parse.src = 'DOMAIN/parse.js';
+        document.getElementsByTagName('head')[0].appendChild(parse);
+    }
+    function parsePage() {
+        setTimeout(function () {
+            if (typeof (playTheInternetParse) != 'undefined') {
+                openWindow(playTheInternetParse());
+            } else {
+                console.log('undefined');
+                parsePage();
+            }
+        }, 0)
+    }
+    function openWindow(links) {
+        var a = window,
+            b = document,
+            c = encodeURIComponent,
+            d = a.open('DOMAIN/parse.html#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');
+        a.setTimeout(function () {
+            d.focus();
+        }, 300)
+    }
+    parsePage();
+})();">HOLDER</a>
+
       </tr>
     </table>
+    <script>
+        $('#local').attr('href', $('#holder').attr('href').replace(/DOMAIN/g, 'http://localhost:8888'))
+        $('#production').attr('href', $('#holder').attr('href').replace(/DOMAIN/g, 'http://playtheinternet.appspot.com'))
+    </script>
   </body>
 </html>

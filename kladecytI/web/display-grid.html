@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Play The Internet</title>
+    <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
 	<script src="jqC/development-bundle/jquery-1.7.1.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
@@ -150,9 +151,9 @@
             var videoElement = new VideoElement(null, "#ulFirst")
             videoElements.push(videoElement)
             $.ajax({
-                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=json",
+                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
                 success: function(data) {
-                    var videoFeed = new VideoFeed(data.entry)
+                    var videoFeed = new VideoFeed(data.data)
                     this.fillDiv(videoFeed)
                     playListFinishedLoading(youtubeLinks.length, ++responseCounter)
                 },
