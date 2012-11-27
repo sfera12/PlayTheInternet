@@ -122,33 +122,33 @@
             })
         })
     }
-
-	var i = 0;
-	var aSuccess = function(data) {
-		// alert('success')
-		// $.each(data, function(key, element) {
-    	// alert('key: ' + key + '\n' + 'value: ' + element);
-		// });
-		// alert(data.feed.title.$t)
-		// alert(data.data.items[0].id)
-		$('#ulSecond').empty();
-		$('#iStatus').attr('value', i++)
-		$.each(data.data.items, function(index, item) {
-            var videoFeed = new VideoFeed(item)
-            videoFeeds.push(videoFeed)
-            new VideoElement(videoFeed, "#ulSecond")
-        });
-	}
-	var aError = function(data) {
-		alert("error")
-	}
-	$.ajax({
-		url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-		// url : 'https://gdata.youtube.com/feeds/api/videos/8_E8x15wkAo/related?v=2&alt=jsonc&max-results=3',
-		dataType : 'json',
-		success : aSuccess,
-		error : aError
-	})
+//
+//	var i = 0;
+//	var aSuccess = function(data) {
+//		// alert('success')
+//		// $.each(data, function(key, element) {
+//    	// alert('key: ' + key + '\n' + 'value: ' + element);
+//		// });
+//		// alert(data.feed.title.$t)
+//		// alert(data.data.items[0].id)
+//		$('#ulSecond').empty();
+//		$('#iStatus').attr('value', i++)
+//		$.each(data.data.items, function(index, item) {
+//            var videoFeed = new VideoFeed(item)
+//            videoFeeds.push(videoFeed)
+//            new VideoElement(videoFeed, "#ulSecond")
+//        });
+//	}
+//	var aError = function(data) {
+//		alert("error")
+//	}
+//	$.ajax({
+//		url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+//		// url : 'https://gdata.youtube.com/feeds/api/videos/8_E8x15wkAo/related?v=2&alt=jsonc&max-results=3',
+//		dataType : 'json',
+//		success : aSuccess,
+//		error : aError
+//	})
 </script>
 
 <script>
