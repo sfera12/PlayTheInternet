@@ -86,14 +86,15 @@ function YoutubePlayer(ytp) {
     }
 
     this.drawPlayer = function(appendTo) {
-        playList = $("#ulFirst div").filter(function(index, item) {
+        playList = $("#ulSecond div").filter(function(index, item) {
             return $(item).data("videoFeed") != null
         })
         currSong = playList[0]
         var videoFeed = $(currSong).data("videoFeed")
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
-        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, "425", "356", "8", null, null, params, atts);
+        var playerWidth = window.screen.width / 2 / 1.020
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, parseInt(playerWidth), parseInt(playerWidth / 1.19) , "8", null, null, params, atts);
     }
 
     this.playVideoDiv = function (videoDiv) {
