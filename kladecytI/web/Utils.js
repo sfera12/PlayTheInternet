@@ -93,7 +93,7 @@ function YoutubePlayer(ytp) {
         var videoFeed = $(currSong).data("videoFeed")
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
-        var playerWidth = window.screen.width / 2 / 1.020
+        var playerWidth = document.width / 2 / 1.020
         swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, parseInt(playerWidth), parseInt(playerWidth / 1.19) , "8", null, null, params, atts);
     }
 
