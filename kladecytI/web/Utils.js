@@ -54,8 +54,6 @@ function VideoElement(videoFeed, appendTo) {
         this.div.append(imgDiv)
         this.div.append(span)
         this.div.click(function() {
-            $('#iCriteria').attr('value', videoFeed.videoId)
-            $('#iTitle').attr('value', videoFeed.title + '\t' + videoFeed.videoId)
             yte.playVideoDiv(this.div[0])
         }.bind(this))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
@@ -71,21 +69,61 @@ function VideoElement(videoFeed, appendTo) {
     return this
 }
 
-function Playlist(containerElementId) {
-    this.containerElementId = containerElementId
+function Playlist(appendToElementExpression) {
+    this.containerElementExpression = appendToElementExpression
     this.playlist
     this.currSong
 
     this.recalculatePlaylist = function() {
-        this.playlist = $("#" + this.containerElementId + " div").filter(function(index, item) {
+        this.playlist = $(this.containerElementExpression + " div").filter(function(index, item) {
             return $(item).data("videoFeed") != null
         })
     }
 
-    this.nextSong = function(currSong) {
+    this.lookupNextSong = function(currSong) {
         var index = this.playlist.toArray().indexOf(currSong)
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
+    }
+
+    this.addSongsToPlayList = function(appendToElementExpression, links, finished) {
+        var responseCounter = 0
+        var playlistFinishedLoading = function(playlistSize, current) {
+            if(playlistSize == current ) {
+                this.recalculatePlaylist()
+                if(finished != null) {
+                    finished()
+                }
+            }
+        }.bind(this)
+        links.forEach(function(videoId) {
+            var videoElement = new VideoElement(null, appendToElementExpression)
+            videoElements.push(videoElement)
+            $.ajax({
+                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
+                success: function(data) {
+                    try {
+                        var videoFeed = new VideoFeed(data.data)
+                        this.fillDiv(videoFeed)
+                    } finally {
+                        playlistFinishedLoading(links.length, ++responseCounter)
+                    }
+                },
+                error: function(data) {
+                    playlistFinishedLoading(links.length, ++responseCounter)
+                },
+                context: videoElement,
+                dataType: 'json'
+            })
+        })
+    }
+
+    this.parseSongIds = function(text) {
+        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
+        var youtubeLinks = text.match(youtube)
+        return youtubeLinks.map(function(item) {
+            return item.replace(youtube, "$4")
+        }).unique()
     }
 }
 
@@ -104,14 +142,14 @@ function YoutubePlayer(ytp, pla) {
         }
     }
 
-    this.drawPlayer = function(appendTo) {
+    this.drawPlayer = function(appendToElementId) {
         this.pla.recalculatePlaylist()
         this.pla.currSong = this.pla.playlist[0]
         var videoFeed = $(this.pla.currSong).data("videoFeed")
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
         var playerWidth = window.innerWidth / 2 / 1.020
-        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendTo, parseInt(playerWidth), parseInt(playerWidth / 1.19) , "8", null, null, params, atts);
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19) , "8", null, null, params, atts);
     }
 
     this.playVideoDiv = function (videoDiv) {
@@ -129,7 +167,7 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.playNextVideo = function() {
-        this.playVideoDiv(this.pla.nextSong(this.pla.currSong))
+        this.playVideoDiv(this.pla.lookupNextSong(this.pla.currSong))
     }
 
     this.onStateChange = function(state) {

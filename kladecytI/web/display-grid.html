@@ -63,8 +63,8 @@
 		}).disableSelection();
 	});
 
-    var yte = new YoutubePlayer(null, new Playlist("ulSecond"))
-
+    var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
+    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash), function() { yte.drawPlayer("taFirst") })
 
     function onYouTubePlayerReady(playerId) {
         ytPlayer = document.getElementById("ytplayer");
@@ -77,49 +77,50 @@
         yte.onStateChange(state)
     }
 
-    loadPlaylistFromHash();
+//    loadPlaylistFromHash();
 
-    function loadPlaylistFromHash() {
-        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
-//        var textArea = $("#taArea").val()
-        var textArea = window.location.hash;
-        var youtubeLinks = textArea.match(youtube)
-        $('#ulSecond').empty()
-        console.log("--------------------------------------------")
-        youtubeLinks = youtubeLinks.map(function(item) {
-            return item.replace(youtube, "$4")
-        }).unique()
-        loadPlaylist(youtubeLinks)
-    }
+//    function loadPlaylistFromHash() {
+//        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
+////        var textArea = $("#taArea").val()
+//        var textArea = window.location.hash;
+//        var youtubeLinks = textArea.match(youtube)
+//        $('#ulSecond').empty()
+//        console.log("--------------------------------------------")
+//        youtubeLinks = youtubeLinks.map(function(item) {
+//            return item.replace(youtube, "$4")
+//        }).unique()
+//        loadPlaylist(yte.pla.parseSongIds(textArea))
+//    }
 
-    function loadPlaylist(youtubeLinks) {
-        var responseCounter = 0
-        var playlistFinishedLoading = function(playlistSize, current) {
-            if(playlistSize == current) {
-                yte.drawPlayer("taFirst")
-            }
-        }
-        youtubeLinks.forEach(function(videoId) {
-            var videoElement = new VideoElement(null, "#ulSecond")
-            videoElements.push(videoElement)
-            $.ajax({
-                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
-                success: function(data) {
-                    try {
-                        var videoFeed = new VideoFeed(data.data)
-                        this.fillDiv(videoFeed)
-                    } finally {
-                        playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
-                    }
-                },
-                error: function(data) {
-                    playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
-                },
-                context: videoElement,
-                dataType: 'json'
-            })
-        })
-    }
+//    function loadPlaylist(youtubeLinks) {
+//        yte.pla.addSongsToPlayList(youtubeLinks)
+//        var responseCounter = 0
+//        var playlistFinishedLoading = function(playlistSize, current) {
+//            if(playlistSize == current) {
+//                yte.drawPlayer("taFirst")
+//            }
+//        }
+//        youtubeLinks.forEach(function(videoId) {
+//            var videoElement = new VideoElement(null, "#ulSecond")
+//            videoElements.push(videoElement)
+//            $.ajax({
+//                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
+//                success: function(data) {
+//                    try {
+//                        var videoFeed = new VideoFeed(data.data)
+//                        this.fillDiv(videoFeed)
+//                    } finally {
+//                        playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
+//                    }
+//                },
+//                error: function(data) {
+//                    playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
+//                },
+//                context: videoElement,
+//                dataType: 'json'
+//            })
+//        })
+//    }
 //
 //	var i = 0;
 //	var aSuccess = function(data) {
