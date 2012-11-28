@@ -25,7 +25,7 @@
 		#dPLists { position:absolute; float: left; width: 99%; height: 98.8%; }
 		#firstView, #secondView { float: left; width: 50%; height: 100%; }
         .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
-        .playListFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: scroll; }
+        .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: scroll; }
 /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
 		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
         .selected { background-image:url(/selected.png)}
@@ -48,7 +48,7 @@
 	</div>
 	
 	<div id="secondView">
-		<div id="ulSecond" class="connectedSortable playListFrame"/>
+		<div id="ulSecond" class="connectedSortable playlistFrame"/>
 	</div>
 
 </div>
@@ -63,7 +63,8 @@
 		}).disableSelection();
 	});
 
-    var yte = new YoutubePlayer()
+    var yte = new YoutubePlayer(null, new Playlist("ulSecond"))
+
 
     function onYouTubePlayerReady(playerId) {
         ytPlayer = document.getElementById("ytplayer");
@@ -76,16 +77,9 @@
         yte.onStateChange(state)
     }
 
-    var playList
-    var currSong
+    loadPlaylistFromHash();
 
-    if(window.location.hash) {
-        $("#taArea").val(window.location.hash)
-    }
-
-    loadPlayListFromHash();
-
-    function loadPlayListFromHash() {
+    function loadPlaylistFromHash() {
         var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
 //        var textArea = $("#taArea").val()
         var textArea = window.location.hash;
@@ -95,13 +89,13 @@
         youtubeLinks = youtubeLinks.map(function(item) {
             return item.replace(youtube, "$4")
         }).unique()
-        loadPlayList(youtubeLinks)
+        loadPlaylist(youtubeLinks)
     }
 
-    function loadPlayList(youtubeLinks) {
+    function loadPlaylist(youtubeLinks) {
         var responseCounter = 0
-        var playListFinishedLoading = function(playListSize, current) {
-            if(playListSize == current) {
+        var playlistFinishedLoading = function(playlistSize, current) {
+            if(playlistSize == current) {
                 yte.drawPlayer("taFirst")
             }
         }
@@ -115,11 +109,11 @@
                         var videoFeed = new VideoFeed(data.data)
                         this.fillDiv(videoFeed)
                     } finally {
-                        playListFinishedLoading(youtubeLinks.length, ++responseCounter)
+                        playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
                     }
                 },
                 error: function(data) {
-                    playListFinishedLoading(youtubeLinks.length, ++responseCounter)
+                    playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
                 },
                 context: videoElement,
                 dataType: 'json'

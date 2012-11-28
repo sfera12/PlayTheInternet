@@ -71,8 +71,27 @@ function VideoElement(videoFeed, appendTo) {
     return this
 }
 
-function YoutubePlayer(ytp) {
-    var ytp
+function Playlist(containerElementId) {
+    this.containerElementId = containerElementId
+    this.playlist
+    this.currSong
+
+    this.recalculatePlaylist = function() {
+        this.playlist = $("#" + this.containerElementId + " div").filter(function(index, item) {
+            return $(item).data("videoFeed") != null
+        })
+    }
+
+    this.nextSong = function(currSong) {
+        var index = this.playlist.toArray().indexOf(currSong)
+        index = index >= this.playlist.length - 1 ? 0 : ++index
+        return this.playlist[index]
+    }
+}
+
+function YoutubePlayer(ytp, pla) {
+    this.ytp
+    this.pla = pla
 
     if(ytp != null) {
         this.setPlayer(ytp)
@@ -81,16 +100,14 @@ function YoutubePlayer(ytp) {
     this.setPlayer = function(ytp) {
         if(ytp != null) {
             this.ytp = ytp
-            this.playVideoDiv(currSong)
+            this.playVideoDiv(this.pla.currSong)
         }
     }
 
     this.drawPlayer = function(appendTo) {
-        playList = $("#ulSecond div").filter(function(index, item) {
-            return $(item).data("videoFeed") != null
-        })
-        currSong = playList[0]
-        var videoFeed = $(currSong).data("videoFeed")
+        this.pla.recalculatePlaylist()
+        this.pla.currSong = this.pla.playlist[0]
+        var videoFeed = $(this.pla.currSong).data("videoFeed")
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
         var playerWidth = window.innerWidth / 2 / 1.020
@@ -98,9 +115,9 @@ function YoutubePlayer(ytp) {
     }
 
     this.playVideoDiv = function (videoDiv) {
-        currSong = videoDiv
-        $(playList).removeClass("selected")
-        $(currSong).addClass("selected")
+        this.pla.currSong = videoDiv
+        $(this.pla.playlist).removeClass("selected")
+        $(this.pla.currSong).addClass("selected")
         var videoFeed = $(videoDiv).data('videoFeed')
         document.title = 'Play - ' + videoFeed.title
         this.playVideoFeed(videoFeed)
@@ -112,20 +129,13 @@ function YoutubePlayer(ytp) {
     }
 
     this.playNextVideo = function() {
-        console.log("nextVideo" + this.nextVideo())
-        var index = this.nextVideo()
-        this.playVideoDiv(playList[index])
-    }
-
-    this.nextVideo = function() {
-        var index = playList.toArray().indexOf(currSong)
-        return (index >= playList.length - 1 ? 0 : ++index)
+        this.playVideoDiv(this.pla.nextSong(this.pla.currSong))
     }
 
     this.onStateChange = function(state) {
         console.log("change " + state)
         if(state == 0) {
-            this.playNextVideo(playList, currSong)
+            this.playNextVideo()
         }
     }
 }
