@@ -111,9 +111,9 @@
             $.ajax({
                 url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
                 success: function(data) {
-                    try{
-                    var videoFeed = new VideoFeed(data.data)
-                    this.fillDiv(videoFeed)
+                    try {
+                        var videoFeed = new VideoFeed(data.data)
+                        this.fillDiv(videoFeed)
                     } finally {
                         playListFinishedLoading(youtubeLinks.length, ++responseCounter)
                     }
@@ -121,7 +121,8 @@
                 error: function(data) {
                     playListFinishedLoading(youtubeLinks.length, ++responseCounter)
                 },
-                context: videoElement
+                context: videoElement,
+                dataType: 'json'
             })
         })
     }
