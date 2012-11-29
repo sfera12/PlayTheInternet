@@ -86,7 +86,7 @@ function Playlist(appendToElementExpression) {
         return this.playlist[index]
     }
 
-    this.addSongsToPlayList = function(appendToElementExpression, links, finished) {
+    this.addSongsToPlayList = function(appendToElementExpression, links, finished, unique) {
         var responseCounter = 0
         var playlistFinishedLoading = function(playlistSize, current) {
             if(playlistSize == current ) {
@@ -96,6 +96,12 @@ function Playlist(appendToElementExpression) {
                 }
             }
         }.bind(this)
+        if(unique == true) {
+            var oldLinks = this.playlistSongIds()
+            var newLinks = yte.pla.parseSongIds(window.location.hash)
+            links = newLinks.filter(function(newId) { return oldLinks.indexOf(newId) == -1 ? true : false })
+        }
+
         links.forEach(function(videoId) {
             var videoElement = new VideoElement(null, appendToElementExpression)
             videoElements.push(videoElement)
@@ -124,6 +130,10 @@ function Playlist(appendToElementExpression) {
         return youtubeLinks.map(function(item) {
             return item.replace(youtube, "$4")
         }).unique()
+    }
+
+    this.playlistSongIds = function() {
+        return this.playlist.map(function(index, div) {return $(div).data('videoFeed').videoId}).toArray()
     }
 }
 
