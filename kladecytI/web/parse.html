@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>jQuery UI Sortable - Display as grid</title>
+    <meta charset="utf-8">
+    <title>jQuery UI Sortable - Display as grid</title>
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
 </head>
 <body>
-    <a id="proceed" href="" target="_blank"></a>
-    <script>
-            var hash = window.location.hash;
-            var link = "/display-grid.html" + hash
-            var proceed = $("#proceed")
-            proceed.attr("href", link).text(link)
-            proceed.click(function() {
-                setTimeout(function() {
-                    window.close()
-                }, 1000)
-            })
-    </script>
+<a id="proceed" href="" target="_blank">Open in new Window</a>    <br>
+<a id="addChannel" href="">Add to current Playlist</a>
+<script>
+    var generateHref = function (elementExpression, url) {
+        var proceed = $(elementExpression)
+        proceed.attr("href", url)
+        proceed.click(function () {
+            setTimeout(function () {
+                window.close()
+            }, 1000)
+        })
+    }
+    generateHref("#proceed", "/display-grid.html" + window.location.hash)
+    generateHref("#addChannel", "/channel/send?msg=" + window.location.hash.replace("#", ""))
+</script>
 </body>
 </html>

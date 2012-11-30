@@ -98,8 +98,7 @@ function Playlist(appendToElementExpression) {
         }.bind(this)
         if(unique == true) {
             var oldLinks = this.playlistSongIds()
-            var newLinks = yte.pla.parseSongIds(window.location.hash)
-            links = newLinks.filter(function(newId) { return oldLinks.indexOf(newId) == -1 ? true : false })
+            links = links.filter(function(newId) { return oldLinks.indexOf(newId) == -1 ? true : false })
         }
 
         links.forEach(function(videoId) {
@@ -125,7 +124,7 @@ function Playlist(appendToElementExpression) {
     }
 
     this.parseSongIds = function(text) {
-        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
+        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]{11})/g
         var youtubeLinks = text.match(youtube)
         return youtubeLinks.map(function(item) {
             return item.replace(youtube, "$4")
@@ -186,6 +185,19 @@ function YoutubePlayer(ytp, pla) {
             this.playNextVideo()
         }
     }
+}
+
+function GUID() {
+    var S4 = function ()
+    {
+        return Math.floor(
+            Math.random() * 0x10000 /* 65536 */
+        ).toString(16);
+    };
+
+    return (
+        S4() + S4()
+        );
 }
 
 function convert(duration) {

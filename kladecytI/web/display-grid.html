@@ -13,6 +13,7 @@
 	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
     <script src="Utils.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
 	<style>
 		/*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
@@ -57,24 +58,67 @@
     var videoFeeds = new Array()
     var videoElements = new Array()
 
+    function Channel(clientId) {
+        this.clientId = clientId
+        this.socket
+        this.channel
+
+        this.onmessage = function(msg) {
+            yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(msg.data), null, true)
+        }
+
+        this.createChannel = function() {
+            $.ajax({
+                url: "/channel/create/" + this.clientId,
+                success: function(token) {
+                    this.channel = new goog.appengine.Channel(token)
+                    var handler = {
+                        'onopen': function(msg){console.log(" *** opened channel")},
+                        'onmessage': this.onmessage,
+                        'onerror': function(msg, e){console.log(msg+=" *** err "+e.description+" "+e.code)},
+                        'onclose': function(msg){console.log(" *** closed channel")}
+                    }
+                    this.socket = this.channel.open(handler)
+                }.bind(this),
+                error: function(data) {
+                    console.log("error" + data)
+                }
+            })
+        }
+        this.createChannel()
+    }
+
 	$(function() {
 		$( "#ulFirst, #ulSecond" ).sortable({
 			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer', distance: 25
 		}).disableSelection();
 	});
 
+    var channel
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
-    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash), function() { yte.drawPlayer("taFirst") })
+    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
+            function() {
+                yte.drawPlayer("taFirst");
+                this.channel = new Channel(GUID())
+            }
+    )
+
+
 
     function onYouTubePlayerReady(playerId) {
         ytPlayer = document.getElementById("ytplayer");
         yte.setPlayer(ytPlayer)
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
+        yte.ytp.addEventListener("onError", "onError")
     }
 
     function change(state) {
         yte.onStateChange(state)
+    }
+
+    function onError() {
+        yte.onStateChange(0)
     }
 
 //    loadPlaylistFromHash();
