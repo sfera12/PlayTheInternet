@@ -1,17 +1,13 @@
 package kladecyt;
 
 import com.google.appengine.api.channel.ChannelMessage;
-import com.google.appengine.api.channel.ChannelPresence;
-import com.google.appengine.api.channel.ChannelService;
-import com.google.appengine.api.channel.ChannelServiceFactory;
+import kladecyt.model.Channel;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +21,6 @@ import java.util.regex.Pattern;
 public class ChannelServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        ChannelService channelService = ChannelServiceFactory.getChannelService();
         Pattern methodAndIdPattern = Pattern.compile("/channel/([^/]+)(/([^/]+)){0,1}");
         Matcher methodAndId = methodAndIdPattern.matcher(req.getRequestURI());
         String method = "";
@@ -35,22 +30,36 @@ public class ChannelServlet extends HttpServlet {
             id = methodAndId.group(3);
             System.out.println(method + " " + id);
             if("create".equals(method) && !"".equals(id)) {
-                String token = channelService.createChannel(id);
-                req.getSession().setAttribute("clientId", id);
+                if(!"".equals(getWindowClientId(req))) {
+                    id = getWindowClientId(req);
+                }
+                System.out.println(id);
+                Channel channel = ChannelPool.getChannel(id);
+                String token = channel.token;
+                req.getSession().setAttribute("windowClientId", channel.windowClientId);
+//                System.out.println(String.format("create {windowClientId: %s] [channelClientId: %s] [token: %s]", channel.windowClientId, channel.channelClientId, channel.token));
                 writeAndClose(resp, token);
             } else if("send".equals(method) && req.getParameter("msg") != null) {
-                if(id != null) {
-                    channelService.sendMessage(new ChannelMessage(id, req.getParameter("msg")));
-                } else {
-                    channelService.sendMessage(new ChannelMessage(getClientId(req), req.getParameter("msg")));
+                Channel channel = ChannelPool.lookup(getWindowClientId(req));
+                if(channel != null) {
+                    ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
                     writeAndClose(resp, "Added songs to playlist");
+                } else {
+                    writeAndClose(resp, "I'm sorry can't add songs to playlist either because you closed playtheinternet window or there's something wrong with application and WE ALL GONNA DIE.");
                 }
+//                if(id != null) {
+//                    ChannelPool.channelService.sendMessage(new ChannelMessage(id, req.getParameter("msg")));
+//                } else {
+//                    Channel channel = ChannelPool.getChannel(getWindowClientId(req));
+//                    ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
+//                    writeAndClose(resp, "Added songs to playlist");
+//                }
             } else if("session".equals(method)) {
-                Object clientIdObj = req.getSession().getAttribute("clientId");
+                Object clientIdObj = req.getSession().getAttribute("windowClientId");
                 if(clientIdObj != null) {
                     writeAndClose(resp, (String)clientIdObj);
                 } else {
-                    System.out.println("clientId doesn't exist");
+                    System.out.println("windowClientId doesn't exist");
                 }
             }
         }
@@ -62,12 +71,12 @@ public class ChannelServlet extends HttpServlet {
 //            String channelKey = req.getParameter("create");
 //            String token = channelService.createChannel(channelKey);
 //            channelService.sendMessage(new ChannelMessage("xyz", "asdf"));
-//            req.getSession().setAttribute("clientId", token);
+//            req.getSession().setAttribute("channelClientId", token);
 //            resp.setContentType("text/plain");
 //            bufferedWriter.write(token);
 //            bufferedWriter.close();
 //        } else if (req.getParameter("session") != null) {
-//            bufferedWriter.write(req.getSession().getAttribute("clientId").toString());
+//            bufferedWriter.write(req.getSession().getAttribute("channelClientId").toString());
 //            bufferedWriter.close();
 //        }
     }
@@ -84,8 +93,8 @@ public class ChannelServlet extends HttpServlet {
         bufferedWriter.close();
     }
 
-    public static String getClientId(HttpServletRequest req) {
-        Object clientIdObj = req.getSession().getAttribute("clientId");
+    public static String getWindowClientId(HttpServletRequest req) {
+        Object clientIdObj = req.getSession().getAttribute("windowClientId");
         return clientIdObj != null ? (String)clientIdObj : "";
     }
 }

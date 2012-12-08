@@ -66,6 +66,11 @@
         this.onmessage = function(msg) {
             yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(msg.data), null, true)
         }
+        this.onerror = function(msg) {
+            console.log(msg);
+            channel = new Channel(windowId)
+            console.log("created new channel")
+        }
 
         this.createChannel = function() {
             $.ajax({
@@ -75,7 +80,7 @@
                     var handler = {
                         'onopen': function(msg){console.log(" *** opened channel")},
                         'onmessage': this.onmessage,
-                        'onerror': function(msg, e){console.log(msg+=" *** err "+e.description+" "+e.code)},
+                        'onerror': this.onerror,
                         'onclose': function(msg){console.log(" *** closed channel")}
                     }
                     this.socket = this.channel.open(handler)
@@ -95,11 +100,12 @@
 	});
 
     var channel
+    var windowId = GUID()
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
     yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
             function() {
                 yte.drawPlayer("taFirst");
-                this.channel = new Channel(GUID())
+                this.channel = new Channel(windowId)
             }
     )
 
