@@ -30,10 +30,10 @@ public class ChannelServlet extends HttpServlet {
             id = methodAndId.group(3);
             System.out.println(method + " " + id);
             if("create".equals(method) && !"".equals(id)) {
-                if(!"".equals(getWindowClientId(req))) {
-                    id = getWindowClientId(req);
-                }
-                System.out.println(id);
+//                if(!"".equals(getWindowClientId(req))) {
+//                    id = getWindowClientId(req);
+//                }
+//                System.out.println(id);
                 Channel channel = ChannelPool.getChannel(id);
                 String token = channel.token;
                 req.getSession().setAttribute("windowClientId", channel.windowClientId);

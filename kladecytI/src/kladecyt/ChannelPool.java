@@ -89,17 +89,24 @@ public class ChannelPool {
 
     private static Channel createNewChannel(String windowClientId) {
         String guid = UUID.randomUUID().toString();
-        Channel channel = new Channel();
-        channel.creationTime = new Date();
-        channel.windowClientId = windowClientId;
-        channel.token = channelService.createChannel(guid, Channel.tokenDuration);
-        channel.channelClientId = guid;
+        String token = "";
+        int tokenDuration = 0;
+        try {
+            token = channelService.createChannel(guid, Channel.maxTokenDuration);
+            System.out.println("MaxTokenDuration for channelClientId " + guid);
+            tokenDuration = Channel.maxTokenDuration;
+        } catch(Exception e) {
+            token = channelService.createChannel(guid, Channel.tokenDuration);
+            System.out.println("RegularTokenDuration for channelClientId " + guid);
+            tokenDuration = Channel.tokenDuration;
+        }
+        Channel channel = new Channel(windowClientId, guid, token, tokenDuration);
         channelPool.put(windowClientId, channel);
         return channel;
     }
 
     private static boolean timeout(Channel channel) {
-        return System.currentTimeMillis() >= (channel.creationTime.getTime() + (Channel.tokenDuration * 60000));
+        return System.currentTimeMillis() >= channel.expirationTime.getTime();
     }
 
     public static void printChannel(String operation, Channel channel) {
