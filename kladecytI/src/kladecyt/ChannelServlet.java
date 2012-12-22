@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,32 +22,36 @@ import java.util.regex.Pattern;
 public class ChannelServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        Pattern methodAndIdPattern = Pattern.compile("/channel/([^/]+)(/([^/]+)){0,1}");
-        Matcher methodAndId = methodAndIdPattern.matcher(req.getRequestURI());
-        String method = "";
-        String id = "";
-        if(methodAndId.find()) {
-            method = methodAndId.group(1);
-            id = methodAndId.group(3);
-            System.out.println(method + " " + id);
-            if("create".equals(method) && !"".equals(id)) {
+        try {
+            Pattern methodAndIdPattern = Pattern.compile("/channel/([^/]+)(/([^/]+)){0,1}");
+            Matcher methodAndId = methodAndIdPattern.matcher(req.getRequestURI());
+            String method = "";
+            String id = "";
+            if (methodAndId.find()) {
+                method = methodAndId.group(1);
+                id = methodAndId.group(3);
+                System.out.println(method + " " + id);
+                if ("create".equals(method) && !"".equals(id)) {
 //                if(!"".equals(getWindowClientId(req))) {
 //                    id = getWindowClientId(req);
 //                }
 //                System.out.println(id);
-                Channel channel = ChannelPool.getChannel(id);
-                String token = channel.token;
-                req.getSession().setAttribute("windowClientId", channel.windowClientId);
+                    Channel channel = ChannelPool.getChannel(id);
+                    String token = channel.token;
+                    req.getSession().setAttribute("windowClientId", channel.windowClientId);
 //                System.out.println(String.format("create {windowClientId: %s] [channelClientId: %s] [token: %s]", channel.windowClientId, channel.channelClientId, channel.token));
-                writeAndClose(resp, token);
-            } else if("send".equals(method) && req.getParameter("msg") != null) {
-                Channel channel = ChannelPool.lookup(getWindowClientId(req));
-                if(channel != null) {
-                    ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
-                    writeAndClose(resp, "Added songs to playlist");
-                } else {
-                    writeAndClose(resp, "I'm sorry can't add songs to playlist either because you closed playtheinternet window or there's something wrong with application and WE ALL GONNA DIE.");
-                }
+                    writeAndClose(resp, token);
+                } else if ("send".equals(method) && req.getParameter("msg") != null) {
+                    Channel channel = ChannelPool.lookup(getWindowClientId(req));
+                    if (channel != null) {
+                        ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
+                        writeAndClose(resp, "Added songs to playlist");
+                    } else if (id != null) {
+                        ChannelPool.channelService.sendMessage(new ChannelMessage(id, req.getParameter("msg")));
+                        writeAndClose(resp, "Added songs to playlist for clientId: " + id);
+                    } else {
+                        writeAndClose(resp, "I'm sorry can't add songs to playlist either because you closed playtheinternet window or there's something wrong with application and WE ALL GONNA DIE.");
+                    }
 //                if(id != null) {
 //                    ChannelPool.channelService.sendMessage(new ChannelMessage(id, req.getParameter("msg")));
 //                } else {
@@ -54,15 +59,15 @@ public class ChannelServlet extends HttpServlet {
 //                    ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
 //                    writeAndClose(resp, "Added songs to playlist");
 //                }
-            } else if("session".equals(method)) {
-                Object clientIdObj = req.getSession().getAttribute("windowClientId");
-                if(clientIdObj != null) {
-                    writeAndClose(resp, (String)clientIdObj);
-                } else {
-                    System.out.println("windowClientId doesn't exist");
+                } else if ("session".equals(method)) {
+                    Object clientIdObj = req.getSession().getAttribute("windowClientId");
+                    if (clientIdObj != null) {
+                        writeAndClose(resp, (String) clientIdObj);
+                    } else {
+                        System.out.println("windowClientId doesn't exist");
+                    }
                 }
             }
-        }
 //        if (req.getParameter("send") != null) {
 //            channelService.sendMessage(new ChannelMessage("xyz", req.getParameter("send")));
 //        } else if (req.getParameter("create") != null) {
@@ -79,6 +84,11 @@ public class ChannelServlet extends HttpServlet {
 //            bufferedWriter.write(req.getSession().getAttribute("channelClientId").toString());
 //            bufferedWriter.close();
 //        }
+        } catch (Exception e) {
+            PrintWriter writer = resp.getWriter();
+            e.printStackTrace(writer);
+            writer.close();
+        }
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -95,6 +105,6 @@ public class ChannelServlet extends HttpServlet {
 
     public static String getWindowClientId(HttpServletRequest req) {
         Object clientIdObj = req.getSession().getAttribute("windowClientId");
-        return clientIdObj != null ? (String)clientIdObj : "";
+        return clientIdObj != null ? (String) clientIdObj : "";
     }
 }

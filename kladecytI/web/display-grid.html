@@ -127,6 +127,22 @@
         yte.onStateChange(0)
     }
 
+    function poll() {
+        setTimeout(function() {
+            $.ajax({
+                url: "/channel/session",
+                success: function(windowClientId) {
+                    console.log("poll " + windowClientId)
+                    poll()
+                },
+                error: function(data) {
+                    console.log("error" + data)
+                }
+            })
+        }, 600000)
+    }
+
+    poll()
 //    loadPlaylistFromHash();
 
 //    function loadPlaylistFromHash() {

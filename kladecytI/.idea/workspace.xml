@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="f0790886-13bc-40f9-8aea-54865a44585e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kladecyt/ChannelPool.java" afterPath="$PROJECT_DIR$/src/kladecyt/ChannelPool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kladecyt/ChannelServlet.java" afterPath="$PROJECT_DIR$/src/kladecyt/ChannelServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kladecyt/model/Channel.java" afterPath="$PROJECT_DIR$/src/kladecyt/model/Channel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/display-grid.html" afterPath="$PROJECT_DIR$/web/display-grid.html" />
     </list>
     <ignored path="kladecyt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,16 +65,16 @@
       <file leaf-file-name="AliveServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kladecyt/AliveServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="17" selection-start="1043" selection-end="1043" vertical-scroll-proportion="0.0">
+            <state line="21" column="44" selection-start="738" selection-end="738" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChannelPool.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ChannelPool.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kladecyt/ChannelPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="52" selection-start="3809" selection-end="3809" vertical-scroll-proportion="0.44924405">
+            <state line="15" column="13" selection-start="358" selection-end="358" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -90,10 +89,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChannelServlet.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ChannelServlet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/kladecyt/ChannelServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="34" selection-start="4617" selection-end="4686" vertical-scroll-proportion="0.0">
+            <state line="42" column="31" selection-start="1803" selection-end="1803" vertical-scroll-proportion="0.5770235">
               <folding />
             </state>
           </provider>
@@ -102,7 +101,7 @@
       <file leaf-file-name="display-grid.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/display-grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="95" column="31" selection-start="4182" selection-end="4182" vertical-scroll-proportion="0.0">
+            <state line="130" column="32" selection-start="5165" selection-end="5165" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
@@ -127,10 +126,10 @@
         <option value="$PROJECT_DIR$/web/Utils.js" />
         <option value="$PROJECT_DIR$/src/kladecyt/Test.java" />
         <option value="$PROJECT_DIR$/src/kladecyt/AliveServlet.java" />
-        <option value="$PROJECT_DIR$/web/display-grid.html" />
-        <option value="$PROJECT_DIR$/src/kladecyt/ChannelServlet.java" />
         <option value="$PROJECT_DIR$/src/kladecyt/model/Channel.java" />
         <option value="$PROJECT_DIR$/src/kladecyt/ChannelPool.java" />
+        <option value="$PROJECT_DIR$/web/display-grid.html" />
+        <option value="$PROJECT_DIR$/src/kladecyt/ChannelServlet.java" />
       </list>
     </option>
   </component>
@@ -168,16 +167,12 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kladecyt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kladecytI" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -274,12 +269,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
+      <pane id="PackagesPane">
+        <subPane>
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kladecyt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kladecytI" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -567,7 +566,11 @@
       <created>1354982099265</created>
       <updated>1354982099265</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="channel maxTokenDuration">
+      <created>1355033135203</created>
+      <updated>1355033135203</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -581,18 +584,18 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.67783093" sideWeight="0.9110764" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20095694" sideWeight="0.5265211" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32854864" sideWeight="0.5444618" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.45631826" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32854864" sideWeight="0.450078" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17940718" sideWeight="0.79904306" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20095694" sideWeight="0.4680187" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17940718" sideWeight="0.67145133" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20095694" sideWeight="0.4524181" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.49063963" order="1" side_tool="false" content_ui="tabs" />
@@ -637,7 +640,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="channel maxTokenDuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="printint exception to client" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -653,6 +656,7 @@
     <MESSAGE value="moved VideoFeed, VideoElement to Utils" />
     <MESSAGE value="channel reuse" />
     <MESSAGE value="channel maxTokenDuration" />
+    <MESSAGE value="printint exception to client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -673,17 +677,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
+      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="22" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0" />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/appengine-web.xml">
@@ -721,33 +725,31 @@
         <state line="14" column="15" selection-start="758" selection-end="758" vertical-scroll-proportion="0.61731845" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kladecyt/ChannelServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="34" selection-start="4617" selection-end="4686" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/display-grid.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="31" selection-start="4182" selection-end="4182" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kladecyt/model/Channel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="27" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/kladecyt/AliveServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="17" selection-start="1043" selection-end="1043" vertical-scroll-proportion="0.0" />
+        <state line="21" column="44" selection-start="738" selection-end="738" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kladecyt/ChannelPool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="52" selection-start="3809" selection-end="3809" vertical-scroll-proportion="0.44924405">
+        <state line="15" column="13" selection-start="358" selection-end="358" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kladecyt/model/Channel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="27" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/display-grid.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="32" selection-start="5165" selection-end="5165" vertical-scroll-proportion="-0.65384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kladecyt/ChannelServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="31" selection-start="1803" selection-end="1803" vertical-scroll-proportion="0.5770235">
           <folding />
         </state>
       </provider>
