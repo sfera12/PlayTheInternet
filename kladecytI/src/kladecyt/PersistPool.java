@@ -27,8 +27,6 @@ public class PersistPool {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(blobChannelBytes);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Object desObject = objectInputStream.readObject();
-            Iterator iterator = "HashMap".equals(desObject.getClass().getSimpleName()) ? ((HashMap<String, Channel>)desObject).entrySet().iterator() : ((Collection)desObject).iterator();
-            ChannelPool.removeTimeout(iterator);
             System.out.println(String.format("Deserialized %s", entity.getKey()));
             return desObject;
         } catch (EntityNotFoundException e) {
