@@ -2,6 +2,7 @@ package kladecyt;
 
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import kladecyt.model.Channel;
 
 import java.util.*;
@@ -14,78 +15,111 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class ChannelPool {
-    public static HashMap<String, Channel> channelPool = new HashMap<String, Channel>();
-    public static ArrayList<Channel> freeChannels = new ArrayList<Channel>();
+    public static String ENTITY_KIND = "ChannelPool";
+    public static int SAFE_TIMEOUT = 5;
+    public static HashMap<String, Channel> channelPool = (HashMap<String, Channel>) PersistPool.deserialize(new Entity(ENTITY_KIND, "Map"), new HashMap<String, Channel>());
+    public static ArrayList<Channel> freeChannels = (ArrayList<Channel>) PersistPool.deserialize(new Entity(ENTITY_KIND, "List"), new ArrayList<Channel>());
 
     static ChannelService channelService = ChannelServiceFactory.getChannelService();
 
-    public static Channel getChannel(String windowClientId) {
-        Channel channel = synchronize(windowClientId, "GET");
-//        printChannel("getChannel", channel);
-        return channel;
-    }
-
-    public static void removeChannel(String windowClientId) {
-        synchronize(windowClientId, "REMOVE");
-    }
-
-    public static void freeChannel(String channelClientId) {
-
-        Channel channel = synchronize(channelClientId, "FREE");
-        printChannel("freeChannel", channel);
-    }
 
     public synchronized static Channel synchronize(String clientId, String operation) {
+        Channel channel = null;
         if ("GET".equals(operation)) {
-            return channelLookupAndCreate(clientId);
+            channel = channelLookupAndCreate(clientId);
         } else if ("REMOVE".equals(operation)) {
-            channelPool.remove(clientId);
+            channel = channelPool.remove(clientId);
         } else if ("FREE".equals(operation)) {
-            Channel channel = null;
-            for(Map.Entry<String, Channel> entry : channelPool.entrySet()) {
+            for (Iterator<Map.Entry<String, Channel>> it = channelPool.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, Channel> entry = it.next();
                 if(clientId.equals(entry.getValue().channelClientId)) {
                     channel = entry.getValue();
-                    break;
+                    it.remove();
                 }
             }
-            channel.windowClientId = "";
+            channel.assign("");
             freeChannels.add(channel);
-            return channel;
+            for (Iterator<Map.Entry<String, Channel>> it = channelPool.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, Channel> entry = it.next();
+                Channel entryChannel = entry.getValue();
+                if(entryChannel.connectionExpires != 0 && System.currentTimeMillis() >= entryChannel.connectionExpires) {
+                    entryChannel = entry.getValue();
+                    it.remove();
+                    printChannel("Connection timedout on", entryChannel);
+                    entryChannel.assign("");
+                    freeChannels.add(entryChannel);
+                }
+            }
+
+        } else if("CONNECTED".equals(operation)) {
+            for (Iterator<Map.Entry<String, Channel>> it = channelPool.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String, Channel> entry = it.next();
+                if(clientId.equals(entry.getValue().channelClientId)) {
+                    channel = entry.getValue();
+                    channel.connectionExpires = 0;
+                    printChannel("connected", channel);
+                }
+            }
         } else {
             System.out.println("UNRECOGNIZED OPERATION IN ChannelPool: " + operation);
         }
-        return null;
+
+//        try {
+            Entity entityMap = new Entity(ENTITY_KIND, "Map");
+//            System.out.println("serialize");
+            PersistPool.serialize(entityMap, channelPool);
+            printMap(channelPool);
+
+            Entity entityList = new Entity(ENTITY_KIND, "List");
+            PersistPool.serialize(entityList, freeChannels);
+            printList(freeChannels);
+
+//            System.out.println("deserialize");
+//            HashMap<String, Channel> deserializedMap = (HashMap<String, Channel>) PersistPool.deserialize(entity, new HashMap<String, Channel>());
+//            printMap(deserializedMap);
+//        } catch (Exception e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+
+        return channel;
     }
+
 
     public static Channel channelLookupAndCreate(String windowClientId) {
         Channel channel = lookup(windowClientId);
         if (channel == null) {
-            while (!freeChannels.isEmpty() && (channel = freeChannels.remove(0)) != null) {
-                if (!timeout(channel)) {
-                    channel.windowClientId = windowClientId;
-                    channelPool.put(windowClientId,  channel);
-                    printChannel("fromFreeChannels", channel);
-                    return channel;
-                }
+//            while (!freeChannels.isEmpty() && (channel = freeChannels.remove(0)) != null) {
+//                if (!timeout(channel)) {
+//                    channel.windowClientId = windowClientId;
+//                    channelPool.put(windowClientId,  channel);
+//                    printChannel("fromFreeChannels", channel);
+//                    return channel;
+//                }
+//            }
+            removeTimeout(freeChannels.iterator());
+            if (!freeChannels.isEmpty() && (channel = freeChannels.remove(0)) != null) {
+                channelPool.put(windowClientId,  channel);
+                printChannel("fromFreeChannels", channel);
+//                return channel;
+            } else {
+                channel = createNewChannel(windowClientId);
+                printChannel("createdNewChannel", channel);
+//                return channel;
             }
-            channel = createNewChannel(windowClientId);
-            printChannel("createdNewChannel", channel);
-            return channel;
         } else {
             if (timeout(channel)) {
                 channel = createNewChannel(windowClientId);
+                channelPool.remove(windowClientId);
                 printChannel("oldChannelTimeOut", channel);
-                return channel;
+//                return channel;
             }
             printChannel("returnedExistingChannel", channel);
-            return channel;
+//            return channel;
         }
+        channel.assign(windowClientId);
+        return channel;
     }
 
-    public static Channel lookup(String windowClientId) {
-        Channel channel = channelPool.get(windowClientId);
-        return (channel == null || !windowClientId.equals(channel.windowClientId) || timeout(channel)) ? null : channel;
-    }
 
     private static Channel createNewChannel(String windowClientId) {
         String guid = UUID.randomUUID().toString();
@@ -105,11 +139,67 @@ public class ChannelPool {
         return channel;
     }
 
+    public static void removeTimeout(Iterator iterator) {
+        String simpleName = iterator.getClass().getSimpleName();
+        while(iterator.hasNext()) {
+            Object nextObj = iterator.next();
+            //Itr EntryIterator
+            Channel channel = "Itr".equals(simpleName) ? (Channel)nextObj : ((Map.Entry<String, Channel>)nextObj).getValue();
+            if(safeTimeout(channel)) {
+                printChannel("Removed due to  safetimeout", channel);
+                iterator.remove();
+            }
+        }
+    }
+
+    public static Channel lookup(String windowClientId) {
+        Channel channel = channelPool.get(windowClientId);
+        return (channel == null || !windowClientId.equals(channel.windowClientId) || timeout(channel)) ? null : channel;
+    }
+
+    public static void conntected(String channelClientId) {
+        synchronize(channelClientId, "CONNECTED");
+    }
+
+    public static Channel getChannel(String windowClientId) {
+        Channel channel = synchronize(windowClientId, "GET");
+        return channel;
+    }
+
+    public static void removeChannel(String windowClientId) {
+        synchronize(windowClientId, "REMOVE");
+    }
+
+    public static void disconnected(String channelClientId) {
+        Channel channel = synchronize(channelClientId, "FREE");
+        printChannel("disconnected", channel);
+    }
+
     private static boolean timeout(Channel channel) {
-        return System.currentTimeMillis() >= channel.expirationTime.getTime();
+        return genericTimeout(channel, 0);
+    }
+
+    private static boolean safeTimeout(Channel channel) {
+        return genericTimeout(channel, SAFE_TIMEOUT);
+    }
+
+    private static boolean genericTimeout(Channel channel, int safe) {
+        return (System.currentTimeMillis() - safe * 60000) >= channel.expirationTime.getTime();
     }
 
     public static void printChannel(String operation, Channel channel) {
-        System.out.println(String.format("%s [windowId: %s] [clientId: %s] [token: %s]", operation, channel.windowClientId, channel.channelClientId, channel.token));
+        System.out.println(String.format("%s [windowId: %s] [clientId: %s] [token: %s] [expires: %s] [connectionExpires: %s]", operation, channel.windowClientId, channel.channelClientId, channel.token, channel.expirationTime, new Date(channel.connectionExpires)));
+    }
+
+    public static void printMap(HashMap<String, Channel> map) {
+        for(Map.Entry<String, Channel> entry : map.entrySet ()) {
+            printChannel("Serialized", entry.getValue());
+        }
+    }
+
+    private static void printList(ArrayList<Channel> channels) {
+        for (Channel channel : channels) {
+            printChannel("Serialized", channel);
+        }
     }
 }

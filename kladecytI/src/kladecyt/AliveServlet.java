@@ -3,7 +3,6 @@ package kladecyt;
 import com.google.appengine.api.channel.ChannelPresence;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
-import kladecyt.model.Channel;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +22,10 @@ public class AliveServlet extends HttpServlet {
         ChannelPresence presence = channelService.parsePresence(req);
         System.out.println(String.format("doPost [Client Id: %s] [IsConnected: %s]", presence.clientId(), presence.isConnected()));
         if (presence.isConnected() == false) {
-            ChannelPool.freeChannel(presence.clientId());
+            ChannelPool.disconnected(presence.clientId());
 //            System.out.println(String.format("Putted %s to freeChannels with %s token", presence.clientId(), channel.token));
+        } else if (presence.isConnected() == true) {
+            ChannelPool.conntected(presence.clientId());
         }
     }
 }

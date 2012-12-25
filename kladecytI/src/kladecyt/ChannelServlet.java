@@ -42,10 +42,13 @@ public class ChannelServlet extends HttpServlet {
 //                System.out.println(String.format("create {windowClientId: %s] [channelClientId: %s] [token: %s]", channel.windowClientId, channel.channelClientId, channel.token));
                     writeAndClose(resp, token);
                 } else if ("send".equals(method) && req.getParameter("msg") != null) {
-                    Channel channel = ChannelPool.lookup(getWindowClientId(req));
+
+                    String sessionWindowClientId = getWindowClientId(req);
+                    Channel channel = ChannelPool.lookup(sessionWindowClientId);
                     if (channel != null) {
                         ChannelPool.channelService.sendMessage(new ChannelMessage(channel.channelClientId, req.getParameter("msg")));
                         writeAndClose(resp, "Added songs to playlist");
+                        System.out.println(String.format("Sent message to window client id %s", sessionWindowClientId));
                     } else if (id != null) {
                         ChannelPool.channelService.sendMessage(new ChannelMessage(id, req.getParameter("msg")));
                         writeAndClose(resp, "Added songs to playlist for clientId: " + id);
@@ -87,6 +90,7 @@ public class ChannelServlet extends HttpServlet {
         } catch (Exception e) {
             PrintWriter writer = resp.getWriter();
             e.printStackTrace(writer);
+            e.printStackTrace(System.out);
             writer.close();
         }
     }
