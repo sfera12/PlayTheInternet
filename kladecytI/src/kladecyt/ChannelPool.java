@@ -34,10 +34,12 @@ public class ChannelPool {
                 Map.Entry<String, Channel> entry = it.next();
                 if(clientId.equals(entry.getValue().channelClientId)) {
                     channel = entry.getValue();
+                    printChannel("Removed channel from map and moved to list", channel);
                     it.remove();
                 }
             }
             channel.assign("");
+            printChannel("Moved to list", channel);
             freeChannels.add(channel);
             for (Iterator<Map.Entry<String, Channel>> it = channelPool.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry<String, Channel> entry = it.next();
@@ -98,7 +100,7 @@ public class ChannelPool {
 //            }
             removeTimeout(freeChannels.iterator());
             if (!freeChannels.isEmpty() && (channel = freeChannels.remove(0)) != null) {
-                channelPool.put(windowClientId,  channel);
+                put(windowClientId, channel);
                 printChannel("fromFreeChannels", channel);
 //                return channel;
             } else {
@@ -120,6 +122,12 @@ public class ChannelPool {
         return channel;
     }
 
+    public static Channel put(String windowClientId, Channel channel) {
+            channel.assign(windowClientId);
+            channelPool.put(windowClientId, channel);
+        return channel;
+    }
+
 
     private static Channel createNewChannel(String windowClientId) {
         String guid = UUID.randomUUID().toString();
@@ -134,8 +142,8 @@ public class ChannelPool {
             System.out.println("RegularTokenDuration for channelClientId " + guid);
             tokenDuration = Channel.tokenDuration;
         }
-        Channel channel = new Channel(windowClientId, guid, token, tokenDuration);
-        channelPool.put(windowClientId, channel);
+            Channel channel = new Channel(windowClientId, guid, token, tokenDuration);
+            put(windowClientId, channel);
         return channel;
     }
 
@@ -184,7 +192,7 @@ public class ChannelPool {
     }
 
     private static boolean genericTimeout(Channel channel, int safe) {
-        return (System.currentTimeMillis() - safe * 60000) >= channel.expirationTime.getTime();
+        return System.currentTimeMillis() >= (channel.expirationTime.getTime()  - safe * 60000);
     }
 
     public static void printChannel(String operation, Channel channel) {
