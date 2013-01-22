@@ -44,12 +44,12 @@
         });
         var html = document.getElementsByTagName('html')[0];
         var htmlText = document.getHTML(html, true);
-        var youtube = /((youtu.be\/)|(watch[^ \'\'<>]+v=))([^ &\'\'<>\/\\]+)/g;
+        var youtube = /(youtu.be\/|watch[^ \'\'<>]+v=|youtube.com\/embed\/)([^ &\'\'<>\/\\.]{11})/g;
         var youtubeLinks = htmlText.match(youtube);
         var uTubeLinks = youtubeLinks.unique();
         var result = '';
         for (var i = 0; i < uTubeLinks.length; i++) {
-            result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$4') + ',';
+            result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$2') + ',';
         }
         return result;
     }
