@@ -44,7 +44,7 @@
         });
         var html = document.getElementsByTagName('html')[0];
         var htmlText = document.getHTML(html, true);
-        var youtube = /(youtu.be\/|watch[^ \'\'<>]+v=|youtube.com\/embed\/)([^ &\'\'<>\/\\.]{11})/g;
+        var youtube = /(youtu.be\/|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
         var youtubeLinks = htmlText.match(youtube);
         var uTubeLinks = youtubeLinks.unique();
         var result = '';
