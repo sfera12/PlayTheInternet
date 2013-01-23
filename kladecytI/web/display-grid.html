@@ -117,6 +117,7 @@
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
+        $(window).resize(function(item) {yte.resizePlayer(item.target)})
     }
 
     function change(state) {
