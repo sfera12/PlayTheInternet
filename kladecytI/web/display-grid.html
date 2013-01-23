@@ -102,8 +102,10 @@
     var channel
     var windowId = GUID()
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
+    var ytPlayerHolder
     yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
             function() {
+                ytPlayerHolder = $('#firstView')
                 yte.drawPlayer("taFirst");
                 this.channel = new Channel(windowId)
             }
@@ -117,7 +119,7 @@
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
-        $(window).resize(function(item) {yte.resizePlayer(item.target)})
+        $(window).resize(function() {yte.resizePlayer(ytPlayerHolder)})
     }
 
     function change(state) {

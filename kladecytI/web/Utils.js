@@ -116,6 +116,8 @@ function Playlist(appendToElementExpression) {
                 },
                 error: function(data) {
                     playlistFinishedLoading(links.length, ++responseCounter)
+                    console.log("Unable to load: " + videoElement.videoId)
+                    console.log(data)
                 },
                 context: videoElement,
                 dataType: 'json'
@@ -157,12 +159,13 @@ function YoutubePlayer(ytp, pla) {
         var videoFeed = $(this.pla.currSong).data("videoFeed")
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "ytplayer" };
-        var playerWidth = window.innerWidth / 2 / 1.020
+        var playerWidth = ytPlayerHolder.width() - 9
         swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19) , "8", null, null, params, atts);
     }
 
-    this.resizePlayer = function(window) {
-        var playerWidth = window.innerWidth / 2 / 1.020
+    this.resizePlayer = function(ytPlayerHolder) {
+        console.log(ytPlayerHolder)
+        var playerWidth = ytPlayerHolder.width() - 9
         var playerHeight = parseInt(playerWidth / 1.19)
         var ytplayer = $('#ytplayer')
         ytplayer.width(playerWidth)
