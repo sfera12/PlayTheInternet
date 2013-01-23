@@ -49,7 +49,7 @@
         var uTubeLinks = youtubeLinks.unique();
         var result = '';
         for (var i = 0; i < uTubeLinks.length; i++) {
-            result += 'http://youtube.com/watch?v=' + uTubeLinks[i].replace(youtube, '$2') + ',';
+            result += 'y=' + uTubeLinks[i].replace(youtube, '$2') + ',';
         }
         return result;
     }

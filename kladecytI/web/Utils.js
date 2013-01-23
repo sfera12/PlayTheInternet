@@ -124,10 +124,10 @@ function Playlist(appendToElementExpression) {
     }
 
     this.parseSongIds = function(text) {
-        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]{11})/g
+        var youtube =/y=([^ &\"\'<>\/\\,]{11})/g
         var youtubeLinks = text.match(youtube)
         return youtubeLinks.map(function(item) {
-            return item.replace(youtube, "$4")
+            return item.replace(youtube, "$1")
         }).unique()
     }
 
