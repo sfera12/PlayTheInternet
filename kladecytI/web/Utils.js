@@ -164,7 +164,6 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.resizePlayer = function(ytPlayerHolder) {
-        console.log(ytPlayerHolder)
         var playerWidth = ytPlayerHolder.width() - 9
         var playerHeight = parseInt(playerWidth / 1.19)
         var ytplayer = $('#ytplayer')
