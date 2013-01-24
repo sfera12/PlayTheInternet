@@ -44,18 +44,28 @@ function VideoElement(videoFeed, appendTo) {
         var img = $('<img/>')
         img.attr('src', videoFeed.thumbnail)
 
-        var span = $('<span/>')
+        var span = $('<span style="float: left; width: 58.5%"/>')
         var b = $('<b>').text(videoFeed.title)
         span.append(b)
         span.append("<br>by " + videoFeed.uploader)
+
+        var buttonSpan = $('<span style="float: left; width: 10px; height: 10px;"/>')
+        var closeButton = $('<img style="width: 10px; height: 10px;" src="http://localhost:8888/jqC/css/custom/close.jpg">')
+        buttonSpan.append(closeButton)
 
         imgDiv.append(img)
         imgDiv.append(durationCaption)
         this.div.append(imgDiv)
         this.div.append(span)
+        this.div.append(buttonSpan)
         this.div.click(function() {
             yte.playVideoDiv(this.div[0])
         }.bind(this))
+        closeButton.click(function(evt) {
+            evt.stopPropagation()
+            this.toggleClass("disabled-Video")
+            yte.pla.recalculatePlaylist()
+        }.bind(this.div))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() -3)
 
@@ -76,7 +86,9 @@ function Playlist(appendToElementExpression) {
 
     this.recalculatePlaylist = function() {
         this.playlist = $(this.containerElementExpression + " div").filter(function(index, item) {
-            return $(item).data("videoFeed") != null
+//            console.log($(item).hasClass("disabled-Video"))
+            item = $(item)
+            return item.data("videoFeed") != null && !(item.hasClass("disabled-Video"))
         })
     }
 

@@ -34,7 +34,8 @@
 		#ulFirst img, #ulSecond img { float: left; height: 90px; }
 		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; } 
 		#ulFirst span, #ulSecond span { left: 128px; top: 5px; word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
-	</style>
+	    .disabled-Video { opacity: 0.4 }
+    </style>
 	<script>
 
 	</script>
@@ -95,7 +96,10 @@
 
 	$(function() {
 		$( "#ulFirst, #ulSecond" ).sortable({
-			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer', distance: 25
+			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer', distance: 25,
+            update: function(event, ui) {
+                yte.pla.recalculatePlaylist()
+            }
 		}).disableSelection();
 	});
 
