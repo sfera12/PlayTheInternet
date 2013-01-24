@@ -5,7 +5,8 @@
 	<title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
-	<script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>
@@ -14,6 +15,7 @@
     <script src="Utils.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
     <script type="text/javascript" src="/_ah/channel/jsapi"></script>
+    <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
 	<style>
 		/*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
@@ -26,7 +28,7 @@
 		#dPLists { position:absolute; float: left; width: 99%; height: 98.8%; }
 		#firstView, #secondView { float: left; width: 50%; height: 100%; }
         .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
-        .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: scroll; }
+        .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: hidden; }
 /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
 		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
         .selected { background-image:url(/selected.png)}
@@ -115,6 +117,15 @@
             }
     )
 
+    var setSlimScroll = function() { $('#ulSecond').slimScroll({
+            height: window.innerHeight - 15,
+            color: '#0BB3E6',
+            railVisible: true,
+            railColor: '#0BB3E6',
+            disableFadeOut: true
+        });
+    }
+    setSlimScroll()
 
 
     function onYouTubePlayerReady(playerId) {
@@ -123,7 +134,11 @@
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
-        $(window).resize(function() {yte.resizePlayer(ytPlayerHolder)})
+        $(window).resize(function() {
+            yte.resizePlayer(ytPlayerHolder);
+            $('.slimScrollDiv').css("height", window.innerHeight - 15);
+            $('#ulSecond').css("height", window.innerHeight - 15);
+        })
     }
 
     function change(state) {

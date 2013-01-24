@@ -44,12 +44,12 @@ function VideoElement(videoFeed, appendTo) {
         var img = $('<img/>')
         img.attr('src', videoFeed.thumbnail)
 
-        var span = $('<span style="float: left; left: 2px;"/>')
+        var span = $('<span/>')
         var b = $('<b>').text(videoFeed.title)
         span.append(b)
         span.append("<br>by " + videoFeed.uploader)
 
-        var buttonSpan = $('<span style="float: left; width: 12px; height: 10px;"/>')
+        var buttonSpan = $('<span style="float: left; width: 12px; height: 90px;"/>')
         var closeButton = $('<img style="width: 10px; height: 10px;" src="http://localhost:8888/jqC/css/custom/close.jpg">')
         buttonSpan.append(closeButton)
 
@@ -58,7 +58,7 @@ function VideoElement(videoFeed, appendTo) {
         this.div.append(imgDiv)
         this.div.append(buttonSpan)
         this.div.append(span)
-        this.div.click(function() {
+        this.div.click(function(evt) {
             yte.playVideoDiv(this.div[0])
         }.bind(this))
         closeButton.click(function(evt) {
