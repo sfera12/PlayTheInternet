@@ -50,7 +50,7 @@ function VideoElement(videoFeed, appendTo) {
         span.append("<br>by " + videoFeed.uploader)
 
         var buttonSpan = $('<span style="float: left; width: 12px; height: 90px;"/>')
-        var closeButton = $('<img style="width: 10px; height: 10px;" src="http://localhost:8888/jqC/css/custom/close.jpg">')
+        var closeButton = $('<img style="width: 10px; height: 10px;" src="/jqC/css/custom/close.jpg">')
         buttonSpan.append(closeButton)
 
         imgDiv.append(img)
