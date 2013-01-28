@@ -69,6 +69,8 @@ public class ChannelServlet extends HttpServlet {
                     } else {
                         System.out.println("windowClientId doesn't exist");
                     }
+                } else if ("print".equals(method)) {
+                    writeAndClose(resp, ChannelPool.printList("", ChannelPool.channels));
                 }
             }
 //        if (req.getParameter("send") != null) {

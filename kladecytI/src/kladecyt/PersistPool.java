@@ -4,9 +4,10 @@ import com.google.appengine.api.datastore.*;
 import kladecyt.model.Channel;
 
 import java.io.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
+import static kladecyt.ChannelPool.printList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +28,7 @@ public class PersistPool {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(blobChannelBytes);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Object desObject = objectInputStream.readObject();
-            System.out.println(String.format("Deserialized %s", entity.getKey()));
+            printList("Deserialized", (ArrayList<Channel>)desObject);
             return desObject;
         } catch (EntityNotFoundException e) {
             System.out.println(String.format("Initializing Entity %s", entity.getKey()));
@@ -50,7 +51,7 @@ public class PersistPool {
 
         Blob blob = new Blob(bytes);
         entity.setProperty("binary", blob);
-        System.out.println(String.format("Serialized %s", entity.getKey()));
+//        System.out.println(String.format("Serialized %s", entity.getKey()));
         datastoreService.put(entity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ public class PersistPool {
         ObjectInputStream objectInputStream;
         try {
             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(ChannelPool.channelPool);
+            objectOutputStream.writeObject(ChannelPool.channels);
             objectOutputStream.close();
             byte[] bytes = byteArrayOutputStream.toByteArray();
 
@@ -82,7 +83,8 @@ public class PersistPool {
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
             HashMap<String, Channel> desChannelPool = (HashMap<String, Channel>) objectInputStream.readObject();
             System.out.println("Deserialized channel pool");
-            ChannelPool.printMap(desChannelPool);
+            //todo print deserialized channel list
+//            ChannelPool.printMap(desChannelPool);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

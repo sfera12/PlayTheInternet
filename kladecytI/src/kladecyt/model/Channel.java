@@ -11,29 +11,32 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Channel implements Serializable {
-    public static int maxTokenDuration = 720;
-    public static int tokenDuration = 120;
-    public static int connectionTimeout = 5;
-    public Date expirationTime;
-    public long connectionExpires;
     public String windowClientId;
     public String channelClientId;
     public String token;
+    public Date issueDate;
+    private long AWAITING_CONNECTION = 300000;
+    public Date awaitingConnectionDate;
+    public Date creationDate;
+    private long CHANNEL_DURATION = 43200000;
+    public Date expirationDate;
 
-    public Channel(String windowClientId, String channelClientId, String token, int channelDuration) {
-        this.windowClientId = windowClientId;
+    public Channel(String windowClientId, String channelClientId, String token) {
         this.channelClientId = channelClientId;
         this.token = token;
-        this.expirationTime = new Date(System.currentTimeMillis() + channelDuration * 60000);
-        this.connectionExpires = connectionExpires();
+        this.creationDate = new Date();
+        this.expirationDate = new Date(System.currentTimeMillis() + CHANNEL_DURATION);
+        assign(windowClientId);
     }
 
     public void assign(String windowClientId) {
         this.windowClientId = windowClientId;
-        this.connectionExpires = connectionExpires();
+        this.issueDate = new Date();
+        this.awaitingConnectionDate = new Date(System.currentTimeMillis() + AWAITING_CONNECTION);
     }
 
-    private long connectionExpires() {
-        return System.currentTimeMillis() + connectionTimeout * 60000;
-    }
+
+    public String toString() {
+        return String.format("[WindowId: %s] [ChannelId: %s] [Token: %s] [Issue: %s] [AwaitingConnection: %s] [Creation: %s] [Expiration: %s]", windowClientId, channelClientId, token, issueDate, awaitingConnectionDate, creationDate, expirationDate);    }
+
 }

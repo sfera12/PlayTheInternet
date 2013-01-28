@@ -20,12 +20,11 @@ public class AliveServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
         ChannelPresence presence = channelService.parsePresence(req);
-        System.out.println(String.format("doPost [Client Id: %s] [IsConnected: %s]", presence.clientId(), presence.isConnected()));
+//        System.out.println(String.format("doPost [Client Id: %s] [IsConnected: %s]", presence.clientId(), presence.isConnected()));
         if (presence.isConnected() == false) {
-            ChannelPool.disconnected(presence.clientId());
-//            System.out.println(String.format("Putted %s to freeChannels with %s token", presence.clientId(), channel.token));
+            ChannelPool.disconnect(presence.clientId());
         } else if (presence.isConnected() == true) {
-            ChannelPool.conntected(presence.clientId());
+            ChannelPool.connect(presence.clientId());
         }
     }
 }
