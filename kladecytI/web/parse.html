@@ -4,11 +4,18 @@
     <meta charset="utf-8">
     <title>jQuery UI Sortable - Display as grid</title>
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
+
 </head>
 <body>
 <a id="proceed" href="" target="_blank">Open in new Window</a>    <br>
-<a id="addChannel" href="">Add to current Playlist</a>
+<a id="addChannel">Add to current Playlist</a>
 <script>
+    var intercom = Intercom.getInstance();
+
+    intercom.on('child', function(data) {
+        console.log(data.message);
+    });
     var generateHref = function (elementExpression, url) {
         var proceed = $(elementExpression)
         proceed.attr("href", url)
@@ -19,7 +26,9 @@
         })
     }
     generateHref("#proceed", "/display-grid.html" + window.location.hash)
-    generateHref("#addChannel", "/channel/send?msg=" + window.location.hash.replace("#", ""))
+    $('#addChannel').click(function() {
+        intercom.emit('parent', {message: window.location.hash});
+    })
 </script>
 </body>
 </html>

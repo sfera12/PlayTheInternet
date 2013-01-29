@@ -5,6 +5,7 @@
 	<title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
+    <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
@@ -14,7 +15,6 @@
 	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
     <script src="Utils.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
-    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
 	<style>
@@ -61,41 +61,6 @@
     var videoFeeds = new Array()
     var videoElements = new Array()
 
-    function Channel(clientId) {
-        this.clientId = clientId
-        this.socket
-        this.channel
-
-        this.onmessage = function(msg) {
-            yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(msg.data), null, true)
-        }
-        this.onerror = function(msg) {
-            console.log(msg);
-            channel = new Channel(windowId)
-            console.log("created new channel")
-        }
-
-        this.createChannel = function() {
-            $.ajax({
-                url: "/channel/create/" + this.clientId,
-                success: function(token) {
-                    this.channel = new goog.appengine.Channel(token)
-                    var handler = {
-                        'onopen': function(msg){console.log(" *** opened channel")},
-                        'onmessage': this.onmessage,
-                        'onerror': this.onerror,
-                        'onclose': function(msg){console.log(" *** closed channel")}
-                    }
-                    this.socket = this.channel.open(handler)
-                }.bind(this),
-                error: function(data) {
-                    console.log("error" + data)
-                }
-            })
-        }
-        this.createChannel()
-    }
-
 	$(function() {
 		$( "#ulFirst, #ulSecond" ).sortable({
 			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer', distance: 25,
@@ -105,7 +70,7 @@
 		}).disableSelection();
 	});
 
-    var channel
+    var intercom
     var windowId = GUID()
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
     var ytPlayerHolder
@@ -113,7 +78,11 @@
             function() {
                 ytPlayerHolder = $('#firstView')
                 yte.drawPlayer("taFirst");
-                this.channel = new Channel(windowId)
+                this.intercom = new Intercom()
+                this.intercom.on('parent', function(data) {
+                    console.log(data.message)
+                    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+                });
             }
     )
 
@@ -150,93 +119,6 @@
         yte.onStateChange(0)
     }
 
-    function poll() {
-        setTimeout(function() {
-            $.ajax({
-                url: "/channel/session",
-                success: function(windowClientId) {
-                    console.log("poll " + windowClientId)
-                    poll()
-                },
-                error: function(data) {
-                    console.log("error" + data)
-                }
-            })
-        }, 600000)
-    }
-
-    poll()
-//    loadPlaylistFromHash();
-
-//    function loadPlaylistFromHash() {
-//        var youtube =/((youtu.be\/)|(watch[^ \"\'<>\/\\,]+v=))([^ &\"\'<>\/\\,]+)/g
-////        var textArea = $("#taArea").val()
-//        var textArea = window.location.hash;
-//        var youtubeLinks = textArea.match(youtube)
-//        $('#ulSecond').empty()
-//        console.log("--------------------------------------------")
-//        youtubeLinks = youtubeLinks.map(function(item) {
-//            return item.replace(youtube, "$4")
-//        }).unique()
-//        loadPlaylist(yte.pla.parseSongIds(textArea))
-//    }
-
-//    function loadPlaylist(youtubeLinks) {
-//        yte.pla.addSongsToPlayList(youtubeLinks)
-//        var responseCounter = 0
-//        var playlistFinishedLoading = function(playlistSize, current) {
-//            if(playlistSize == current) {
-//                yte.drawPlayer("taFirst")
-//            }
-//        }
-//        youtubeLinks.forEach(function(videoId) {
-//            var videoElement = new VideoElement(null, "#ulSecond")
-//            videoElements.push(videoElement)
-//            $.ajax({
-//                url: "http://gdata.youtube.com/feeds/api/videos/" + videoId + "?v=2&alt=jsonc",
-//                success: function(data) {
-//                    try {
-//                        var videoFeed = new VideoFeed(data.data)
-//                        this.fillDiv(videoFeed)
-//                    } finally {
-//                        playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
-//                    }
-//                },
-//                error: function(data) {
-//                    playlistFinishedLoading(youtubeLinks.length, ++responseCounter)
-//                },
-//                context: videoElement,
-//                dataType: 'json'
-//            })
-//        })
-//    }
-//
-//	var i = 0;
-//	var aSuccess = function(data) {
-//		// alert('success')
-//		// $.each(data, function(key, element) {
-//    	// alert('key: ' + key + '\n' + 'value: ' + element);
-//		// });
-//		// alert(data.feed.title.$t)
-//		// alert(data.data.items[0].id)
-//		$('#ulSecond').empty();
-//		$('#iStatus').attr('value', i++)
-//		$.each(data.data.items, function(index, item) {
-//            var videoFeed = new VideoFeed(item)
-//            videoFeeds.push(videoFeed)
-//            new VideoElement(videoFeed, "#ulSecond")
-//        });
-//	}
-//	var aError = function(data) {
-//		alert("error")
-//	}
-//	$.ajax({
-//		url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-//		// url : 'https://gdata.youtube.com/feeds/api/videos/8_E8x15wkAo/related?v=2&alt=jsonc&max-results=3',
-//		dataType : 'json',
-//		success : aSuccess,
-//		error : aError
-//	})
 </script>
 
 <script>
