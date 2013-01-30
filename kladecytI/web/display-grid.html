@@ -79,9 +79,13 @@
                 ytPlayerHolder = $('#firstView')
                 yte.drawPlayer("taFirst");
                 this.intercom = new Intercom()
-                this.intercom.on('parent', function(data) {
-                    console.log(data.message)
+                this.intercom.on(windowId + 'playlistReceived', function(data) {
                     yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+                    intercom.emit(data.sender + 'playlistReceived', { sender: windowId, type: 'playlistReceived', status: 'success'})
+                    console.log(data)
+                });
+                this.intercom.on('windowId', function(data) {
+                    intercom.emit(data.sender + 'windowId', { sender: windowId })
                 });
             }
     )

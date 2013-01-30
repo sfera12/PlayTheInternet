@@ -5,17 +5,28 @@
     <title>jQuery UI Sortable - Display as grid</title>
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
+    <script src="Utils.js"></script>
 
 </head>
 <body>
 <a id="proceed" href="" target="_blank">Open in new Window</a>    <br>
 <a id="addChannel">Add to current Playlist</a>
 <script>
+    var windowId = GUID();
     var intercom = Intercom.getInstance();
 
-    intercom.on('child', function(data) {
-        console.log(data.message);
+    intercom.on(windowId + 'windowId', function(data) {
+        var div = $('<div/>')
+        div.text(data.sender)
+        div.click(function() {
+            intercom.emit(data.sender + 'playlistReceived', {sender: windowId, message: window.location.hash});
+        })
+        $('body').append(div)
     });
+    intercom.on(windowId + 'playlistReceived', function(data) {
+        var div = $('div:contains(' + data.sender + ')')
+        div.css("color", "green")
+    })
     var generateHref = function (elementExpression, url) {
         var proceed = $(elementExpression)
         proceed.attr("href", url)
@@ -27,8 +38,9 @@
     }
     generateHref("#proceed", "/display-grid.html" + window.location.hash)
     $('#addChannel').click(function() {
-        intercom.emit('parent', {message: window.location.hash});
+        intercom.emit('parent', {sender: windowId, message: window.location.hash});
     })
+    intercom.emit('windowId', { sender: windowId })
 </script>
 </body>
 </html>
