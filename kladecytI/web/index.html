@@ -39,7 +39,7 @@
         });
         var html = document.getElementsByTagName('html')[0];
         var htmlText = document.getHTML(html, true);
-        \\todo add escaped characters for \
+        <!--\\todo add escaped characters for \-->
         var youtube = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
         var youtubeLinks = htmlText.match(youtube);
         var uTubeLinks = youtubeLinks.unique();
