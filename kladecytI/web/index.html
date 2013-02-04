@@ -39,12 +39,13 @@
         });
         var html = document.getElementsByTagName('html')[0];
         var htmlText = document.getHTML(html, true);
-        var youtube = /(youtu.be\/|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
+        \\todo add escaped characters for \
+        var youtube = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
         var youtubeLinks = htmlText.match(youtube);
         var uTubeLinks = youtubeLinks.unique();
         var result = '';
         for (var i = 0; i < uTubeLinks.length; i++) {
-            result += 'y=' + uTubeLinks[i].replace(youtube, '$2') + ',';
+            result += 'y=' + uTubeLinks[i].replace(youtube, '$3') + ',';
         }
         return result;
     }
