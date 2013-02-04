@@ -26,6 +26,9 @@
     intercom.on(windowId + 'playlistReceived', function(data) {
         var div = $('div:contains(' + data.sender + ')')
         div.css("color", "green")
+        setTimeout(function() {
+            window.close()
+        }, 3000)
     })
     var generateHref = function (elementExpression, url) {
         var proceed = $(elementExpression)
