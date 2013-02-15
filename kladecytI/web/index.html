@@ -7,81 +7,36 @@
 <!-- but may lead to some differences in layout.   -->
 
 <html>
-  <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script src="parse.js"></script>
     <title>Hello App Engine</title>
-  </head>
+</head>
 
-  <body>
-    <h1>Hello App Engine!</h1>
-	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-          <a id="local">LOCAL</a>
-          <br>
-          <a id="production">PlayTheInternet</a>
+<body>
+<h1>Hello App Engine!</h1>
 
-            <!-- \\todo add escaped characters for / -->
-          <a id="holder" style="visibility: hidden;" href="javascript: (function () {
-    function playTheInternetParse() {
-        document.getHTML = function (who, deep) {
-            return document.documentElement.innerHTML;
-        };
-        Array.prototype.unique = function (a) {
-            return function () {
-                return this.filter(a)
-            }
-        }(function (a, b, c) {
-            return c.indexOf(a) == b
-        });
-        var html = document.getElementsByTagName('html')[0];
-        var htmlText = document.getHTML(html, true);
-        var youtube = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
-        var youtubeLinks = htmlText.match(youtube);
-        var uTubeLinks = youtubeLinks.unique();
-        var result = '';
-        for (var i = 0; i < uTubeLinks.length; i++) {
-            result += 'y=' + uTubeLinks[i].replace(youtube, '$3') + ',';
-        }
-        return result;
-    }
-    if (typeof (playTheInternetParse) == 'undefined') {
-        console.log('first time');
-        var parse = document.createElement('script');
-        parse.src = 'DOMAIN/parse.js';
-        document.getElementsByTagName('head')[0].appendChild(parse);
-    }
-    function parsePage() {
-        setTimeout(function () {
-            if (typeof (playTheInternetParse) != 'undefined') {
-                openWindow(playTheInternetParse());
-            } else {
-                console.log('undefined');
-                parsePage();
-            }
-        }, 0)
-    }
-    function openWindow(links) {
-        var a = window,
-            b = document,
-            c = encodeURIComponent,
-            d = a.open('DOMAIN/parse.html#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=300px,width=750px,resizable=1,alwaysRaised=1');
-        a.setTimeout(function () {
-            d.focus();
-        }, 300)
-    }
-    parsePage();
-})();">HOLDER</a>
+<table>
+    <tr>
+        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>
+    </tr>
+    <tr>
+        <a id="local">LOCAL</a>
+        <br>
+        <a id="production">PlayTheInternet</a>
 
-      </tr>
-    </table>
-    <script>
+        <!-- \\todo add escaped characters for / -->
+        <a id="holder" style="visibility: hidden;" href="">HOLDER</a>
+
+    </tr>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#holder').attr('href', 'javascript: (function() {' + playTheInternetParse + openWindow + parsePage + ';parsePage()})()')
         $('#local').attr('href', $('#holder').attr('href').replace(/DOMAIN/g, 'http://localhost:8888'))
         $('#production').attr('href', $('#holder').attr('href').replace(/DOMAIN/g, 'http://playtheinternet.appspot.com'))
-    </script>
-  </body>
+    })
+</script>
+</body>
 </html>

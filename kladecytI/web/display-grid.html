@@ -14,6 +14,7 @@
 	<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>
 	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
     <script src="Utils.js"></script>
+    <script src="parse.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
@@ -74,21 +75,24 @@
     var windowId = GUID()
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
     var ytPlayerHolder
-    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
-            function() {
-                ytPlayerHolder = $('#firstView')
-                yte.drawPlayer("taFirst");
-                this.intercom = new Intercom()
-                this.intercom.on(windowId + 'playlistReceived', function(data) {
-                    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
-                    intercom.emit(data.sender + 'playlistReceived', { sender: windowId, type: 'playlistReceived', status: 'success'})
-                    console.log(data)
-                });
-                this.intercom.on('windowId', function(data) {
-                    intercom.emit(data.sender + 'windowId', { sender: windowId })
-                });
-            }
-    )
+    var init = function () {
+        yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
+                function () {
+                    ytPlayerHolder = $('#firstView')
+                    yte.drawPlayer("taFirst");
+                    this.intercom = new Intercom()
+                    this.intercom.on(windowId + 'playlistReceived', function (data) {
+                        yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+                        intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
+                        console.log(data)
+                    });
+                    this.intercom.on('windowId', function (data) {
+                        intercom.emit(data.sender + 'windowId', { sender:windowId })
+                    });
+                }
+        )
+    };
+    this.init();
 
     var setSlimScroll = function() {
         $('#ulSecond').slimScroll({
