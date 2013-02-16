@@ -6,13 +6,15 @@
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
-    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>
-	<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>
-	<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>
-	<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>
-	<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>
-	<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>
+    <!--<script src="jqC/development-bundle/jquery-1.7.1.js"></script>-->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>-->
+	<!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
+	<!--<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>-->
+	<!--<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>-->
+	<!--<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>-->
+	<!--<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>-->
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script src="Utils.js"></script>
     <script src="parse.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
@@ -24,7 +26,7 @@
 		#firstView, #secondView { width: 80%; background-color: red }*/
 /*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
 		body { height: 100%; }
-        .taArea {width: 100%; height: 85%; }
+        .taArea {width: 98%; height: 200px; }
         .auto {width: auto; height: auto;}
 		#dPLists { position:absolute; float: left; width: 99.2%; height: 98.8%; }
 		#firstView, #secondView { float: left; width: 50%; height: 100%; }
@@ -35,7 +37,7 @@
         .selected { background-image:url(/selected.png)}
 		.image-div { float: left; position: relative; width: 123px; height: 90px; }
 		#ulFirst img, #ulSecond img { float: left; height: 90px; }
-		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; } 
+		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
 		#ulFirst span, #ulSecond span { left: 128px; top: 5px; word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
 	    .disabled-Video { opacity: 0.4 }
     </style>
@@ -45,16 +47,30 @@
 </head>
 <body>
 <div id="dPLists">
-	<div id="firstView">
-        <div id="taFirst" class="internalFrame">
+    <div id="firstView">
+        <div id="tabs">
+            <ul>
+                <li><a href="#player">Player</a></li>
+                <li><a href="#tAreaDiv">Text Area</a></li>
+            </ul>
+            <div id="player">
+            </div>
+            <div id="tAreaDiv">
+                <textArea id="tArea" class="taArea"></textArea>
+                <br>
+                <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
+            </div>
+            <div id="taFirst" class="internalFrame">
+            </div>
+            <div id="ulFirst" class="">
+            </div>
+            <div id="youtube"></div>
         </div>
-		<div id="ulFirst" class="connectedSortable">
-		</div>
-	</div>
-	
-	<div id="secondView">
-		<div id="ulSecond" class="connectedSortable playlistFrame"/>
-	</div>
+    </div>
+
+    <div id="secondView">
+        <div id="ulSecond" class="connectedSortable playlistFrame"></div>
+    </div>
 
 </div>
 
@@ -62,14 +78,21 @@
     var videoFeeds = new Array()
     var videoElements = new Array()
 
-	$(function() {
-		$( "#ulFirst, #ulSecond" ).sortable({
-			connectWith: ".connectedSortable", scrollSensitivity: 50, tolerance: 'pointer', distance: 25,
-            update: function(event, ui) {
+	$(document).ready(function () {
+        $("#ulFirst, #ulSecond").sortable({
+            connectWith: '.connectedSortable',
+            scrollSensitivity:50,
+            tolerance:'pointer',
+            distance:25,
+            update:function (event, ui) {
                 yte.pla.recalculatePlaylist()
             }
-		}).disableSelection();
-	});
+        }).disableSelection();
+        $('#tAreaParseButton').click(function() {
+            var tAreaText = $('#tArea').val()
+            yte.pla.addSongsToPlayList('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
+        })
+    })
 
     var intercom
     var windowId = GUID()
@@ -79,7 +102,7 @@
         yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
                 function () {
                     ytPlayerHolder = $('#firstView')
-                    yte.drawPlayer("taFirst");
+                    yte.drawPlayer("youtube");
                     this.intercom = new Intercom()
                     this.intercom.on(windowId + 'playlistReceived', function (data) {
                         yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
@@ -141,7 +164,7 @@
 			data: feedRequest,
 			success : function(){ alert('success')},
 			error : aError
-		})	
+		})
 	}
 
 	var batchWrapper = function() {
@@ -170,14 +193,14 @@
 				data: feedStart + feedEnd,
 				success : batchWrapper,
 				error : aError
-			})	
+			})
 		} else {
 			console.log('done with')
 			console.log('batchI ' + batchI)
 			console.log('songs.length ' + songs.length)
-		}	
+		}
 	}
-	
+
 	var related = function(maxRes) {
 		if(recDepth > 0) {
 			$.each(currIteration, function(index, currId) {
@@ -189,7 +212,7 @@
 					// dataType : 'json',
 					success : addSongs,
 					error : aError
-				})				 
+				})
 			});
 		} else {
 			console.log(songs.length)
@@ -198,14 +221,14 @@
 			batch(0)
 		}
 	}
-	
+
 
 
 	var addSongs = function(data) {
 		currLength++
 		$.each(data.data.items, function(index, item) {
-			songs.push(item.id)	
-			nextIteration.push(item.id)	
+			songs.push(item.id)
+			nextIteration.push(item.id)
 			console.log(item.id)
 		})
 		// console.log('addSongs ' + currIteration.length)
@@ -216,9 +239,9 @@
 			currIteration = nextIteration
 			nextIteration = []
 			related(maxRes)
-		}		
+		}
 	}
-	
+
 	var vId = $('#iCriteria').attr('value')
 	var maxRes = 15;
 	var recDepth = 2;
@@ -227,17 +250,20 @@
 	var currLength = 0;
 	var nextIteration = []
 	var songs = new Array()
-	
+
 	songs.push(vId)
 	currIteration.push(vId)
 	$("#iRelated").click(function() {
 		related(maxRes)
 	});
-	
+
 	$("#iUploadVideo").click(function() {
-		uploadVideo()		
+		uploadVideo()
 	});
 
+    $('#tabs').tabs({
+//        activate: function( event, ui ) { alert('activate')}
+    })
 </script>
 </body>
 </html>
