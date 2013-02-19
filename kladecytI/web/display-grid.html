@@ -6,6 +6,7 @@
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
 	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
+    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
     <!--<script src="jqC/development-bundle/jquery-1.7.1.js"></script>-->
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>-->
 	<!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
@@ -88,34 +89,43 @@
                 yte.pla.recalculatePlaylist()
             }
         }).disableSelection();
+        var initPlayer = _.once(function (songIds) {
+            this.init(songIds) ;
+        })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
+            initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
             yte.pla.addSongsToPlayList('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
         })
+
+        if (window.location.hash.length > 0) {
+            initPlayer(yte.pla.parseSongIds(window.location.hash));
+        } else {
+            $( "#tabs" ).tabs( "option", "active", 1 );
+        }
     })
 
     var intercom
     var windowId = GUID()
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
     var ytPlayerHolder
-    var init = function () {
-        yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(window.location.hash),
-                function () {
-                    ytPlayerHolder = $('#firstView')
-                    yte.drawPlayer("youtube");
-                    this.intercom = new Intercom()
-                    this.intercom.on(windowId + 'playlistReceived', function (data) {
-                        yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
-                        intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
-                        console.log(data)
-                    });
-                    this.intercom.on('windowId', function (data) {
-                        intercom.emit(data.sender + 'windowId', { sender:windowId })
-                    });
-                }
+    var init = function (songIds) {
+        yte.pla.addSongsToPlayList("#ulSecond", songIds,
+            function () {
+                ytPlayerHolder = $('#firstView')
+                yte.drawPlayer("youtube");
+                this.intercom = new Intercom()
+                this.intercom.on(windowId + 'playlistReceived', function (data) {
+                    yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+                    intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
+                    console.log(data)
+                });
+                this.intercom.on('windowId', function (data) {
+                    intercom.emit(data.sender + 'windowId', { sender:windowId })
+                });
+            }
         )
     };
-    this.init();
 
     var setSlimScroll = function() {
         $('#ulSecond').slimScroll({
