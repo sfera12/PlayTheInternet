@@ -16,12 +16,14 @@
     var intercom = Intercom.getInstance();
 
     intercom.on(windowId + 'windowId', function(data) {
-        var div = $('<div/>')
-        div.text(data.sender)
-        div.click(function() {
-            intercom.emit(data.sender + 'playlistReceived', {sender: windowId, message: window.location.hash});
-        })
-        $('body').append(div)
+        if(!($('div:contains(' + data.sender + ')').size())) {
+            var div = $('<div/>')
+            div.text(data.sender)
+            div.click(function () {
+                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message:window.location.hash});
+            })
+            $('body').append(div)
+        }
     });
     intercom.on(windowId + 'playlistReceived', function(data) {
         var div = $('div:contains(' + data.sender + ')')
@@ -43,7 +45,13 @@
     $('#addChannel').click(function() {
         intercom.emit('parent', {sender: windowId, message: window.location.hash});
     })
-    intercom.emit('windowId', { sender: windowId })
+    $(document).ready(function () {
+        intercom.emit('windowId', { sender:windowId })
+        setTimeout(function() {
+            intercom.emit('windowId', { sender:windowId })
+        }, 1000)
+
+    })
 </script>
 </body>
 </html>

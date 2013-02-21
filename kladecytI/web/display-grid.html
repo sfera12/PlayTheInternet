@@ -103,6 +103,7 @@
         } else {
             $( "#tabs" ).tabs( "option", "active", 1 );
         }
+        document.title = windowId
     })
 
     var intercom
@@ -137,6 +138,11 @@
         });
     }
     setSlimScroll()
+    var resizeApp = function() {
+        yte.resizePlayer(ytPlayerHolder);
+        $('.slimScrollDiv').css("height", window.innerHeight - 15);
+        $('#ulSecond').css("height", window.innerHeight - 15);
+    }
 
 
     function onYouTubePlayerReady(playerId) {
@@ -145,11 +151,7 @@
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
-        $(window).resize(function() {
-            yte.resizePlayer(ytPlayerHolder);
-            $('.slimScrollDiv').css("height", window.innerHeight - 15);
-            $('#ulSecond').css("height", window.innerHeight - 15);
-        })
+        $(window).resize(resizeApp)
     }
 
     function change(state) {

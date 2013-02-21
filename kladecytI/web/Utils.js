@@ -212,7 +212,7 @@ function YoutubePlayer(ytp, pla) {
         this.pla.currSong = videoDiv
         $(this.pla.currSong).addClass("selected")
         var videoFeed = $(videoDiv).data('videoFeed')
-        document.title = 'Play - ' + videoFeed.title
+        document.title = windowId + ' - ' + videoFeed.title
         this.playVideoFeed(videoFeed)
     }
 
