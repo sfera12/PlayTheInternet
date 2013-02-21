@@ -91,6 +91,12 @@ function Playlist(appendToElementExpression) {
         })
     }
 
+    this.buildHash = function() {
+        return "#" + _.reduce(this.playlistSongIds(), function(memo, videoId) {
+            return memo.concat("y=" + videoId + ",")
+        }, "")
+    }
+
     this.lookupNextSong = function (currSong) {
         var index = this.playlist.toArray().indexOf(currSong)
         index = index >= this.playlist.length - 1 ? 0 : ++index
@@ -190,7 +196,6 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.drawPlayer = function (appendToElementId) {
-        this.pla.recalculatePlaylist()
         this.pla.currSong = this.pla.playlist[0]
         var videoFeed = $(this.pla.currSong).data("videoFeed")
         var params = { allowScriptAccess:"always", allowFullScreen:"true" };
