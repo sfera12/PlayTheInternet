@@ -51,3 +51,18 @@ var channel = new goog.appengine.Channel(token);
 var socket = channel.open();
 
 // http://www.iconarchive.com/show/nod-icons-by-rimshotdesign/Network-icon.html
+
+//todo parse twitter links http://t.co/xFkhzLg00G
+
+function createIframe(url) {
+    var iframe = document.createElement("iframe");
+    iframe.src = url;
+    iframe.name = "da-iframe"
+    iframe.id = "da-iframe"
+    document.body.appendChild(iframe);
+    return frames["da-iframe"].location.host;
+}
+createIframe("http://localhost:8888/linkRenderer.html");
+
+var iframeWin = document.getElementById("da-iframe").contentWindow
+iframeWin.postMessage("RECEIVED", "http://localhost:8888");

@@ -1,7 +1,4 @@
 function playTheInternetParse(htmlText) {
-    document.getHTML = function (who, deep) {
-        return document.documentElement.innerHTML;
-    };
     Array.prototype.unique = function (a) {
         return function () {
             return this.filter(a)
@@ -10,8 +7,7 @@ function playTheInternetParse(htmlText) {
         return c.indexOf(a) == b
     });
     if(htmlText == null) {
-        var html = document.getElementsByTagName('html')[0];
-        htmlText = document.getHTML(html, true);
+        htmlText = document.documentElement.innerHTML;
     }
     var youtube = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11})/g;
     var youtubeLinks = htmlText.match(youtube);
