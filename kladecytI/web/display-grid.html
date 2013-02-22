@@ -104,12 +104,8 @@
             initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
             yte.pla.addSongsToPlayList('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
         })
-        var composeHash = _.compose(function(hash) { return window.location + hash}, function() { return yte.pla.buildHash() })
-        var once = _.once(function() { console.log(composeHash()); return composeHash()})
         $('#buildHash').click(function() {
-//            console.log(yte.pla.buildHash())
-            $('#buildHashInput').val('')
-            $('#buildHashInput').val(once())
+            $('#buildHashInput').val(window.location.origin + yte.pla.buildHash())
         })
 
         window.intercom = new Intercom()

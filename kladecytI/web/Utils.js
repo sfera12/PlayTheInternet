@@ -91,7 +91,7 @@ function Playlist(appendToElementExpression) {
         })
     }
 
-    this.buildHash = function() {
+    Playlist.prototype.buildHash = function() {
         return "#" + _.reduce(this.playlistSongIds(), function(memo, videoId) {
             return memo.concat("y=" + videoId + ",")
         }, "")
