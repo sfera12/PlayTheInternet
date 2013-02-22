@@ -46,11 +46,13 @@
         intercom.emit('parent', {sender: windowId, message: window.location.hash});
     })
     $(document).ready(function () {
-        intercom.emit('windowId', { sender:windowId })
-        setTimeout(function() {
+        var drawWindows = function() {
             intercom.emit('windowId', { sender:windowId })
-        }, 1000)
-
+            setTimeout(function() {
+                drawWindows()
+            }, 2000)
+        }
+        drawWindows()
     })
 </script>
 </body>
