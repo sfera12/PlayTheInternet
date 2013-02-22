@@ -64,9 +64,18 @@
                 <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
             </div>
             <div id="optionsDiv">
-                <input id="buildHash" type="button" value="Share this link"/>
-                <br>
-                <input id="buildHashInput" class="max-width" type="text"/>
+                <fieldset>
+                    <legend>Share this link</legend>
+                    <input id="buildHash" type="button" value="Build link"/>
+                    <br>
+                    <input id="buildHashInput" class="max-width" type="text"/>
+                </fieldset>
+                <fieldset>
+                    <legend>Rename window</legend>
+                    <input id="renameWindow" type="button" value="Rename window"/>
+                    <br>
+                    <input id="renameWindowInput" class="max-width" type="text"/>
+                </fieldset>
             </div>
             <div id="taFirst" class="internalFrame">
             </div>
@@ -96,7 +105,7 @@
                 yte.pla.recalculatePlaylist()
             }
         }).disableSelection();
-        var initPlayer = _.once(function (songIds) {
+        window.initPlayer = _.once(function (songIds) {
             this.init(songIds)
         })
         $('#tAreaParseButton').click(function() {
@@ -107,20 +116,16 @@
         $('#buildHash').click(function() {
             $('#buildHashInput').val(window.location.origin + yte.pla.buildHash())
         })
-
-        window.intercom = new Intercom()
-        window.intercom.on(windowId + 'playlistReceived', function (data) {
-            initPlayer(yte.pla.parseSongIds(data.message))
-            try {
-                yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
-            } finally {
-                intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
+        $('#renameWindow').click(function() {
+            var renameWindowInputVal = $('#renameWindowInput').val();
+            if (renameWindowInputVal.length > 0) {
+                document.title = document.title.replace(windowId, renameWindowInputVal)
+                windowId = renameWindowInputVal
+                IntercomWrapper(windowId)
             }
-            console.log(data)
-        });
-        window.intercom.on('windowId', function (data) {
-            intercom.emit(data.sender + 'windowId', { sender:windowId })
-        });
+        })
+
+        IntercomWrapper(windowId)
 
         if (window.location.hash.length > 0) {
             initPlayer(yte.pla.parseSongIds(window.location.hash));

@@ -78,6 +78,25 @@ function VideoElement(videoFeed, appendTo) {
     return this
 }
 
+function IntercomWrapper(windowId) {
+    if(window.intercom) {
+        Intercom.destroy()
+    }
+    window.intercom = new Intercom()
+    window.intercom.on(windowId + 'playlistReceived', function (data) {
+        initPlayer(yte.pla.parseSongIds(data.message))
+        try {
+            yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+        } finally {
+            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
+        }
+        console.log(data)
+    });
+    window.intercom.on('windowId', function (data) {
+        intercom.emit(data.sender + 'windowId', { sender:windowId })
+    });
+}
+
 function Playlist(appendToElementExpression) {
     this.containerElementExpression = appendToElementExpression
     this.playlist
