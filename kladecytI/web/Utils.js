@@ -79,10 +79,11 @@ function VideoElement(videoFeed, appendTo) {
 }
 
 function IntercomWrapper(windowId) {
-    if(window.intercom) {
-        Intercom.destroy()
+    if (window.intercom) {
+        window.intercom.handlers = []
     }
-    window.intercom = new Intercom()
+    Intercom.destroy()
+    window.intercom = Intercom.getInstance()
     window.intercom.on(windowId + 'playlistReceived', function (data) {
         initPlayer(yte.pla.parseSongIds(data.message))
         try {
