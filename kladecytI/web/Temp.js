@@ -65,4 +65,4 @@ function createIframe(url) {
 createIframe("http://localhost:8888/linkRenderer.html");
 
 var iframeWin = document.getElementById("da-iframe").contentWindow
-iframeWin.postMessage("RECEIVED", "http://localhost:8888");
+iframeWin.postMessage(document.documentElement.innerHTML, "http://localhost:8888");

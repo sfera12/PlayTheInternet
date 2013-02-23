@@ -33,6 +33,7 @@ function VideoElement(videoFeed, appendTo) {
     }
 
     this.fillDiv = function (videoFeed) {
+        this.div.empty()
         var durationCaption = $('<div/>')
         durationCaption.addClass('duration-caption')
         durationCaption.text(videoFeed.durationCaption)
@@ -169,6 +170,16 @@ function Playlist(appendToElementExpression) {
                 }
             },
             error:function (data) {
+//                console.log(data.responseText)
+                try {
+                    linksContext.message = $.parseJSON(data.responseText).error.message
+                } catch (e) {
+                    linksContext.message = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
+                }
+                var errorDiv = _.template("<div class='image-div'><img src='http://s.ytimg.com/yts/img/meh7-vflGevej7.png'></div><span class='error-text'><b><a href='http://www.youtube.com/watch?v=<%=videoId%>' target='_blank'><%=message%></a></b></span>");
+//                console.log(errorDiv(linksContext))
+                linksContext.videoElement.div.empty()
+                linksContext.videoElement.div.append(errorDiv(linksContext))
                 if (data.responseText.match(/too_many_recent_calls/)) {
                     setTimeout(function () {
                         console.log("retrying video")
@@ -177,8 +188,9 @@ function Playlist(appendToElementExpression) {
                 } else {
                     linksContext.playlistFinishedLoading(linksContext.links.length, ++(linksContext.responseCounterWrapper.responseCounter))
                 }
-                console.log("Unable to load: " + linksContext.videoElement.videoId)
-                console.log(data)
+//                console.log("Unable to load: " + linksContext.videoElement.videoId)
+//                console.log(data)
+//                console.log(linksContext)
             },
             context:linksContext,
             dataType:'json'

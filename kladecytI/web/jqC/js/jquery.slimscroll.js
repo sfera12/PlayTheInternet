@@ -12,7 +12,7 @@
 
       var defaults = {
         wheelStep : 20,
-        width : 'auto',
+//        width : 'auto',
         height : '250px',
         size : '7px',
         color: '#000',
@@ -88,7 +88,7 @@
           .addClass(o.wrapperClass)
           .css({
             position: 'relative',
-            overflow: 'hidden',
+//            overflow: 'hidden',
             width: o.width,
             height: o.height
           });

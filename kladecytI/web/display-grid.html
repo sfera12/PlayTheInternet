@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Play The Internet</title>
+    <meta charset="utf-8">
+    <title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
-	<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
+    <link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
     <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
     <!--<script src="jqC/development-bundle/jquery-1.7.1.js"></script>-->
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>-->
-	<!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
-	<!--<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>-->
-	<!--<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>-->
-	<!--<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>-->
-	<!--<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>-->
+    <!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
+    <!--<script src="jqC/development-bundle/ui/jquery.ui.widget.js"></script>-->
+    <!--<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>-->
+    <!--<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>-->
+    <!--<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script src="jqC/js/jquery-ui-1.10.1.js"></script>
     <script src="Utils.js"></script>
     <script src="parse.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
-	<style>
-		/*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
-		#first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
-		#firstView, #secondView { width: 80%; background-color: red }*/
-/*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
-		body { height: 100%; }
+    <style>
+            /*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
+           #first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+           #firstView, #secondView { width: 80%; background-color: red }*/
+            /*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
+        body { height: 100%; }
         .taArea {width: 98%; height: 200px; }
         .max-width {width: 98% }
         .auto {width: auto; height: auto;}
-		#dPLists { position:absolute; float: left; width: 99.2%; height: 98.8%; }
-		#firstView, #secondView { float: left; width: 50%; height: 100%; }
+        #dPLists { position: fixed; float: left; width: 99.2%; height: 98.8%; }
+        #firstView, #secondView { float: left; width: 50%; height: 100%; }
+        .slimScrollDiv { float:left; width: 100%; height: 100%; }
+        .ui-sortable-helper { width: 49.6%; }
         .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
         .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: hidden; }
-/*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
-		#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
+            /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
+        #ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
         .selected { background-image:url(/selected.png)}
-		.image-div { float: left; position: relative; width: 123px; height: 90px; }
-		#ulFirst img, #ulSecond img { float: left; height: 90px; }
-		.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
-		#ulFirst span, #ulSecond span { left: 128px; top: 5px; word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
-	    .disabled-Video { opacity: 0.4 }
+        .image-div { float: left; position: relative; width: 123px; height: 90px; }
+        #ulFirst img, #ulSecond img { float: left; height: 90px; }
+        .duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+        #ulFirst span, #ulSecond span { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
+        .error-text { position: relative; left: 10px; top:35%; }
+        .disabled-Video { opacity: 0.4 }
     </style>
-	<script>
+    <script>
 
-	</script>
+    </script>
 </head>
 <body>
 <div id="dPLists">
@@ -79,9 +82,9 @@
             </div>
             <div id="taFirst" class="internalFrame">
             </div>
-            <div id="ulFirst" class="">
-            </div>
             <div id="youtube"></div>
+        </div>
+        <div id="ulFirst" class="connectedSortable playlistFrame">
         </div>
     </div>
 
@@ -95,7 +98,7 @@
     var videoFeeds = new Array()
     var videoElements = new Array()
 
-	$(document).ready(function () {
+    $(document).ready(function () {
         $("#ulFirst, #ulSecond").sortable({
             connectWith: '.connectedSortable',
             scrollSensitivity:50,
@@ -114,7 +117,7 @@
             yte.pla.addSongsToPlayList('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
         })
         $('#buildHash').click(function() {
-            $('#buildHashInput').val(window.location.origin + yte.pla.buildHash())
+            $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ yte.pla.buildHash())
         })
         $('#renameWindow').click(function() {
             var renameWindowInputVal = $('#renameWindowInput').val();
@@ -137,19 +140,21 @@
 
     var intercom
     var windowId = GUID()
+//    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
     var ytPlayerHolder
     var init = function (songIds) {
-        yte.pla.addSongsToPlayList("#ulSecond", songIds,
-            function () {
+//        yte.pla.addSongsToPlayList("#ulFirst", songIds)
+        yte.pla.addSongsToPlayList("#ulSecond", songIds
+            ,function () {
                 ytPlayerHolder = $('#firstView')
                 yte.drawPlayer("youtube");
             }
         )
     };
 
-    var setSlimScroll = function() {
-        $('#ulSecond').slimScroll({
+    var setSlimScroll = function(id) {
+        $(id).slimScroll({
             height: window.innerHeight - 15,
             color: '#0BB3E6',
             railVisible: true,
@@ -157,7 +162,8 @@
             disableFadeOut: true
         });
     }
-    setSlimScroll()
+//        setSlimScroll('#ulFirst')
+        setSlimScroll('#ulSecond')
     var resizeApp = function() {
         yte.resizePlayer(ytPlayerHolder);
         $('.slimScrollDiv').css("height", window.innerHeight - 15);
@@ -185,113 +191,113 @@
 </script>
 
 <script>
-	var uploadVideo = function() {
-		var feedRequest = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry></feed>'
-		$.ajax({
-			// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-			// url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-			url : 'kladecyt',
-			type: 'POST',
-			headers: { 'Bearer': gAuth},
-			data: feedRequest,
-			success : function(){ alert('success')},
-			error : aError
-		})
-	}
+    var uploadVideo = function() {
+        var feedRequest = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry></feed>'
+        $.ajax({
+            // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+            // url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+            url : 'kladecyt',
+            type: 'POST',
+            headers: { 'Bearer': gAuth},
+            data: feedRequest,
+            success : function(){ alert('success')},
+            error : aError
+        })
+    }
 
-	var batchWrapper = function() {
-		setTimeout(batch, "60000")
-	}
+    var batchWrapper = function() {
+        setTimeout(batch, "60000")
+    }
 
-	var batchI = 0;
-	var batch = function() {
-		if(batchI < 200 && batchI < songs.length) {
-			console.log('batchI ' + batchI)
-			console.log('songs.length ' + songs.length)
-			var feedStart = '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/>'
-			var feedEnd = '</feed>'
-			var end = batchI + 40
-			for (var i=batchI; i < end && i < songs.length && i < 200; i++, batchI++) {
-				var entry = '<entry><batch:operation type="insert"/><id>' + songs[i] + '</id></entry>'
-				feedStart += entry
-			};
-			console.log(feedStart + feedEnd)
-			$.ajax({
-				// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-				// url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-				url : 'kladecyt',
-				type: 'POST',
-				headers: { 'Bearer': gAuth},
-				data: feedStart + feedEnd,
-				success : batchWrapper,
-				error : aError
-			})
-		} else {
-			console.log('done with')
-			console.log('batchI ' + batchI)
-			console.log('songs.length ' + songs.length)
-		}
-	}
+    var batchI = 0;
+    var batch = function() {
+        if(batchI < 200 && batchI < songs.length) {
+            console.log('batchI ' + batchI)
+            console.log('songs.length ' + songs.length)
+            var feedStart = '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/>'
+            var feedEnd = '</feed>'
+            var end = batchI + 40
+            for (var i=batchI; i < end && i < songs.length && i < 200; i++, batchI++) {
+                var entry = '<entry><batch:operation type="insert"/><id>' + songs[i] + '</id></entry>'
+                feedStart += entry
+            };
+            console.log(feedStart + feedEnd)
+            $.ajax({
+                // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+                // url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+                url : 'kladecyt',
+                type: 'POST',
+                headers: { 'Bearer': gAuth},
+                data: feedStart + feedEnd,
+                success : batchWrapper,
+                error : aError
+            })
+        } else {
+            console.log('done with')
+            console.log('batchI ' + batchI)
+            console.log('songs.length ' + songs.length)
+        }
+    }
 
-	var related = function(maxRes) {
-		if(recDepth > 0) {
-			$.each(currIteration, function(index, currId) {
-				// console.log('related ' + currIteration.length)
-				$.ajax({
-					// async: false,
-					// url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-					url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-					// dataType : 'json',
-					success : addSongs,
-					error : aError
-				})
-			});
-		} else {
-			console.log(songs.length)
-			console.log(songs.unique().length)
-			songs = songs.unique()
-			batch(0)
-		}
-	}
+    var related = function(maxRes) {
+        if(recDepth > 0) {
+            $.each(currIteration, function(index, currId) {
+                // console.log('related ' + currIteration.length)
+                $.ajax({
+                    // async: false,
+                    // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
+                    url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
+                    // dataType : 'json',
+                    success : addSongs,
+                    error : aError
+                })
+            });
+        } else {
+            console.log(songs.length)
+            console.log(songs.unique().length)
+            songs = songs.unique()
+            batch(0)
+        }
+    }
 
 
 
-	var addSongs = function(data) {
-		currLength++
-		$.each(data.data.items, function(index, item) {
-			songs.push(item.id)
-			nextIteration.push(item.id)
-			console.log(item.id)
-		})
-		// console.log('addSongs ' + currIteration.length)
-		if(currLength == currIteration.length) {
-			currLength = 0
-			console.log('currIteration')
-			recDepth--
-			currIteration = nextIteration
-			nextIteration = []
-			related(maxRes)
-		}
-	}
+    var addSongs = function(data) {
+        currLength++
+        $.each(data.data.items, function(index, item) {
+            songs.push(item.id)
+            nextIteration.push(item.id)
+            console.log(item.id)
+        })
+        // console.log('addSongs ' + currIteration.length)
+        if(currLength == currIteration.length) {
+            currLength = 0
+            console.log('currIteration')
+            recDepth--
+            currIteration = nextIteration
+            nextIteration = []
+            related(maxRes)
+        }
+    }
 
-	var vId = $('#iCriteria').attr('value')
-	var maxRes = 15;
-	var recDepth = 2;
+    var vId = $('#iCriteria').attr('value')
+    var maxRes = 15;
+    var recDepth = 2;
 
-	var currIteration = []
-	var currLength = 0;
-	var nextIteration = []
-	var songs = new Array()
+    var currIteration = []
+    var currLength = 0;
+    var nextIteration = []
+    var songs = new Array()
 
-	songs.push(vId)
-	currIteration.push(vId)
-	$("#iRelated").click(function() {
-		related(maxRes)
-	});
+    songs.push(vId)
+    currIteration.push(vId)
+    $("#iRelated").click(function() {
+        related(maxRes)
+    });
 
-	$("#iUploadVideo").click(function() {
-		uploadVideo()
-	});
+    $("#iUploadVideo").click(function() {
+        uploadVideo()
+    });
 
     $('#tabs').tabs({
 //        activate: function( event, ui ) { alert('activate')}
