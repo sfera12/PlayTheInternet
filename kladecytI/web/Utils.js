@@ -178,8 +178,7 @@ function Playlist(appendToElementExpression) {
                 }
                 var errorDiv = _.template("<div class='image-div'><img src='http://s.ytimg.com/yts/img/meh7-vflGevej7.png'></div><span class='error-text'><b><a href='http://www.youtube.com/watch?v=<%=videoId%>' target='_blank'><%=message%></a></b></span>");
 //                console.log(errorDiv(linksContext))
-                linksContext.videoElement.div.empty()
-                linksContext.videoElement.div.append(errorDiv(linksContext))
+                linksContext.videoElement.div.html(errorDiv(linksContext))
                 if (data.responseText.match(/too_many_recent_calls/)) {
                     setTimeout(function () {
                         console.log("retrying video")
