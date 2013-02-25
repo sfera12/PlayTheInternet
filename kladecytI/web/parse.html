@@ -21,7 +21,7 @@
 <div id="dPLists">
     <div id="firstView">
         <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
-            <a id="nwWndFirst">Open in new window</a>
+            <a href="thisislink" id="nwWndFirst">Open in new window</a>
         </div>
         <div id="ulFirst" class="connectedSortable parsePlaylistFrame">
         </div>
@@ -29,7 +29,7 @@
 
     <div id="secondView">
         <div id="ctrlSecond" class="ctrlSecond" style="height: 12%;">
-            <a id="nwWndSecond">Open in new window</a>
+            <a href="thisislink" id="nwWndSecond">Open in new window</a>
         </div>
         <div id="ulSecond" class="connectedSortable parsePlaylistFrame">
         </div>
@@ -51,37 +51,47 @@
     var intercom = Intercom.getInstance();
     var ctrlFirst = $('#ctrlFirst')
     var ctrlSecond = $('#ctrlSecond')
+    var videoIds = function(elementExpression) {
+        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.videoId }).toArray()
+    }
     intercom.on(windowId + 'windowId', function(data) {
         if(!($('input[value=' + data.sender + ']').size())) {
             var input = $('<input type="button"/>')
             input.val(data.sender)
             input.click(function () {
-                var ids = $("#ulFirst > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.videoId }).toArray()
+                var ids = videoIds("#ulFirst")
                 console.log(ids)
                 intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids});
             })
-            ctrlsBar.append(input)
+            ctrlFirst.append(input)
+            var input = $('<input type="button"/>')
+            input.val(data.sender)
+            input.click(function () {
+                var ids = videoIds("#ulSecond")
+                console.log(ids)
+                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids});
+            })
+            ctrlSecond.append(input)
         }
     });
     intercom.on(windowId + 'playlistReceived', function(data) {
         var div = $('div:contains(' + data.sender + ')')
         div.css("color", "green")
         setTimeout(function() {
-            window.close()
+//            window.close()
         }, 3000)
     })
-    var generateHref = function (elementExpression, url) {
+    var generateHref = function (elementExpression, containerElementExpression) {
         var proceed = $(elementExpression)
-        proceed.attr("href", url)
         proceed.attr("target", "_blank")
         proceed.css("font-size", "medium")
         proceed.click(function () {
+            proceed.attr("href", "/display-grid.html#y=" + videoIds(containerElementExpression).join(",y="))
             setTimeout(function () {
-                window.close()
+//                window.close()
             }, 10000)
         })
     }
-    generateHref("#nwWndFirst", "/display-grid.html" + window.location.hash)
     $('#addChannel').click(function() {
         intercom.emit('parent', {sender: windowId, message: window.location.hash});
     })
@@ -93,6 +103,8 @@
             }, 2000)
         }
         drawWindows()
+        generateHref("#nwWndFirst", "#ulFirst")
+        generateHref("#nwWndSecond", "#ulSecond")
     })
 </script>
 </body>
