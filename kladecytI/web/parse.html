@@ -3,26 +3,64 @@
 <head>
     <meta charset="utf-8">
     <title>jQuery UI Sortable - Display as grid</title>
-    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
     <script src="Utils.js"></script>
-
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
+    <script src="jqC/js/jquery-ui-1.10.1.js"></script>
+    <link rel="stylesheet" href="playlist.css"/>
+    <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+    <link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
+    <style>
+        .parsePlaylistFrame {  float: left; width: 100%; height: 87%; overflow-x: hidden; overflow-y: hidden;  }
+    </style>
 </head>
 <body>
-<a id="proceed" href="" target="_blank">Open in new Window</a>    <br>
-<a id="addChannel">Add to current Playlist</a>
+<!--<a id="proceed" href="" target="_blank">Open in new Window</a>    <br>-->
+<!--<a id="addChannel">Add to current Playlist</a>-->
+<div id="dPLists">
+    <div id="firstView">
+        <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
+            <a id="nwWndFirst">Open in new window</a>
+        </div>
+        <div id="ulFirst" class="connectedSortable parsePlaylistFrame">
+        </div>
+    </div>
+
+    <div id="secondView">
+        <div id="ctrlSecond" class="ctrlSecond" style="height: 12%;">
+            <a id="nwWndSecond">Open in new window</a>
+        </div>
+        <div id="ulSecond" class="connectedSortable parsePlaylistFrame">
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#ulFirst, #ulSecond").sortable({
+        connectWith:'.connectedSortable',
+        scrollSensitivity:50,
+        tolerance:'pointer',
+        distance:25})
+    var plt = new Playlist("#ulFirst")
+    //todo solve the unique true issue
+    plt.addSongsToPlaylist("#ulFirst", plt.parseSongIds(window.location.hash))
+</script>
 <script>
     var windowId = GUID();
     var intercom = Intercom.getInstance();
-
+    var ctrlFirst = $('#ctrlFirst')
+    var ctrlSecond = $('#ctrlSecond')
     intercom.on(windowId + 'windowId', function(data) {
-        if(!($('div:contains(' + data.sender + ')').size())) {
-            var div = $('<div/>')
-            div.text(data.sender)
-            div.click(function () {
-                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message:window.location.hash});
+        if(!($('input[value=' + data.sender + ']').size())) {
+            var input = $('<input type="button"/>')
+            input.val(data.sender)
+            input.click(function () {
+                var ids = $("#ulFirst > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.videoId }).toArray()
+                console.log(ids)
+                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids});
             })
-            $('body').append(div)
+            ctrlsBar.append(input)
         }
     });
     intercom.on(windowId + 'playlistReceived', function(data) {
@@ -35,13 +73,15 @@
     var generateHref = function (elementExpression, url) {
         var proceed = $(elementExpression)
         proceed.attr("href", url)
+        proceed.attr("target", "_blank")
+        proceed.css("font-size", "medium")
         proceed.click(function () {
             setTimeout(function () {
                 window.close()
             }, 10000)
         })
     }
-    generateHref("#proceed", "/display-grid.html" + window.location.hash)
+    generateHref("#nwWndFirst", "/display-grid.html" + window.location.hash)
     $('#addChannel').click(function() {
         intercom.emit('parent', {sender: windowId, message: window.location.hash});
     })

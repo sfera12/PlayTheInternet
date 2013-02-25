@@ -21,30 +21,31 @@
     <script type="text/javascript" src="swfobject.js"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+    <link rel="stylesheet" href="playlist.css">
     <style>
             /*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
            #first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
            #firstView, #secondView { width: 80%; background-color: red }*/
             /*		#firstView, #secondView { overflow: scroll; width: 100%; height: 45%; }*/
-        body { height: 100%; }
-        .taArea {width: 98%; height: 200px; }
-        .max-width {width: 98% }
-        .auto {width: auto; height: auto;}
-        #dPLists { position: fixed; float: left; width: 99.2%; height: 98.8%; }
-        #firstView, #secondView { float: left; width: 50%; height: 100%; }
-        .slimScrollDiv { float:left; width: 100%; height: 100%; }
-        .ui-sortable-helper { width: 49.6%; }
-        .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
-        .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: hidden; }
+        /*body { height: 100%; }*/
+        /*.taArea {width: 98%; height: 200px; }*/
+        /*.max-width {width: 98% }*/
+        /*.auto {width: auto; height: auto;}*/
+        /*#dPLists { position: fixed; float: left; width: 99.2%; height: 98.8%; }*/
+        /*#firstView, #secondView { float: left; width: 50%; height: 100%; }*/
+        /*.slimScrollDiv { float:left; width: 100%; height: 100%; }*/
+        /*.ui-sortable-helper { width: 49.6%; }*/
+        /*.internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }*/
+        /*.playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: hidden; }*/
             /*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
-        #ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }
-        .selected { background-image:url(/selected.png)}
-        .image-div { float: left; position: relative; width: 123px; height: 90px; }
-        #ulFirst img, #ulSecond img { float: left; height: 90px; }
-        .duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
-        #ulFirst span, #ulSecond span { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
-        .error-text { position: relative; left: 10px; top:35%; }
-        .disabled-Video { opacity: 0.4 }
+        /*#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 49.6%; height: 90px;  }*/
+        /*.selected { background-image:url(/selected.png)}*/
+        /*.image-div { float: left; position: relative; width: 123px; height: 90px; }*/
+        /*#ulFirst img, #ulSecond img { float: left; height: 90px; }*/
+        /*.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }*/
+        /*#ulFirst span, #ulSecond span { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }*/
+        /*.error-text { position: relative; left: 10px; top:35%; }*/
+        /*.disabled-Video { opacity: 0.4 }*/
     </style>
     <script>
 
@@ -114,7 +115,7 @@
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
-            yte.pla.addSongsToPlayList('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
+            yte.pla.addSongsToPlaylist('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
         })
         $('#buildHash').click(function() {
             $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ yte.pla.buildHash())
@@ -145,7 +146,7 @@
     var ytPlayerHolder
     var init = function (songIds) {
 //        yte.pla.addSongsToPlayList("#ulFirst", songIds)
-        yte.pla.addSongsToPlayList("#ulSecond", songIds
+        yte.pla.addSongsToPlaylist("#ulSecond", songIds
             ,function () {
                 ytPlayerHolder = $('#firstView')
                 yte.drawPlayer("youtube");

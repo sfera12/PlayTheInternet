@@ -86,9 +86,9 @@ function IntercomWrapper(windowId) {
     Intercom.destroy()
     window.intercom = Intercom.getInstance()
     window.intercom.on(windowId + 'playlistReceived', function (data) {
-        initPlayer(yte.pla.parseSongIds(data.message))
+        initPlayer(data.message)
         try {
-            yte.pla.addSongsToPlayList("#ulSecond", yte.pla.parseSongIds(data.message), null, true)
+            yte.pla.addSongsToPlaylist("#ulSecond", data.message, null, true)
         } finally {
             intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
         }
@@ -124,7 +124,7 @@ function Playlist(appendToElementExpression) {
         return this.playlist[index]
     }
 
-    this.addSongsToPlayList = function (appendToElementExpression, links, finished, unique) {
+    this.addSongsToPlaylist = function (appendToElementExpression, links, finished, unique) {
         var responseCounterWrapper = {
             responseCounter:0
         }
@@ -145,7 +145,7 @@ function Playlist(appendToElementExpression) {
 
         links.forEach(function (videoId) {
             var videoElement = new VideoElement(null, appendToElementExpression)
-            videoElements.push(videoElement)
+//            videoElements.push(videoElement)
             var linksContext = {
                 responseCounterWrapper:responseCounterWrapper,
                 videoElement:videoElement,
