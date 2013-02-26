@@ -90,7 +90,7 @@ function IntercomWrapper(windowId) {
         try {
             yte.pla.addSongsToPlaylist("#ulSecond", data.message, null, true)
         } finally {
-            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, type:'playlistReceived', status:'success'})
+            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl: data.ctrl, type:'playlistReceived', status:'success'})
         }
         console.log(data)
     });

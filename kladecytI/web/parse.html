@@ -63,22 +63,20 @@
             input.val(data.sender)
             input.click(function () {
                 var ids = videoIds("#ulFirst")
-                console.log(ids)
-                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids});
+                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlFirst"});
             })
             ctrlFirst.append(input)
             var input = $('<input type="button"/>')
             input.val(data.sender)
             input.click(function () {
                 var ids = videoIds("#ulSecond")
-                console.log(ids)
-                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids});
+                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlSecond"});
             })
             ctrlSecond.append(input)
         }
     });
     intercom.on(windowId + 'playlistReceived', function(data) {
-        var div = $('div:contains(' + data.sender + ')')
+        var div = $( data.ctrl + ' > input[value=' + data.sender + ']')
         div.css("color", "green")
         setTimeout(function() {
             window.close()
