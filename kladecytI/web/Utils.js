@@ -281,6 +281,16 @@ function GUID() {
         );
 }
 
+
+var setSlimScroll = function(elementExpression, height) {
+    $(elementExpression).slimScroll({
+        height: height,
+        color: '#0BB3E6',
+        railVisible: true,
+        railColor: '#000000',
+        disableFadeOut: true
+    });
+}
 function convert(duration) {
     var tbl = [
         [ 7 * 24 * 60 * 60, 'week' ],

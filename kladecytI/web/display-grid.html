@@ -167,21 +167,12 @@
         )
     };
 
-    var setSlimScroll = function(id) {
-        $(id).slimScroll({
-            height: window.innerHeight - 15,
-            color: '#0BB3E6',
-            railVisible: true,
-            railColor: '#000000',
-            disableFadeOut: true
-        });
-    }
 //        setSlimScroll('#ulFirst')
-        setSlimScroll('#ulSecond')
+        setSlimScroll('#ulSecond', "100%")
     var resizeApp = function() {
         yte.resizePlayer(ytPlayerHolder);
-        $('.slimScrollDiv').css("height", window.innerHeight - 15);
-        $('#ulSecond').css("height", window.innerHeight - 15);
+//        $('.slimScrollDiv').css("height", window.innerHeight - 15);
+//        $('#ulSecond').css("height", window.innerHeight - 15);
     }
 
 
