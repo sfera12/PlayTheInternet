@@ -78,8 +78,8 @@
         var div = $('div:contains(' + data.sender + ')')
         div.css("color", "green")
         setTimeout(function() {
-//            window.close()
-        }, 3000)
+            window.close()
+        }, 10000)
     })
     var generateHref = function (elementExpression, containerElementExpression) {
         var proceed = $(elementExpression)
@@ -88,7 +88,7 @@
         proceed.click(function () {
             proceed.attr("href", "/display-grid.html#y=" + videoIds(containerElementExpression).join(",y="))
             setTimeout(function () {
-//                window.close()
+                window.close()
             }, 10000)
         })
     }
