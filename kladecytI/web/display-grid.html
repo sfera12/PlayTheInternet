@@ -191,7 +191,9 @@
     }
 
     function onError() {
-        yte.onStateChange(0)
+        setTimeout(function () {
+            yte.onStateChange(0)
+        }, 2000)
     }
 
 </script>
