@@ -9,12 +9,12 @@ function playTheInternetParse(htmlText) {
     if(htmlText == null) {
         htmlText = document.documentElement.innerHTML;
     }
-    var youtube = /((youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.]{11}))|(soundcloud.com\/)([^ ?]+)/g;
+    var youtube = /((youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11}))|((soundcloud.com\/)|(a class="soundTitle__title.*href="))([^ ,?"]+)/g;
     var youtubeLinks = htmlText.match(youtube);
     var uTubeLinks = youtubeLinks.unique();
     var result = '';
     for (var i = 0; i < uTubeLinks.length; i++) {
-        result += uTubeLinks[i].replace(youtube, function(match) {console.log(match.replace(youtube, '$4'));return match.replace(youtube, '$4') != '' ? match.replace(youtube, 'y=$4') : match.replace(youtube, 's=$6')
+        result += uTubeLinks[i].replace(youtube, function(match) {console.log(match.replace(youtube, '$4'));return match.replace(youtube, '$4') != '' ? match.replace(youtube, 'y=$4') : match.replace(youtube, 's=$8')
         }) + ',';
     }
     return result;
