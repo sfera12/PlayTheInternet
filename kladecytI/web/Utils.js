@@ -25,7 +25,7 @@ function VideoElement(videoFeed, appendTo) {
 
     this.createDiv = function (videoFeed) {
         this.div = $('<div/>')
-        this.div.addClass('ui-state-default')
+        this.div.addClass('pti-state-default')
         $(appendTo).append(this.div)
         if (videoFeed != null) {
             this.fillDiv(videoFeed)
@@ -56,7 +56,7 @@ function VideoElement(videoFeed, appendTo) {
         imgDiv.append(img)
         imgDiv.append(durationCaption)
         this.div.append(imgDiv)
-        this.div.append(buttonSpan)
+//        this.div.append(buttonSpan)
         this.div.append(span)
         this.div.click(function (evt) {
             yte.playVideoDiv(this.div[0])
@@ -88,7 +88,7 @@ function IntercomWrapper(windowId) {
     window.intercom.on(windowId + 'playlistReceived', function (data) {
         initPlayer(data.message)
         try {
-            yte.pla.addSongsToPlaylist("#ulSecond", data.message, null, true)
+            yte.pla.addSongsToPlaylist(data.message, null, true)
         } finally {
             intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl: data.ctrl, type:'playlistReceived', status:'success'})
         }
@@ -124,7 +124,7 @@ function Playlist(appendToElementExpression) {
         return this.playlist[index]
     }
 
-    this.addSongsToPlaylist = function (appendToElementExpression, links, finished, unique) {
+    this.addSongsToPlaylist = function (links, finished, unique) {
         var responseCounterWrapper = {
             responseCounter:0
         }
@@ -144,7 +144,7 @@ function Playlist(appendToElementExpression) {
         }
 
         links.forEach(function (videoId) {
-            var videoElement = new VideoElement(null, appendToElementExpression)
+            var videoElement = new VideoElement(null, this.containerElementExpression)
 //            videoElements.push(videoElement)
             var linksContext = {
                 responseCounterWrapper:responseCounterWrapper,
@@ -155,7 +155,7 @@ function Playlist(appendToElementExpression) {
                 retryCounter:0
             }
             loadVideo(linksContext);
-        })
+        }.bind(this))
     }
 
     function loadVideo(linksContext) {
@@ -205,9 +205,13 @@ function Playlist(appendToElementExpression) {
     }
 
     this.playlistSongIds = function () {
-        return this.playlist.map(function (index, div) {
-            return $(div).data('videoFeed').videoId
-        }).toArray()
+        if (this.playlist) {
+            return this.playlist.map(function (index, div) {
+                return $(div).data('videoFeed').videoId
+            }).toArray()
+        } else {
+            return new Array()
+        }
     }
 }
 
@@ -236,7 +240,7 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.resizePlayer = function (ytPlayerHolder) {
-        var playerWidth = ytPlayerHolder.width() - 9
+        var playerWidth = ytPlayerHolder.width()
         var playerHeight = parseInt(playerWidth / 1.19)
         var ytplayer = $('#ytplayer')
         ytplayer.width(playerWidth)

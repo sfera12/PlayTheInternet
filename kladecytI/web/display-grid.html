@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
-    <link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
-    <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
-    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
     <!--<script src="jqC/development-bundle/jquery-1.7.1.js"></script>-->
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>-->
     <!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
@@ -14,15 +11,125 @@
     <!--<script src="jqC/development-bundle/ui/jquery.ui.mouse.js"></script>-->
     <!--<script src="jqC/development-bundle/ui/jquery.ui.sortable.js"></script>-->
     <!--<script src="jqC/development-bundle/ui/jquery.ui.position.js"></script>-->
+
+    <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
+    <!--<link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">-->
+    <!--<link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">-->
+    <!--<link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css">    -->
+    <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
+    <link rel="stylesheet" href="bootswatch/cosmo.css">
+    <!--<link rel="stylesheet" href="https://raw.github.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
+
+    <script src="bootstrapCustom/js/bootstrap.js"></script>
+    <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
+    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
     <script src="Utils.js"></script>
     <script src="parse.js"></script>
     <script type="text/javascript" src="swfobject.js"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
-    <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
     <link rel="stylesheet" href="playlist.css">
     <style>
+        /*.nav-pills > .active > a {*/
+            /*background-color: rgb(51, 0, 255)*/
+            /*background-color: #6589ca;*/
+        /*}*/
+        /*.custom > li > a:hover {*/
+            /*color: white;*/
+            /*background-color:rgb(0, 133, 255);*/
+            /*background-image:url(/selected.png);*/
+            /*margin-right: 0px;*/
+        /*}*/
+
+        .pti-state-default {
+            background-color: #f1f1f1;
+        }
+
+        .pti-state-default > span, .pti-state-default:hover > span {
+            color: #007FFF;
+            /*color: black;*/
+        }
+
+        /*.pti-state-default:hover {*/
+                     /*color: #007FFF;*/
+                     /*color: black;*/
+        /*}*/
+
+
+
+
+        .pti-state-default:hover {
+            background-color: #D4FFF7;
+            color: #007FFF
+        }
+
+        .pti-state-default:hover > span {
+            color: #007FFF
+        }
+
+
+
+        .selected, .selected:hover {
+            background-color: #007FFF;
+        }
+
+        .post-hover {
+            background-color: rgb(220, 220, 220)
+        }
+
+
+        .selected > span, .selected:hover > span {
+            color: white;
+        }
+
+        /*.hover {*/
+            /*background-color: #d4fff7;*/
+        /*}*/
+
+        .nav-pills > li > a {
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            color: #007fff;
+            /*background-color: #F1F1F1;*/
+            /*background-color: #FFFFFF;*/
+            /*background-color:rgb(0, 133, 255);*/
+            /*background: #e6e6e6*//*{bgColorDefault}*//* url(jqC/development-bundle/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png)*//*{bgImgUrlDefault}*//* 50%*//*{bgDefaultXPos}*//* 50%*//*{bgDefaultYPos}*//* repeat-x*//*{bgDefaultRepeat}*//*;*/
+        }
+        .nav-pills > li > a:focus {
+            background-color: #FFFFFF;
+        }
+
+        /*.active {*/
+            /*outline: none;*/
+        /*}*/
+
+        .nav > .active > a, .nav > .active > a > div, .nav > .active > a:hover, .nav > .active > a:hover > div{
+            outline:none;
+        }
+
+        .nav-pills > .active > a > div, .nav-pills > .active > a:hover > div {
+            color: #ffffff;
+            background-color: #007fff;
+        }
+
+        .nav-pills > li > a:hover, .nav-pills > li > a:hover > div  {
+            /*margin-right: 0px;*/
+            /*background-color:rgb(0, 133, 255);*/
+            background-color: #d4fff7;
+            /*background-color: #b7fff2;*/
+            color: #007fff;
+            /*color: rgb(0, 127, 255);*/
+            /*background: #e6e6e6*//*{bgColorDefault}*//* url(jqC/development-bundle/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png)*//*{bgImgUrlDefault}*//* 50%*//*{bgDefaultXPos}*//* 50%*//*{bgDefaultYPos}*//* repeat-x*//*{bgDefaultRepeat}*//*;*/
+        }
+
+
+
+            /*.active {*/
+            /*background: "";*/
+        /*}*/
+
             /*#menu, #first, #second { list-style-type: none; margin: 0; padding: 0; float: left;}
            #first li, #second li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
            #firstView, #secondView { width: 80%; background-color: red }*/
@@ -67,11 +174,12 @@
 </script>
 <div id="dPLists">
     <div id="firstView">
-        <div id="tabs">
-            <ul>
-                <li><a href="#player">Player</a></li>
-                <li><a href="#tAreaDiv">Text Area</a></li>
-                <li><a href="#optionsDiv">Options</a></li>
+        <div id="tabs" class="playlistFrame">
+            <ul style="height: 0px;" class="nav nav-pills">
+                <li class="active"><a href="#player">Player<div id="podPlayer" style="position: fixed; z-index: -1; left: 0px; width: 65px;"></div></a></li>
+                <li><a href="#tAreaDiv">Text Area<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
+                <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
+                <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
             </ul>
             <div id="player">
             </div>
@@ -80,7 +188,7 @@
                 <br>
                 <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
             </div>
-            <div id="optionsDiv">
+            <div id="optionsDiv" class="playlistFrame">
                 <fieldset>
                     <legend>Share this link</legend>
                     <input id="buildHash" type="button" value="Build link"/>
@@ -94,11 +202,12 @@
                     <input id="renameWindowInput" class="max-width" type="text"/>
                 </fieldset>
             </div>
-            <div id="taFirst" class="internalFrame">
+            <div id="recycleBinDiv" class="playlistFrame">
+                <div id="ulFirst" class="connectedSortable playlistFrame"></div>
             </div>
+            <!--<div id="taFirst" class="playlistFrame internalFrame">-->
+            <!--</div>-->
             <div id="youtube"></div>
-        </div>
-        <div id="ulFirst" class="connectedSortable playlistFrame">
         </div>
     </div>
 
@@ -109,11 +218,42 @@
 </div>
 
 <script>
+var gimpedAnimation = [
+    {nav:"#player", fixed:"#podPlayer"},
+    {nav:"#tAreaDiv", fixed:"#podTa"},
+    {nav:"#optionsDiv", fixed:"#podOptions"},
+    {nav:"#recycleBinDiv", fixed:"#podBin"}
+]
+
+fc = 220
+
+$.each(gimpedAnimation, function (index, item) {
+    var rgb = function (number) {
+        console.log(number)
+        return 'rgb(' + number + ', ' + number + ', ' + number + ')'
+    }
+    $('a[href="' + item.nav + '"]').mouseenter(function (event, ui) {
+        $(item.fixed).animate({height:"100%"}, { queue:false, duration:500})
+    }).mouseleave(function (event, ui) {
+                $(item.fixed).animate({
+                    height:"0%"
+                }, 600, 'linear', function () {
+                    $('a[href="' + item.nav + '"]').removeClass('post-hover')
+                });
+                $(item.fixed).addClass('post-hover')
+                $('a[href="' + item.nav + '"]').addClass('post-hover')
+            });
+})
+
     var videoFeeds = new Array()
     var videoElements = new Array()
 
     $(document).ready(function () {
         $("#ulFirst, #ulSecond").sortable({
+//            create: function(event, ui) {
+//                var that = this;
+//                $('.ui-state-default', that).addClass('pti-state-default');
+//            },
             connectWith: '.connectedSortable',
             scrollSensitivity:50,
             tolerance:'pointer',
@@ -128,7 +268,7 @@
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
-            yte.pla.addSongsToPlaylist('#ulSecond', yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
+            yte.pla.addSongsToPlaylist(yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
         })
         $('#buildHash').click(function() {
             $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ yte.pla.buildHash())
@@ -159,12 +299,10 @@
     var ytPlayerHolder
     var init = function (songIds) {
 //        yte.pla.addSongsToPlayList("#ulFirst", songIds)
-        yte.pla.addSongsToPlaylist("#ulSecond", songIds
-            ,function () {
-                ytPlayerHolder = $('#firstView')
-                yte.drawPlayer("youtube");
-            }
-        )
+        yte.pla.addSongsToPlaylist(songIds, function () {
+            ytPlayerHolder = $('#firstView')
+            yte.drawPlayer("youtube");
+        })
     };
 
 //        setSlimScroll('#ulFirst')
@@ -308,7 +446,12 @@
     });
 
     $('#tabs').tabs({
-//        activate: function( event, ui ) { alert('activate')}
+        activate: function( event, ui ) {
+            var newTab = $(ui.newTab);
+            console.log(newTab)
+            newTab.addClass('active')
+            $(ui.oldTab).removeClass('active')
+        }
     })
 </script>
 </body>

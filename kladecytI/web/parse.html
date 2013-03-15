@@ -45,7 +45,7 @@
         distance:25})
     var plt = new Playlist("#ulFirst")
     //todo solve the unique true issue
-    plt.addSongsToPlaylist("#ulFirst", plt.parseSongIds(window.location.hash))
+    plt.addSongsToPlaylist(plt.parseSongIds(window.location.hash))
     setSlimScroll("#ulFirst", "93.5%")
     setSlimScroll("#ulSecond", "93.5%")
 </script>
