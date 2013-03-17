@@ -143,65 +143,30 @@ function Playlist(appendToElementExpression) {
             })
         }
 
-        links.forEach(function (videoId) {
+        links.forEach(function (videoItem) {
             var videoElement = new VideoElement(null, this.containerElementExpression)
 //            videoElements.push(videoElement)
-            var linksContext = {
+            var linkContext = {
                 responseCounterWrapper:responseCounterWrapper,
                 videoElement:videoElement,
                 playlistFinishedLoading:playlistFinishedLoading,
                 links:links,
-                videoId:videoId,
+                videoItem:videoItem,
                 retryCounter:0
             }
-            loadVideo(linksContext);
+//            siteHandlerManager.getHandler(videoItem.type).loadVideoFeed(linkContext);
+            siteHandlerManager.loadVideoFeed(linkContext)
         }.bind(this))
     }
 
-    function loadVideo(linksContext) {
-        $.ajax({
-            url:"http://gdata.youtube.com/feeds/api/videos/" + linksContext.videoId + "?v=2&alt=jsonc",
-            success:function (data) {
-                try {
-                    var videoFeed = new VideoFeed(data.data)
-                    linksContext.videoElement.fillDiv(videoFeed)
-                } finally {
-                    linksContext.playlistFinishedLoading(linksContext.links.length, ++(linksContext.responseCounterWrapper.responseCounter))
-                }
-            },
-            error:function (data) {
-//                console.log(data.responseText)
-                try {
-                    linksContext.message = $.parseJSON(data.responseText).error.message
-                } catch (e) {
-                    linksContext.message = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
-                }
-                var errorDiv = _.template("<div class='image-div'><img src='http://s.ytimg.com/yts/img/meh7-vflGevej7.png'></div><span class='error-text'><b><a href='http://www.youtube.com/watch?v=<%=videoId%>' target='_blank'><%=message%></a></b></span>");
-//                console.log(errorDiv(linksContext))
-                linksContext.videoElement.div.html(errorDiv(linksContext))
-                if (data.responseText.match(/too_many_recent_calls/)) {
-                    setTimeout(function () {
-                        console.log("retrying video")
-                        loadVideo(linksContext)
-                    }, 10000)
-                } else {
-                    linksContext.playlistFinishedLoading(linksContext.links.length, ++(linksContext.responseCounterWrapper.responseCounter))
-                }
-//                console.log("Unable to load: " + linksContext.videoElement.videoId)
-//                console.log(data)
-//                console.log(linksContext)
-            },
-            context:linksContext,
-            dataType:'json'
-        })
-    }
-
     this.parseSongIds = function (text) {
-        var youtube = /y=([^ &\"\'<>\/\\,]{11})/g
+        var youtube = /([\w]+)=([^ &\"\'<>\/\\,]{11})/g
         var youtubeLinks = text.match(youtube)
-        return youtubeLinks.map(function (item) {
-            return item.replace(youtube, "$1")
-        }).unique()
+        return _.unique(youtubeLinks.map(function (item) {
+            return {"type":item.replace(youtube, "$1"), "id":item.replace(youtube, "$2") }
+        }), function (item) {
+            return item.type + item.id
+        })
     }
 
     this.playlistSongIds = function () {
