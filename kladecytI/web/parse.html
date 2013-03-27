@@ -55,22 +55,25 @@
     var intercom = Intercom.getInstance();
     var ctrlFirst = $('#ctrlFirst')
     var ctrlSecond = $('#ctrlSecond')
-    var videoIds = function(elementExpression) {
+    var videos = function(elementExpression) {
         return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
+    }
+    var videoIds = function(elementExpression) {
+        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.id }).toArray()
     }
     intercom.on(windowId + 'windowId', function(data) {
         if(!($('input[value=' + data.sender + ']').size())) {
             var input = $('<input type="button"/>')
             input.val(data.sender)
             input.click(function () {
-                var ids = videoIds("#ulFirst")
+                var ids = videos("#ulFirst")
                 intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlFirst"});
             })
             ctrlFirst.append(input)
             var input = $('<input type="button"/>')
             input.val(data.sender)
             input.click(function () {
-                var ids = videoIds("#ulSecond")
+                var ids = videos("#ulSecond")
                 intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlSecond"});
             })
             ctrlSecond.append(input)
