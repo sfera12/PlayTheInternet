@@ -255,7 +255,7 @@ function GUID() {
 var setSlimScroll = function(elementExpression, height) {
     $(elementExpression).slimScroll({
         height: height,
-        color: '#0BB3E6',
+        color: 'rgb(0, 50, 255)',
         railVisible: true,
         railColor: '#000000',
         disableFadeOut: true
