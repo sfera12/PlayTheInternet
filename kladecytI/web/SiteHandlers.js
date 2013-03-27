@@ -1,4 +1,4 @@
-siteHandlers = [new YoutubeHandler()]
+siteHandlers = [new YoutubeHandler(), new SoundCloudHandler()]
 
 siteHandlerManager = new SiteHandlerManager();
 
@@ -65,5 +65,14 @@ function YoutubeHandler() {
 
     YoutubeHandler.prototype.prefix = "y"
     YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11})/
-    YoutubeHandler.prototype.regexGroup = 4
+    YoutubeHandler.prototype.regexGroup = 3
+}
+
+function SoundCloudHandler() {
+    SoundCloudHandler.prototype.prefix = "s"
+    SoundCloudHandler.prototype.regex = /((soundcloud.com\/)|(a class="soundTitle__title.*href="))([^ ,?"]+)/
+    SoundCloudHandler.prototype.regexGroup = 4
+    SoundCloudHandler.prototype.loadVideoFeed = function() {
+
+    }
 }
