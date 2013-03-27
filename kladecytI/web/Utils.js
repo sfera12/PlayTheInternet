@@ -1,14 +1,15 @@
 function VideoFeed(item, parent) {
     if (item == null) throw "kladecyt: null vId argument in VideoFeed Constructor"
     if (item.thumbnail != null) {
-        this.videoId = item.id
+        this.id = item.id
+        this.type = item.type
         this.duration = item.duration
         this.durationCaption = convert(item.duration)
         this.title = item.title
         this.uploader = item.uploader
         this.thumbnail = item.thumbnail.sqDefault
     } else if (item.id.$t != "") {
-        this.videoId = item.id.$t.replace(/.*video\:(.*)/, "$1")
+        this.id = item.id.$t.replace(/.*video\:(.*)/, "$1")
         this.duration = item.media$group.media$content[0].duration
         this.durationCaption = convert(this.duration)
         this.title = item.title.$t
@@ -172,7 +173,7 @@ function Playlist(appendToElementExpression) {
     this.playlistSongIds = function () {
         if (this.playlist) {
             return this.playlist.map(function (index, div) {
-                return $(div).data('videoFeed').videoId
+                return $(div).data('videoFeed').id
             }).toArray()
         } else {
             return new Array()
@@ -201,7 +202,7 @@ function YoutubePlayer(ytp, pla) {
         var params = { allowScriptAccess:"always", allowFullScreen:"true" };
         var atts = { id:"ytplayer" };
         var playerWidth = ytPlayerHolder.width() - 9
-        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.videoId + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19), "8", null, null, params, atts);
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.id + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19), "8", null, null, params, atts);
     }
 
     this.resizePlayer = function (ytPlayerHolder) {
@@ -222,7 +223,7 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.playVideoFeed = function (videoFeed) {
-        var videoId = videoFeed.videoId
+        var videoId = videoFeed.id
         this.ytp.loadVideoById(videoId)
     }
 

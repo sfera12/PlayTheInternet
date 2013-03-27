@@ -30,6 +30,7 @@ function YoutubeHandler() {
             url:"http://gdata.youtube.com/feeds/api/videos/" + linksContext.videoItem.id + "?v=2&alt=jsonc",
             success:function (data) {
                 try {
+                    data.data.type = "y"
                     var videoFeed = new VideoFeed(data.data)
                     linksContext.videoElement.fillDiv(videoFeed)
                 } finally {

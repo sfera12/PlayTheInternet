@@ -56,7 +56,7 @@
     var ctrlFirst = $('#ctrlFirst')
     var ctrlSecond = $('#ctrlSecond')
     var videoIds = function(elementExpression) {
-        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.videoId }).toArray()
+        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
     }
     intercom.on(windowId + 'windowId', function(data) {
         if(!($('input[value=' + data.sender + ']').size())) {
