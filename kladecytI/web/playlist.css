@@ -8,13 +8,39 @@ body { height: 100%; }
 .ui-sortable-helper { width: 50%; }
 .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
 .playlistFrame { float: left; width: 100%; height: 99%; overflow-x: hidden; overflow-y: hidden; }
-/*		#ulFirst div, #ulSecond div { float: left; width: 49%; height: 90px; font-size: 4em; text-align: left;}*/
-#ulFirst .ui-state-default, #ulSecond .ui-state-default { float:left; cursor: default; width: 50%; height: 90px;  }
-#ulFirst .pti-state-default, #ulSecond .pti-state-default { float:left; cursor: default; width: 49.8%; height: 90px; margin: 0.1% }
-/*.pti-state-default, .pti-widget-content .pti-state-default, .pti-widget-header .pti-state-default { border: 1px solid #d3d3d3*//*{borderColorDefault}*//*; background: #e6e6e6*//*{bgColorDefault}*//* url(jqC/development-bundle/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png)*//*{bgImgUrlDefault}*//* 50%*//*{bgDefaultXPos}*//* 50%*//*{bgDefaultYPos}*//* repeat-x*//*{bgDefaultRepeat}*//*; font-weight: normal*//*{fwDefault}*//*; color: #555555*//*{fcDefault}*//*; }*/
-.pti-state-default, .pti-widget-content .pti-state-default, .pti-widget-header .pti-state-default { font-weight: normal/*{fwDefault}*/; color: #555555/*{fcDefault}*/; background-color: #f1f1f1;}
-/*.selected { background-image:url(/selected.png)}*/
-.selected { background-color: #007FFF;}
+.pti-state-default { float:left; cursor: default; width: 50%; height: 91px; }
+.pti-state-default > div { height: 90px; width:auto ; margin: 0.5px; }
+.pti-state-default { font-weight: normal/*{fwDefault}*/; color: #555555/*{fcDefault}*/; background-color: #f1f1f1;}
+.pti-state-default > div {
+    background-color: #f1f1f1;
+}
+
+.pti-state-default > div > span, .pti-state-default:hover > div > span {
+    color: #007FFF;
+}
+.pti-state-default:hover > div {
+    background-color: #D4FFF7;
+    color: #007FFF
+}
+
+.pti-state-default:hover > div > span {
+    color: #007FFF
+}
+
+.selected > div, .selected:hover > div {
+    background-color: #007FFF;
+}
+
+.post-hover {
+    background-color: rgb(220, 220, 220)
+}
+
+
+.selected > div> span, .selected:hover > div > span {
+    color: white;
+}
+
+.selected > div{ background-color: #007FFF;}
 .image-div { float: left; position: relative; width: 123px; height: 90px; }
 #ulFirst img, #ulSecond img { float: left; height: 90px; }
 .duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }

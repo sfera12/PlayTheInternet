@@ -1,31 +1,10 @@
-function VideoFeed(item, parent) {
-    if (item == null) throw "kladecyt: null vId argument in VideoFeed Constructor"
-    if (item.thumbnail != null) {
-        this.id = item.id
-        this.type = item.type
-        this.duration = item.duration
-        this.durationCaption = convert(item.duration)
-        this.title = item.title
-        this.uploader = item.uploader
-        this.thumbnail = item.thumbnail.sqDefault
-    } else if (item.id.$t != "") {
-        this.id = item.id.$t.replace(/.*video\:(.*)/, "$1")
-        this.duration = item.media$group.media$content[0].duration
-        this.durationCaption = convert(this.duration)
-        this.title = item.title.$t
-        this.uploader = item.author[0].name.$t
-        this.thumbnail = item.media$group.media$thumbnail[0].url
-    } else {
-        this.error = "incompatible type"
-        console.log("incompatible type" + item)
-    }
-}
-
 function VideoElement(videoFeed, appendTo) {
     var div
+    var childDiv
 
     this.createDiv = function (videoFeed) {
-        this.div = $('<div/>')
+        this.childDiv = $('<div/>')
+        this.div = $('<div/>').append(this.childDiv)
         this.div.addClass('pti-state-default')
         $(appendTo).append(this.div)
         if (videoFeed != null) {
@@ -34,7 +13,7 @@ function VideoElement(videoFeed, appendTo) {
     }
 
     this.fillDiv = function (videoFeed) {
-        this.div.empty()
+        this.childDiv.empty()
         var durationCaption = $('<div/>')
         durationCaption.addClass('duration-caption')
         durationCaption.text(videoFeed.durationCaption)
@@ -56,17 +35,17 @@ function VideoElement(videoFeed, appendTo) {
 
         imgDiv.append(img)
         imgDiv.append(durationCaption)
-        this.div.append(imgDiv)
-//        this.div.append(buttonSpan)
-        this.div.append(span)
-        this.div.click(function (evt) {
+        this.childDiv.append(imgDiv)
+//        this.childDiv.append(buttonSpan)
+        this.childDiv.append(span)
+        this.childDiv.click(function (evt) {
             yte.playVideoDiv(this.div[0])
         }.bind(this))
         closeButton.click(function (evt) {
             evt.stopPropagation()
             this.toggleClass("disabled-Video")
             yte.pla.recalculatePlaylist()
-        }.bind(this.div))
+        }.bind(this.childDiv))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
@@ -78,6 +57,29 @@ function VideoElement(videoFeed, appendTo) {
     this.createDiv(videoFeed)
 
     return this
+}
+
+function VideoFeed(item, parent) {
+    if (item == null) throw "kladecyt: null vId argument in VideoFeed Constructor"
+    if (item.thumbnail != null) {
+        this.id = item.id
+        this.type = item.type
+        this.duration = item.duration
+        this.durationCaption = convert(item.duration)
+        this.title = item.title
+        this.uploader = item.uploader
+        this.thumbnail = item.thumbnail.sqDefault
+    } else if (item.id.$t != "") {
+        this.id = item.id.$t.replace(/.*video\:(.*)/, "$1")
+        this.duration = item.media$group.media$content[0].duration
+        this.durationCaption = convert(this.duration)
+        this.title = item.title.$t
+        this.uploader = item.author[0].name.$t
+        this.thumbnail = item.media$group.media$thumbnail[0].url
+    } else {
+        this.error = "incompatible type"
+        console.log("incompatible type" + item)
+    }
 }
 
 function IntercomWrapper(windowId) {
