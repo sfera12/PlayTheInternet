@@ -222,6 +222,9 @@ $.each(gimpedAnimation, function (index, item) {
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
+        $('#ulFirst, #ulSecond').bind('PlayVideo', function(evt) {
+            yte.playVideoDiv(evt.target)
+        })
         $(window).resize(resizeApp)
         yte.resizePlayer(ytPlayerHolder)
     }

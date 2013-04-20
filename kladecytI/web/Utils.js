@@ -1,10 +1,9 @@
 function VideoElement(videoFeed, appendTo) {
     var div
-    var childDiv
 
     this.createDiv = function (videoFeed) {
-        this.childDiv = $('<div/>')
-        this.div = $('<div/>').append(this.childDiv)
+        var childDiv = $('<div/>')
+        this.div = $('<div/>').append(childDiv)
         this.div.addClass('pti-state-default')
         $(appendTo).append(this.div)
         if (videoFeed != null) {
@@ -13,7 +12,8 @@ function VideoElement(videoFeed, appendTo) {
     }
 
     this.fillDiv = function (videoFeed) {
-        this.childDiv.empty()
+        this.div.empty()
+        childDiv = $('<div/>').appendTo(this.div)
         var durationCaption = $('<div/>')
         durationCaption.addClass('duration-caption')
         durationCaption.text(videoFeed.durationCaption)
@@ -35,17 +35,20 @@ function VideoElement(videoFeed, appendTo) {
 
         imgDiv.append(img)
         imgDiv.append(durationCaption)
-        this.childDiv.append(imgDiv)
-//        this.childDiv.append(buttonSpan)
-        this.childDiv.append(span)
-        this.childDiv.click(function (evt) {
-            yte.playVideoDiv(this.div[0])
+        childDiv.append(imgDiv)
+//        childDiv.append(buttonSpan)
+        childDiv.append(span)
+        childDiv.click(function (evt) {
+//            yte.playVideoDiv(this.div[0])
+            var evObj = document.createEvent('HTMLEvents');
+            evObj.initEvent('PlayVideo', true, true);
+            this.div[0].dispatchEvent(evObj); // Shows alert, "true"
         }.bind(this))
         closeButton.click(function (evt) {
             evt.stopPropagation()
             this.toggleClass("disabled-Video")
             yte.pla.recalculatePlaylist()
-        }.bind(this.childDiv))
+        }.bind(childDiv))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
@@ -93,7 +96,7 @@ function IntercomWrapper(windowId) {
         try {
             yte.pla.addSongsToPlaylist(data.message, null, true)
         } finally {
-            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl: data.ctrl, type:'playlistReceived', status:'success'})
+            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl:data.ctrl, type:'playlistReceived', status:'success'})
         }
         console.log(data)
     });
@@ -115,8 +118,8 @@ function Playlist(appendToElementExpression) {
         })
     }
 
-    Playlist.prototype.buildHash = function() {
-        return "#" + _.reduce(this.playlistSongIds(), function(memo, videoId) {
+    Playlist.prototype.buildHash = function () {
+        return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
             return memo.concat("y=" + videoId + ",")
         }, "")
     }
@@ -254,13 +257,13 @@ function GUID() {
 }
 
 
-var setSlimScroll = function(elementExpression, height) {
+var setSlimScroll = function (elementExpression, height) {
     $(elementExpression).slimScroll({
-        height: height,
-        color: 'rgb(0, 50, 255)',
-        railVisible: true,
-        railColor: '#000000',
-        disableFadeOut: true
+        height:height,
+        color:'rgb(0, 50, 255)',
+        railVisible:true,
+        railColor:'#000000',
+        disableFadeOut:true
     });
 }
 function convert(duration) {

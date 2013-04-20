@@ -1,11 +1,12 @@
 function playTheInternetParseTemp(htmlText) {
-    Array.prototype.unique = function (a) {
-        return function () {
-            return this.filter(a)
+    Array.prototype.unique = function(){
+        var r = [];
+        for(var i = 0; i < this.length; i++){
+            if( r.indexOf(this[i]) == -1 )
+                r.push( this[i] );
         }
-    }(function (a, b, c) {
-        return c.indexOf(a) == b
-    });
+        return r;
+    };
     if(htmlText == null) {
         htmlText = document.documentElement.innerHTML;
     }
