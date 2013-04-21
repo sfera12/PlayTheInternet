@@ -1,3 +1,9 @@
+var onceLoaded = _.once(function(videoDiv) {
+    yte.pla.currSong = videoDiv
+    console.log('onceLoaded')
+    playFirstLoaded();
+})
+
 function VideoElement(videoFeed, appendTo) {
     var div
 
@@ -53,6 +59,8 @@ function VideoElement(videoFeed, appendTo) {
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
         this.div.data("videoFeed", videoFeed)
+        onceLoaded(this.div)
+        SiteHandlerManager.prototype.setVideoFeed(videoFeed)
 
         return this.div
     }
@@ -94,7 +102,7 @@ function IntercomWrapper(windowId) {
     window.intercom.on(windowId + 'playlistReceived', function (data) {
         initPlayer(data.message)
         try {
-            yte.pla.addSongsToPlaylist(data.message, null, true)
+            yte.pla.addSongsToPlaylist(data.message, true)
         } finally {
             intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl:data.ctrl, type:'playlistReceived', status:'success'})
         }
@@ -130,18 +138,7 @@ function Playlist(appendToElementExpression) {
         return this.playlist[index]
     }
 
-    this.addSongsToPlaylist = function (links, finished, unique) {
-        var responseCounterWrapper = {
-            responseCounter:0
-        }
-        var playlistFinishedLoading = function (playlistSize, current) {
-            if (playlistSize == current) {
-                this.recalculatePlaylist()
-                if (finished != null) {
-                    finished()
-                }
-            }
-        }.bind(this)
+    this.addSongsToPlaylist = function (links, unique) {
         if (unique == true) {
             var oldLinks = this.playlistSongIds()
             links = links.filter(function (newId) {
@@ -153,10 +150,7 @@ function Playlist(appendToElementExpression) {
             var videoElement = new VideoElement(null, this.containerElementExpression)
 //            videoElements.push(videoElement)
             var linkContext = {
-                responseCounterWrapper:responseCounterWrapper,
                 videoElement:videoElement,
-                playlistFinishedLoading:playlistFinishedLoading,
-                links:links,
                 videoItem:videoItem,
                 retryCounter:0
             }
@@ -197,25 +191,16 @@ function YoutubePlayer(ytp, pla) {
     this.setPlayer = function (ytp) {
         if (ytp != null) {
             this.ytp = ytp
-            this.playVideoDiv(this.pla.currSong)
         }
     }
 
     this.drawPlayer = function (appendToElementId) {
-        this.pla.currSong = this.pla.playlist[0]
-        var videoFeed = $(this.pla.currSong).data("videoFeed")
+//        this.pla.currSong = this.pla.playlist[0]
+//        var videoFeed = $(this.pla.currSong).data("videoFeed")
         var params = { allowScriptAccess:"always", allowFullScreen:"true" };
         var atts = { id:"ytplayer" };
-        var playerWidth = ytPlayerHolder.width() - 9
-        swfobject.embedSWF("http://www.youtube.com/v/" + videoFeed.id + "?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19), "8", null, null, params, atts);
-    }
-
-    this.resizePlayer = function (ytPlayerHolder) {
-        var playerWidth = ytPlayerHolder.width()
-        var playerHeight = parseInt(playerWidth / 1.19)
-        var ytplayer = $('#ytplayer')
-        ytplayer.width(playerWidth)
-        ytplayer.height(playerHeight)
+        var playerWidth = $('#firstView').width() - 9
+        swfobject.embedSWF("http://www.youtube.com/v/MK6TXMsvgQg?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19), "8", null, null, params, atts);
     }
 
     this.playVideoDiv = function (videoDiv) {

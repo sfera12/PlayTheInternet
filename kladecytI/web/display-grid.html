@@ -19,7 +19,7 @@
     <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
     <link rel="stylesheet" href="bootswatch/cosmo.css">
     <!--<link rel="stylesheet" href="https://raw.github.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
-
+    <script src="js/datajs.js"></script>
     <script src="bootstrapCustom/js/bootstrap.js"></script>
     <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
     <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
@@ -120,6 +120,12 @@
 </div>
 
 <script>
+
+    var playFirstLoaded = _.after(2, function() {
+        console.log('playFirstLoaded')
+        yte.playVideoDiv(yte.pla.currSong)
+    })
+
 var gimpedAnimation = [
     {nav:"#player", fixed:"#podPlayer"},
     {nav:"#tAreaDiv", fixed:"#podTa"},
@@ -147,9 +153,6 @@ $.each(gimpedAnimation, function (index, item) {
             });
 })
 
-    var videoFeeds = new Array()
-    var videoElements = new Array()
-
     $(document).ready(function () {
         $("#ulFirst, #ulSecond").sortable({
 //            create: function(event, ui) {
@@ -170,7 +173,7 @@ $.each(gimpedAnimation, function (index, item) {
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
-            yte.pla.addSongsToPlaylist(yte.pla.parseSongIds(playTheInternetParse(tAreaText)), null, true)
+            yte.pla.addSongsToPlaylist(yte.pla.parseSongIds(playTheInternetParse(tAreaText)), true)
         })
         $('#buildHash').click(function() {
             $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ yte.pla.buildHash())
@@ -198,23 +201,14 @@ $.each(gimpedAnimation, function (index, item) {
     var windowId = GUID()
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
     var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
-    var ytPlayerHolder
+    yte.drawPlayer("youtube");
     var init = function (songIds) {
 //        yte.pla.addSongsToPlayList("#ulFirst", songIds)
-        yte.pla.addSongsToPlaylist(songIds, function () {
-            ytPlayerHolder = $('#firstView')
-            yte.drawPlayer("youtube");
-        })
+        yte.pla.addSongsToPlaylist(songIds)
     };
 
 //        setSlimScroll('#ulFirst')
-        setSlimScroll('#ulSecond', "100%")
-    var resizeApp = function() {
-        yte.resizePlayer(ytPlayerHolder);
-//        $('.slimScrollDiv').css("height", window.innerHeight - 15);
-//        $('#ulSecond').css("height", window.innerHeight - 15);
-    }
-
+    setSlimScroll('#ulSecond', "100%")
 
     function onYouTubePlayerReady(playerId) {
         ytPlayer = document.getElementById("ytplayer");
@@ -225,8 +219,7 @@ $.each(gimpedAnimation, function (index, item) {
         $('#ulFirst, #ulSecond').bind('PlayVideo', function(evt) {
             yte.playVideoDiv(evt.target)
         })
-        $(window).resize(resizeApp)
-        yte.resizePlayer(ytPlayerHolder)
+        playFirstLoaded();
     }
 
     function change(state) {
