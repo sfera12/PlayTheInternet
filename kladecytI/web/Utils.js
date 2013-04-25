@@ -1,5 +1,6 @@
 var onceLoaded = _.once(function(videoDiv) {
-    yte.pla.currSong = videoDiv
+    yte.pla.recalculatePlaylist()
+    yte.pla.currSong = yte.pla.playlist[0]
     console.log('onceLoaded')
     playFirstLoaded();
 })
@@ -60,6 +61,7 @@ function VideoElement(videoFeed, appendTo) {
 
         this.div.data("videoFeed", videoFeed)
         onceLoaded(this.div)
+        yte.pla.debounceRecalculatePlaylist()
         SiteHandlerManager.prototype.setVideoFeed(videoFeed)
 
         return this.div
@@ -126,6 +128,8 @@ function Playlist(appendToElementExpression) {
         })
     }
 
+    this.debounceRecalculatePlaylist = _.debounce(function() { this.recalculatePlaylist() }, 1000)
+
     Playlist.prototype.buildHash = function () {
         return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
             return memo.concat("y=" + videoId + ",")
@@ -133,7 +137,7 @@ function Playlist(appendToElementExpression) {
     }
 
     this.lookupNextSong = function (currSong) {
-        var index = this.playlist.toArray().indexOf(currSong)
+        var index = $('#ulSecond>div.selected').index()
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }

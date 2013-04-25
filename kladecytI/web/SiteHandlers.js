@@ -57,7 +57,7 @@ function YoutubeHandler() {
                     var videoFeed = new VideoFeed(data.data)
                     linksContext.videoElement.fillDiv(videoFeed)
                 } finally {
-                    linksContext.playlistFinishedLoading(linksContext.links.length, ++(linksContext.responseCounterWrapper.responseCounter))
+
                 }
             },
             error:function (data) {
@@ -75,8 +75,6 @@ function YoutubeHandler() {
                         console.log("retrying video")
                         YoutubeHandler.prototype.loadVideoFeed(linksContext)
                     }, 10000)
-                } else {
-                    linksContext.playlistFinishedLoading(linksContext.links.length, ++(linksContext.responseCounterWrapper.responseCounter))
                 }
 //                console.log("Unable to load: " + linksContext.videoElement.videoItem.id)
 //                console.log(data)
