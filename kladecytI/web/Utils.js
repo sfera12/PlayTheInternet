@@ -1,5 +1,4 @@
-var onceLoaded = _.once(function(videoDiv) {
-    yte.pla.recalculatePlaylist()
+var onceLoaded = _.once(function() {
     yte.pla.currSong = yte.pla.playlist[0]
     console.log('onceLoaded')
     playFirstLoaded();
@@ -60,7 +59,6 @@ function VideoElement(videoFeed, appendTo) {
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
         this.div.data("videoFeed", videoFeed)
-        onceLoaded(this.div)
         yte.pla.debounceRecalculatePlaylist()
         SiteHandlerManager.prototype.setVideoFeed(videoFeed)
 
@@ -128,7 +126,10 @@ function Playlist(appendToElementExpression) {
         })
     }
 
-    this.debounceRecalculatePlaylist = _.debounce(function() { this.recalculatePlaylist() }, 1000)
+    this.debounceRecalculatePlaylist = _.debounce(function() {
+        this.recalculatePlaylist()
+        window.onceLoaded()
+    }, 1000)
 
     Playlist.prototype.buildHash = function () {
         return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
