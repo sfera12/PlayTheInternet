@@ -129,7 +129,7 @@ function Playlist(appendToElementExpression) {
     this.debounceRecalculatePlaylist = _.debounce(function() {
         this.recalculatePlaylist()
         window.onceLoaded()
-    }, 1000)
+    }, 500)
 
     Playlist.prototype.buildHash = function () {
         return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
