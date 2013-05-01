@@ -25,6 +25,8 @@
     <tr>
         <a id="local">LOCAL</a>
         <br>
+        <a id="99">99</a>
+        <br>
         <a id="production">PlayTheInternet</a>
 
         <!-- \\todo add escaped characters for / -->
@@ -52,6 +54,11 @@
         $('#holder').attr('href', 'javascript: (function() {' + playTheInternetParse + openWindow + parsePage + ';parsePage()})()')
         $('#local').attr('href', $('#holder').attr('href')
                 .replace(/DOMAIN/g, 'http://localhost:8888')
+                .replace(/thisisregex/g, regexs)
+                .replace(/'matchfunction'/, matchFunction)
+        )
+        $('#99').attr('href', $('#holder').attr('href')
+                .replace(/DOMAIN/g, 'http://192.168.1.99:8888')
                 .replace(/thisisregex/g, regexs)
                 .replace(/'matchfunction'/, matchFunction)
         )

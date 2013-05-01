@@ -59,8 +59,8 @@ function VideoElement(videoFeed, appendTo) {
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
         this.div.data("videoFeed", videoFeed)
-        yte.pla.debounceRecalculatePlaylist()
         SiteHandlerManager.prototype.setVideoFeed(videoFeed)
+        yte.pla.debounceRecalculatePlaylist()
 
         return this.div
     }
@@ -126,10 +126,10 @@ function Playlist(appendToElementExpression) {
         })
     }
 
-    this.debounceRecalculatePlaylist = _.debounce(function() {
-        this.recalculatePlaylist()
-        window.onceLoaded()
-    }, 500)
+    this.debounceRecalculatePlaylist = _.debounce(function () {
+        this.recalculatePlaylist();
+        onceLoaded();
+    }, 300)
 
     Playlist.prototype.buildHash = function () {
         return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
