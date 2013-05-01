@@ -4,7 +4,8 @@ body { height: 100%; }
 .auto {width: auto; height: auto;}
 #dPLists { position: fixed; float: left; width: 100%; height: 98.8%; }
 #firstView, #secondView { float: left; width: 50%; height: 100%; }
-#ulSecond >:nth-child(1) >:first-child { margin-top: 0px!important; }
+#ulSecond >:nth-child(1) >:first-child, #ulSecond >:nth-child(2) >:first-child { margin-top: 0px!important; }
+#ulSecond >:nth-child(1) , #ulSecond >:nth-child(2) { height: 90px!important; }
 .slimScrollDiv { float:left; width: 100%; height: 100%; }
 .ui-sortable-helper { width: 50%; }
 .internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
