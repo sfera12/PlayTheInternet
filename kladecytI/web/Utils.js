@@ -44,12 +44,6 @@ function VideoElement(videoFeed, appendTo) {
         childDiv.append(imgDiv)
 //        childDiv.append(buttonSpan)
         childDiv.append(span)
-        childDiv.click(function (evt) {
-//            yte.playVideoDiv(this.div[0])
-            var evObj = document.createEvent('HTMLEvents');
-            evObj.initEvent('PlayVideo', true, true);
-            this.div[0].dispatchEvent(evObj); // Shows alert, "true"
-        }.bind(this))
         closeButton.click(function (evt) {
             evt.stopPropagation()
             this.toggleClass("disabled-Video")

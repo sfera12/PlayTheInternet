@@ -216,8 +216,9 @@ $.each(gimpedAnimation, function (index, item) {
         console.log("youtube Ready")
         yte.ytp.addEventListener("onStateChange", "change")
         yte.ytp.addEventListener("onError", "onError")
-        $('#ulFirst, #ulSecond').bind('PlayVideo', function(evt) {
-            yte.playVideoDiv(evt.target)
+        $('#ulFirst, #ulSecond').click(function(evt) {
+            yte.playVideoDiv($(evt.target).closest('div[class="pti-state-default"]'))
+
         })
         playFirstLoaded();
     }
