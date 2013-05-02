@@ -199,16 +199,18 @@ function YoutubePlayer(ytp, pla) {
         var params = { allowScriptAccess:"always", allowFullScreen:"true" };
         var atts = { id:"ytplayer" };
         var playerWidth = $('#firstView').width() - 9
-        swfobject.embedSWF("http://www.youtube.com/v/MK6TXMsvgQg?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.19), "8", null, null, params, atts);
+        swfobject.embedSWF("http://www.youtube.com/v/MK6TXMsvgQg?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.642), "8", null, null, params, atts);
     }
 
     this.playVideoDiv = function (videoDiv) {
-        $(this.pla.currSong).removeClass("selected")
-        this.pla.currSong = videoDiv
-        $(this.pla.currSong).addClass("selected")
         var videoFeed = $(videoDiv).data('videoFeed')
-        document.title = windowId + ' - ' + videoFeed.title
-        this.playVideoFeed(videoFeed)
+        if (videoFeed) {
+            $(this.pla.currSong).removeClass("selected")
+            this.pla.currSong = videoDiv
+            $(this.pla.currSong).addClass("selected")
+            document.title = windowId + ' - ' + videoFeed.title
+            this.playVideoFeed(videoFeed)
+        }
     }
 
     this.playVideoFeed = function (videoFeed) {

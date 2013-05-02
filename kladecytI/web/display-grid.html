@@ -218,7 +218,11 @@ $.each(gimpedAnimation, function (index, item) {
         yte.ytp.addEventListener("onError", "onError")
         $('#ulFirst, #ulSecond').click(function(evt) {
             yte.playVideoDiv($(evt.target).closest('div[class="pti-state-default"]'))
-
+        })
+        $(window).resize(function() {
+            var ytp = $(ytPlayer)
+            ytp.height(ytp.width() / 1.642)
+            console.log(ytp.height())
         })
         playFirstLoaded();
     }
