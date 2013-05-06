@@ -21,25 +21,34 @@ function SiteHandlerManager() {
             })
     }
 
+    SiteHandlerManager.prototype.getHandler = function(type) {
+        var handler = SiteHandlerManager.prototype.mapping[type]
+        if (handler) {
+            return handler
+        } else {
+            console.log('Missing site handler for type: ' + type)
+            console.log(type)
+            return null
+        }
+    }
+
     SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
         SiteHandlerManager.prototype.store.read(linkContext.videoItem.id, function (key, value) {
 //                console.log(value)
                 if (value != undefined) {
                     linkContext.videoElement.fillDiv(value)
                 } else {
-                    var handler = SiteHandlerManager.prototype.mapping[linkContext.videoItem.type]
-                    if (handler) {
-                        handler.loadVideoFeed(linkContext)
-                    } else {
-                        console.log('Missing site handler for type: ' + linkContext.videoItem.type)
-                        console.log(linkContext)
-                    }
+                    SiteHandlerManager.prototype.getHandler(linkContext.videoItem.type).loadVideoFeed(linkContext);
                 }
             },
             function (error) {
                 console.log(error)
                 console.log('error in reading videoFeed from dom store')
             })
+    }
+
+    SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {
+        SiteHandlerManager.prototype.getHandler(videoFeed.type).playVideoFeed(videoFeed)
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -88,13 +97,27 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.prefix = "y"
     YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11})/
     YoutubeHandler.prototype.regexGroup = 3
+    YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
+        var videoId = videoFeed.id
+        yte.ytp.loadVideoById(videoId)
+    }
 }
 
 function SoundCloudHandler() {
+    SoundCloudHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
     SoundCloudHandler.prototype.regex = /((soundcloud.com\/)|(a class="soundTitle__title.*href="))([^ ,?"]+)/
     SoundCloudHandler.prototype.regexGroup = 4
-    SoundCloudHandler.prototype.loadVideoFeed = function () {
-
+    SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
+        var container = linksContext.videoElement.div;
+        container.html(SoundCloudHandler.prototype.template(linksContext.videoItem))
+        container.data('videoFeed', linksContext.videoItem)
+//        console.log(linksContext)
+    }
+    SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
+        scWidget.load('https://w.soundcloud.com/player/?url=' + videoFeed.id, {callback: function() {
+            console.log('play')
+            scWidget.play()
+        }})
     }
 }

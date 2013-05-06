@@ -159,12 +159,8 @@ function Playlist(appendToElementExpression) {
     }
 
     this.parseSongIds = function (text) {
-        var youtube = /([\w]+)=([^ &\"\'<>\/\\,]{11})/g
-        var youtubeLinks = text.match(youtube)
-        return _.unique(youtubeLinks.map(function (item) {
-            return {"type":item.replace(youtube, "$1"), "id":item.replace(youtube, "$2") }
-        }), function (item) {
-            return item.type + item.id
+        return text.replace(/.*#/, '').split(',').map(function (item) {
+            return {type:item.replace(/=.*/, ''), id:item.replace(/.*=/, '')}
         })
     }
 
@@ -209,13 +205,8 @@ function YoutubePlayer(ytp, pla) {
             this.pla.currSong = videoDiv
             $(this.pla.currSong).addClass("selected")
             document.title = windowId + ' - ' + videoFeed.title
-            this.playVideoFeed(videoFeed)
+            SiteHandlerManager.prototype.playVideoFeed(videoFeed)
         }
-    }
-
-    this.playVideoFeed = function (videoFeed) {
-        var videoId = videoFeed.id
-        this.ytp.loadVideoById(videoId)
     }
 
     this.playNextVideo = function () {
