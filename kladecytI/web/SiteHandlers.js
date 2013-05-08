@@ -48,7 +48,44 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {
-        SiteHandlerManager.prototype.getHandler(videoFeed.type).playVideoFeed(videoFeed)
+        var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
+            if(siteHandler) {
+                SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
+                siteHandler.playVideoFeed(videoFeed)
+            }
+    }
+
+    SiteHandlerManager.prototype.hide = function(siteHandler) {
+        $('#' + siteHandler.playerContainer).width('0%')
+    }
+
+    SiteHandlerManager.prototype.show = function(siteHandler) {
+        $('#' + siteHandler.playerContainer).width('100%')
+    }
+
+    SiteHandlerManager.prototype.showPlayer = function(id) {
+        id = id.replace(/^#?(.*)/, '#$1')
+        id = $(id).attr('id')
+        $.each(siteHandlers, function(index, item) {
+            if(this.playerContainer) {
+                if(this.playerContainer == id) {
+                    SiteHandlerManager.prototype.show(this)
+                } else {
+                    this.stop()
+                    SiteHandlerManager.prototype.hide(this)
+                }
+            }
+        })
+    }
+
+    SiteHandlerManager.prototype.stateChange = function(state) {
+        if(state == "NEXT") {
+            yte.playNextVideo()
+        } else if (state == "ERROR") {
+            setTimeout(function () {
+                yte.playNextVideo()
+            }, 2000)
+        }
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -97,9 +134,13 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.prefix = "y"
     YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11})/
     YoutubeHandler.prototype.regexGroup = 3
+    YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
         var videoId = videoFeed.id
         yte.ytp.loadVideoById(videoId)
+    }
+    YoutubeHandler.prototype.stop = function() {
+        yte.ytp.stopVideo()
     }
 }
 
@@ -108,16 +149,19 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.prefix = "s"
     SoundCloudHandler.prototype.regex = /((soundcloud.com\/)|(a class="soundTitle__title.*href="))([^ ,?"]+)/
     SoundCloudHandler.prototype.regexGroup = 4
+    SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         var container = linksContext.videoElement.div;
         container.html(SoundCloudHandler.prototype.template(linksContext.videoItem))
         container.data('videoFeed', linksContext.videoItem)
-//        console.log(linksContext)
+        yte.pla.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
-        scWidget.load('https://w.soundcloud.com/player/?url=' + videoFeed.id, {callback: function() {
-            console.log('play')
+        scWidget.load('https://w.soundcloud.com/player/?url=' + videoFeed.id.replace(/^\/?(.*)/, '/$1'), {callback: function() {
             scWidget.play()
         }})
+    }
+    SoundCloudHandler.prototype.stop = function() {
+        scWidget.pause()
     }
 }

@@ -60,7 +60,14 @@
         return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
     }
     var videoIds = function(elementExpression) {
-        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return item.id }).toArray()
+        var ids = ""
+        $(elementExpression + ' > div').each(function (index, item) {
+            videoFeed = $(item).data('videoFeed')
+            if (videoFeed) {
+                ids += videoFeed.type + '=' + videoFeed.id + ','
+            }
+        })
+        return ids
     }
     intercom.on(windowId + 'windowId', function(data) {
         if(!($('input[value=' + data.sender + ']').size())) {
@@ -92,7 +99,7 @@
         proceed.attr("target", "_blank")
         proceed.css("font-size", "medium")
         proceed.click(function () {
-            proceed.attr("href", "/display-grid.html#y=" + videoIds(containerElementExpression).join(",y="))
+            proceed.attr("href", "/display-grid.html#" + videoIds(containerElementExpression))
             setTimeout(function () {
                 window.close()
             }, 10000)
