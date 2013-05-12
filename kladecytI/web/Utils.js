@@ -158,7 +158,7 @@ function Playlist(appendToElementExpression) {
         }.bind(this))
     }
 
-    this.parseSongIds = function (text) {
+    Playlist.prototype.parseSongIds = function (text) {
         return text.replace(/.*#/, '').split(',').map(function (item) {
             return {type:item.replace(/=.*/, ''), id:item.replace(/.*=/, '')}
         })

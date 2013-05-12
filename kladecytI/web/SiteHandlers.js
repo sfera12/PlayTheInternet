@@ -132,7 +132,7 @@ function YoutubeHandler() {
     }
 
     YoutubeHandler.prototype.prefix = "y"
-    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11})/
+    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,]{11})/
     YoutubeHandler.prototype.regexGroup = 3
     YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
@@ -147,8 +147,8 @@ function YoutubeHandler() {
 function SoundCloudHandler() {
     SoundCloudHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
-    SoundCloudHandler.prototype.regex = /((soundcloud.com\/)|(a class="soundTitle__title.*href="))([^ ,?"]+)/
-    SoundCloudHandler.prototype.regexGroup = 4
+    SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^\s,?"=&]+)/
+    SoundCloudHandler.prototype.regexGroup = 5
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         var container = linksContext.videoElement.div;
@@ -157,7 +157,11 @@ function SoundCloudHandler() {
         yte.pla.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
-        scWidget.load('https://w.soundcloud.com/player/?url=' + videoFeed.id.replace(/^\/?(.*)/, '/$1'), {callback: function() {
+        var playerUrl = 'https://w.soundcloud.com/player/?url='
+        var id = videoFeed.id.replace(/^\/?(.*)/, '/$1').replace(/\\/, '')
+        var url = playerUrl + id
+//        console.log(url)
+        scWidget.load(url, {callback: function() {
             scWidget.play()
         }})
     }
