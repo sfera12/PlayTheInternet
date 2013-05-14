@@ -1,11 +1,15 @@
 function playTheInternetParseTemp(htmlText) {
-    Array.prototype.unique = function(){
-        var r = [];
-        for(var i = 0; i < this.length; i++){
-            if( r.indexOf(this[i]) == -1 )
-                r.push( this[i] );
-        }
-        return r;
+    Array.prototype.unique = function () {
+        var newarr = [];
+        var unique = {};
+
+        this.forEach(function (item) {
+            if (!unique[item.id]) {
+                newarr.push(item);
+                unique[item.id] = item;
+            }
+        });
+        return newarr;
     };
     if(htmlText == null) {
         htmlText = document.documentElement.innerHTML;
@@ -13,14 +17,18 @@ function playTheInternetParseTemp(htmlText) {
     var youtube = /thisisregex/g;
     var local = /thisisregex/;
     var youtubeLinks = htmlText.match(youtube);
-    var uTubeLinks = youtubeLinks.unique();
-    var result = '';
-    for (var i = 0; i < uTubeLinks.length; i++) {
-        result += uTubeLinks[i].replace(local,
+    var result = new Array();
+    for (var i = 0; i < youtubeLinks.length; i++) {
+        youtubeLinks[i].replace(local,
         'matchfunction'
-        ) + ',';
+        );
     }
-    return result;
+    result = result.unique();
+    var hash = '';
+    result.forEach(function(item) {
+        hash += item.type + '=' + item.id + ',';
+    });
+    return hash;
 }
 
 (function () {
@@ -36,7 +44,7 @@ function playTheInternetParseTemp(htmlText) {
         var groupCount = regex.split('(').length - 1
         lastGroupCount = lastGroupCount + groupCount
         var prefix = item.__proto__.prefix;
-        return "if(match.match(local)[" + group + "] != undefined) { return match.replace(local, '" + prefix + "=$" + group + "')}"
+        return "if(match.match(local)[" + group + "] != undefined) { result.push({type: '" + prefix + "', id:  match.replace(local, '$" + group + "')})}"
     }).join(';')
     matchFunction = matchFunction + ifs + '}'
     var playTheInternetParseString = String(window.playTheInternetParseTemp)

@@ -63,7 +63,10 @@
                 .replace(/thisisregex/g, regexs)
                 .replace(/'matchfunction'/, matchFunction)
         )
-        $('#production').attr('href', $('#holder').attr('href').replace(/DOMAIN/g, 'http://playtheinternet.appspot.com'))
+        $('#production').attr('href', $('#holder').attr('href')
+                .replace(/DOMAIN/g, 'http://playtheinternet.appspot.com')
+                .replace(/thisisregex/g, regexs)
+                .replace(/'matchfunction'/, matchFunction))
     })
 </script>
 </body>

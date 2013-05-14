@@ -102,6 +102,7 @@
 <div style="position: relative; width: 100%">
     <textarea id="youtube" style="visibility: visible; position: relative;" class="go-left">
         http://www.youtu.be/00000000000
+        http://www.youtu.be%2F00000000000
         http://www.youtu.be%2F11111111111
         watch?v=22222222222
         http://www.youtube.com/embed/33333333333
@@ -126,7 +127,7 @@ describe("youtube", function () {
     it("http://www.youtube.com/watch?v=00000000000", function () {
         expect(youtube[0]).toEqual({type: "y", id: "00000000000"});
     });
-    it("http://www.youtu.be\u00252F11111111111", function () {
+    it("http://www.youtu.be\u00252F11111111111 (test for duplication too)", function () {
         expect(youtube[1]).toEqual({type: "y", id: "11111111111"});
     });
     it("watch?v=22222222222", function () {
