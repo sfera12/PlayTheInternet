@@ -1,4 +1,4 @@
-siteHandlers = [new YoutubeHandler(), new SoundCloudHandler()]
+siteHandlers = [new YoutubeHandler(), new SoundCloudHandler(), new VimeoHandler()]
 
 siteHandlerManager = new SiteHandlerManager();
 
@@ -145,10 +145,11 @@ function YoutubeHandler() {
 }
 
 function SoundCloudHandler() {
+    SoundCloudHandler.prototype.properties = { errorTimeout: null }
     SoundCloudHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
-    SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^\s,?"=&]+)/
-    SoundCloudHandler.prototype.regexGroup = 5
+    SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&]+)/
+    SoundCloudHandler.prototype.regexGroup = 4
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         var container = linksContext.videoElement.div;
@@ -158,14 +159,40 @@ function SoundCloudHandler() {
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
         var playerUrl = 'https://w.soundcloud.com/player/?url='
-        var id = videoFeed.id.replace(/^\/?(.*)/, '/$1').replace(/\\/, '')
+        var id = videoFeed.id.replace(/^\/?(.*)/, '/$1').replace(/\\/g, '')
         var url = playerUrl + id
 //        console.log(url)
+        clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
+        SoundCloudHandler.prototype.properties.errorTimeout = setTimeout(function() {
+            SiteHandlerManager.prototype.stateChange("ERROR")
+        }, 5000)
         scWidget.load(url, {callback: function() {
+            clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
             scWidget.play()
         }})
     }
     SoundCloudHandler.prototype.stop = function() {
         scWidget.pause()
     }
+}
+
+function VimeoHandler() {
+    VimeoHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"></div><span><b><%= id %></b></span></div>')
+    VimeoHandler.prototype.prefix = 'v'
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&]+)/
+    VimeoHandler.prototype.regexGroup = 1
+    VimeoHandler.prototype.playerContainer = 'todo'
+    VimeoHandler.prototype.loadVideoFeed = function(linksContext) {
+        var container = linksContext.videoElement.div;
+        container.html(VimeoHandler.prototype.template(linksContext.videoItem))
+        container.data('videoFeed', linksContext.videoItem)
+        yte.pla.debounceRecalculatePlaylist()
+    }
+    VimeoHandler.prototype.playVideoFeed = function(videoFeed) {
+        console.log('playing vimeo video feed')
+    }
+    VimeoHandler.prototype.stop = function() {
+        console.log('vimeo stop')
+    }
+//    VimeoHandler.prototype. =
 }
