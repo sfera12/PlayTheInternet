@@ -178,10 +178,11 @@ function SoundCloudHandler() {
 
 function VimeoHandler() {
     VimeoHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"></div><span><b><%= id %></b></span></div>')
+    VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
-    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&]+)/
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&\'\'<>\/\\.,\"]+)/
     VimeoHandler.prototype.regexGroup = 1
-    VimeoHandler.prototype.playerContainer = 'todo'
+    VimeoHandler.prototype.playerContainer = 'vimeoContainer'
     VimeoHandler.prototype.loadVideoFeed = function(linksContext) {
         var container = linksContext.videoElement.div;
         container.html(VimeoHandler.prototype.template(linksContext.videoItem))
@@ -189,7 +190,13 @@ function VimeoHandler() {
         yte.pla.debounceRecalculatePlaylist()
     }
     VimeoHandler.prototype.playVideoFeed = function(videoFeed) {
-        console.log('playing vimeo video feed')
+        var player = $f($('#vimeo')[0])
+        player.addEvent('ready', function(id) {
+            setTimeout(function() {$f(id).api('play')}, 1000);
+//            player.api('play')
+            console.log('play')
+        })
+        $('#' + VimeoHandler.prototype.playerContainer).empty().append(VimeoHandler.prototype.playerTemplate(videoFeed))
     }
     VimeoHandler.prototype.stop = function() {
         console.log('vimeo stop')
