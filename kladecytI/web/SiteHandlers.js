@@ -5,6 +5,7 @@ siteHandlerManager = new SiteHandlerManager();
 function SiteHandlerManager() {
     SiteHandlerManager.prototype.mapping = new Object();
     SiteHandlerManager.prototype.store = datajs.createStore('VideoId', 'dom')
+    SiteHandlerManager.prototype.errorTimeout
     SiteHandlerManager.prototype.getHandler = function (type) {
         return SiteHandlerManager.prototype.mapping[type]
     }
@@ -48,11 +49,12 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {
+        clearTimeout(SiteHandlerManager.prototype.errorTimeout)
         var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
-            if(siteHandler) {
-                SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
-                siteHandler.playVideoFeed(videoFeed)
-            }
+        if(siteHandler) {
+            SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
+            siteHandler.playVideoFeed(videoFeed)
+        }
     }
 
     SiteHandlerManager.prototype.hide = function(siteHandler) {
@@ -67,6 +69,9 @@ function SiteHandlerManager() {
         id = id.replace(/^#?(.*)/, '#$1')
         id = $(id).attr('id')
         $.each(siteHandlers, function(index, item) {
+            if(typeof(this.clearTimeout) == 'function') {
+                this.clearTimeout()
+            };
             if(this.playerContainer) {
                 if(this.playerContainer == id) {
                     SiteHandlerManager.prototype.show(this)
@@ -82,7 +87,7 @@ function SiteHandlerManager() {
         if(state == "NEXT") {
             yte.playNextVideo()
         } else if (state == "ERROR") {
-            setTimeout(function () {
+            SiteHandlerManager.prototype.errorTimeout = setTimeout(function () {
                 yte.playNextVideo()
             }, 2000)
         }
@@ -151,6 +156,9 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&]+)/
     SoundCloudHandler.prototype.regexGroup = 4
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
+    SoundCloudHandler.prototype.clearTimeout = function() {
+        clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
+    }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         var container = linksContext.videoElement.div;
         container.html(SoundCloudHandler.prototype.template(linksContext.videoItem))
@@ -178,11 +186,17 @@ function SoundCloudHandler() {
 
 function VimeoHandler() {
     VimeoHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"></div><span><b><%= id %></b></span></div>')
-    VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
+    VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
     VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&\'\'<>\/\\.,\"]+)/
     VimeoHandler.prototype.regexGroup = 1
     VimeoHandler.prototype.playerContainer = 'vimeoContainer'
+    VimeoHandler.prototype.playInterval
+    VimeoHandler.prototype.playTimeout
+    VimeoHandler.prototype.clearTimeout = function() {
+        clearInterval(VimeoHandler.prototype.playInterval)
+        clearTimeout(VimeoHandler.prototype.playTimeout)
+    }
     VimeoHandler.prototype.loadVideoFeed = function(linksContext) {
         var container = linksContext.videoElement.div;
         container.html(VimeoHandler.prototype.template(linksContext.videoItem))
@@ -190,16 +204,32 @@ function VimeoHandler() {
         yte.pla.debounceRecalculatePlaylist()
     }
     VimeoHandler.prototype.playVideoFeed = function(videoFeed) {
-        var player = $f($('#vimeo')[0])
-        player.addEvent('ready', function(id) {
-            setTimeout(function() {$f(id).api('play')}, 1000);
-//            player.api('play')
-            console.log('play')
-        })
         $('#' + VimeoHandler.prototype.playerContainer).empty().append(VimeoHandler.prototype.playerTemplate(videoFeed))
+        var player = $f($('#vimeo')[0])
+        VimeoHandler.prototype.playTimeout = setTimeout(function() {
+            clearInterval(VimeoHandler.prototype.playInterval)
+            SiteHandlerManager.prototype.stateChange("ERROR")
+        }, 5000)
+        player.addEvent('ready', function(id) {
+            clearInterval(VimeoHandler.prototype.playInterval)
+            player.addEvent('play', function () {
+//                console.log('playing')
+                clearInterval(VimeoHandler.prototype.playInterval)
+                clearTimeout(VimeoHandler.prototype.playTimeout)
+                player.addEvent('finish', function() {
+//                    console.log('finish')
+                    SiteHandlerManager.prototype.stateChange("NEXT")
+                })
+            })
+            VimeoHandler.prototype.playInterval = setInterval(function () {
+                player.api('play')
+//                console.log('interval')
+            }, 100)
+//            console.log('ready')
+        })
     }
     VimeoHandler.prototype.stop = function() {
-        console.log('vimeo stop')
+        $('#' + VimeoHandler.prototype.playerContainer).empty()
+//        console.log('empty')
     }
-//    VimeoHandler.prototype. =
 }
