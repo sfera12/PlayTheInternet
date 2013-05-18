@@ -209,8 +209,10 @@ function VimeoHandler() {
 //                console.log(JSON.stringify(data[0]))
                 data[0].type = VimeoHandler.prototype.prefix
                 var videoFeed = new VideoFeed(data[0])
-                container.html(VimeoHandler.prototype.completeTemplate(videoFeed))
-                container.data('videoFeed', videoFeed)
+                linksContext.videoElement.fillDiv(videoFeed)
+//                container.html(VimeoHandler.prototype.completeTemplate(videoFeed))
+//                container.data('videoFeed', videoFeed)
+
             },
             error: function(error) {
                 console.log('error in vimeoHandler loadVideoFeed start')
