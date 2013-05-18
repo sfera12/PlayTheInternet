@@ -93,6 +93,19 @@ function SiteHandlerManager() {
         }
     }
 
+    SiteHandlerManager.prototype.fillVideoElement = function(linkContext) {
+        var videoItem = linkContext.videoItem;
+        var videoFeed = linkContext.videoFeed;
+        var videoElement = linkContext.videoElement;
+        var handler = SiteHandlerManager.prototype.getHandler(videoItem.type);
+        if(videoFeed) {
+            videoElement.div.html(handler.completeTemplate(videoFeed))
+            SiteHandlerManager.prototype.setVideoFeed(videoFeed)
+        } else {
+            videoElement.div.html(handler.rawTemplate(videoItem))
+        }
+    }
+
     $.each(siteHandlers, function (index, item) {
         SiteHandlerManager.prototype.mapping[item.prefix] = item
     })
@@ -198,18 +211,19 @@ function VimeoHandler() {
         clearInterval(VimeoHandler.prototype.playInterval)
         clearTimeout(VimeoHandler.prototype.playTimeout)
     }
-    VimeoHandler.prototype.loadVideoFeed = function(linksContext) {
-        var container = linksContext.videoElement.div;
-        container.html(VimeoHandler.prototype.rawTemplate(linksContext.videoItem))
-        container.data('videoFeed', linksContext.videoItem)
+    VimeoHandler.prototype.loadVideoFeed = function(linkContext) {
+        var container = linkContext.videoElement.div;
+        container.html(VimeoHandler.prototype.rawTemplate(linkContext.videoItem))
+        container.data('videoFeed', linkContext.videoItem)
         yte.pla.debounceRecalculatePlaylist()
         $.ajax({
-            url: 'http://vimeo.com/api/v2/video/' + linksContext.videoItem.id + '.json',
+            url: 'http://vimeo.com/api/v2/video/' + linkContext.videoItem.id + '.json',
             success: function(data) {
 //                console.log(JSON.stringify(data[0]))
                 data[0].type = VimeoHandler.prototype.prefix
-                var videoFeed = new VideoFeed(data[0])
-                linksContext.videoElement.fillDiv(videoFeed)
+                linkContext.videoFeed = new VideoFeed(data[0])
+                SiteHandlerManager.prototype.fillVideoElement(linkContext)
+//                linkContext.videoElement.fillDiv(videoFeed)
 //                container.html(VimeoHandler.prototype.completeTemplate(videoFeed))
 //                container.data('videoFeed', videoFeed)
 
