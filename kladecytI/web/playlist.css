@@ -45,7 +45,7 @@ body { height: 100%; }
 .selected > div{ background-color: #007FFF;}
 .image-div { float: left; position: relative; width: 123px; height: 90px; }
 #ulFirst img, #ulSecond img { float: left; height: 90px; }
-.duration-caption { float: right; position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.duration-caption { position: absolute; width: auto; height: auto; right: 5px; bottom: 3px; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
 #ulFirst span, #ulSecond span { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
 .error-text { position: relative; left: 10px; top:35%; }
 .disabled-Video { opacity: 0.4 }

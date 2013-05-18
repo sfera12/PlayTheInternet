@@ -137,7 +137,7 @@ function YoutubeHandler() {
     }
 
     YoutubeHandler.prototype.prefix = "y"
-    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,]{11})/
+    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 3
     YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
@@ -153,7 +153,7 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.properties = { errorTimeout: null }
     SoundCloudHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
-    SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&]+)/
+    SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&#]+)/
     SoundCloudHandler.prototype.regexGroup = 4
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
     SoundCloudHandler.prototype.clearTimeout = function() {
@@ -185,10 +185,11 @@ function SoundCloudHandler() {
 }
 
 function VimeoHandler() {
-    VimeoHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"></div><span><b><%= id %></b></span></div>')
+    VimeoHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"></div><span><b><%= id %></b></span></div>')
+    VimeoHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
     VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
-    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&\'\'<>\/\\.,\"]+)/
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&\'\'<>\/\\.,\"#]+)/
     VimeoHandler.prototype.regexGroup = 1
     VimeoHandler.prototype.playerContainer = 'vimeoContainer'
     VimeoHandler.prototype.playInterval
@@ -199,9 +200,25 @@ function VimeoHandler() {
     }
     VimeoHandler.prototype.loadVideoFeed = function(linksContext) {
         var container = linksContext.videoElement.div;
-        container.html(VimeoHandler.prototype.template(linksContext.videoItem))
+        container.html(VimeoHandler.prototype.rawTemplate(linksContext.videoItem))
         container.data('videoFeed', linksContext.videoItem)
         yte.pla.debounceRecalculatePlaylist()
+        $.ajax({
+            url: 'http://vimeo.com/api/v2/video/' + linksContext.videoItem.id + '.json',
+            success: function(data) {
+//                console.log(JSON.stringify(data[0]))
+                data[0].type = VimeoHandler.prototype.prefix
+                var videoFeed = new VideoFeed(data[0])
+                container.html(VimeoHandler.prototype.completeTemplate(videoFeed))
+                container.data('videoFeed', videoFeed)
+            },
+            error: function(error) {
+                console.log('error in vimeoHandler loadVideoFeed start')
+                console.log(error)
+                console.log('error in vimeoHandler loadVideoFeed end')
+            },
+            dataType: 'jsonp'
+        })
     }
     VimeoHandler.prototype.playVideoFeed = function(videoFeed) {
         $('#' + VimeoHandler.prototype.playerContainer).empty().append(VimeoHandler.prototype.playerTemplate(videoFeed))

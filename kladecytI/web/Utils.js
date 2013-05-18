@@ -74,13 +74,14 @@ function VideoFeed(item, parent) {
         this.title = item.title
         this.uploader = item.uploader
         this.thumbnail = item.thumbnail.sqDefault
-    } else if (item.id.$t != "") {
-        this.id = item.id.$t.replace(/.*video\:(.*)/, "$1")
-        this.duration = item.media$group.media$content[0].duration
-        this.durationCaption = convert(this.duration)
-        this.title = item.title.$t
-        this.uploader = item.author[0].name.$t
-        this.thumbnail = item.media$group.media$thumbnail[0].url
+    } else if (item || item.url || item.url.contains('vimeo')) {
+        this.id = item.id
+        this.type = item.type
+        this.duration = item.duration
+        this.durationCaption = convert(item.duration)
+        this.title = item.title
+        this.uploader = item.user_name
+        this.thumbnail = item.thumbnail_medium
     } else {
         this.error = "incompatible type"
         console.log("incompatible type" + item)
