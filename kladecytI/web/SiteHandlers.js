@@ -6,9 +6,6 @@ function SiteHandlerManager() {
     SiteHandlerManager.prototype.mapping = new Object();
     SiteHandlerManager.prototype.store = datajs.createStore('VideoId', 'dom')
     SiteHandlerManager.prototype.errorTimeout
-    SiteHandlerManager.prototype.getHandler = function (type) {
-        return SiteHandlerManager.prototype.mapping[type]
-    }
 
     SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
         this.store.addOrUpdate(videoFeed.id,
@@ -27,9 +24,7 @@ function SiteHandlerManager() {
         if (handler) {
             return handler
         } else {
-            console.log('Missing site handler for type: ' + type)
-            console.log(type)
-            return null
+            throw 'Missing site handler for type: ' + type
         }
     }
 
@@ -37,8 +32,12 @@ function SiteHandlerManager() {
         SiteHandlerManager.prototype.store.read(linkContext.videoItem.id, function (key, value) {
 //                console.log(value)
                 if (value != undefined) {
-                    linkContext.videoElement.fillDiv(value)
+                    linkContext.fromCache = true;
+                    linkContext.videoFeed = value;
+                    console.log(JSON.stringify(value) + 'FROM CACHE')
+                    SiteHandlerManager.prototype.fillVideoElement(linkContext);
                 } else {
+                    SiteHandlerManager.prototype.fillVideoElement(linkContext);
                     SiteHandlerManager.prototype.getHandler(linkContext.videoItem.type).loadVideoFeed(linkContext);
                 }
             },
@@ -93,16 +92,21 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.fillVideoElement = function(linkContext) {
+    SiteHandlerManager.prototype.fillVideoElement = function(linkContext, fromCache) {
         var videoItem = linkContext.videoItem;
         var videoFeed = linkContext.videoFeed;
         var videoElement = linkContext.videoElement;
         var handler = SiteHandlerManager.prototype.getHandler(videoItem.type);
         if(videoFeed) {
             videoElement.div.html(handler.completeTemplate(videoFeed))
-            SiteHandlerManager.prototype.setVideoFeed(videoFeed)
+            videoElement.div.data('videoFeed', videoFeed)
+            if (!linkContext.fromCache) {
+                SiteHandlerManager.prototype.setVideoFeed(videoFeed)
+            }
+            yte.pla.debounceRecalculatePlaylist()
         } else {
             videoElement.div.html(handler.rawTemplate(videoItem))
+            videoElement.div.data('videoFeed', videoItem)
         }
     }
 
@@ -112,14 +116,21 @@ function SiteHandlerManager() {
 }
 
 function YoutubeHandler() {
-    YoutubeHandler.prototype.loadVideoFeed = function (linksContext) {
+    YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"></div><span><b><%= id %></b></span></div>')
+    YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
+    YoutubeHandler.prototype.prefix = "y"
+    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,#]{11})/
+    YoutubeHandler.prototype.regexGroup = 3
+    YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
+    YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
-            url:"http://gdata.youtube.com/feeds/api/videos/" + linksContext.videoItem.id + "?v=2&alt=jsonc",
+            url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoItem.id + "?v=2&alt=jsonc",
             success:function (data) {
                 try {
                     data.data.type = "y"
                     var videoFeed = new VideoFeed(data.data)
-                    linksContext.videoElement.fillDiv(videoFeed)
+                    linkContext.videoFeed = videoFeed
+                    SiteHandlerManager.prototype.fillVideoElement(linkContext)
                 } finally {
 
                 }
@@ -127,32 +138,28 @@ function YoutubeHandler() {
             error:function (data) {
 //                console.log(data.responseText)
                 try {
-                    linksContext.message = $.parseJSON(data.responseText).error.message
+                    linkContext.message = $.parseJSON(data.responseText).error.message
                 } catch (e) {
-                    linksContext.message = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
+                    linkContext.message = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
                 }
                 var errorDiv = _.template("<div><div class=\'image-div\'><img src=\'http://s.ytimg.com/yts/img/meh7-vflGevej7.png\'></div><span class=\'error-text\'><b><a href=\'http://www.youtube.com/watch?v=<%=videoItem.id%>\' target=\'_blank\'><%=message%></a></b></span></div>");
 //                console.log(errorDiv(linksContext))
-                linksContext.videoElement.div.html(errorDiv(linksContext))
+                linkContext.videoElement.div.html(errorDiv(linkContext))
                 if (data.responseText.match(/too_many_recent_calls/)) {
                     setTimeout(function () {
                         console.log("retrying video")
-                        YoutubeHandler.prototype.loadVideoFeed(linksContext)
+                        YoutubeHandler.prototype.loadVideoFeed(linkContext)
                     }, 10000)
                 }
 //                console.log("Unable to load: " + linksContext.videoElement.videoItem.id)
 //                console.log(data)
 //                console.log(linksContext)
             },
-            context:linksContext,
+            context:linkContext,
             dataType:'json'
         })
     }
 
-    YoutubeHandler.prototype.prefix = "y"
-    YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,#]{11})/
-    YoutubeHandler.prototype.regexGroup = 3
-    YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
         var videoId = videoFeed.id
         yte.ytp.loadVideoById(videoId)
@@ -164,7 +171,7 @@ function YoutubeHandler() {
 
 function SoundCloudHandler() {
     SoundCloudHandler.prototype.properties = { errorTimeout: null }
-    SoundCloudHandler.prototype.template = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
+    SoundCloudHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
     SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&#]+)/
     SoundCloudHandler.prototype.regexGroup = 4
@@ -173,9 +180,6 @@ function SoundCloudHandler() {
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
-        var container = linksContext.videoElement.div;
-        container.html(SoundCloudHandler.prototype.template(linksContext.videoItem))
-        container.data('videoFeed', linksContext.videoItem)
         yte.pla.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
@@ -212,10 +216,6 @@ function VimeoHandler() {
         clearTimeout(VimeoHandler.prototype.playTimeout)
     }
     VimeoHandler.prototype.loadVideoFeed = function(linkContext) {
-        var container = linkContext.videoElement.div;
-        container.html(VimeoHandler.prototype.rawTemplate(linkContext.videoItem))
-        container.data('videoFeed', linkContext.videoItem)
-        yte.pla.debounceRecalculatePlaylist()
         $.ajax({
             url: 'http://vimeo.com/api/v2/video/' + linkContext.videoItem.id + '.json',
             success: function(data) {
@@ -223,10 +223,6 @@ function VimeoHandler() {
                 data[0].type = VimeoHandler.prototype.prefix
                 linkContext.videoFeed = new VideoFeed(data[0])
                 SiteHandlerManager.prototype.fillVideoElement(linkContext)
-//                linkContext.videoElement.fillDiv(videoFeed)
-//                container.html(VimeoHandler.prototype.completeTemplate(videoFeed))
-//                container.data('videoFeed', videoFeed)
-
             },
             error: function(error) {
                 console.log('error in vimeoHandler loadVideoFeed start')
