@@ -133,7 +133,7 @@ function Playlist(appendToElementExpression) {
     }
 
     this.lookupNextSong = function (currSong) {
-        var index = $('#ulSecond>div.selected').index()
+        var index = $('#ulSecond>div.filled').index($('#ulSecond>div.selected'))
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }

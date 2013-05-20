@@ -96,17 +96,28 @@ function SiteHandlerManager() {
         var videoItem = linkContext.videoItem;
         var videoFeed = linkContext.videoFeed;
         var videoElement = linkContext.videoElement;
+        var error = linkContext.error;
         var handler = SiteHandlerManager.prototype.getHandler(videoItem.type);
         if(videoFeed) {
             videoElement.div.html(handler.completeTemplate(videoFeed))
             videoElement.div.data('videoFeed', videoFeed)
+            //todo workaround start
+            videoElement.div.addClass('filled')
+            //todo workaroung end
             if (!linkContext.fromCache) {
                 SiteHandlerManager.prototype.setVideoFeed(videoFeed)
             }
-            yte.pla.debounceRecalculatePlaylist()
+        } else if(error) {
+            videoElement.div.html(handler.errorTemplate(linkContext))
         } else {
             videoElement.div.html(handler.rawTemplate(videoItem))
             videoElement.div.data('videoFeed', videoItem)
+            //todo workaround start
+            videoElement.div.addClass('filled')
+            //todo workaroung end
+        }
+        if(window.yte) {
+            yte.pla.debounceRecalculatePlaylist()
         }
     }
 
@@ -118,6 +129,7 @@ function SiteHandlerManager() {
 function YoutubeHandler() {
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"></div><span><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
+    YoutubeHandler.prototype.errorTemplate = _.template("<div><div class=\'image-div\'><img src=\'http://s.ytimg.com/yts/img/meh7-vflGevej7.png\'></div><span class=\'error-text\'><b><a href=\'http://www.youtube.com/watch?v=<%=videoItem.id%>\' target=\'_blank\'><%=error%></a></b></span></div>");
     YoutubeHandler.prototype.prefix = "y"
     YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 3
@@ -138,18 +150,16 @@ function YoutubeHandler() {
             error:function (data) {
 //                console.log(data.responseText)
                 try {
-                    linkContext.message = $.parseJSON(data.responseText).error.message
+                    linkContext.error = $.parseJSON(data.responseText).error.message
                 } catch (e) {
-                    linkContext.message = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
+                    linkContext.error = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
                 }
-                var errorDiv = _.template("<div><div class=\'image-div\'><img src=\'http://s.ytimg.com/yts/img/meh7-vflGevej7.png\'></div><span class=\'error-text\'><b><a href=\'http://www.youtube.com/watch?v=<%=videoItem.id%>\' target=\'_blank\'><%=message%></a></b></span></div>");
-//                console.log(errorDiv(linksContext))
-                linkContext.videoElement.div.html(errorDiv(linkContext))
+                SiteHandlerManager.prototype.fillVideoElement(linkContext)
                 if (data.responseText.match(/too_many_recent_calls/)) {
                     setTimeout(function () {
                         console.log("retrying video")
                         YoutubeHandler.prototype.loadVideoFeed(linkContext)
-                    }, 10000)
+                    }, 35000)
                 }
 //                console.log("Unable to load: " + linksContext.videoElement.videoItem.id)
 //                console.log(data)
