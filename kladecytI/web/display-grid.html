@@ -188,7 +188,6 @@ $.each(gimpedAnimation, function (index, item) {
         })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
-            initPlayer(yte.pla.parseSongIds(playTheInternetParse($('#tArea').val())));
             yte.pla.addSongsToPlaylist(yte.pla.parseSongIds(playTheInternetParse(tAreaText)), true)
         })
         $('#buildHash').click(function() {
@@ -220,7 +219,7 @@ $.each(gimpedAnimation, function (index, item) {
     yte.drawPlayer("youtube");
     var init = function (songIds) {
 //        yte.pla.addSongsToPlayList("#ulFirst", songIds)
-        yte.pla.addSongsToPlaylist(songIds)
+        yte.pla.addSongsToPlaylist(songIds, true)
     };
 
 //        setSlimScroll('#ulFirst')

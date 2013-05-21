@@ -95,7 +95,6 @@ function IntercomWrapper(windowId) {
     Intercom.destroy()
     window.intercom = Intercom.getInstance()
     window.intercom.on(windowId + 'playlistReceived', function (data) {
-        initPlayer(data.message)
         try {
             yte.pla.addSongsToPlaylist(data.message, true)
         } finally {
@@ -117,7 +116,7 @@ function Playlist(appendToElementExpression) {
         this.playlist = $(this.containerElementExpression + " div").filter(function (index, item) {
 //            console.log($(item).hasClass("disabled-Video"))
             item = $(item)
-            return item.data("videoFeed") != null && !(item.hasClass("disabled-Video"))
+            return item.hasClass('filled')
         })
     }
 
@@ -141,8 +140,8 @@ function Playlist(appendToElementExpression) {
     this.addSongsToPlaylist = function (links, unique) {
         if (unique == true) {
             var oldLinks = this.playlistSongIds()
-            links = links.filter(function (newId) {
-                return oldLinks.indexOf(newId) == -1 ? true : false
+            links = links.filter(function (newSong) {
+                return oldLinks.indexOf(newSong.id) == -1 ? true : false
             })
         }
 
@@ -165,7 +164,7 @@ function Playlist(appendToElementExpression) {
         })
     }
 
-    this.playlistSongIds = function () {
+    Playlist.prototype.playlistSongIds = function () {
         if (this.playlist) {
             return this.playlist.map(function (index, div) {
                 return $(div).data('videoFeed').id
