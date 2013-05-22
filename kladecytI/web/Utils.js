@@ -1,5 +1,5 @@
 var onceLoaded = _.once(function() {
-    yte.pla.currSong = yte.pla.playlist[0]
+    playlist.currSong = playlist.playlist[0]
     console.log('onceLoaded')
     playFirstLoaded();
 })
@@ -47,14 +47,14 @@ function VideoElement(videoFeed, appendTo) {
         closeButton.click(function (evt) {
             evt.stopPropagation()
             this.toggleClass("disabled-Video")
-            yte.pla.recalculatePlaylist()
+            playlist.recalculatePlaylist()
         }.bind(childDiv))
         durationCaption.css('left', 120 - durationCaption.width() - 3)
         durationCaption.css('top', 90 - durationCaption.height() - 3)
 
         this.div.data("videoFeed", videoFeed)
         SiteHandlerManager.prototype.setVideoFeed(videoFeed)
-        yte.pla.debounceRecalculatePlaylist()
+        playlist.debounceRecalculatePlaylist()
 
         return this.div
     }
@@ -96,7 +96,7 @@ function IntercomWrapper(windowId) {
     window.intercom = Intercom.getInstance()
     window.intercom.on(windowId + 'playlistReceived', function (data) {
         try {
-            yte.pla.addSongsToPlaylist(data.message, true)
+            playlist.addSongsToPlaylist(data.message, true)
         } finally {
             intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl:data.ctrl, type:'playlistReceived', status:'success'})
         }
@@ -131,8 +131,8 @@ function Playlist(appendToElementExpression) {
         }, "")
     }
 
-    this.lookupNextSong = function (currSong) {
-        var index = $('#ulSecond>div.filled').index($('#ulSecond>div.selected'))
+    Playlist.prototype.lookupNextSong = function () {
+        var index = $(this.containerElementExpression).find('div.filled').index($(this.containerElementExpression).find('div.selected'))
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }
@@ -173,6 +173,21 @@ function Playlist(appendToElementExpression) {
             return new Array()
         }
     }
+
+    Playlist.prototype.playVideoDiv = function (videoDiv) {
+        var videoFeed = $(videoDiv).data('videoFeed')
+        if (videoFeed) {
+            $(this.currSong).removeClass("selected")
+            this.currSong = videoDiv
+            $(this.currSong).addClass("selected")
+            document.title = windowId + ' - ' + videoFeed.title
+            SiteHandlerManager.prototype.playVideoFeed(videoFeed)
+        }
+    }
+
+    Playlist.prototype.playNextVideo = function () {
+        Playlist.prototype.playVideoDiv(playlist.lookupNextSong())
+    }
 }
 
 function YoutubePlayer(ytp, pla) {
@@ -190,28 +205,14 @@ function YoutubePlayer(ytp, pla) {
     }
 
     this.drawPlayer = function (appendToElementId) {
-//        this.pla.currSong = this.pla.playlist[0]
-//        var videoFeed = $(this.pla.currSong).data("videoFeed")
+//        playlist.currSong = playlist.playlist[0]
+//        var videoFeed = $(playlist.currSong).data("videoFeed")
         var params = { allowScriptAccess:"always", allowFullScreen:"true" };
         var atts = { id:"ytplayer" };
         var playerWidth = $('#firstView').width() - 9
         swfobject.embedSWF("http://www.youtube.com/v/MK6TXMsvgQg?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.642), "8", null, null, params, atts);
     }
 
-    this.playVideoDiv = function (videoDiv) {
-        var videoFeed = $(videoDiv).data('videoFeed')
-        if (videoFeed) {
-            $(this.pla.currSong).removeClass("selected")
-            this.pla.currSong = videoDiv
-            $(this.pla.currSong).addClass("selected")
-            document.title = windowId + ' - ' + videoFeed.title
-            SiteHandlerManager.prototype.playVideoFeed(videoFeed)
-        }
-    }
-
-    this.playNextVideo = function () {
-        this.playVideoDiv(this.pla.lookupNextSong(this.pla.currSong))
-    }
 
     this.onStateChange = function (state) {
         console.log("change " + state)

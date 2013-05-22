@@ -31,6 +31,7 @@
     <script type="text/javascript" src="swfobject.js"></script>
     <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
     <script src="http://a.vimeocdn.com/js/froogaloop2.min.js" type="text/javascript"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="playlist.css">
     <style>
@@ -139,7 +140,7 @@
 
     var playFirstLoaded = _.after(3, function() {
         console.log('playFirstLoaded')
-        yte.playVideoDiv(yte.pla.currSong)
+        playlist.playVideoDiv(playlist.currSong)
     })
 
 var gimpedAnimation = [
@@ -180,7 +181,7 @@ $.each(gimpedAnimation, function (index, item) {
             tolerance:'pointer',
             distance:25,
             update:function (event, ui) {
-                yte.pla.recalculatePlaylist()
+                playlist.recalculatePlaylist()
             }
         }).disableSelection();
         window.initPlayer = _.once(function (songIds) {
@@ -188,10 +189,10 @@ $.each(gimpedAnimation, function (index, item) {
         })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
-            yte.pla.addSongsToPlaylist(yte.pla.parseSongIds(playTheInternetParse(tAreaText)), true)
+            playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
         })
         $('#buildHash').click(function() {
-            $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ yte.pla.buildHash())
+            $('#buildHashInput').val(window.location.origin + '/display-grid.html'+ playlist.buildHash())
         })
         $('#renameWindow').click(function() {
             var renameWindowInputVal = $('#renameWindowInput').val();
@@ -205,7 +206,7 @@ $.each(gimpedAnimation, function (index, item) {
         IntercomWrapper(windowId)
 
         if (window.location.hash.length > 0) {
-            initPlayer(yte.pla.parseSongIds(window.location.hash));
+            initPlayer(playlist.parseSongIds(window.location.hash));
         } else {
             $( "#tabs" ).tabs( "option", "active", 1 );
         }
@@ -215,11 +216,12 @@ $.each(gimpedAnimation, function (index, item) {
     var intercom
     var windowId = GUID()
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
-    var yte = new YoutubePlayer(null, new Playlist("#ulSecond"))
-    yte.drawPlayer("youtube");
+    var playlist = new Playlist("#ulSecond");
+    var yte = new YoutubePlayer(null, playlist)
+//    yte.drawPlayer("youtube");
     var init = function (songIds) {
-//        yte.pla.addSongsToPlayList("#ulFirst", songIds)
-        yte.pla.addSongsToPlaylist(songIds, true)
+//        playlist.addSongsToPlayList("#ulFirst", songIds)
+        playlist.addSongsToPlaylist(songIds, true)
     };
 
 //        setSlimScroll('#ulFirst')
@@ -242,25 +244,47 @@ $.each(gimpedAnimation, function (index, item) {
         })
     });
 
-    function onYouTubePlayerReady(playerId) {
-        ytPlayer = document.getElementById("ytplayer");
-        yte.setPlayer(ytPlayer)
-        console.log("youtube Ready")
-        yte.ytp.addEventListener("onStateChange", "change")
-        yte.ytp.addEventListener("onError", "onError")
-        $('#ulFirst, #ulSecond').click(function(evt) {
-            yte.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
-        })
-        $(window).resize(function() {
-            var ytp = $(ytPlayer)
-            ytp.height(ytp.width() / 1.642)
-            console.log(ytp.height())
-        })
-        playFirstLoaded();
+    function onYouTubeIframeAPIReady() {
+        window.youtube = new YT.Player('youtube', {
+            height: '100%',
+            width: '100%',
+            videoId: 'MK6TXMsvgQg',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': change,
+                'onError': onError
+            }
+        });
     }
 
+    function onPlayerReady(event) {
+        playFirstLoaded();
+        $('#ulFirst, #ulSecond').click(function(evt) {
+            playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
+        })
+    }
+
+
+
+    //    function onYouTubePlayerReady(playerId) {
+//        ytPlayer = document.getElementById("ytplayer");
+//        yte.setPlayer(ytPlayer)
+//        console.log("youtube Ready")
+//        yte.ytp.addEventListener("onStateChange", "change")
+//        yte.ytp.addEventListener("onError", "onError")
+//        $('#ulFirst, #ulSecond').click(function(evt) {
+//            playlistyVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
+//        })
+//        $(window).resize(function() {
+//            var ytp = $(ytPlayer)
+//            ytp.height(ytp.width() / 1.642)
+//            console.log(ytp.height())
+//        })
+//        playFirstLoaded();
+//    }
+
     function change(state) {
-        if(state == 0) {
+        if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
     }

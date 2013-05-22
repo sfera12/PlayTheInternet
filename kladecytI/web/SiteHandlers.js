@@ -84,10 +84,10 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.stateChange = function(state) {
         if(state == "NEXT") {
-            yte.playNextVideo()
+            playlist.playNextVideo()
         } else if (state == "ERROR") {
             SiteHandlerManager.prototype.errorTimeout = setTimeout(function () {
-                yte.playNextVideo()
+                playlist.playNextVideo()
             }, 2000)
         }
     }
@@ -116,8 +116,8 @@ function SiteHandlerManager() {
             videoElement.div.addClass('filled')
             //todo workaroung end
         }
-        if(window.yte) {
-            yte.pla.debounceRecalculatePlaylist()
+        if(window.playlist) {
+            playlist.debounceRecalculatePlaylist()
         }
     }
 
@@ -172,10 +172,10 @@ function YoutubeHandler() {
 
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
         var videoId = videoFeed.id
-        yte.ytp.loadVideoById(videoId)
+        youtube.loadVideoById(videoId)
     }
     YoutubeHandler.prototype.stop = function() {
-        yte.ytp.stopVideo()
+        youtube.stopVideo()
     }
 }
 
@@ -190,7 +190,7 @@ function SoundCloudHandler() {
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
-        yte.pla.debounceRecalculatePlaylist()
+        playlist.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
         var playerUrl = 'https://w.soundcloud.com/player/?url='
