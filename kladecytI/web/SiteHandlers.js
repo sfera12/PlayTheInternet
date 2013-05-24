@@ -4,19 +4,10 @@ siteHandlerManager = new SiteHandlerManager();
 
 function SiteHandlerManager() {
     SiteHandlerManager.prototype.mapping = new Object();
-    SiteHandlerManager.prototype.store = datajs.createStore('VideoId', 'dom')
     SiteHandlerManager.prototype.errorTimeout
 
     SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
-        this.store.addOrUpdate(videoFeed.id,
-            videoFeed,
-            function (key, value) {
-//                console.log(key + " persisted in store successfully")
-//                console.log(value)
-            }, function (error) {
-                console.log(error)
-                console.log('error in persisting to store')
-            })
+        $.jStorage.set(videoFeed.id, videoFeed)
     }
 
     SiteHandlerManager.prototype.getHandler = function(type) {
@@ -29,22 +20,17 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
-        SiteHandlerManager.prototype.store.read(linkContext.videoItem.id, function (key, value) {
-//                console.log(value)
-                if (value != undefined) {
-                    linkContext.fromCache = true;
-                    linkContext.videoFeed = value;
-                    console.log(JSON.stringify(value) + 'FROM CACHE')
-                    SiteHandlerManager.prototype.fillVideoElement(linkContext);
-                } else {
-                    SiteHandlerManager.prototype.fillVideoElement(linkContext);
-                    SiteHandlerManager.prototype.getHandler(linkContext.videoItem.type).loadVideoFeed(linkContext);
-                }
-            },
-            function (error) {
-                console.log(error)
-                console.log('error in reading videoFeed from dom store')
-            })
+        var value = $.jStorage.get(linkContext.videoItem.id)
+//      console.log(value)
+        if (value) {
+            linkContext.fromCache = true;
+            linkContext.videoFeed = value;
+            console.log(JSON.stringify(value) + 'FROM CACHE')
+            SiteHandlerManager.prototype.fillVideoElement(linkContext);
+        } else {
+            SiteHandlerManager.prototype.fillVideoElement(linkContext);
+            SiteHandlerManager.prototype.getHandler(linkContext.videoItem.type).loadVideoFeed(linkContext);
+        }
     }
 
     SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {

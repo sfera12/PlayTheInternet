@@ -112,12 +112,18 @@ function Playlist(appendToElementExpression) {
     this.playlist
     this.currSong
 
-    this.recalculatePlaylist = function () {
+    this.recalculatePlaylist = function (jStorageId) {
         this.playlist = $(this.containerElementExpression + " div").filter(function (index, item) {
 //            console.log($(item).hasClass("disabled-Video"))
             item = $(item)
             return item.hasClass('filled')
         })
+        //todo start from here windowId || jStorageId check this
+        $.jStorage.set(windowId || jStorageId, this.playlistVideos())
+    }
+
+    Playlist.prototype.playlistVideos = function() {
+        return _.map($(this.containerElementExpression + " div.filled"), function(item) { return $(item).data('videoFeed') })
     }
 
     this.debounceRecalculatePlaylist = _.debounce(function () {

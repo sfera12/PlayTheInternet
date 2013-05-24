@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Sortable - Display as grid</title>
+    <!--<script src="js/datajs.js"></script>-->
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://raw.github.com/andris9/jStorage/master/jstorage.js"></script>
+    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
+    <script src="jqC/js/jquery-ui-1.10.1.js"></script>
+    <script src="jqC/js/jquery.slimscroll.js"></script>
+    <link rel="stylesheet" href="playlist.css"/>
+    <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
+    <link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
+    <script src="SiteHandlers.js"></script>
+    <script src="Utils.js"></script>
+    <style>
+        .parsePlaylistFrame {  float: left; width: 100%; height: 87%; overflow-x: hidden; overflow-y: hidden;  }
+    </style>
+</head>
+<body>
+<!--<a id="proceed" href="" target="_blank">Open in new Window</a>    <br>-->
+<!--<a id="addChannel">Add to current Playlist</a>-->
+<div id="dPLists">
+    <div id="firstView">
+        <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
+            <a href="thisislink" id="nwWndFirst">Open in new window</a>
+        </div>
+        <div id="ulFirst" class="connectedSortable parsePlaylistFrame">
+        </div>
+    </div>
+
+    <div id="secondView">
+        <div id="ctrlSecond" class="ctrlSecond" style="height: 12%;">
+            <a href="thisislink" id="nwWndSecond">Open in new window</a>
+        </div>
+        <div id="ulSecond" class="connectedSortable parsePlaylistFrame">
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#ulFirst, #ulSecond").sortable({
+        connectWith:'.connectedSortable',
+        scrollSensitivity:50,
+        tolerance:'pointer',
+        distance:25,
+        update:function (event, ui) {
+            plt.recalculatePlaylist()
+            plr.recalculatePlaylist()
+        }
+    })
+    var plt = new Playlist("#ulFirst")
+    var plr = new Playlist('#ulSecond');
+    //todo solve the unique true issue
+    plt.addSongsToPlaylist(plt.parseSongIds(window.location.hash))
+
+</script>
+<script>
+    var ctrlFirst = $('#ctrlFirst')
+    var ctrlSecond = $('#ctrlSecond')
+    var videos = function(elementExpression) {
+        return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
+    }
+    var videoIds = function(elementExpression) {
+        var ids = ""
+        $(elementExpression + ' > div').each(function (index, item) {
+            videoFeed = $(item).data('videoFeed')
+            if (videoFeed) {
+                ids += videoFeed.type + '=' + videoFeed.id + ','
+            }
+        })
+        return ids
+    }
+//    intercom.on(windowId + 'windowId', function(data) {
+//        if(!($('input[value=' + data.sender + ']').size())) {
+//            var input = $('<input type="button"/>')
+//            input.val(data.sender)
+//            input.click(function () {
+//                var ids = videos("#ulFirst")
+//                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlFirst"});
+//            })
+//            ctrlFirst.append(input)
+//            var input = $('<input type="button"/>')
+//            input.val(data.sender)
+//            input.click(function () {
+//                var ids = videos("#ulSecond")
+//                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlSecond"});
+//            })
+//            ctrlSecond.append(input)
+//        }
+//    });
+//    intercom.on(windowId + 'playlistReceived', function(data) {
+//        var div = $( data.ctrl + ' > input[value=' + data.sender + ']')
+//        div.css("color", "green")
+//        setTimeout(function() {
+//            window.close()
+//        }, 10000)
+//    })
+    var generateHref = function (elementExpression, containerElementExpression) {
+        var proceed = $(elementExpression)
+        proceed.attr("target", "_blank")
+        proceed.css("font-size", "medium")
+        proceed.click(function () {
+            proceed.attr("href", "/display-grid.html#" + videoIds(containerElementExpression))
+            setTimeout(function () {
+                window.close()
+            }, 10000)
+        })
+    }
+    $(document).ready(function () {
+        setSlimScroll("#ulFirst", "93.5%")
+        setSlimScroll("#ulSecond", "93.5%")
+//        var drawWindows = function() {
+//            intercom.emit('windowId', { sender:windowId })
+//            setTimeout(function() {
+//                drawWindows()
+//            }, 2000)
+//        }
+
+        $.jStorage.subscribe('windowIds', function(channel, payload) {
+            console.log($.jStorage.get(payload))
+            if(!($('input[value=' + payload + ']').size())) {
+                var input = $('<input type="button"/>')
+                input.val(payload)
+                input.click(function () {
+                    $(plr.containerElementExpression).empty()
+                    plr.addSongsToPlaylist($.jStorage.get(payload))
+                })
+                ctrlSecond.append(input)
+            }
+        })
+        $.jStorage.publish('queryWindowIds', 'give me');
+//        drawWindows()
+        generateHref("#nwWndFirst", "#ulFirst")
+        generateHref("#nwWndSecond", "#ulSecond")
+    })
+</script>
+</body>
+</html>
