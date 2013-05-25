@@ -102,9 +102,9 @@ function SiteHandlerManager() {
             videoElement.div.addClass('filled')
             //todo workaroung end
         }
-        if(window.playlist) {
-            playlist.debounceRecalculatePlaylist()
-        }
+//        if(window.playlist) {
+//            playlist.debounceRecalculatePlaylist()
+//        }
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -176,7 +176,7 @@ function SoundCloudHandler() {
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
-        playlist.debounceRecalculatePlaylist()
+//        playlist.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
         var playerUrl = 'https://w.soundcloud.com/player/?url='

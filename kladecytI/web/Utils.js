@@ -12,9 +12,9 @@ function VideoElement(videoFeed, appendTo) {
         this.div = $('<div/>').append(childDiv)
         this.div.addClass('pti-state-default')
         $(appendTo).append(this.div)
-        if (videoFeed != null) {
-            this.fillDiv(videoFeed)
-        }
+//            if (videoFeed != null) {
+//                this.fillDiv(videoFeed)
+//            }
     }
 
     this.fillDiv = function (videoFeed) {
@@ -54,7 +54,7 @@ function VideoElement(videoFeed, appendTo) {
 
         this.div.data("videoFeed", videoFeed)
         SiteHandlerManager.prototype.setVideoFeed(videoFeed)
-        playlist.debounceRecalculatePlaylist()
+//        playlist.debounceRecalculatePlaylist()
 
         return this.div
     }
@@ -145,22 +145,25 @@ function Playlist(appendToElementExpression) {
 
     this.addSongsToPlaylist = function (links, unique) {
         if (unique == true) {
-            var oldLinks = this.playlistSongIds()
-            links = links.filter(function (newSong) {
-                return oldLinks.indexOf(newSong.id) == -1 ? true : false
+            var oldLinks = this.playlistVideos()
+            links = _.filter(links, function (newSong) {
+                return !_.findWhere(oldLinks, newSong)
             })
         }
 
         links.forEach(function (videoItem) {
-            var videoElement = new VideoElement(null, this.containerElementExpression)
-//            videoElements.push(videoElement)
-            var linkContext = {
-                videoElement:videoElement,
-                videoItem:videoItem,
-                retryCounter:0
+            if(videoItem.id && videoItem.type) {
+                var videoElement = new VideoElement(videoItem, this.containerElementExpression)
+        //            videoElements.push(videoElement)
+                var linkContext = {
+                    videoElement:videoElement,
+                    videoItem:videoItem,
+                    retryCounter:0
+                }
+        //            siteHandlerManager.getHandler(videoItem.type).loadVideoFeed(linkContext);
+                siteHandlerManager.loadVideoFeed(linkContext)
+                this.debounceRecalculatePlaylist()
             }
-//            siteHandlerManager.getHandler(videoItem.type).loadVideoFeed(linkContext);
-            siteHandlerManager.loadVideoFeed(linkContext)
         }.bind(this))
     }
 
