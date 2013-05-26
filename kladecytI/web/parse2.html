@@ -46,14 +46,14 @@
         tolerance:'pointer',
         distance:25,
         update:function (event, ui) {
-            plt.recalculatePlaylist()
+            playlist.recalculatePlaylist()
             plr.recalculatePlaylist()
         }
     })
-    var plt = new Playlist("#ulFirst")
+    var playlist = new Playlist("#ulFirst")
     var plr = new Playlist('#ulSecond');
     //todo solve the unique true issue
-    plt.addSongsToPlaylist(plt.parseSongIds(window.location.hash))
+    playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash))
 
 </script>
 <script>

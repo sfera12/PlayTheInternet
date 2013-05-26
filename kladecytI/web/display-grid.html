@@ -221,7 +221,13 @@ $.each(gimpedAnimation, function (index, item) {
         $.jStorage.publish('windowIds', windowId)
     })
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
-    var playlist = new Playlist("#ulSecond");
+    var playlist = new Playlist("#ulSecond",
+            {
+                id: windowId,
+                listenKeyChangeCallback: function(playlist) {
+                    window.location.hash = playlist.jPlaylist.sortable('toArray')
+                }
+            });
     var yte = new YoutubePlayer(null, playlist)
 //    yte.drawPlayer("youtube");
     var init = function (songIds) {

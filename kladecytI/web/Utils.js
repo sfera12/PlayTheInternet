@@ -11,6 +11,7 @@ function VideoElement(videoFeed, appendTo) {
         var childDiv = $('<div/>')
         this.div = $('<div/>').append(childDiv)
         this.div.addClass('pti-state-default')
+        this.div.attr('id', videoFeed.type + '=' + videoFeed.id)
         $(appendTo).append(this.div)
 //            if (videoFeed != null) {
 //                this.fillDiv(videoFeed)
@@ -107,10 +108,26 @@ function IntercomWrapper(windowId) {
     });
 }
 
-function Playlist(appendToElementExpression) {
+function Playlist(appendToElementExpression, options) {
     this.containerElementExpression = appendToElementExpression
+    this.jPlaylist = $(this.containerElementExpression)
     this.playlist
     this.currSong
+    this.id
+
+    Playlist.prototype.listenFunction = function(key, action) {
+        console.log(key + ' has been ' + action)
+        console.log(this.jPlaylist.sortable('toArray'))
+        if(options && typeof options.listenKeyChangeCallback == 'function') {
+            options.listenKeyChangeCallback(this)
+        }
+    }.bind(this)
+
+    Playlist.prototype.setId = function(id) {
+        $.jStorage.stopListening(id)
+        this.id = id
+        $.jStorage.listenKeyChange(id, this.listenFunction)
+    }
 
     this.recalculatePlaylist = function (jStorageId) {
         this.playlist = $(this.containerElementExpression + " div").filter(function (index, item) {
@@ -119,7 +136,9 @@ function Playlist(appendToElementExpression) {
             return item.hasClass('filled')
         })
         //todo start from here windowId || jStorageId check this
-        $.jStorage.set(windowId || jStorageId, this.playlistVideos())
+        if(this.id) {
+            $.jStorage.set(this.id, this.jPlaylist.sortable('toArray'))
+        }
     }
 
     Playlist.prototype.playlistVideos = function() {
@@ -196,6 +215,12 @@ function Playlist(appendToElementExpression) {
 
     Playlist.prototype.playNextVideo = function () {
         Playlist.prototype.playVideoDiv(playlist.lookupNextSong())
+    }
+
+    if(options) {
+        if(options.id) {
+            this.setId(options.id)
+        }
     }
 }
 
