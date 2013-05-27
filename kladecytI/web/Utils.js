@@ -114,10 +114,35 @@ function Playlist(appendToElementExpression, options) {
     this.playlist
     this.currSong
     this.id
+    var that = this
+
+    $(this.containerElementExpression).sortable({
+        connectWith:'.connectedSortable',
+        scrollSensitivity:50,
+        tolerance:'pointer',
+        distance:25,
+        update:function (event, ui) {
+            that.recalculatePlaylist()
+        }
+    })
 
     Playlist.prototype.listenFunction = function(key, action) {
         console.log(key + ' has been ' + action)
         console.log(this.jPlaylist.sortable('toArray'))
+        console.log($.jStorage.get(key))
+        arrayEq = function(a, b) {
+            return _.all(_.zip(a, b), function(x) {
+                return x[0] === x[1];
+            });
+        };
+        if(arrayEq(this.jPlaylist.sortable('toArray'), $.jStorage.get(key))) {
+            console.log('nothing changed')
+        } else {
+            var id = this.jPlaylist.find('.selected').data('videoFeed').id
+            this.jPlaylist.empty()
+            this.addSongsToPlaylist(this.parseSongIds($.jStorage.get(key).join(',')))
+            this.jPlaylist.find('#' + id).addClass('selected')
+        }
         if(options && typeof options.listenKeyChangeCallback == 'function') {
             options.listenKeyChangeCallback(this)
         }
@@ -301,18 +326,18 @@ function convert(duration) {
     }
     return out.join(":")
 }
-
-Array.prototype.unique =
-    function () {
-        var a = [];
-        var l = this.length;
-        for (var i = 0; i < l; i++) {
-            for (var j = i + 1; j < l; j++) {
-                // If this[i] is found later in the array
-                if (this[i] === this[j])
-                    j = ++i;
-            }
-            a.push(this[i]);
-        }
-        return a;
-    };
+//
+//Array.prototype.unique =
+//    function () {
+//        var a = [];
+//        var l = this.length;
+//        for (var i = 0; i < l; i++) {
+//            for (var j = i + 1; j < l; j++) {
+//                // If this[i] is found later in the array
+//                if (this[i] === this[j])
+//                    j = ++i;
+//            }
+//            a.push(this[i]);
+//        }
+//        return a;
+//    };

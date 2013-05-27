@@ -172,19 +172,19 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
     $(document).ready(function () {
-        $("#ulFirst, #ulSecond").sortable({
-//            create: function(event, ui) {
-//                var that = this;
-//                $('.ui-state-default', that).addClass('pti-state-default');
-//            },
-            connectWith: '.connectedSortable',
-            scrollSensitivity:50,
-            tolerance:'pointer',
-            distance:25,
-            update:function (event, ui) {
-                playlist.recalculatePlaylist()
-            }
-        }).disableSelection();
+//        $("#ulFirst, #ulSecond").sortable({
+////            create: function(event, ui) {
+////                var that = this;
+////                $('.ui-state-default', that).addClass('pti-state-default');
+////            },
+//            connectWith: '.connectedSortable',
+//            scrollSensitivity:50,
+//            tolerance:'pointer',
+//            distance:25,
+//            update:function (event, ui) {
+//                playlist.recalculatePlaylist()
+//            }
+//        }).disableSelection();
         window.initPlayer = _.once(function (songIds) {
             this.init(songIds)
         })

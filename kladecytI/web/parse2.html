@@ -40,16 +40,16 @@
 
 </div>
 <script>
-    $("#ulFirst, #ulSecond").sortable({
-        connectWith:'.connectedSortable',
-        scrollSensitivity:50,
-        tolerance:'pointer',
-        distance:25,
-        update:function (event, ui) {
-            playlist.recalculatePlaylist()
-            plr.recalculatePlaylist()
-        }
-    })
+//    $("#ulFirst, #ulSecond").sortable({
+//        connectWith:'.connectedSortable',
+//        scrollSensitivity:50,
+//        tolerance:'pointer',
+//        distance:25,
+//        update:function (event, ui) {
+//            playlist.recalculatePlaylist()
+//            plr.recalculatePlaylist()
+//        }
+//    })
     var playlist = new Playlist("#ulFirst")
     var plr = new Playlist('#ulSecond');
     //todo solve the unique true issue
@@ -125,7 +125,8 @@
                 input.val(payload)
                 input.click(function () {
                     $(plr.containerElementExpression).empty()
-                    plr.addSongsToPlaylist($.jStorage.get(payload))
+                    plr.setId(payload)
+                    plr.addSongsToPlaylist(plr.parseSongIds($.jStorage.get(payload).join(',')))
                 })
                 ctrlSecond.append(input)
             }
