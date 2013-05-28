@@ -46,14 +46,13 @@
 //        tolerance:'pointer',
 //        distance:25,
 //        update:function (event, ui) {
-//            playlist.recalculatePlaylist()
+//            pll.recalculatePlaylist()
 //            plr.recalculatePlaylist()
 //        }
 //    })
-    var playlist = new Playlist("#ulFirst")
+    var pll = new Playlist("#ulFirst")
     var plr = new Playlist('#ulSecond');
-    //todo solve the unique true issue
-    playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash))
+    pll.addSongsToPlaylist(pll.parseSongIds(window.location.hash))
 
 </script>
 <script>
@@ -72,31 +71,7 @@
         })
         return ids
     }
-//    intercom.on(windowId + 'windowId', function(data) {
-//        if(!($('input[value=' + data.sender + ']').size())) {
-//            var input = $('<input type="button"/>')
-//            input.val(data.sender)
-//            input.click(function () {
-//                var ids = videos("#ulFirst")
-//                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlFirst"});
-//            })
-//            ctrlFirst.append(input)
-//            var input = $('<input type="button"/>')
-//            input.val(data.sender)
-//            input.click(function () {
-//                var ids = videos("#ulSecond")
-//                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlSecond"});
-//            })
-//            ctrlSecond.append(input)
-//        }
-//    });
-//    intercom.on(windowId + 'playlistReceived', function(data) {
-//        var div = $( data.ctrl + ' > input[value=' + data.sender + ']')
-//        div.css("color", "green")
-//        setTimeout(function() {
-//            window.close()
-//        }, 10000)
-//    })
+
     var generateHref = function (elementExpression, containerElementExpression) {
         var proceed = $(elementExpression)
         proceed.attr("target", "_blank")
@@ -111,28 +86,38 @@
     $(document).ready(function () {
         setSlimScroll("#ulFirst", "93.5%")
         setSlimScroll("#ulSecond", "93.5%")
-//        var drawWindows = function() {
-//            intercom.emit('windowId', { sender:windowId })
-//            setTimeout(function() {
-//                drawWindows()
-//            }, 2000)
-//        }
+
+        var drawPlaylist = function(plt, ctrl, playlistName, lReturnPlaylist) {
+            var input = $('<input type="button"/>')
+            input.val(playlistName)
+            input.click(function () {
+                console.log(plt.jPlaylist)
+                plt.setId(playlistName)
+            })
+            ctrl.append(input)
+        }
 
         $.jStorage.subscribe('windowIds', function(channel, payload) {
             console.log($.jStorage.get(payload))
             if(!($('input[value=' + payload + ']').size())) {
-                var input = $('<input type="button"/>')
-                input.val(payload)
-                input.click(function () {
-                    $(plr.containerElementExpression).empty()
-                    plr.setId(payload)
-                    plr.addSongsToPlaylist(plr.parseSongIds($.jStorage.get(payload).join(',')))
-                })
-                ctrlSecond.append(input)
+                var returnPlaylist = function() {
+                    console.log(payload)
+                    return $.jStorage.get(payload).join(',')
+                }
+                drawPlaylist(pll, ctrlFirst, payload, returnPlaylist)
+                drawPlaylist(plr, ctrlSecond, payload, returnPlaylist)
             }
         })
+
+        drawPlaylist(pll, ctrlFirst, 'parsed', function () {
+            return window.location.hash
+        })
+
         $.jStorage.publish('queryWindowIds', 'give me');
-//        drawWindows()
+        setInterval(function() {
+//            $.jStorage.publish('queryWindowIds', 'give me');
+        }, 2000)
+
         generateHref("#nwWndFirst", "#ulFirst")
         generateHref("#nwWndSecond", "#ulSecond")
     })

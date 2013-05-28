@@ -25,7 +25,7 @@ function SiteHandlerManager() {
         if (value) {
             linkContext.fromCache = true;
             linkContext.videoFeed = value;
-            console.log(JSON.stringify(value) + 'FROM CACHE')
+            //console.log(JSON.stringify(value) + 'FROM CACHE')
             SiteHandlerManager.prototype.fillVideoElement(linkContext);
         } else {
             SiteHandlerManager.prototype.fillVideoElement(linkContext);

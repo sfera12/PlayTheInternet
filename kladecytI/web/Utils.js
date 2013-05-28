@@ -138,20 +138,27 @@ function Playlist(appendToElementExpression, options) {
         if(arrayEq(this.jPlaylist.sortable('toArray'), $.jStorage.get(key))) {
             console.log('nothing changed')
         } else {
-            var id = this.jPlaylist.find('.selected').data('videoFeed').id
+            var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
+            if(videoFeed) {
+                var id = '#' + videoFeed.type + '\\=' + videoFeed.id
+            }
+            console.log(this.jPlaylist)
             this.jPlaylist.empty()
             this.addSongsToPlaylist(this.parseSongIds($.jStorage.get(key).join(',')))
-            this.jPlaylist.find('#' + id).addClass('selected')
+            if(videoFeed) {
+                this.jPlaylist.find(id).addClass('selected')
+            }
         }
         if(options && typeof options.listenKeyChangeCallback == 'function') {
             options.listenKeyChangeCallback(this)
         }
-    }.bind(this)
+    }
 
     Playlist.prototype.setId = function(id) {
-        $.jStorage.stopListening(id)
+        $.jStorage.stopListening(id, this.listenFunction)
         this.id = id
-        $.jStorage.listenKeyChange(id, this.listenFunction)
+        this.listenFunction(id, 'custom call')
+        $.jStorage.listenKeyChange(id, this.listenFunction.bind(this))
     }
 
     this.recalculatePlaylist = function (jStorageId) {
@@ -198,13 +205,11 @@ function Playlist(appendToElementExpression, options) {
         links.forEach(function (videoItem) {
             if(videoItem.id && videoItem.type) {
                 var videoElement = new VideoElement(videoItem, this.containerElementExpression)
-        //            videoElements.push(videoElement)
                 var linkContext = {
                     videoElement:videoElement,
                     videoItem:videoItem,
                     retryCounter:0
                 }
-        //            siteHandlerManager.getHandler(videoItem.type).loadVideoFeed(linkContext);
                 siteHandlerManager.loadVideoFeed(linkContext)
                 this.debounceRecalculatePlaylist()
             }
@@ -230,7 +235,7 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.playVideoDiv = function (videoDiv) {
         var videoFeed = $(videoDiv).data('videoFeed')
         if (videoFeed) {
-            $(this.currSong).removeClass("selected")
+            this.jPlaylist.children().removeClass("selected")
             this.currSong = videoDiv
             $(this.currSong).addClass("selected")
             document.title = windowId + ' - ' + videoFeed.title
