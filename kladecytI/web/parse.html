@@ -53,12 +53,13 @@
     var pll = new Playlist("#ulFirst")
     var plr = new Playlist('#ulSecond');
     var saveToHistory = _.once(function() {
+        var now = new Date().getTime();
         var data = new Object();
         data.data = pll.playlistVideos();
-        data.meta = {user: 'sichain', url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1')}
+        data.meta = {user: 'sichain', url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1'), date: now}
         console.log(JSON.stringify(data))
         $.ajax({
-            url: '/calendar?date=' + new Date().getTime() + '&user=sichain',
+            url: '/calendar?date=' + now + '&user=sichain',
             type: 'post',
             data: JSON.stringify(data)
         })
