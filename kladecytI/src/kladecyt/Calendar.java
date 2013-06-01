@@ -3,6 +3,7 @@ package kladecyt;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Text;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,18 +25,13 @@ public class Calendar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Entity entity = new Entity("Calendar");
-//        req.getParameter("date");
-//        req.getParameter("user");
-//        byte[] bytes = new byte[1024];
-//        req.getInputStream().read(bytes);
-//        System.out.println(new String(bytes, "UTF-8"));
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
             InputStream inputStream = req.getInputStream();
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(
-                        inputStream));
+                        inputStream, "UTF-8"));
                 char[] charBuffer = new char[128];
                 int bytesRead = -1;
                 while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
@@ -55,10 +51,16 @@ public class Calendar extends HttpServlet {
                 }
             }
         }
-        String body = stringBuilder.toString();
-        System.out.println(body);
-        System.out.println(req.getParameter("date"));
-        System.out.println(req.getParameter("user"));
-//        datastoreService.put(entity);
+        Text body = new Text(stringBuilder.toString());
+        parameterToEntity(req, entity, "date");
+        parameterToEntity(req, entity, "user");
+        entity.setProperty("content", body);
+        datastoreService.put(entity);
     }
+
+    private void parameterToEntity(HttpServletRequest req, Entity entity, String parameterName) {
+        entity.setProperty(parameterName, req.getParameter("date"));
+    }
+
+
 }

@@ -89,6 +89,7 @@ function SiteHandlerManager() {
             videoElement.div.data('videoFeed', videoFeed)
             //todo workaround start
             videoElement.div.addClass('filled')
+            linkContext.loadVideoFeedCallback && typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
             //todo workaroung end
             if (!linkContext.fromCache) {
                 SiteHandlerManager.prototype.setVideoFeed(videoFeed)
@@ -176,6 +177,7 @@ function SoundCloudHandler() {
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
+        linksContext.loadVideoFeedCallback && typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
 //        playlist.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {

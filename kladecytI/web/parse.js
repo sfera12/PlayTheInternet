@@ -63,7 +63,7 @@ function openWindow(links) {
     var a = window,
         b = document,
         c = encodeURIComponent,
-        d = a.open('DOMAIN/parse.html#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=530px,width=1100px,resizable=1,alwaysRaised=1');
+        d = a.open('DOMAIN/parse.html?location=' + encodeURI(window.location.href.replace(/#/g, '&hash;')) + '#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=530px,width=1100px,resizable=1,alwaysRaised=1');
     a.setTimeout(function () {
         d.focus();
     }, 300)

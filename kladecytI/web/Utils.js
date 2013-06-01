@@ -194,7 +194,7 @@ function Playlist(appendToElementExpression, options) {
         return this.playlist[index]
     }
 
-    this.addSongsToPlaylist = function (links, unique) {
+    this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback) {
         if (unique == true) {
             var oldLinks = this.playlistVideos()
             links = _.filter(links, function (newSong) {
@@ -202,17 +202,22 @@ function Playlist(appendToElementExpression, options) {
             })
         }
 
+        links = _.filter(links, function(validSong) {
+            return (validSong.id && validSong.type)
+        })
+
+        var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
+
         links.forEach(function (videoItem) {
-            if(videoItem.id && videoItem.type) {
                 var videoElement = new VideoElement(videoItem, this.containerElementExpression)
                 var linkContext = {
                     videoElement:videoElement,
                     videoItem:videoItem,
-                    retryCounter:0
+                    retryCounter:0,
+                    loadVideoFeedCallback: afterLoadVideoFeed
                 }
                 siteHandlerManager.loadVideoFeed(linkContext)
                 this.debounceRecalculatePlaylist()
-            }
         }.bind(this))
     }
 

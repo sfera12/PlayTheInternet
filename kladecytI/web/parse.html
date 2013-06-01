@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>jQuery UI Sortable - Display as grid</title>
-    <script src="js/datajs.js"></script>
-    <script src="https://rawgithub.com/diy/intercom.js/master/intercom.js"></script>
+    <!--<script src="js/datajs.js"></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
     <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
@@ -40,20 +40,33 @@
 
 </div>
 <script>
-    $("#ulFirst, #ulSecond").sortable({
-        connectWith:'.connectedSortable',
-        scrollSensitivity:50,
-        tolerance:'pointer',
-        distance:25})
-    var plt = new Playlist("#ulFirst")
-    //todo solve the unique true issue
-    plt.addSongsToPlaylist(plt.parseSongIds(window.location.hash))
-    setSlimScroll("#ulFirst", "93.5%")
-    setSlimScroll("#ulSecond", "93.5%")
+//    $("#ulFirst, #ulSecond").sortable({
+//        connectWith:'.connectedSortable',
+//        scrollSensitivity:50,
+//        tolerance:'pointer',
+//        distance:25,
+//        update:function (event, ui) {
+//            pll.recalculatePlaylist()
+//            plr.recalculatePlaylist()
+//        }
+//    })
+    var pll = new Playlist("#ulFirst")
+    var plr = new Playlist('#ulSecond');
+    var saveToHistory = _.once(function() {
+        var data = new Object();
+        data.data = pll.playlistVideos();
+        data.meta = {user: 'sichain', url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1')}
+        console.log(JSON.stringify(data))
+        $.ajax({
+            url: '/calendar?date=' + new Date().getTime() + '&user=sichain',
+            type: 'post',
+            data: JSON.stringify(data)
+        })
+    }.bind(this))
+    pll.addSongsToPlaylist(pll.parseSongIds(window.location.hash), true, saveToHistory)
+
 </script>
 <script>
-    var windowId = GUID();
-    var intercom = Intercom.getInstance();
     var ctrlFirst = $('#ctrlFirst')
     var ctrlSecond = $('#ctrlSecond')
     var videos = function(elementExpression) {
@@ -69,31 +82,7 @@
         })
         return ids
     }
-    intercom.on(windowId + 'windowId', function(data) {
-        if(!($('input[value=' + data.sender + ']').size())) {
-            var input = $('<input type="button"/>')
-            input.val(data.sender)
-            input.click(function () {
-                var ids = videos("#ulFirst")
-                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlFirst"});
-            })
-            ctrlFirst.append(input)
-            var input = $('<input type="button"/>')
-            input.val(data.sender)
-            input.click(function () {
-                var ids = videos("#ulSecond")
-                intercom.emit(data.sender + 'playlistReceived', {sender:windowId, message: ids, ctrl: "#ctrlSecond"});
-            })
-            ctrlSecond.append(input)
-        }
-    });
-    intercom.on(windowId + 'playlistReceived', function(data) {
-        var div = $( data.ctrl + ' > input[value=' + data.sender + ']')
-        div.css("color", "green")
-        setTimeout(function() {
-            window.close()
-        }, 10000)
-    })
+
     var generateHref = function (elementExpression, containerElementExpression) {
         var proceed = $(elementExpression)
         proceed.attr("target", "_blank")
@@ -106,13 +95,40 @@
         })
     }
     $(document).ready(function () {
-        var drawWindows = function() {
-            intercom.emit('windowId', { sender:windowId })
-            setTimeout(function() {
-                drawWindows()
-            }, 2000)
+        setSlimScroll("#ulFirst", "93.5%")
+        setSlimScroll("#ulSecond", "93.5%")
+
+        var drawPlaylist = function(plt, ctrl, playlistName, lReturnPlaylist) {
+            var input = $('<input type="button"/>')
+            input.val(playlistName)
+            input.click(function () {
+                console.log(plt.jPlaylist)
+                plt.setId(playlistName)
+            })
+            ctrl.append(input)
         }
-        drawWindows()
+
+        $.jStorage.subscribe('windowIds', function(channel, payload) {
+//            console.log($.jStorage.get(payload))
+            if(!($('input[value=' + payload + ']').size())) {
+                var returnPlaylist = function() {
+                    console.log(payload)
+                    return $.jStorage.get(payload).join(',')
+                }
+                drawPlaylist(pll, ctrlFirst, payload, returnPlaylist)
+                drawPlaylist(plr, ctrlSecond, payload, returnPlaylist)
+            }
+        })
+
+        drawPlaylist(pll, ctrlFirst, 'parsed', function () {
+            return window.location.hash
+        })
+
+        $.jStorage.publish('queryWindowIds', 'give me');
+        setInterval(function() {
+//            $.jStorage.publish('queryWindowIds', 'give me');
+        }, 2000)
+
         generateHref("#nwWndFirst", "#ulFirst")
         generateHref("#nwWndSecond", "#ulSecond")
     })
