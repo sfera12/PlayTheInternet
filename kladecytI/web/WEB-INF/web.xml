@@ -5,6 +5,22 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet>
+        <servlet-name>calendar</servlet-name>
+        <servlet-class>kladecyt.Calendar</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>calendar</servlet-name>
+        <url-pattern>/calendar</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>calendarSorted</servlet-name>
+        <servlet-class>kladecyt.CalendarSorted</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>calendarSorted</servlet-name>
+        <url-pattern>/calendarSorted</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>kladecyt</servlet-name>
         <servlet-class>kladecyt.KladecytServlet</servlet-class>
     </servlet>

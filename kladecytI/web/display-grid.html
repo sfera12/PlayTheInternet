@@ -18,13 +18,13 @@
     <!--<link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css">    -->
     <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
     <link rel="stylesheet" href="bootswatch/cosmo.css">
-    <!--<link rel="stylesheet" href="https://raw.github.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
+    <!--<link rel="stylesheet" href="https://rawgithub.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <!--<script src="js/datajs.js"></script>-->
-    <script src="https://raw.github.com/andris9/jStorage/master/jstorage.js"></script>
-    <script src="https://raw.github.com/diy/intercom.js/master/intercom.js"></script>
+    <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
+    <script src="https://rawgithub.com/diy/intercom.js/master/intercom.js"></script>
     <script src="bootstrapCustom/js/bootstrap.js"></script>
-    <script src="https://raw.github.com/documentcloud/underscore/master/underscore.js"></script>
+    <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
     <!--<script src="js/jqui1.10.3/jquery-ui-1.10.3.custom.min.js"></script>-->
     <script src="SiteHandlers.js"></script>
@@ -222,6 +222,7 @@ $.each(gimpedAnimation, function (index, item) {
     })
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
     $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
+    var ulFirst = new Playlist('#ulFirst')
     var playlist = new Playlist("#ulSecond",
             {
                 id: windowId,
