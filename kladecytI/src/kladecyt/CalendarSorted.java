@@ -22,6 +22,7 @@ public class CalendarSorted extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json; charset=utf-8");
 //        Query query = new Query("Calendar").addFilter("date", Query.FilterOperator.LESS_THAN_OR_EQUAL, new Date().getTime()).addSort("date", Query.SortDirection.ASCENDING);
         Query query = new Query("Calendar");
         PreparedQuery preparedQuery = datastoreService.prepare(query);

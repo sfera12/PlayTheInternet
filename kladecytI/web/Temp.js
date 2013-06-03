@@ -66,3 +66,5 @@ createIframe("http://localhost:8888/linkRenderer.html");
 
 var iframeWin = document.getElementById("da-iframe").contentWindow
 iframeWin.postMessage(document.documentElement.innerHTML, "http://localhost:8888");
+
+_.uniq(_.flatten(_.reduce(sortedData, function(memo, item) { memo.push(item.data); return memo }, new Array())), function(item) { return item.type + '=' + item.id } )
