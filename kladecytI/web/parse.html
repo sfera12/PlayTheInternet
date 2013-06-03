@@ -24,7 +24,8 @@
 <div id="dPLists">
     <div id="firstView">
         <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
-            <a href="thisislink" id="nwWndFirst">Open in new window</a>
+            <label id="saveHistoryStatus" style="position:absolute">Status<br></label>
+            <a style="position:relative; left: 27px; padding-right: 27px; " href="thisislink" id="nwWndFirst">Open in new window</a>
         </div>
         <div id="ulFirst" class="connectedSortable parsePlaylistFrame">
         </div>
@@ -50,18 +51,45 @@
 //            plr.recalculatePlaylist()
 //        }
 //    })
+    function calendarSortedStringify(callback) {
+        $.ajax({url:'/calendarSorted', success:function (data) {
+            console.log(JSON.stringify(data))
+            typeof callback == "function" && callback(data)
+        }})
+    }
+
+    function calendarSorted(callback) {
+        $.ajax({url:'/calendarSorted', success:function (data) {
+            console.log(data)
+            typeof callback == "function" && callback(data)
+        }})
+    }
+
+
+
     var pll = new Playlist("#ulFirst")
     var plr = new Playlist('#ulSecond');
     var saveToHistory = _.once(function() {
         var now = new Date().getTime();
         var data = new Object();
         data.data = pll.playlistVideos();
+        var count = data.data.length
         data.meta = {user: 'sichain', url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1'), date: now}
         console.log(JSON.stringify(data))
         $.ajax({
             url: '/calendar?date=' + now + '&user=sichain',
             type: 'post',
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            success: function() {
+                var saveHistoryElement = $('#saveHistoryStatus');
+                saveHistoryElement.text(count)
+                saveHistoryElement.css('font-size', 25)
+                saveHistoryElement.css('background-color', 'green')
+            },
+            error: function(err) {
+                console.log(err)
+                alert('error in saving to history, please check console for further information')
+            }
         })
     }.bind(this))
     pll.addSongsToPlaylist(pll.parseSongIds(window.location.hash), true, saveToHistory)
@@ -127,8 +155,8 @@
 
         $.jStorage.publish('queryWindowIds', 'give me');
         setInterval(function() {
-//            $.jStorage.publish('queryWindowIds', 'give me');
-        }, 2000)
+            $.jStorage.publish('queryWindowIds', 'give me');
+        }, 3000)
 
         generateHref("#nwWndFirst", "#ulFirst")
         generateHref("#nwWndSecond", "#ulSecond")

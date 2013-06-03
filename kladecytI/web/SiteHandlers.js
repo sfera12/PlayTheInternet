@@ -147,6 +147,8 @@ function YoutubeHandler() {
                         console.log("retrying video")
                         YoutubeHandler.prototype.loadVideoFeed(linkContext)
                     }, 35000)
+                } else {
+                    typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 }
 //                console.log("Unable to load: " + linksContext.videoElement.videoItem.id)
 //                console.log(data)

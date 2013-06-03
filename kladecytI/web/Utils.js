@@ -1,9 +1,3 @@
-var onceLoaded = _.once(function() {
-    playlist.currSong = playlist.playlist[0]
-    console.log('onceLoaded')
-    playFirstLoaded();
-})
-
 function VideoElement(videoFeed, appendTo) {
     var div
 
@@ -179,7 +173,8 @@ function Playlist(appendToElementExpression, options) {
 
     this.debounceRecalculatePlaylist = _.debounce(function () {
         this.recalculatePlaylist();
-        onceLoaded();
+        console.log('playFirstLoaded debounce')
+        playFirstLoaded();
     }, 300)
 
     Playlist.prototype.buildHash = function () {
@@ -206,7 +201,9 @@ function Playlist(appendToElementExpression, options) {
             return (validSong.id && validSong.type)
         })
 
-        var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
+        if(typeof loadVideoFeedCallback == "function") {
+            var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
+        }
 
         links.forEach(function (videoItem) {
                 var videoElement = new VideoElement(videoItem, this.containerElementExpression)
@@ -249,7 +246,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.playNextVideo = function () {
-        Playlist.prototype.playVideoDiv(playlist.lookupNextSong())
+        playlist.playVideoDiv(playlist.lookupNextSong())
     }
 
     if(options) {

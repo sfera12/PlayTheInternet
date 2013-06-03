@@ -86,6 +86,7 @@
                 <li><a href="#tAreaDiv">Text Area<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
                 <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
                 <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
+                <li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
             </ul>
             <div id="player">
             </div>
@@ -110,6 +111,9 @@
             </div>
             <div id="recycleBinDiv" class="playlistFrame">
                 <div id="ulFirst" class="connectedSortable playlistFrame"></div>
+            </div>
+            <div id="calendarDiv" class="playlistFrame">
+                <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
             <!--<div id="taFirst" class="playlistFrame internalFrame">-->
             <!--</div>-->
@@ -138,10 +142,12 @@
 </div>
 
 <script>
-
+    var onceLoaded = _.once(function() {
+        playlist.playVideoDiv(playlist.lookupNextSong())
+    })
     var playFirstLoaded = _.after(3, function() {
         console.log('playFirstLoaded')
-        playlist.playVideoDiv(playlist.currSong)
+        onceLoaded()
     })
 
 var gimpedAnimation = [
@@ -185,9 +191,6 @@ $.each(gimpedAnimation, function (index, item) {
 //                playlist.recalculatePlaylist()
 //            }
 //        }).disableSelection();
-        window.initPlayer = _.once(function (songIds) {
-            this.init(songIds)
-        })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
@@ -206,9 +209,7 @@ $.each(gimpedAnimation, function (index, item) {
 
         IntercomWrapper(windowId)
 
-        if (window.location.hash.length > 0) {
-            initPlayer(playlist.parseSongIds(window.location.hash));
-        } else {
+        if (window.location.hash.length == 0) {
             $( "#tabs" ).tabs( "option", "active", 1 );
         }
         document.title = windowId
@@ -223,6 +224,7 @@ $.each(gimpedAnimation, function (index, item) {
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
     $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
     var ulFirst = new Playlist('#ulFirst')
+    var calendarPlaylist = new Playlist('#calendarPlaylist')
     var playlist = new Playlist("#ulSecond",
             {
                 id: windowId,
@@ -230,20 +232,19 @@ $.each(gimpedAnimation, function (index, item) {
                     window.location.hash = playlist.jPlaylist.sortable('toArray')
                 }
             });
+    playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
     var yte = new YoutubePlayer(null, playlist)
 //    yte.drawPlayer("youtube");
-    var init = function (songIds) {
-//        playlist.addSongsToPlayList("#ulFirst", songIds)
-        playlist.addSongsToPlaylist(songIds, true)
-    };
 
-//        setSlimScroll('#ulFirst')
+    setSlimScroll('#calendarPlaylist', "100%")
+    setSlimScroll('#ulFirst', "100%")
     setSlimScroll('#ulSecond', "100%")
 
     var scWidgetIframe = document.getElementById('sc-widget');
     window.scWidget = SC.Widget(scWidgetIframe);
 
     scWidget.bind(SC.Widget.Events.READY, function () {
+        console.log('playFirstLoaded sc')
         playFirstLoaded();
         scWidget.bind(SC.Widget.Events.FINISH, function () {
             scWidget.getCurrentSoundIndex(function (data) {
@@ -272,6 +273,7 @@ $.each(gimpedAnimation, function (index, item) {
 
     function onPlayerReady(event) {
         playFirstLoaded();
+        console.log('playFirstLoaded yt')
         $('#ulFirst, #ulSecond').click(function(evt) {
             playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
         })
@@ -417,10 +419,38 @@ $.each(gimpedAnimation, function (index, item) {
         uploadVideo()
     });
 
+    function propagateCalendar() {
+        $.ajax({
+            url: '/calendarSorted',
+            success: function(data) {
+                var uniqSongs = _.uniq(_.flatten(_.reduce(data, function (memo, item) {
+                    memo.push(item.data);
+                    return memo
+                }, new Array())), function (item) {
+                    return item.type + '=' + item.id
+                })
+                var songsArray = _.reduce(uniqSongs,
+                    function(memo, item) {
+                        SiteHandlerManager.prototype.setVideoFeed(item)
+                        memo.push(item.type + '=' + item.id)
+                        return memo
+                    },
+                    new Array()
+                )
+                console.log(songsArray)
+                $.jStorage.set(windowId + 'calendar', songsArray)
+                calendarPlaylist.setId(windowId + 'calendar')
+            }
+        })
+    }
+
     $('#tabs').tabs({
         activate: function( event, ui ) {
             var newTab = $(ui.newTab);
-            console.log(newTab)
+            console.log(newTab.text())
+            if(newTab.text() == "Calendar") {
+                propagateCalendar()
+            }
             newTab.addClass('active')
             $(ui.oldTab).removeClass('active')
         }
