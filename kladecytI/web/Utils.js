@@ -205,16 +205,18 @@ function Playlist(appendToElementExpression, options) {
             var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
         }
 
-        links.forEach(function (videoItem) {
-                var videoElement = new VideoElement(videoItem, this.containerElementExpression)
-                var linkContext = {
-                    videoElement:videoElement,
-                    videoItem:videoItem,
-                    retryCounter:0,
-                    loadVideoFeedCallback: afterLoadVideoFeed
-                }
-                siteHandlerManager.loadVideoFeed(linkContext)
-                this.debounceRecalculatePlaylist()
+
+        links.forEach(function (videoFeed) {
+            videoFeed.template = "rawTemplate"
+            var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
+            var linkContext = {
+                videoElement:videoElement,
+                videoFeed:videoFeed,
+                retryCounter:0,
+                loadVideoFeedCallback: afterLoadVideoFeed
+            }
+            siteHandlerManager.loadVideoFeed(linkContext)
+            this.debounceRecalculatePlaylist()
         }.bind(this))
     }
 
