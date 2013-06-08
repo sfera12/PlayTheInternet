@@ -20,14 +20,19 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
-        var value = $.jStorage.get(linkContext.videoFeed.id)
+        if(linkContext.videoFeed && linkContext.videoFeed.template) {
+            var value = linkContext.videoFeed
+        } else {
+            var value = $.jStorage.get(linkContext.videoFeed.id)
+            //console.log(JSON.stringify(value) + 'FROM CACHE')
+        }
 //      console.log(value)
         if (value) {
             linkContext.fromCache = true;
             linkContext.videoFeed = value;
-            //console.log(JSON.stringify(value) + 'FROM CACHE')
             SiteHandlerManager.prototype.fillVideoElement(linkContext);
         } else {
+            linkContext.videoFeed.template = "rawTemplate"
             SiteHandlerManager.prototype.fillVideoElement(linkContext);
             SiteHandlerManager.prototype.getHandler(linkContext.videoFeed.type).loadVideoFeed(linkContext);
         }
@@ -78,7 +83,7 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.fillVideoElement = function(linkContext, fromCache) {
+    SiteHandlerManager.prototype.fillVideoElement = function(linkContext) {
         var videoFeed = linkContext.videoFeed;
         var videoElement = linkContext.videoElement;
         var handler = SiteHandlerManager.prototype.getHandler(videoFeed.type);
@@ -86,8 +91,7 @@ function SiteHandlerManager() {
             videoElement.div.html(handler[videoFeed.template](videoFeed))
             videoElement.div.data('videoFeed', videoFeed)
             //todo workaround start
-            if(videoFeed.template == "completeTemplate") {
-                videoElement.div.addClass('filled')
+            if(videoFeed.template == "completeTemplate" || linkContext.fromCache) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 //todo workaroung end
             }
@@ -204,7 +208,7 @@ function VimeoHandler() {
     VimeoHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
     VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
-    VimeoHandler.prototype.regex = /vimeo.com\\?\/([^\s&\'\'<>\/\\.,\"#]+)/
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/(\d+)/
     VimeoHandler.prototype.regexGroup = 1
     VimeoHandler.prototype.playerContainer = 'vimeoContainer'
     VimeoHandler.prototype.playInterval
@@ -224,11 +228,13 @@ function VimeoHandler() {
                 SiteHandlerManager.prototype.fillVideoElement(linkContext)
             },
             error: function(error) {
+                typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 console.log('error in vimeoHandler loadVideoFeed start')
                 console.log(error)
                 console.log('error in vimeoHandler loadVideoFeed end')
             },
-            dataType: 'jsonp'
+            dataType: 'jsonp',
+            timeout: 10000
         })
     }
     VimeoHandler.prototype.playVideoFeed = function(videoFeed) {

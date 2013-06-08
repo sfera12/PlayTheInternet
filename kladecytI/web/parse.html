@@ -3,31 +3,24 @@
 <head>
     <meta charset="utf-8">
     <title>jQuery UI Sortable - Display as grid</title>
-    <!--<script src="js/datajs.js"></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
     <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
+    <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="playlist.css"/>
-    <link rel="stylesheet" href="jqC/development-bundle/demos/demos.css">
-    <link rel="stylesheet" href="jqC/development-bundle/themes/base/jquery.ui.all.css">
     <script src="SiteHandlers.js"></script>
     <script src="Utils.js"></script>
-    <style>
-        .parsePlaylistFrame {  float: left; width: 100%; height: 87%; overflow-x: hidden; overflow-y: hidden;  }
-    </style>
 </head>
 <body>
-<!--<a id="proceed" href="" target="_blank">Open in new Window</a>    <br>-->
-<!--<a id="addChannel">Add to current Playlist</a>-->
 <div id="dPLists">
     <div id="firstView">
         <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
             <label id="saveHistoryStatus" style="position:absolute">Status<br></label>
             <a style="position:relative; left: 27px; padding-right: 27px; " href="thisislink" id="nwWndFirst">Open in new window</a>
         </div>
-        <div id="ulFirst" class="connectedSortable parsePlaylistFrame">
+        <div id="ulFirst" class="connectedSortable playlistFrame">
         </div>
     </div>
 
@@ -35,22 +28,12 @@
         <div id="ctrlSecond" class="ctrlSecond" style="height: 12%;">
             <a href="thisislink" id="nwWndSecond">Open in new window</a>
         </div>
-        <div id="ulSecond" class="connectedSortable parsePlaylistFrame">
+        <div id="ulSecond" class="connectedSortable playlistFrame">
         </div>
     </div>
 
 </div>
 <script>
-//    $("#ulFirst, #ulSecond").sortable({
-//        connectWith:'.connectedSortable',
-//        scrollSensitivity:50,
-//        tolerance:'pointer',
-//        distance:25,
-//        update:function (event, ui) {
-//            pll.recalculatePlaylist()
-//            plr.recalculatePlaylist()
-//        }
-//    })
     function calendarSortedStringify(callback) {
         $.ajax({url:'/calendarSorted', success:function (data) {
             console.log(JSON.stringify(data))
@@ -71,13 +54,14 @@
     var plr = new Playlist('#ulSecond');
     var saveToHistory = _.once(function() {
         var now = new Date().getTime();
+        var user = 'sichain'
         var data = new Object();
         data.data = pll.playlistVideos();
         var count = data.data.length
-        data.meta = {user: 'sichain', url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1'), date: now}
+        data.meta = {user: user, url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1'), date: now}
         console.log(JSON.stringify(data))
         $.ajax({
-            url: '/calendar?date=' + now + '&user=sichain',
+            url: '/calendar?date=' + now + '&user=' + user,
             type: 'post',
             data: JSON.stringify(data),
             success: function() {

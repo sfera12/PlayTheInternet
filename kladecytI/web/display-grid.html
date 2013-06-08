@@ -308,117 +308,6 @@ $.each(gimpedAnimation, function (index, item) {
         SiteHandlerManager.prototype.stateChange("ERROR")
     }
 
-</script>
-
-<script>
-    var uploadVideo = function() {
-        var feedRequest = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry><entry><batch:operation type="insert"/><id>sCKe65D-uyo</id></entry></feed>'
-        $.ajax({
-            // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-            // url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-            url : 'kladecyt',
-            type: 'POST',
-            headers: { 'Bearer': gAuth},
-            data: feedRequest,
-            success : function(){ alert('success')},
-            error : aError
-        })
-    }
-
-    var batchWrapper = function() {
-        setTimeout(batch, "60000")
-    }
-
-    var batchI = 0;
-    var batch = function() {
-        if(batchI < 200 && batchI < songs.length) {
-            console.log('batchI ' + batchI)
-            console.log('songs.length ' + songs.length)
-            var feedStart = '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:yt="http://gdata.youtube.com/schemas/2007"><batch:operation type="update"/>'
-            var feedEnd = '</feed>'
-            var end = batchI + 40
-            for (var i=batchI; i < end && i < songs.length && i < 200; i++, batchI++) {
-                var entry = '<entry><batch:operation type="insert"/><id>' + songs[i] + '</id></entry>'
-                feedStart += entry
-            };
-            console.log(feedStart + feedEnd)
-            $.ajax({
-                // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-                // url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-                url : 'kladecyt',
-                type: 'POST',
-                headers: { 'Bearer': gAuth},
-                data: feedStart + feedEnd,
-                success : batchWrapper,
-                error : aError
-            })
-        } else {
-            console.log('done with')
-            console.log('batchI ' + batchI)
-            console.log('songs.length ' + songs.length)
-        }
-    }
-
-    var related = function(maxRes) {
-        if(recDepth > 0) {
-            $.each(currIteration, function(index, currId) {
-                // console.log('related ' + currIteration.length)
-                $.ajax({
-                    // async: false,
-                    // url : 'https://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&start-index=1&max-results=50&q=asking%20alexandria&orderby=relevance',
-                    url : 'https://gdata.youtube.com/feeds/api/videos/' + currId + '/related?v=2&alt=jsonc&max-results=' + maxRes,
-                    // dataType : 'json',
-                    success : addSongs,
-                    error : aError
-                })
-            });
-        } else {
-            console.log(songs.length)
-            console.log(songs.unique().length)
-            songs = songs.unique()
-            batch(0)
-        }
-    }
-
-
-
-    var addSongs = function(data) {
-        currLength++
-        $.each(data.data.items, function(index, item) {
-            songs.push(item.id)
-            nextIteration.push(item.id)
-            console.log(item.id)
-        })
-        // console.log('addSongs ' + currIteration.length)
-        if(currLength == currIteration.length) {
-            currLength = 0
-            console.log('currIteration')
-            recDepth--
-            currIteration = nextIteration
-            nextIteration = []
-            related(maxRes)
-        }
-    }
-
-    var vId = $('#iCriteria').attr('value')
-    var maxRes = 15;
-    var recDepth = 2;
-
-    var currIteration = []
-    var currLength = 0;
-    var nextIteration = []
-    var songs = new Array()
-
-    songs.push(vId)
-    currIteration.push(vId)
-    $("#iRelated").click(function() {
-        related(maxRes)
-    });
-
-    $("#iUploadVideo").click(function() {
-        uploadVideo()
-    });
-
     function propagateCalendar() {
         $.ajax({
             url: '/calendarSorted',
@@ -429,17 +318,8 @@ $.each(gimpedAnimation, function (index, item) {
                 }, new Array())), function (item) {
                     return item.type + '=' + item.id
                 })
-                var songsArray = _.reduce(uniqSongs,
-                    function(memo, item) {
-                        SiteHandlerManager.prototype.setVideoFeed(item)
-                        memo.push(item.type + '=' + item.id)
-                        return memo
-                    },
-                    new Array()
-                )
-                console.log(songsArray)
-                $.jStorage.set(windowId + 'calendar', songsArray)
-                calendarPlaylist.setId(windowId + 'calendar')
+//                console.log(uniqSongs)
+                calendarPlaylist.addSongsToPlaylist(uniqSongs, true)
             }
         })
     }

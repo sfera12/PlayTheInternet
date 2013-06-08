@@ -103,12 +103,12 @@ function IntercomWrapper(windowId) {
 }
 
 function Playlist(appendToElementExpression, options) {
+    this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jPlaylist = $(this.containerElementExpression)
     this.playlist
     this.currSong
     this.id
-    var that = this
 
     $(this.containerElementExpression).sortable({
         connectWith:'.connectedSortable',
@@ -116,8 +116,8 @@ function Playlist(appendToElementExpression, options) {
         tolerance:'pointer',
         distance:25,
         update:function (event, ui) {
-            that.recalculatePlaylist()
-        }
+            this.recalculatePlaylist()
+        }.bind(this)
     })
 
     Playlist.prototype.listenFunction = function(key, action) {
@@ -143,8 +143,8 @@ function Playlist(appendToElementExpression, options) {
                 this.jPlaylist.find(id).addClass('selected')
             }
         }
-        if(options && typeof options.listenKeyChangeCallback == 'function') {
-            options.listenKeyChangeCallback(this)
+        if(this.options && typeof this.options.listenKeyChangeCallback == 'function') {
+            this.options.listenKeyChangeCallback(this)
         }
     }
 
@@ -156,10 +156,10 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.recalculatePlaylist = function (jStorageId) {
-        this.playlist = $(this.containerElementExpression + " div").filter(function (index, item) {
+        this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
 //            console.log($(item).hasClass("disabled-Video"))
             item = $(item)
-            return item.hasClass('filled')
+            return item
         })
         //todo start from here windowId || jStorageId check this
         if(this.id) {
@@ -168,13 +168,15 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.playlistVideos = function() {
-        return _.map($(this.containerElementExpression + " div.filled"), function(item) { return $(item).data('videoFeed') })
+        return _.map($(this.containerElementExpression + '> div'), function(item) { return $(item).data('videoFeed') })
     }
 
     this.debounceRecalculatePlaylist = _.debounce(function () {
         this.recalculatePlaylist();
         console.log('playFirstLoaded debounce')
-        playFirstLoaded();
+        if(typeof playFirstLoaded == "function") {
+            playFirstLoaded();
+        }
     }, 300)
 
     Playlist.prototype.buildHash = function () {
@@ -184,14 +186,14 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.lookupNextSong = function () {
-        var index = $(this.containerElementExpression).find('div.filled').index($(this.containerElementExpression).find('div.selected'))
+        var index = $(this.containerElementExpression).find('div.pti-state-default').index($(this.containerElementExpression).find('div.selected'))
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }
 
     this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback) {
         if (unique == true) {
-            var oldLinks = this.playlistVideos()
+            var oldLinks = this.parseSongIds(this.jPlaylist.sortable('toArray').join(','))
             links = _.filter(links, function (newSong) {
                 return !_.findWhere(oldLinks, newSong)
             })
@@ -205,9 +207,7 @@ function Playlist(appendToElementExpression, options) {
             var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
         }
 
-
         links.forEach(function (videoFeed) {
-            videoFeed.template = "rawTemplate"
             var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
             var linkContext = {
                 videoElement:videoElement,
@@ -244,6 +244,8 @@ function Playlist(appendToElementExpression, options) {
             $(this.currSong).addClass("selected")
             document.title = windowId + ' - ' + videoFeed.title
             SiteHandlerManager.prototype.playVideoFeed(videoFeed)
+        } else {
+            throw "videoFeed is empty"
         }
     }
 
@@ -251,10 +253,8 @@ function Playlist(appendToElementExpression, options) {
         playlist.playVideoDiv(playlist.lookupNextSong())
     }
 
-    if(options) {
-        if(options.id) {
-            this.setId(options.id)
-        }
+    if(options && options.id) {
+        this.setId(options.id)
     }
 }
 
@@ -283,7 +283,6 @@ function YoutubePlayer(ytp, pla) {
 
 
     this.onStateChange = function (state) {
-        console.log("change " + state)
         if (state == 0) {
             this.playNextVideo()
         }
@@ -335,18 +334,3 @@ function convert(duration) {
     }
     return out.join(":")
 }
-//
-//Array.prototype.unique =
-//    function () {
-//        var a = [];
-//        var l = this.length;
-//        for (var i = 0; i < l; i++) {
-//            for (var j = i + 1; j < l; j++) {
-//                // If this[i] is found later in the array
-//                if (this[i] === this[j])
-//                    j = ++i;
-//            }
-//            a.push(this[i]);
-//        }
-//        return a;
-//    };
