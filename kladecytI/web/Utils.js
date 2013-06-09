@@ -155,13 +155,13 @@ function Playlist(appendToElementExpression, options) {
         $.jStorage.listenKeyChange(id, this.listenFunction.bind(this))
     }
 
-    this.recalculatePlaylist = function (jStorageId) {
+    this.recalculatePlaylist = function () {
         this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
 //            console.log($(item).hasClass("disabled-Video"))
             item = $(item)
             return item
         })
-        //todo start from here windowId || jStorageId check this
+
         if(this.id) {
             $.jStorage.set(this.id, this.jPlaylist.sortable('toArray'))
         }

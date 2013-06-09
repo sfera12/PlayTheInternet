@@ -23,8 +23,9 @@ public class CalendarSorted extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset=utf-8");
+        Long start = Long.valueOf(req.getParameter("start"));
 //        Query query = new Query("Calendar").addFilter("date", Query.FilterOperator.LESS_THAN_OR_EQUAL, new Date().getTime()).addSort("date", Query.SortDirection.ASCENDING);
-        Query query = new Query("Calendar");
+        Query query = new Query("Calendar").addFilter("date", Query.FilterOperator.GREATER_THAN_OR_EQUAL, start).addSort("date", Query.SortDirection.DESCENDING);
         PreparedQuery preparedQuery = datastoreService.prepare(query);
         Iterator<Entity> iterator = preparedQuery.asIterator();
         StringBuilder output = null;

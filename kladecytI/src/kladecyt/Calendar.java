@@ -52,14 +52,14 @@ public class Calendar extends HttpServlet {
             }
         }
         Text body = new Text(stringBuilder.toString());
-        parameterToEntity(req, entity, "date");
-        parameterToEntity(req, entity, "user");
+        parameterToEntity(req, entity, "date", Long.valueOf(req.getParameter("date")));
+        parameterToEntity(req, entity, "user", req.getParameter("user"));
         entity.setProperty("content", body);
         datastoreService.put(entity);
     }
 
-    private void parameterToEntity(HttpServletRequest req, Entity entity, String parameterName) {
-        entity.setProperty(parameterName, req.getParameter("date"));
+    private void parameterToEntity(HttpServletRequest req, Entity entity, String parameterName, Object value) {
+        entity.setProperty(parameterName, value);
     }
 
 
