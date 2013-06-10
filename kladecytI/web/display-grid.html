@@ -304,14 +304,16 @@ $.each(gimpedAnimation, function (index, item) {
         $.ajax({
             url: '/calendarSorted?start=0',
             success: function(data) {
-                var uniqSongs = _.uniq(_.flatten(_.reduce(data, function (memo, item) {
-                    memo.push(item.data);
-                    return memo
-                }, new Array())), function (item) {
-                    return item.type + '=' + item.id
-                })
-//                console.log(uniqSongs)
-                calendarPlaylist.addSongsToPlaylist(uniqSongs, true)
+//                var uniqSongs = _.uniq(_.flatten(_.reduce(data, function (memo, item) {
+//                    memo.push(item.data);
+//                    return memo
+//                }, new Array())), function (item) {
+//                    return item.type + '=' + item.id
+//                })
+////                console.log(uniqSongs)
+                var compose = _.compose(map, _.pairs, groupBy, reduce)
+                var calendarDays = compose(data)
+                calendarPlaylist.addCalendarSongsToPlaylist(calendarDays)
             }
         })
     }

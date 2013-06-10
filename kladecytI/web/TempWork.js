@@ -5,3 +5,4 @@ _.flatten(_.reduce(sortedData, function (memo, item) {
     memo.push(item.data);
     return memo
 }, new Array()))
+

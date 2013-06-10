@@ -191,6 +191,24 @@ function Playlist(appendToElementExpression, options) {
         return this.playlist[index]
     }
 
+    this.addCalendarSongsToPlaylist = function (days) {
+        days.forEach(function (day) {
+            console.log(day.date)
+            day.links.forEach(function (link) {
+                console.log(link)
+//                var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
+//                var linkContext = {
+//                    videoElement:videoElement,
+//                    videoFeed:videoFeed,
+//                    retryCounter:0,
+//                    loadVideoFeedCallback:afterLoadVideoFeed
+//                }
+//                siteHandlerManager.loadVideoFeed(linkContext)
+//                this.debounceRecalculatePlaylist()
+            })
+        }.bind(this))
+    }
+
     this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback) {
         if (unique == true) {
             var oldLinks = this.parseSongIds(this.jPlaylist.sortable('toArray').join(','))
@@ -334,3 +352,43 @@ function convert(duration) {
     }
     return out.join(":")
 }
+
+function formatDate(dateObj) {
+    var month = dateObj.getUTCMonth();
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    var newdate = ("0" + day).slice(-2) + "-" + ("0" + month).slice(-2) + "-" +  year;
+    return newdate
+}
+
+function calendarSorted(callback) {
+    $.ajax({url:'/calendarSorted?start=0', success:function (data) {
+        console.log(data)
+        window.calendarData = data
+        typeof callback == "function" && callback(data)
+    }})
+}
+
+var reduce = function (sortedData) {
+    return _.flatten(_.reduce(sortedData, function (memo, item) {
+        _.each(item.data, function (item) {
+            item.date = this.meta.date
+        }, item)
+        memo.push(item.data);
+        return memo
+    }, new Array()))
+}
+var groupBy = function (links) {
+    return _.groupBy(links, function (item) {
+        return formatDate(new Date(item.date))
+    })
+}
+var map = function (grouped) {
+    return _.map(grouped, function (item) {
+        return {'date':item[0], links:_.uniq(item[1], function (item) {
+            return item.id + item.type
+        })}
+    })
+}
+var compose = _.compose(map, _.pairs, groupBy)
