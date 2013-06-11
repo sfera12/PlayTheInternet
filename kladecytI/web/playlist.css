@@ -50,3 +50,4 @@ body { height: 100%; }
 .error-text { position: relative; left: 10px; top:35%; }
 .disabled-Video { opacity: 0.4 }
 #ytplayer { width: 100% }
+.pti-state-droppable-target { clear: both; float: left; width: 100%;}

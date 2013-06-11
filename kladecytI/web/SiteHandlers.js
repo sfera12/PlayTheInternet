@@ -170,7 +170,7 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.properties = { errorTimeout: null, dontPlay: true }
     SoundCloudHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
-    SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&#]+)/
+    SoundCloudHandler.prototype.regex = /((soundcloud.com\\?\/)|(a class="soundTitle__title.*href="))([^\s,?"=&#<]+)/
     SoundCloudHandler.prototype.regexGroup = 4
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
     SoundCloudHandler.prototype.clearTimeout = function() {

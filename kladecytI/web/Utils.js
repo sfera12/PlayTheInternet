@@ -109,16 +109,33 @@ function Playlist(appendToElementExpression, options) {
     this.playlist
     this.currSong
     this.id
+    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=date%></label>')
 
+    var blockSort = false;
     $(this.containerElementExpression).sortable({
         connectWith:'.connectedSortable',
         scrollSensitivity:50,
         tolerance:'pointer',
         distance:25,
-        update:function (event, ui) {
-            this.recalculatePlaylist()
-        }.bind(this)
-    })
+//        update:function (event, ui) {
+//            this.recalculatePlaylist()
+//        }.bind(this),
+        cancel:'.pti-state-droppable-target'
+    }).on('sortreceive', function () {
+        blockSort = false;
+//        this.recalculatePlaylist()
+        console.log(this)
+        console.log('receive')
+    }.bind(this)).on('sortstop', function (e) {
+        console.log(this)
+        console.log(blockSort + ' sortstop')
+        if (blockSort) {
+            e.preventDefault();
+        } else {
+            console.log('recalculate')
+        }
+        blockSort = true;
+    }.bind(this))
 
     Playlist.prototype.listenFunction = function(key, action) {
         console.log(key + ' has been ' + action)
@@ -194,18 +211,19 @@ function Playlist(appendToElementExpression, options) {
     this.addCalendarSongsToPlaylist = function (days) {
         days.forEach(function (day) {
             console.log(day.date)
-            day.links.forEach(function (link) {
-                console.log(link)
-//                var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
-//                var linkContext = {
-//                    videoElement:videoElement,
-//                    videoFeed:videoFeed,
-//                    retryCounter:0,
-//                    loadVideoFeedCallback:afterLoadVideoFeed
-//                }
-//                siteHandlerManager.loadVideoFeed(linkContext)
-//                this.debounceRecalculatePlaylist()
-            })
+            this.jPlaylist.append(Playlist.prototype.groupHeaderTemplate(day))
+            day.links.forEach(function (videoFeed) {
+                console.log(videoFeed)
+                var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
+                var linkContext = {
+                    videoElement:videoElement,
+                    videoFeed:videoFeed,
+                    retryCounter:0,
+//                    loadVideoFeedCallback:afterLoadVideoFeed ? afterLoadVideoFeed : null
+                }
+                siteHandlerManager.loadVideoFeed(linkContext)
+                this.debounceRecalculatePlaylist()
+            }.bind(this))
         }.bind(this))
     }
 
