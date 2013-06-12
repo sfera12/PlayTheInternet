@@ -88,11 +88,12 @@
         #TrivialReporter .runner { border: 1px solid gray; display: block; margin: 5px 0; padding: 2px 0 2px 10px; }
         .go-left { float: left; width: 45%; }
     </style>
-    <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
-    <script src="https://gist.github.com/openspectrum/8526bdddbd05238a0ba6/raw/6b3459b913ffe7d15f30f8a93d5f7b6d5939ab7e/jasmine.js"></script>
-    <script src="https://gist.github.com/openspectrum/8526bdddbd05238a0ba6/raw/543d56963eb4a36750fef86842213505a7da0657/jasmine-html.js"></script>
-    <script src="https://gist.github.com/openspectrum/8526bdddbd05238a0ba6/raw/a848d7a6d46b2c20aab4fa7fdc09e5094668fcc3/spec_runner.js"></script>
     <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
+    <script src="jqC/js/jquery-ui-1.10.1.js"></script>
+    <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
+    <script src="https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/6b3459b913ffe7d15f30f8a93d5f7b6d5939ab7e/jasmine.js"></script>
+    <script src="https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/543d56963eb4a36750fef86842213505a7da0657/jasmine-html.js"></script>
+    <script src="https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/a848d7a6d46b2c20aab4fa7fdc09e5094668fcc3/spec_runner.js"></script>
     <script src="SiteHandlers.js"></script>
     <script src="parse.js"></script>
     <script src="Utils.js"></script>
@@ -107,6 +108,7 @@
         watch?v=22222222222
         http://www.youtube.com/embed/33333333333
         http://www.youtube.com/v/44444444444
+        http://youtube.googleapis.com/v/C2V-Le8N7UU&source=uds
     </textarea>
     <textarea id="soundcloud" style="visibility: visible; position: relative;" class="go-left">
         https://soundcloud.com/user-name/sets/000000
@@ -145,6 +147,9 @@ describe("youtube", function () {
     });
     it("http://www.youtube.com/v/44444444444", function () {
         expect(youtube[4]).toEqual({type: "y", id: "44444444444"});
+    });
+    it("http://youtube.googleapis.com/v/C2V-Le8N7UU&source=uds", function () {
+        expect(youtube[5]).toEqual({type: "y", id: "C2V-Le8N7UU"});
     });
 });
 describe("soundcloud", function () {

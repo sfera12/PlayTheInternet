@@ -217,7 +217,7 @@ $.each(gimpedAnimation, function (index, item) {
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
     $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
     var ulFirst = new Playlist('#ulFirst')
-    var calendarPlaylist = new Playlist('#calendarPlaylist')
+    var calendarPlaylist = new Playlist('#calendarPlaylist', {type: 'calendar'})
     var playlist = new Playlist("#ulSecond",
             {
                 id: windowId,
@@ -314,6 +314,7 @@ $.each(gimpedAnimation, function (index, item) {
 ////                console.log(uniqSongs)
                 var compose = _.compose(map, _.pairs, groupBy, reduce)
                 var calendarDays = compose(data)
+                calendarPlaylist.jPlaylist.empty()
                 calendarPlaylist.addCalendarSongsToPlaylist(calendarDays)
             }
         })

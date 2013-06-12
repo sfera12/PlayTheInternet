@@ -103,39 +103,58 @@ function IntercomWrapper(windowId) {
 }
 
 function Playlist(appendToElementExpression, options) {
+    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=date%></label>')
     this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jPlaylist = $(this.containerElementExpression)
     this.playlist
     this.currSong
     this.id
-    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=date%></label>')
 
-    var blockSort = false;
     $(this.containerElementExpression).sortable({
         connectWith:'.connectedSortable',
         scrollSensitivity:50,
         tolerance:'pointer',
         distance:25,
-//        update:function (event, ui) {
-//            this.recalculatePlaylist()
-//        }.bind(this),
+        update:function (event, ui) {
+            this.recalculatePlaylist()
+        }.bind(this),
         cancel:'.pti-state-droppable-target'
-    }).on('sortreceive', function () {
-        blockSort = false;
-//        this.recalculatePlaylist()
-        console.log(this)
-        console.log('receive')
-    }.bind(this)).on('sortstop', function (e) {
-        console.log(this)
-        console.log(blockSort + ' sortstop')
-        if (blockSort) {
-            e.preventDefault();
-        } else {
-            console.log('recalculate')
-        }
-        blockSort = true;
-    }.bind(this))
+    })
+
+    if(options && options.type == "calendar") {
+        //todo use later
+//        this.jPlaylist.removeClass('connectedSortable')
+//        this.jPlaylist.addClass('calendarSortable')
+        var blockSort = false;
+        this.jPlaylist.on('sortstart', function () {
+            blockSort = true
+            console.log('start')
+            console.log(this)
+        }.bind(this))
+//        this.jPlaylist.on('sortreceive', function(event, ui) {
+////            blockSort = false
+//            console.log('receive')
+//            console.log(this)
+//        }.bind(this))
+        this.jPlaylist.on('sortstop', function (event, ui) {
+            if (blockSort) {
+                event.preventDefault()
+                console.log('preventDefault')
+                console.log(this)
+            } else {
+                //todo remove else
+                console.log('preventDefault else')
+                console.log(this)
+            }
+            blockSort = false
+        }.bind(this))
+        this.jPlaylist.on('sortremove', function(event, ui) {
+            blockSort = false
+            console.log('remove')
+            console.log(this)
+        }.bind(this))
+    }
 
     Playlist.prototype.listenFunction = function(key, action) {
         console.log(key + ' has been ' + action)
@@ -174,7 +193,6 @@ function Playlist(appendToElementExpression, options) {
 
     this.recalculatePlaylist = function () {
         this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
-//            console.log($(item).hasClass("disabled-Video"))
             item = $(item)
             return item
         })
