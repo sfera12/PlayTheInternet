@@ -69,11 +69,12 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.hideGroupContents = function(element) {
         var headerTagName = element[0].tagName;
         var headers = this.jPlaylist.find(headerTagName)
-        var headerIndex = calendarPlaylist.jPlaylist.find(headerTagName).index(element);
-        var childStartIndex = calendarPlaylist.jPlaylist.find('>*').index(element) + 1;
+        var headerIndex = headers.index(element)
+        var playlistElements = calendarPlaylist.jPlaylist.find('>*')
+        var childStartIndex = playlistElements.index(element) + 1;
         var childEndIndex = 9999
         if(!(headerIndex == headers.length - 1)) {
-            childEndIndex = calendarPlaylist.jPlaylist.find('>*').index(headers[headerIndex + 1])
+            childEndIndex = playlistElements.index(headers[headerIndex + 1])
         }
         this.jPlaylist.find('>*').slice(childStartIndex, childEndIndex).toggleClass('display-none')
 //        console.log(headerTagName); console.log(headers); console.log(headerIndex); console.log(childStartIndex); console.log(childEndIndex)
