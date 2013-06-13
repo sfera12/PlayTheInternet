@@ -1,4 +1,4 @@
-.display-none { display: none}
+.display-none { width:0px!important; height: 0px!important;}
 
 body { height: 100%; }
 .taArea {width: 100%; height: 200px; }
