@@ -7,51 +7,6 @@ function VideoElement(videoFeed, appendTo) {
         this.div.addClass('pti-state-default')
         this.div.attr('id', videoFeed.type + '=' + videoFeed.id)
         $(appendTo).append(this.div)
-//            if (videoFeed != null) {
-//                this.fillDiv(videoFeed)
-//            }
-    }
-
-    this.fillDiv = function (videoFeed) {
-        this.div.empty()
-        childDiv = $('<div/>').appendTo(this.div)
-        var durationCaption = $('<div/>')
-        durationCaption.addClass('duration-caption')
-        durationCaption.text(videoFeed.durationCaption)
-
-        var imgDiv = $('<div/>')
-        imgDiv.addClass('image-div')
-
-        var img = $('<img/>')
-        img.attr('src', videoFeed.thumbnail)
-
-        var span = $('<span/>')
-        var b = $('<b>').text(videoFeed.title)
-        span.append(b)
-        span.append("<br>by " + videoFeed.uploader)
-
-        var buttonSpan = $('<span style="float: left; width: 12px; height: 90px;"/>')
-        var closeButton = $('<img style="width: 10px; height: 10px;" src="/jqC/css/custom/close.jpg">')
-        buttonSpan.append(closeButton)
-
-        imgDiv.append(img)
-        imgDiv.append(durationCaption)
-        childDiv.append(imgDiv)
-//        childDiv.append(buttonSpan)
-        childDiv.append(span)
-        closeButton.click(function (evt) {
-            evt.stopPropagation()
-            this.toggleClass("disabled-Video")
-            playlist.recalculatePlaylist()
-        }.bind(childDiv))
-        durationCaption.css('left', 120 - durationCaption.width() - 3)
-        durationCaption.css('top', 90 - durationCaption.height() - 3)
-
-        this.div.data("videoFeed", videoFeed)
-        SiteHandlerManager.prototype.setVideoFeed(videoFeed)
-//        playlist.debounceRecalculatePlaylist()
-
-        return this.div
     }
 
     this.createDiv(videoFeed)
@@ -110,6 +65,19 @@ function Playlist(appendToElementExpression, options) {
     this.playlist
     this.currSong
     this.id
+
+    Playlist.prototype.hideGroupContents = function(element) {
+        var headerTagName = element[0].tagName;
+        var headers = this.jPlaylist.find(headerTagName)
+        var headerIndex = calendarPlaylist.jPlaylist.find(headerTagName).index(element);
+        var childStartIndex = calendarPlaylist.jPlaylist.find('>*').index(element) + 1;
+        var childEndIndex = 9999
+        if(!(headerIndex == headers.length - 1)) {
+            childEndIndex = calendarPlaylist.jPlaylist.find('>*').index(headers[headerIndex + 1])
+        }
+        this.jPlaylist.find('>*').slice(childStartIndex, childEndIndex).toggleClass('display-none')
+//        console.log(headerTagName); console.log(headers); console.log(headerIndex); console.log(childStartIndex); console.log(childEndIndex)
+    }
 
     $(this.containerElementExpression).sortable({
         connectWith:'.connectedSortable',
@@ -227,9 +195,11 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.addCalendarSongsToPlaylist = function (days) {
+        var hideGroupContentsHandler = this.hideGroupContents.bind(this)
         days.forEach(function (day) {
             console.log(day.date)
-            this.jPlaylist.append(Playlist.prototype.groupHeaderTemplate(day))
+            var element = $(Playlist.prototype.groupHeaderTemplate(day)).click(function() {hideGroupContentsHandler(element)})
+            this.jPlaylist.append(element)
             day.links.forEach(function (videoFeed) {
                 console.log(videoFeed)
                 var videoElement = new VideoElement(videoFeed, this.containerElementExpression)

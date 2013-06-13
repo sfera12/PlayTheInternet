@@ -258,8 +258,9 @@ $.each(gimpedAnimation, function (index, item) {
             videoId: 'MK6TXMsvgQg',
             events: {
                 'onReady': onPlayerReady,
-                'onStateChange': change,
-                'onError': onError
+                //todo youtube is broken
+//                'onStateChange': change,
+//                'onError': onError
             }
         });
     }
@@ -270,6 +271,9 @@ $.each(gimpedAnimation, function (index, item) {
         $('#ulFirst, #ulSecond').click(function(evt) {
             playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
         })
+        //todo youtube is broken
+        youtube.addEventListener('onStateChange', change)
+        youtube.addEventListener('onError', onError)
     }
 
 
@@ -292,6 +296,7 @@ $.each(gimpedAnimation, function (index, item) {
 //    }
 
     function change(state) {
+        console.log(state)
         if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
