@@ -317,7 +317,8 @@ $.each(gimpedAnimation, function (index, item) {
 //                    return item.type + '=' + item.id
 //                })
 ////                console.log(uniqSongs)
-                var compose = _.compose(map, _.pairs, groupBy, reduce)
+//                var compose = _.compose(map, _.pairs, groupByDate, reduce)
+                var compose = _.compose(map, _.pairs, groupByUrl, reduce)
                 var calendarDays = compose(data)
                 calendarPlaylist.jPlaylist.empty()
                 calendarPlaylist.addCalendarSongsToPlaylist(calendarDays)

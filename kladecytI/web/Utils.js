@@ -58,7 +58,7 @@ function IntercomWrapper(windowId) {
 }
 
 function Playlist(appendToElementExpression, options) {
-    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=date%></label>')
+    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=name%></label>')
     this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jPlaylist = $(this.containerElementExpression)
@@ -194,13 +194,13 @@ function Playlist(appendToElementExpression, options) {
         return this.playlist[index]
     }
 
-    this.addCalendarSongsToPlaylist = function (days) {
+    this.addCalendarSongsToPlaylist = function (groups) {
         var hideGroupContentsHandler = this.hideGroupContents.bind(this)
-        days.forEach(function (day) {
-            console.log(day.date)
-            var element = $(Playlist.prototype.groupHeaderTemplate(day)).click(function() {hideGroupContentsHandler(element)})
+        groups.forEach(function (group) {
+            console.log(group.name)
+            var element = $(Playlist.prototype.groupHeaderTemplate(group)).click(function() {hideGroupContentsHandler(element)})
             this.jPlaylist.append(element)
-            day.links.forEach(function (videoFeed) {
+            group.links.forEach(function (videoFeed) {
                 console.log(videoFeed)
                 var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
                 var linkContext = {
@@ -360,7 +360,7 @@ function convert(duration) {
 }
 
 function formatDate(dateObj) {
-    var month = dateObj.getUTCMonth();
+    var month = dateObj.getUTCMonth() + 1;
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
@@ -380,21 +380,28 @@ var reduce = function (sortedData) {
     return _.flatten(_.reduce(sortedData, function (memo, item) {
         _.each(item.data, function (item) {
             item.date = this.meta.date
+            item.url = this.meta.url
         }, item)
         memo.push(item.data);
         return memo
     }, new Array()))
 }
-var groupBy = function (links) {
+var groupByDate = function (links) {
     return _.groupBy(links, function (item) {
         return formatDate(new Date(item.date))
     })
 }
+var groupByUrl = function (links) {
+    return _.groupBy(links, function (item) {
+        return item.url.replace(/(.*\/\/)?(www.)?([^\/]+).*/, '$3')
+    })
+}
+
+
 var map = function (grouped) {
     return _.map(grouped, function (item) {
-        return {'date':item[0], links:_.uniq(item[1], function (item) {
+        return {'name':item[0], links:_.uniq(item[1], function (item) {
             return item.id + item.type
         })}
     })
 }
-var compose = _.compose(map, _.pairs, groupBy)
