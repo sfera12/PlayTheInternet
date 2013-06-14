@@ -53,3 +53,8 @@ body { height: 100%; }
 .disabled-Video { opacity: 0.4 }
 #ytplayer { width: 100% }
 .pti-state-droppable-target { clear: both; float: left; width: 100%;}
+
+.pti-state-default>div>div.sort { float: left; position: relative; width: 10px; height: 90px; }
+.pti-state-default.ui-selected>div { background-color: orange!important; }
+.pti-state-default.ui-selected.selected>div { background-color: orangered!important; }
+.ui-state-highlight { float:left!important; position:relative!important; width: 50%!important; height: 91px!important; margin: 0px; padding: 0px; border: none;}

@@ -80,15 +80,57 @@ function Playlist(appendToElementExpression, options) {
 //        console.log(headerTagName); console.log(headers); console.log(headerIndex); console.log(childStartIndex); console.log(childEndIndex)
     }
 
-    $(this.containerElementExpression).sortable({
-        connectWith:'.connectedSortable',
-        scrollSensitivity:50,
-        tolerance:'pointer',
-        distance:25,
-        update:function (event, ui) {
+    $(this.containerElementExpression).selectable({
+        filter: 'div.pti-state-default',
+        cancel: 'div.sort'
+    })
+        .sortable({
+            connectWith:'.connectedSortable',
+            scrollSensitivity:50,
+            tolerance:'pointer',
+            distance:25,
+            handle: 'div.sort',
+            placeholder: 'ui-state-highlight',
+//            update:function (event, ui) {
+//                this.recalculatePlaylist()
+//            }.bind(this),
+            cancel:'.pti-state-droppable-target',
+//        sort : function(event, ui) {
+//            var $helper = $('.ui-sortable-helper'), hTop = $helper.offset().top, hStyle = $helper.attr('style'), hId = $helper.attr('id');
+//            if (first_rows.length > 1) {
+//                $.each(first_rows, function(i, item) {
+////                    if (hId != item.id) {
+////                        var _top = hTop + (26 * i);
+////                        $('#' + item.id).addClass('ui-sortable-helper').attr('style', hStyle).css('top', _top);
+////                    }
+//                });
+//            }
+//        },
+        start : function(event, ui) {
+            if (ui.item.hasClass('ui-selected') && $('.ui-selected').length > 1) {
+                first_rows = $('.ui-selected').map(function(i, e) {
+                    var $tr = $(e);
+                    return {
+                        tr : $tr.clone(true),
+                        id : $tr.attr('id')
+                    };
+                }).get();
+                $('.ui-selected').addClass('cloned');
+            }
+            ui.placeholder.html('<td style="width: 50%; height: 90px;">&nbsp;</td>');
+        },
+        stop : function(event, ui) {
+            if (first_rows.length > 1) {
+                $.each(first_rows, function(i, item) {
+                    $(item.tr).removeAttr('style').insertBefore(ui.item);
+                });
+                $('.cloned').remove();
+                first_rows = {};
+            }
+            $("#uber tr:even").removeClass("odd even").addClass("even");
+            $("#uber tr:odd").removeClass("odd even").addClass("odd");
             this.recalculatePlaylist()
-        }.bind(this),
-        cancel:'.pti-state-droppable-target'
+        }.bind(this)
     })
 
     if(options && options.type == "calendar") {
