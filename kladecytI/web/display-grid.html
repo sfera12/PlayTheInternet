@@ -211,7 +211,7 @@ $.each(gimpedAnimation, function (index, item) {
     var intercom
     var windowId = GUID()
     $.jStorage.subscribe('queryWindowIds', function(message) {
-        console.log(message)
+//        console.log(message)
         $.jStorage.publish('windowIds', windowId)
     })
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))

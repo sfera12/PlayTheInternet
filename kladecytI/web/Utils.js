@@ -65,6 +65,8 @@ function Playlist(appendToElementExpression, options) {
     this.playlist
     this.currSong
     this.id
+    this.first_rows = {}
+    this.blockSort = false
 
     Playlist.prototype.hideGroupContents = function(element) {
         var headerTagName = element[0].tagName;
@@ -80,6 +82,7 @@ function Playlist(appendToElementExpression, options) {
 //        console.log(headerTagName); console.log(headers); console.log(headerIndex); console.log(childStartIndex); console.log(childEndIndex)
     }
 
+    $(this.containerElementExpression).data('playlist', this)
     $(this.containerElementExpression).selectable({
         filter: 'div.pti-state-default',
         cancel: 'div.sort'
@@ -106,66 +109,95 @@ function Playlist(appendToElementExpression, options) {
 //                });
 //            }
 //        },
-        start : function(event, ui) {
-            if (ui.item.hasClass('ui-selected') && $('.ui-selected').length > 1) {
-                first_rows = $('.ui-selected').map(function(i, e) {
+        start: function(event, ui) {
+            $('.cloned').removeClass('cloned')
+            if(options && options.type == 'calendar') {
+                this.blockSort = true
+            }
+            console.log('start')
+            console.log(this)
+            if (ui.item.hasClass('ui-selected') && this.jPlaylist.find('.ui-selected').length > 1) {
+                this.first_rows = this.jPlaylist.find('.ui-selected').map(function(i, e) {
                     var $tr = $(e);
                     return {
                         tr : $tr.clone(true),
                         id : $tr.attr('id')
                     };
                 }).get();
-                $('.ui-selected').addClass('cloned');
+                this.jPlaylist.find('.ui-selected').addClass('cloned');
             }
             ui.placeholder.html('<td style="width: 50%; height: 90px;">&nbsp;</td>');
-        },
-        stop : function(event, ui) {
-            if (first_rows.length > 1) {
-                $.each(first_rows, function(i, item) {
-                    $(item.tr).removeAttr('style').insertBefore(ui.item);
-                });
-                $('.cloned').remove();
-                first_rows = {};
-            }
-            $("#uber tr:even").removeClass("odd even").addClass("even");
-            $("#uber tr:odd").removeClass("odd even").addClass("odd");
-            this.recalculatePlaylist()
-        }.bind(this)
-    })
-
-    if(options && options.type == "calendar") {
-        //todo use later
-//        this.jPlaylist.removeClass('connectedSortable')
-//        this.jPlaylist.addClass('calendarSortable')
-        var blockSort = false;
-        this.jPlaylist.on('sortstart', function () {
-            blockSort = true
-            console.log('start')
+        }.bind(this),
+        stop: function(event, ui) {
+            console.log('stop')
             console.log(this)
-        }.bind(this))
-//        this.jPlaylist.on('sortreceive', function(event, ui) {
-////            blockSort = false
-//            console.log('receive')
-//            console.log(this)
-//        }.bind(this))
-        this.jPlaylist.on('sortstop', function (event, ui) {
-            if (blockSort) {
-                event.preventDefault()
+            if(this.blockSort) {
                 console.log('preventDefault')
-                console.log(this)
+                event.preventDefault()
             } else {
-                //todo remove else
-                console.log('preventDefault else')
-                console.log(this)
+                console.log('preventDefaultElse')
+                var targetParent = ui.item.parent().data('playlist')
+                console.log(targetParent)
+                console.log(this.first_rows)
+                if (this.first_rows.length > 1) {
+                    $.each(this.first_rows, function(i, item) {
+                        console.log($(item.tr).removeAttr('style').insertBefore(ui.item))
+                    });
+                    $('.cloned').remove();
+                }
+                $("#uber tr:even").removeClass("odd even").addClass("even");
+                $("#uber tr:odd").removeClass("odd even").addClass("odd");
+                this.recalculatePlaylist()
+                targetParent != this && targetParent.recalculatePlaylist()
             }
-            blockSort = false
-        }.bind(this))
-        this.jPlaylist.on('sortremove', function(event, ui) {
-            blockSort = false
+            this.first_rows = {};
+            this.blockSort = false
+        }.bind(this),
+        remove: function(event, ui) {
             console.log('remove')
             console.log(this)
-        }.bind(this))
-    }
+            this.blockSort = false
+        }.bind(this)
+//        ,receive: function(event, ui) {
+//            _.defer(function () {
+//                this.recalculatePlaylist()
+//            }.bind(this))
+//        }.bind(this)
+    })
+
+//    if(options && options.type == "calendar") {
+//        //todo use later
+////        this.jPlaylist.removeClass('connectedSortable')
+////        this.jPlaylist.addClass('calendarSortable')
+//        var blockSort = false;
+//        this.jPlaylist.on('sortstart', function () {
+//            blockSort = true
+//            console.log('start')
+//            console.log(this)
+//        }.bind(this))
+////        this.jPlaylist.on('sortreceive', function(event, ui) {
+//////            blockSort = false
+////            console.log('receive')
+////            console.log(this)
+////        }.bind(this))
+//        this.jPlaylist.on('sortstop', function (event, ui) {
+//            if (blockSort) {
+//                event.preventDefault()
+//                console.log('preventDefault')
+//                console.log(this)
+//            } else {
+//                //todo remove else
+//                console.log('preventDefault else')
+//                console.log(this)
+//            }
+//            blockSort = false
+//        }.bind(this))
+//        this.jPlaylist.on('sortremove', function(event, ui) {
+//            blockSort = false
+//            console.log('remove')
+//            console.log(this)
+//        }.bind(this))
+//    }
 
     Playlist.prototype.listenFunction = function(key, action) {
         console.log(key + ' has been ' + action)
@@ -203,14 +235,16 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.recalculatePlaylist = function () {
-        this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
-            item = $(item)
-            return item
-        })
+        _.defer(function () {
+            this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
+                item = $(item)
+                return item
+            })
 
-        if(this.id) {
-            $.jStorage.set(this.id, this.jPlaylist.sortable('toArray'))
-        }
+            if (this.id) {
+                $.jStorage.set(this.id, this.jPlaylist.sortable('toArray'))
+            }
+        }.bind(this))
     }
 
     Playlist.prototype.playlistVideos = function() {
