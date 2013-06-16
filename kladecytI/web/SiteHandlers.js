@@ -41,34 +41,32 @@ function SiteHandlerManager() {
     SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {
         clearTimeout(SiteHandlerManager.prototype.errorTimeout)
         var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
-        if(siteHandler) {
-            SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
-            siteHandler.playVideoFeed(videoFeed)
-        }
+        SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
+        siteHandler.playVideoFeed(videoFeed)
     }
 
     SiteHandlerManager.prototype.hide = function(siteHandler) {
-        $('#' + siteHandler.playerContainer).width('0%')
+        var playerContainer = $('#' + siteHandler.playerContainer);
+        playerContainer.width('0%')
+        playerContainer.height('0%')
     }
 
     SiteHandlerManager.prototype.show = function(siteHandler) {
-        $('#' + siteHandler.playerContainer).width('100%')
+        var playerContainer = $('#' + siteHandler.playerContainer);
+        playerContainer.width('100%')
+        playerContainer.height('100%')
     }
 
     SiteHandlerManager.prototype.showPlayer = function(id) {
         id = id.replace(/^#?(.*)/, '#$1')
         id = $(id).attr('id')
-        $.each(siteHandlers, function(index, item) {
-            if(typeof(this.clearTimeout) == 'function') {
-                this.clearTimeout()
-            };
-            if(this.playerContainer) {
-                if(this.playerContainer == id) {
-                    SiteHandlerManager.prototype.show(this)
-                } else {
-                    this.stop()
-                    SiteHandlerManager.prototype.hide(this)
-                }
+        $.each(siteHandlers, function (index, item) {
+            typeof this.clearTimeout == 'function' && this.clearTimeout()
+            if (this.playerContainer && this.playerContainer == id) {
+                SiteHandlerManager.prototype.show(this)
+            } else {
+                this.stop()
+                SiteHandlerManager.prototype.hide(this)
             }
         })
     }
@@ -95,13 +93,10 @@ function SiteHandlerManager() {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 //todo workaroung end
             }
-            if (!linkContext.fromCache) {
+            if (!linkContext.fromCache && linkContext.videoFeed.template == "completeTemplate") {
                 SiteHandlerManager.prototype.setVideoFeed(videoFeed)
             }
         }
-////        if(window.playlist) {
-////            playlist.debounceRecalculatePlaylist()
-////        }
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -148,9 +143,6 @@ function YoutubeHandler() {
                 } else {
                     typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 }
-//                console.log("Unable to load: " + linksContext.videoElement.videoFeed.id)
-//                console.log(data)
-//                console.log(linksContext)
             },
             context:linkContext,
             dataType:'json'
@@ -178,7 +170,6 @@ function SoundCloudHandler() {
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
-//        playlist.debounceRecalculatePlaylist()
     }
     SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
         SoundCloudHandler.prototype.properties.dontPlay = false
