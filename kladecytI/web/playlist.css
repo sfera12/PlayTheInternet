@@ -54,7 +54,7 @@ body { height: 100%; }
 #ytplayer { width: 100% }
 .pti-state-droppable-target { clear: both; float: left; width: 100%;}
 
-.pti-state-default>div>div.sort { float: left; position: relative; width: 10px; height: 90px; }
+.pti-state-default>div>div.sort { float: left; position: relative; width: 10px; height: 90px; background: url('http://cdn3.iconfinder.com/data/icons/pyconic-icons-2-1/512/arrow-double-up-down-128.png') 0px 50% no-repeat; background-size: 100% 90%;}
 .pti-state-default.ui-selected>div { background-color: orange!important; }
 .pti-state-default.ui-selected.selected>div { background-color: orangered!important; }
 .ui-state-highlight { float:left!important; position:relative!important; width: 50%!important; height: 91px!important; margin: 0px; padding: 0px; border: none;}

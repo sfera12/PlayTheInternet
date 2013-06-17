@@ -85,7 +85,7 @@ function Playlist(appendToElementExpression, options) {
     $(this.containerElementExpression).data('playlist', this)
     $(this.containerElementExpression).selectable({
         filter: 'div.pti-state-default',
-        cancel: 'div.sort'
+        cancel: 'div.sort, div.image-div'
     })
         .sortable({
             connectWith:'.connectedSortable',
