@@ -85,14 +85,14 @@ function Playlist(appendToElementExpression, options) {
     $(this.containerElementExpression).data('playlist', this)
     $(this.containerElementExpression).selectable({
         filter: 'div.pti-state-default',
-        cancel: 'div.sort, div.image-div'
+        cancel: 'div.image-div, label.pti-state-droppable-target'
     })
         .sortable({
             connectWith:'.connectedSortable',
             scrollSensitivity:50,
             tolerance:'pointer',
             distance:25,
-            handle: 'div.sort',
+            handle: 'div.image-div',
             placeholder: 'ui-state-highlight',
 //            update:function (event, ui) {
 //                this.recalculatePlaylist()
