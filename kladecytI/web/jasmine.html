@@ -113,6 +113,8 @@
     <textarea id="soundcloud" style="visibility: visible; position: relative;" class="go-left">
         https://soundcloud.com/user-name/sets/000000
         a class="soundTitle__title sc-link-dark" href="/user-name/1111111111"
+        https://soundcloud.com\/user-name\/sets\/000000
+        https:\/\/soundcloud.com\/pecavi\/sets\/pecavi&quot
         soundcloud.com%2Fkarina-zukova%2Fhero-finished-output-stereo&amp;h=JAQHJpjwY&amp;s=1"
     </textarea>
     <textarea id="vimeo" style="visibility: visible; position: relative;" class="go-left">
@@ -159,9 +161,12 @@ describe("soundcloud", function () {
     it('a class="soundTitle__title sc-link-dark" href="/user-name/1111111111"', function () {
         expect(soundcloud[1]).toEqual({type: "s", id: "/user-name/1111111111"});
     });
-    it('a class="soundTitle__title sc-link-dark" href="/user-name/1111111111"', function () {
-        expect(soundcloud[1]).toEqual({type: "s", id: "/user-name/1111111111"});
+    it('soundcloud.com/pecavi/sets/pecavi [duplicate check and double backward slash remove]', function () {
+        expect(soundcloud[2]).toEqual({type: "s", id: "pecavi/sets/pecavi"});
     });
+//    it("https://soundcloud.com/pecavi/sets/pecavi", function () {
+//        expect(soundcloud[3]).not.toEqual({type: "s", id: "/pecavi/sets/pecavi"});
+//    });
 });
 describe("soundcloud", function () {
     it("http://vimeo.com\\/64530002 [duplication test]", function () {
