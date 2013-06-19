@@ -6,3 +6,4 @@ _.flatten(_.reduce(sortedData, function (memo, item) {
     return memo
 }, new Array()))
 
+DPGlobal.parseDate($('#start').val(), DPGlobal.parseFormat('dd-mm-yyyy'))

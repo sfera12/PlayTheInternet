@@ -19,11 +19,14 @@
     <!--<link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css">    -->
     <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
     <link rel="stylesheet" href="bootswatch/cosmo.css">
-    <link rel="stylesheet" href="https://rawgithub.com/eternicode/bootstrap-datepicker/master/css/datepicker.css">
+    <!--<link rel="stylesheet" href="https://rawgithub.com/eternicode/bootstrap-datepicker/master/css/datepicker.css">-->
+    <link rel="stylesheet" href="datepicker.css">
     <!--<link rel="stylesheet" href="https://rawgithub.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
-    <script src="https://rawgithub.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js"></script>
+    <!--<script src="bootstrap/js/bootstrap.js"></script>-->
+    <!--<script src="https://rawgithub.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js"></script>-->
+    <script src="bootstrap-datepicker.js"></script>
     <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
     <script src="https://rawgithub.com/diy/intercom.js/master/intercom.js"></script>
     <script src="bootstrapCustom/js/bootstrap.js"></script>
@@ -116,7 +119,10 @@
             </div>
             <div id="calendarDiv" class="playlistFrame">
                 <div class="input-append date datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-                    <input class="span2" size="16" type="text" value="12-02-2012"><span class="add-on"><i class="icon-th"></i></span>
+                    <input id="start" class="span2" size="16" type="text"><span class="add-on"><i class="icon-th"></i></span>
+                </div>
+                <div class="input-append date datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                    <input id="end" class="span2" size="16" type="text"><span class="add-on"><i class="icon-th"></i></span>
                 </div>
                 <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
@@ -183,7 +189,9 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
     $(document).ready(function () {
-        $('.datepicker').datepicker()
+        $('.datepicker').datepicker().on('changeDate', function() {
+                    console.log('a')
+                })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
