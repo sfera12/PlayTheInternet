@@ -118,11 +118,11 @@
                 <div id="ulFirst" class="connectedSortable playlistFrame"></div>
             </div>
             <div id="calendarDiv" class="playlistFrame">
-                <div class="input-append date datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-                    <input id="start" class="span2" size="16" type="text"><span class="add-on"><i class="icon-th"></i></span>
-                </div>
-                <div class="input-append date datepicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-                    <input id="end" class="span2" size="16" type="text"><span class="add-on"><i class="icon-th"></i></span>
+                <div class="input-daterange">
+                    <input class="input-small datepicker" name="start" id="calendarStart" data-date-format="dd-mm-yyyy"/>
+                    <span class="add-on">to</span>
+                    <input class="input-small datepicker" name="end" id="calendarEnd" data-date-format="dd-mm-yyyy"/>
+                    <button id="searchCalendar" class="btn" type="button">Search</button>
                 </div>
                 <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
@@ -189,9 +189,10 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
     $(document).ready(function () {
-        $('.datepicker').datepicker().on('changeDate', function() {
-                    console.log('a')
-                })
+        $('.datepicker').datepicker()
+        $('#searchCalendar').click(function(evt) {
+            propagateCalendar()
+        })
         $('#tAreaParseButton').click(function() {
             var tAreaText = $('#tArea').val()
             playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
@@ -315,8 +316,16 @@ $.each(gimpedAnimation, function (index, item) {
     }
 
     function propagateCalendar() {
+        var dateRange = ""
+        if($('#calendarStart').val()) {
+            dateRange += "start=" + DPGlobal.parseDate($('#calendarStart').val(), DPGlobal.parseFormat('dd-mm-yyyy')).getTime() + "&"
+        }
+        if($('#calendarEnd').val()) {
+            dateRange += "end=" + (DPGlobal.parseDate($('#calendarEnd').val(), DPGlobal.parseFormat('dd-mm-yyyy')).getTime() + 86399999)
+        }
+        console.log(dateRange)
         $.ajax({
-            url: '/calendarSorted?start=0',
+            url: '/calendarSorted?' + dateRange,
             success: function(data) {
 //                var uniqSongs = _.uniq(_.flatten(_.reduce(data, function (memo, item) {
 //                    memo.push(item.data);
@@ -338,9 +347,9 @@ $.each(gimpedAnimation, function (index, item) {
         activate: function( event, ui ) {
             var newTab = $(ui.newTab);
             console.log(newTab.text())
-            if(newTab.text() == "Calendar") {
-                propagateCalendar()
-            }
+//            if(newTab.text() == "Calendar") {
+//                propagateCalendar()
+//            }
             newTab.addClass('active')
             $(ui.oldTab).removeClass('active')
         }
