@@ -275,14 +275,14 @@ $.each(gimpedAnimation, function (index, item) {
     }
 
     function onPlayerReady(event) {
-        playFirstLoaded();
-        console.log('playFirstLoaded yt')
         $('#ulFirst, #ulSecond').click(function(evt) {
             playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
         })
         //todo youtube is broken
         youtube.addEventListener('onStateChange', change)
         youtube.addEventListener('onError', onError)
+        console.log('playFirstLoaded yt')
+        playFirstLoaded();
     }
 
 
