@@ -83,6 +83,9 @@ function Playlist(appendToElementExpression, options) {
     }
 
     $(this.containerElementExpression).data('playlist', this)
+    if(this.options && this.options.type && this.options.type=='calendar') {
+        this.jPlaylist.addClass('calendar')
+    }
     $(this.containerElementExpression).selectable({
         filter: 'div.pti-state-default',
         cancel: 'div.image-div, label.pti-state-droppable-target'
