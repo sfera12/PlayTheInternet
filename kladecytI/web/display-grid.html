@@ -267,9 +267,8 @@ $.each(gimpedAnimation, function (index, item) {
             videoId: 'MK6TXMsvgQg',
             events: {
                 'onReady': onPlayerReady,
-                //todo youtube is broken
-//                'onStateChange': change,
-//                'onError': onError
+                'onStateChange': change,
+                'onError': onError
             }
         });
     }
@@ -278,9 +277,6 @@ $.each(gimpedAnimation, function (index, item) {
         $('#ulFirst, #ulSecond').click(function(evt) {
             playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
         })
-        //todo youtube is broken
-        youtube.addEventListener('onStateChange', change)
-        youtube.addEventListener('onError', onError)
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
@@ -354,6 +350,26 @@ $.each(gimpedAnimation, function (index, item) {
             $(ui.oldTab).removeClass('active')
         }
     })
+
+    var matchTextRegExp = new RegExp("выборы", "gi")
+    var matchText = function (node) {
+        return $(node).text().match(matchTextRegExp) != null ? true : false
+    }
+    var selectMatched = function (node, matchText) {
+        var jNode = $(node)
+        if (matchText(node)) {
+            jNode.addClass('ui-selected')
+        } else {
+            jNode.removeClass('ui-selected')
+            jNode.width('0%')
+            jNode.height('0%')
+        }
+    }
+    var select = function () {
+        _.each(calendarPlaylist.playlist, function (item) {
+            selectMatched(item, matchText)
+        })
+    }
 </script>
 </body>
 </html>
