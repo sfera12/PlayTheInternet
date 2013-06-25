@@ -124,6 +124,10 @@
                     <input class="input-small datepicker" name="end" id="calendarEnd" data-date-format="dd-mm-yyyy"/>
                     <button id="searchCalendar" class="btn" type="button">Search</button>
                 </div>
+                <div class="input-append">
+                    <span class="add-on">Title</span>
+                    <input class="input-small" id="calendarFilterTitle">
+                </div>
                 <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
             <!--<div id="taFirst" class="playlistFrame internalFrame">-->
@@ -214,6 +218,12 @@ $.each(gimpedAnimation, function (index, item) {
         if (window.location.hash.length == 0) {
             $( "#tabs" ).tabs( "option", "active", 1 );
         }
+        var filterThrottle = _.throttle(function() {
+            matchTitleRegExp = new RegExp($('#calendarFilterTitle').val(), "gi")
+            select()
+        }, 1500)
+        $('#calendarFilterTitle').keyup(filterThrottle)
+
         document.title = windowId
     })
 
@@ -351,24 +361,30 @@ $.each(gimpedAnimation, function (index, item) {
         }
     })
 
-    var matchTextRegExp = new RegExp("выборы", "gi")
+    var matchTitleRegExp
     var matchText = function (node) {
-        return $(node).text().match(matchTextRegExp) != null ? true : false
+        return $(node).text().match(matchTitleRegExp) != null ? true : false
     }
     var selectMatched = function (node, matchText) {
         var jNode = $(node)
         if (matchText(node)) {
             jNode.addClass('ui-selected')
+            jNode.removeClass('display-none')
         } else {
+            jNode.addClass('display-none')
             jNode.removeClass('ui-selected')
-            jNode.width('0%')
-            jNode.height('0%')
         }
     }
     var select = function () {
         _.each(calendarPlaylist.playlist, function (item) {
-            selectMatched(item, matchText)
+            selectMatched(item, filterVideo)
         })
+    }
+
+    var filterVideo = function(node) {
+        node = $(node)
+        var data = node.data('videoFeed')
+        return data && data.title && data.title.match(matchTitleRegExp) ? true : false
     }
 </script>
 </body>
