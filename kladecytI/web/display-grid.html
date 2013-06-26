@@ -124,9 +124,13 @@
                     <input class="input-small datepicker" name="end" id="calendarEnd" data-date-format="dd-mm-yyyy"/>
                     <button id="searchCalendar" class="btn" type="button">Search</button>
                 </div>
-                <div class="input-append">
+                <div id="calendarFilter" class="input-append">
                     <span class="add-on">Title</span>
                     <input class="input-small" id="calendarFilterTitle">
+                    <span class="add-on">More than</span>
+                    <input class="input-small" id="calendarFilterDurationMore">
+                    <span class="add-on">Less than</span>
+                    <input class="input-small" id="calendarFilterDurationLess">
                 </div>
                 <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
@@ -220,9 +224,11 @@ $.each(gimpedAnimation, function (index, item) {
         }
         var filterThrottle = _.throttle(function() {
             matchTitleRegExp = new RegExp($('#calendarFilterTitle').val(), "gi")
+            filterDurationMoreValue = $('#calendarFilterDurationMore').val()
+            filterDurationLessValue = $('#calendarFilterDurationLess').val()
             select()
         }, 1500)
-        $('#calendarFilterTitle').keyup(filterThrottle)
+        $('#calendarFilter').keyup(filterThrottle)
 
         document.title = windowId
     })
@@ -371,21 +377,68 @@ $.each(gimpedAnimation, function (index, item) {
             calendarPlaylist.jPlaylist.append(jNode)
             jNode.addClass('ui-selected')
         } else {
-            jNode.remove(null, true)
             jNode.removeClass('ui-selected')
         }
     }
     var select = function () {
+        calendarPlaylist.jPlaylist.find('>*').remove(null, true)
         _.each(calendarPlaylist.playlist, function (item) {
-            selectMatched(item, filterVideo)
+            selectMatched(item, filters)
         })
     }
 
-    var filterVideo = function(node) {
+    var filters = function(node) {
+        var result = true
+        if(result && matchTitleRegExp.toString() != "\"/(?:)/gi\"") {
+            result = filterTitle(node)
+        }
+        if(result && filterDurationMoreValue != "NaN") {
+            result = filterDurationMore(node)
+        }
+        if(result && filterDurationLessValue > 0 && filterDurationLessValue != "NaN") {
+            result = filterDurationLess(node)
+        }
+        return result
+    }
+
+    var filterTitle = function(node) {
         node = $(node)
         var data = node.data('videoFeed')
-        return data && data.title && data.title.match(matchTitleRegExp) ? true : false
+        var title = data.title || data.id
+        return title.match(matchTitleRegExp) ? true : false
     }
+    var filterDurationMore = function(node) {
+        node = $(node)
+        var data = node.data('videoFeed')
+        if(data.duration == undefined) {
+            return true
+        }
+        return data && data.duration && data.duration >= filterDurationMoreValue ? true : false
+    }
+    var filterDurationLess = function(node) {
+        node = $(node)
+        var data = node.data('videoFeed')
+        if(data.duration == undefined) {
+            return true
+        }
+        return data && data.duration && data.duration <= filterDurationLessValue ? true : false
+    }
+        window.regEx = /(((\d+)([d:\s]*))?((\d+)([h:\s]*))?)?((\d+)([m:\s]*))?(\d+)([s\s]*)/
+    var stringToSeconds = function(string) {
+        var result = string.match(regEx)
+        console.log(result)
+        if(result) {
+            var day = result[2] != undefined ? Number(result[2]) : 0
+            var hour = result[5] != undefined ? Number(result[5]) : 0
+            var minutes = result[8] != undefined ? Number(result[8]) : 0
+            var seconds = result[10] != undefined ? Number(result[10]) : 0
+            console.log({day: day, hour: hour, minutes: minutes, seconds: seconds})
+            return day * 86400 + hour * 3600 + minutes * 60 + seconds
+        } else {
+            return 0
+        }
+    }
+
 </script>
 </body>
 </html>
