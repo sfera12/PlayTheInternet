@@ -365,13 +365,13 @@ $.each(gimpedAnimation, function (index, item) {
     var matchText = function (node) {
         return $(node).text().match(matchTitleRegExp) != null ? true : false
     }
-    var selectMatched = function (node, matchText) {
+    var selectMatched = function (node, matchNode) {
         var jNode = $(node)
-        if (matchText(node)) {
+        if (matchNode(node)) {
+            calendarPlaylist.jPlaylist.append(jNode)
             jNode.addClass('ui-selected')
-            jNode.removeClass('display-none')
         } else {
-            jNode.addClass('display-none')
+            jNode.remove(null, true)
             jNode.removeClass('ui-selected')
         }
     }
