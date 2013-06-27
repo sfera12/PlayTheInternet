@@ -40,6 +40,8 @@
     <script src="http://a.vimeocdn.com/js/froogaloop2.min.js" type="text/javascript"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="jqC/js/jquery.slimscroll.js"></script>
+    <script src="http://jeromeetienne.github.io/jquery-qrcode/src/jquery.qrcode.js"></script>
+    <script src="http://jeromeetienne.github.io/jquery-qrcode/src/qrcode.js"></script>
     <link rel="stylesheet" href="playlist.css">
     <style>
         .nav-pills > li > a {
@@ -112,6 +114,10 @@
                     <input id="renameWindow" type="button" value="Rename window"/>
                     <br>
                     <input id="renameWindowInput" class="max-width" type="text"/>
+                </fieldset>
+                <fieldset>
+                    <legend>Go mobile</legend>
+                    <div style="position: absolute; left: 30px" id="qrcode"></div>
                 </fieldset>
             </div>
             <div id="recycleBinDiv" class="playlistFrame">
@@ -197,6 +203,29 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
     $(document).ready(function () {
+        window.windowId = GUID()
+        $.jStorage.subscribe('queryWindowIds', function(message) {
+//        console.log(message)
+            $.jStorage.publish('windowIds', windowId)
+        })
+//    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
+        $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
+        window.ulFirst = new Playlist('#ulFirst')
+        window.calendarPlaylist = new Playlist('#calendarPlaylist', {type: 'calendar'})
+        window.playlist = new Playlist("#ulSecond",
+                {
+                    id: windowId,
+                    listenKeyChangeCallback: function(playlist) {
+                        window.location.hash = playlist.jPlaylist.sortable('toArray')
+                        $('#qrcode').empty()
+                        $('#qrcode').qrcode(window.location.href)
+                    }
+                });
+        playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
+
+        setSlimScroll('#calendarPlaylist', "100%")
+        setSlimScroll('#ulFirst', "100%")
+        setSlimScroll('#ulSecond', "100%")
         $('.datepicker').datepicker()
         $('#searchCalendar').click(function(evt) {
             propagateCalendar()
@@ -232,31 +261,6 @@ $.each(gimpedAnimation, function (index, item) {
 
         document.title = windowId
     })
-
-    var intercom
-    var windowId = GUID()
-    $.jStorage.subscribe('queryWindowIds', function(message) {
-//        console.log(message)
-        $.jStorage.publish('windowIds', windowId)
-    })
-//    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
-    $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
-    var ulFirst = new Playlist('#ulFirst')
-    var calendarPlaylist = new Playlist('#calendarPlaylist', {type: 'calendar'})
-    var playlist = new Playlist("#ulSecond",
-            {
-                id: windowId,
-                listenKeyChangeCallback: function(playlist) {
-                    window.location.hash = playlist.jPlaylist.sortable('toArray')
-                }
-            });
-    playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
-    var yte = new YoutubePlayer(null, playlist)
-//    yte.drawPlayer("youtube");
-
-    setSlimScroll('#calendarPlaylist', "100%")
-    setSlimScroll('#ulFirst', "100%")
-    setSlimScroll('#ulSecond', "100%")
 
     var scWidgetIframe = document.getElementById('sc-widget');
     window.scWidget = SC.Widget(scWidgetIframe);
@@ -296,25 +300,6 @@ $.each(gimpedAnimation, function (index, item) {
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
-
-
-
-    //    function onYouTubePlayerReady(playerId) {
-//        ytPlayer = document.getElementById("ytplayer");
-//        yte.setPlayer(ytPlayer)
-//        console.log("youtube Ready")
-//        yte.ytp.addEventListener("onStateChange", "change")
-//        yte.ytp.addEventListener("onError", "onError")
-//        $('#ulFirst, #ulSecond').click(function(evt) {
-//            playlistyVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
-//        })
-//        $(window).resize(function() {
-//            var ytp = $(ytPlayer)
-//            ytp.height(ytp.width() / 1.642)
-//            console.log(ytp.height())
-//        })
-//        playFirstLoaded();
-//    }
 
     function change(state) {
         console.log(state)
