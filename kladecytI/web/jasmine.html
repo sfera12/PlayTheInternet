@@ -116,6 +116,8 @@
         https://soundcloud.com\/user-name\/sets\/000000
         https:\/\/soundcloud.com\/pecavi\/sets\/pecavi&quot
         soundcloud.com%2Fkarina-zukova%2Fhero-finished-output-stereo&amp;h=JAQHJpjwY&amp;s=1"
+        soundcloud.com/karina-zukova/hero-finished-output-stereo
+        https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F98208364
     </textarea>
     <textarea id="vimeo" style="visibility: visible; position: relative;" class="go-left">
         http://vimeo.com/64530002
@@ -128,7 +130,6 @@ Playlist()
 var youtube = Playlist.prototype.parseSongIds(playTheInternetParse($('#youtube').val()))
 var soundcloud = Playlist.prototype.parseSongIds(playTheInternetParse($('#soundcloud').val()))
 var vimeo = Playlist.prototype.parseSongIds(playTheInternetParse($('#vimeo').val()))
-//YoutubeHandler.prototype.regex = /(youtu.be(\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\/embed\/|youtube.com\/v\/)([^ &\'\'<>\/\\.,]{11})/
 
 //--- SPECS -------------------------
 describe("youtube", function () {
@@ -164,11 +165,14 @@ describe("soundcloud", function () {
     it('soundcloud.com/pecavi/sets/pecavi [duplicate check and double backward slash remove]', function () {
         expect(soundcloud[2]).toEqual({type: "s", id: "pecavi/sets/pecavi"});
     });
-//    it("https://soundcloud.com/pecavi/sets/pecavi", function () {
-//        expect(soundcloud[3]).not.toEqual({type: "s", id: "/pecavi/sets/pecavi"});
-//    });
+    it("soundcloud.com%2Fkarina-zukova%2Fhero-finished-output-stereo&amp;h=JAQHJpjwY&amp;s=1", function () {
+        expect(soundcloud[3]).toEqual({type: "s", id: "karina-zukova/hero-finished-output-stereo"});
+    });
+    it("soundcloud.com/karina-zukova/hero-finished-output-stereo", function () {
+        expect(soundcloud[4]).not.toEqual({type: "s", id: "karina-zukova/hero-finished-output-stereo"});
+    });
 });
-describe("soundcloud", function () {
+describe("vimeo", function () {
     it("http://vimeo.com\\/64530002 [duplication test]", function () {
         expect(vimeo[1]).not.toEqual({type: "v", id: "64530002"});
     });
