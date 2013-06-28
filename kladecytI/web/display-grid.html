@@ -218,7 +218,11 @@ $.each(gimpedAnimation, function (index, item) {
                     listenKeyChangeCallback: function(playlist) {
                         window.location.hash = playlist.jPlaylist.sortable('toArray')
                         $('#qrcode').empty()
-                        $('#qrcode').qrcode(window.location.href)
+                        try {
+                            $('#qrcode').qrcode(window.location.href)
+                        } catch (e) {
+                            console.log(e)
+                        }
                     }
                 });
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
@@ -260,27 +264,29 @@ $.each(gimpedAnimation, function (index, item) {
         $('#calendarFilter').keyup(filterThrottle)
 
         document.title = windowId
-    })
 
-    var scWidgetIframe = document.getElementById('sc-widget');
-    window.scWidget = SC.Widget(scWidgetIframe);
+        var scWidgetIframe = document.getElementById('sc-widget');
+        window.scWidget = SC.Widget(scWidgetIframe);
 
-    scWidget.bind(SC.Widget.Events.READY, function () {
-        console.log('playFirstLoaded sc')
-        playFirstLoaded();
-        scWidget.bind(SC.Widget.Events.FINISH, function () {
-            scWidget.getCurrentSoundIndex(function (data) {
-                scWidget.getSounds(function (sounds) {
-                    console.log('finished sounds count: ' + sounds.length + ' and current index: ' + data)
-                    if (data == sounds.length - 1) {
-                        SiteHandlerManager.prototype.stateChange("NEXT")
-                    }
+        scWidget.bind(SC.Widget.Events.READY, function () {
+            console.log('playFirstLoaded sc')
+            playFirstLoaded();
+            scWidget.bind(SC.Widget.Events.FINISH, function () {
+                scWidget.getCurrentSoundIndex(function (data) {
+                    scWidget.getSounds(function (sounds) {
+                        console.log('finished sounds count: ' + sounds.length + ' and current index: ' + data)
+                        if (data == sounds.length - 1) {
+                            SiteHandlerManager.prototype.stateChange("NEXT")
+                        }
+                    })
                 })
             })
-        })
-    });
+        });
+
+    })
 
     function onYouTubeIframeAPIReady() {
+
         window.youtube = new YT.Player('youtube', {
             height: '100%',
             width: '100%',
