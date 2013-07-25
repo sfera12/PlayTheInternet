@@ -28,7 +28,6 @@
     <!--<script src="https://rawgithub.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js"></script>-->
     <script src="bootstrap-datepicker.js"></script>
     <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
-    <script src="https://rawgithub.com/diy/intercom.js/master/intercom.js"></script>
     <script src="bootstrapCustom/js/bootstrap.js"></script>
     <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
     <!--<script src="js/jqui1.10.3/jquery-ui-1.10.3.custom.min.js"></script>-->
@@ -246,11 +245,8 @@ $.each(gimpedAnimation, function (index, item) {
             if (renameWindowInputVal.length > 0) {
                 document.title = document.title.replace(windowId, renameWindowInputVal)
                 windowId = renameWindowInputVal
-                IntercomWrapper(windowId)
             }
         })
-
-        IntercomWrapper(windowId)
 
         if (window.location.hash.length == 0) {
             $( "#tabs" ).tabs( "option", "active", 1 );

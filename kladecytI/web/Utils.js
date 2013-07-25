@@ -38,24 +38,6 @@ function VideoFeed(item, parent) {
     }
 }
 
-function IntercomWrapper(windowId) {
-    if (window.intercom) {
-        window.intercom.handlers = []
-    }
-    Intercom.destroy()
-    window.intercom = Intercom.getInstance()
-    window.intercom.on(windowId + 'playlistReceived', function (data) {
-        try {
-            playlist.addSongsToPlaylist(data.message, true)
-        } finally {
-            intercom.emit(data.sender + 'playlistReceived', { sender:windowId, ctrl:data.ctrl, type:'playlistReceived', status:'success'})
-        }
-        console.log(data)
-    });
-    window.intercom.on('windowId', function (data) {
-        intercom.emit(data.sender + 'windowId', { sender:windowId })
-    });
-}
 
 function Playlist(appendToElementExpression, options) {
     Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=name%></label>')
