@@ -86,14 +86,7 @@
         return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
     }
     var videoIds = function(elementExpression) {
-        var ids = ""
-        $(elementExpression + ' > div').each(function (index, item) {
-            videoFeed = $(item).data('videoFeed')
-            if (videoFeed) {
-                ids += videoFeed.type + '=' + videoFeed.id + ','
-            }
-        })
-        return ids
+        return $(elementExpression).sortable('toArray').join(',')
     }
 
     var generateHref = function (elementExpression, containerElementExpression) {
@@ -110,6 +103,23 @@
     $(document).ready(function () {
         setSlimScroll("#ulFirst", "93.5%")
         setSlimScroll("#ulSecond", "93.5%")
+
+        var drawSelectDifferences = function(ctrl, firstPlt, secondPlt) {
+            var input = $('<input type="button"/>')
+            input.val('Select differences')
+            ctrl.append(input)
+            input.click(function() {
+                selectDifferences(firstPlt, secondPlt)
+            })
+        }
+
+        var selectDifferences = function(firstPlt, secondPlt) {
+            var differences = _.difference(firstPlt.sortable('toArray'), secondPlt.sortable('toArray'))
+            firstPlt.find('>div').removeClass('ui-selected')
+            _.each(differences, function(item) {
+                firstPlt.find('#' + item.replace(/=/, '\\=')).addClass('ui-selected')
+            })
+        }
 
         var drawPlaylist = function(plt, ctrl, playlistName, lReturnPlaylist) {
             var input = $('<input type="button"/>')
@@ -132,6 +142,9 @@
                 drawPlaylist(plr, ctrlSecond, payload, returnPlaylist)
             }
         })
+
+        drawSelectDifferences(ctrlFirst, pll.jPlaylist, plr.jPlaylist)
+        drawSelectDifferences(ctrlSecond, plr.jPlaylist, pll.jPlaylist)
 
         drawPlaylist(pll, ctrlFirst, 'parsed', function () {
             return window.location.hash
