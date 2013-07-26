@@ -254,7 +254,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.lookupNextSong = function () {
-        var index = this.playlist.index(this.playlist.find('div.selected'))
+        var index = this.playlist.index(this.jPlaylist.find('div.selected'))
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }
