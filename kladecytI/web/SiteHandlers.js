@@ -105,6 +105,34 @@ function SiteHandlerManager() {
 }
 
 function YoutubeHandler() {
+    window.onYouTubeIframeAPIReady = function() {
+        window.youtube = new YT.Player('youtube', {
+            height: '100%',
+            width: '100%',
+            videoId: 'MK6TXMsvgQg',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': change,
+                'onError': onError
+            }
+        });
+    }
+    function onPlayerReady(event) {
+        $('#ulFirst, #ulSecond').click(function(evt) {
+            playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
+        })
+        console.log('playFirstLoaded yt')
+        playFirstLoaded();
+    }
+    function change(state) {
+        console.log(state)
+        if(state.data == 0) {
+            SiteHandlerManager.prototype.stateChange("NEXT")
+        }
+    }
+    function onError() {
+        SiteHandlerManager.prototype.stateChange("ERROR")
+    }
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
     YoutubeHandler.prototype.errorTemplate = _.template('<div><div class="image-div"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');
@@ -159,6 +187,25 @@ function YoutubeHandler() {
 }
 
 function SoundCloudHandler() {
+    SoundCloudHandler.prototype.initializePlayer = function() {
+        var scWidgetIframe = document.getElementById('sc-widget');
+        window.scWidget = SC.Widget(scWidgetIframe);
+
+        scWidget.bind(SC.Widget.Events.READY, function () {
+            console.log('playFirstLoaded sc')
+            playFirstLoaded();
+            scWidget.bind(SC.Widget.Events.FINISH, function () {
+                scWidget.getCurrentSoundIndex(function (data) {
+                    scWidget.getSounds(function (sounds) {
+                        console.log('finished sounds count: ' + sounds.length + ' and current index: ' + data)
+                        if (data == sounds.length - 1) {
+                            SiteHandlerManager.prototype.stateChange("NEXT")
+                        }
+                    })
+                })
+            })
+        });
+    }
     SoundCloudHandler.prototype.properties = { errorTimeout: null, dontPlay: true }
     SoundCloudHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"><div class="pti-logo"></div></div><span><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"

@@ -56,7 +56,8 @@
         var now = new Date().getTime();
         var user = 'sichain'
         var data = new Object();
-        data.data = pll.playlistVideos();
+        pll.immediateRecalculatePlaylist()
+        data.data = pll.playlistVideos()
         var count = data.data.length
         data.meta = {user: user, url: window.location.href.replace(/.*\?location=([^#]+).*/, '$1'), date: now}
         console.log(JSON.stringify(data))
@@ -117,7 +118,7 @@
             var differences = _.difference(firstPlt.sortable('toArray'), secondPlt.sortable('toArray'))
             firstPlt.find('>div').removeClass('ui-selected')
             _.each(differences, function(item) {
-                firstPlt.find('#' + item.replace(/=/, '\\=')).addClass('ui-selected')
+                firstPlt.find('#' + item.replace(/([=/])/g, '\\$1')).addClass('ui-selected')
             })
         }
 

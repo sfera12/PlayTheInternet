@@ -44,6 +44,7 @@ function Playlist(appendToElementExpression, options) {
     this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jPlaylist = $(this.containerElementExpression)
+    this.sortableArray = new Array()
     this.playlist
     this.currSong
     this.id
@@ -64,11 +65,11 @@ function Playlist(appendToElementExpression, options) {
 //        console.log(headerTagName); console.log(headers); console.log(headerIndex); console.log(childStartIndex); console.log(childEndIndex)
     }
 
-    $(this.containerElementExpression).data('playlist', this)
+    this.jPlaylist.data('playlist', this)
     if(this.options && this.options.type && this.options.type=='calendar') {
         this.jPlaylist.addClass('calendar')
     }
-    $(this.containerElementExpression).selectable({
+    this.jPlaylist.selectable({
         filter: 'div.pti-state-default',
         cancel: 'div.image-div, label.pti-state-droppable-target'
     })
@@ -111,7 +112,7 @@ function Playlist(appendToElementExpression, options) {
                 }).get();
                 this.jPlaylist.find('.ui-selected').addClass('cloned');
             }
-            ui.placeholder.html('<td style="width: 50%; height: 90px;">&nbsp;</td>');
+            ui.placeholder.html('<td class="pti-state-default">&nbsp;</td>');
         }.bind(this),
         stop: function(event, ui) {
             console.log('stop')
@@ -185,15 +186,16 @@ function Playlist(appendToElementExpression, options) {
 //    }
 
     Playlist.prototype.listenFunction = function(key, action) {
+        this.recalculateSortable()
         console.log(key + ' has been ' + action)
-        console.log(this.jPlaylist.sortable('toArray'))
+        console.log(this.sortableArray)
         console.log($.jStorage.get(key))
         arrayEq = function(a, b) {
             return _.all(_.zip(a, b), function(x) {
                 return x[0] === x[1];
             });
         };
-        if(arrayEq(this.jPlaylist.sortable('toArray'), $.jStorage.get(key))) {
+        if(arrayEq(this.sortableArray, $.jStorage.get(key))) {
             console.log('nothing changed')
         } else {
             var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
@@ -220,20 +222,19 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.recalculatePlaylist = function () {
-        _.defer(function () {
-            this.playlist = $(this.containerElementExpression + " div.pti-state-default").filter(function (index, item) {
-                item = $(item)
-                return item
-            })
-
-            if (this.id) {
-                $.jStorage.set(this.id, this.jPlaylist.sortable('toArray'))
-            }
-        }.bind(this))
+        _.defer(this.immediateRecalculatePlaylist.bind(this))
     }
 
-    Playlist.prototype.playlistVideos = function() {
-        return _.map($(this.containerElementExpression + '> div'), function(item) { return $(item).data('videoFeed') })
+    this.immediateRecalculatePlaylist = function() {
+        this.playlist = this.jPlaylist.find(">div.pti-state-default").filter(function (index, item) {
+            item = $(item)
+            return item
+        })
+        this.recalculateSortable()
+
+        if (this.id) {
+            $.jStorage.set(this.id, this.sortableArray)
+        }
     }
 
     this.debounceRecalculatePlaylist = _.debounce(function () {
@@ -242,16 +243,18 @@ function Playlist(appendToElementExpression, options) {
         if(typeof playFirstLoaded == "function") {
             playFirstLoaded();
         }
-    }, 300)
+    }, 50)
+
+    Playlist.prototype.playlistVideos = function() {
+        return _.map(this.playlist, function(item) { return $(item).data('videoFeed') })
+    }
 
     Playlist.prototype.buildHash = function () {
-        return "#" + _.reduce(this.playlistSongIds(), function (memo, videoId) {
-            return memo.concat("y=" + videoId + ",")
-        }, "")
+        return "#" + this.prototype.sortable()
     }
 
     Playlist.prototype.lookupNextSong = function () {
-        var index = $(this.containerElementExpression).find('div.pti-state-default').index($(this.containerElementExpression).find('div.selected'))
+        var index = this.playlist.index(this.playlist.find('div.selected'))
         index = index >= this.playlist.length - 1 ? 0 : ++index
         return this.playlist[index]
     }
@@ -312,20 +315,15 @@ function Playlist(appendToElementExpression, options) {
         })
     }
 
-    Playlist.prototype.playlistSongIds = function () {
-        if (this.playlist) {
-            return this.playlist.map(function (index, div) {
-                return $(div).data('videoFeed').id
-            }).toArray()
-        } else {
-            return new Array()
-        }
+    Playlist.prototype.recalculateSortable = function() {
+        this.sortableArray = this.jPlaylist.sortable('toArray')
+        return this.sortableArray
     }
 
     Playlist.prototype.playVideoDiv = function (videoDiv) {
         var videoFeed = $(videoDiv).data('videoFeed')
         if (videoFeed) {
-            this.jPlaylist.children().removeClass("selected")
+            this.playlist.removeClass("selected")
             this.currSong = videoDiv
             $(this.currSong).addClass("selected")
             document.title = windowId + ' - ' + videoFeed.title
@@ -341,37 +339,6 @@ function Playlist(appendToElementExpression, options) {
 
     if(options && options.id) {
         this.setId(options.id)
-    }
-}
-
-function YoutubePlayer(ytp, pla) {
-    this.ytp
-    this.pla = pla
-
-    if (ytp != null) {
-        this.setPlayer(ytp)
-    }
-
-    this.setPlayer = function (ytp) {
-        if (ytp != null) {
-            this.ytp = ytp
-        }
-    }
-
-    this.drawPlayer = function (appendToElementId) {
-//        playlist.currSong = playlist.playlist[0]
-//        var videoFeed = $(playlist.currSong).data("videoFeed")
-        var params = { allowScriptAccess:"always", allowFullScreen:"true" };
-        var atts = { id:"ytplayer" };
-        var playerWidth = $('#firstView').width() - 9
-        swfobject.embedSWF("http://www.youtube.com/v/MK6TXMsvgQg?enablejsapi=1&playerapiid=ytplayer&version=3", appendToElementId, parseInt(playerWidth), parseInt(playerWidth / 1.642), "8", null, null, params, atts);
-    }
-
-
-    this.onStateChange = function (state) {
-        if (state == 0) {
-            this.playNextVideo()
-        }
     }
 }
 
