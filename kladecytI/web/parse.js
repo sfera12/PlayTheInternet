@@ -1,9 +1,9 @@
 function playTheInternetParseTemp(htmlText) {
-    Array.prototype.unique = function () {
+    var unique = function(arr) {
         var newarr = [];
         var unique = {};
 
-        this.forEach(function (item) {
+        arr.forEach(function (item) {
             item.id = item.id.replace(/\\/g, '').replace(/\u00252F/g, '/');
             if (!unique[item.id]) {
                 newarr.push(item);
@@ -24,7 +24,7 @@ function playTheInternetParseTemp(htmlText) {
         'matchfunction'
         );
     }
-    result = result.unique();
+    result = unique(result);
     var hash = '';
     result.forEach(function(item) {
         hash += item.type + '=' + item.id + ',';

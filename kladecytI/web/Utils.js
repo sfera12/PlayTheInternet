@@ -50,6 +50,7 @@ function Playlist(appendToElementExpression, options) {
     this.id
     this.first_rows = {}
     this.blockSort = false
+    this.uid = GUID() + new Date().getTime()
 
     Playlist.prototype.hideGroupContents = function(element) {
         var headerTagName = element[0].tagName;
@@ -95,61 +96,61 @@ function Playlist(appendToElementExpression, options) {
 //                });
 //            }
 //        },
-        start: function(event, ui) {
-            $('.cloned').removeClass('cloned')
-            if(options && options.type == 'calendar') {
-                this.blockSort = true
-            }
-            console.log('start')
-            console.log(this)
-            if (ui.item.hasClass('ui-selected') && this.jPlaylist.find('.ui-selected').length > 1) {
-                this.first_rows = this.jPlaylist.find('.ui-selected').map(function(i, e) {
-                    var $tr = $(e);
-                    return {
-                        tr : $tr.clone(true),
-                        id : $tr.attr('id')
-                    };
-                }).get();
-                this.jPlaylist.find('.ui-selected').addClass('cloned');
-            }
-            ui.placeholder.html('<td class="pti-state-default">&nbsp;</td>');
-        }.bind(this),
-        stop: function(event, ui) {
-            console.log('stop')
-            console.log(this)
-            if(this.blockSort) {
-                console.log('preventDefault')
-                event.preventDefault()
-            } else {
-                console.log('preventDefaultElse')
-                var targetParent = ui.item.parent().data('playlist')
-                console.log(targetParent)
-                console.log(this.first_rows)
-                if (this.first_rows.length > 1) {
-                    $.each(this.first_rows, function(i, item) {
-                        console.log($(item.tr).removeAttr('style').insertBefore(ui.item))
-                    });
-                    $('.cloned').remove();
+            start: function(event, ui) {
+                $('.cloned').removeClass('cloned')
+                if(options && options.type == 'calendar') {
+                    this.blockSort = true
                 }
-                $("#uber tr:even").removeClass("odd even").addClass("even");
-                $("#uber tr:odd").removeClass("odd even").addClass("odd");
-                this.recalculatePlaylist()
-                targetParent != this && targetParent.recalculatePlaylist()
-            }
-            this.first_rows = {};
-            this.blockSort = false
-        }.bind(this),
-        remove: function(event, ui) {
-            console.log('remove')
-            console.log(this)
-            this.blockSort = false
-        }.bind(this)
+                console.log('start')
+                console.log(this)
+                if (ui.item.hasClass('ui-selected') && this.jPlaylist.find('.ui-selected').length > 1) {
+                    this.first_rows = this.jPlaylist.find('.ui-selected').map(function(i, e) {
+                        var $tr = $(e);
+                        return {
+                            tr : $tr.clone(true),
+                            id : $tr.attr('id')
+                        };
+                    }).get();
+                    this.jPlaylist.find('.ui-selected').addClass('cloned');
+                }
+                ui.placeholder.html('<td class="pti-state-default">&nbsp;</td>');
+            }.bind(this),
+            stop: function(event, ui) {
+                console.log('stop')
+                console.log(this)
+                if(this.blockSort) {
+                    console.log('preventDefault')
+                    event.preventDefault()
+                } else {
+                    console.log('preventDefaultElse')
+                    var targetParent = ui.item.parent().data('playlist')
+                    console.log(targetParent)
+                    console.log(this.first_rows)
+                    if (this.first_rows.length > 1) {
+                        $.each(this.first_rows, function(i, item) {
+                            console.log($(item.tr).removeAttr('style').insertBefore(ui.item))
+                        });
+                        $('.cloned').remove();
+                    }
+                    $("#uber tr:even").removeClass("odd even").addClass("even");
+                    $("#uber tr:odd").removeClass("odd even").addClass("odd");
+                    this.recalculatePlaylist()
+                    targetParent != this && targetParent.recalculatePlaylist()
+                }
+                this.first_rows = {};
+                this.blockSort = false
+            }.bind(this),
+            remove: function(event, ui) {
+                console.log('remove')
+                console.log(this)
+                this.blockSort = false
+            }.bind(this)
 //        ,receive: function(event, ui) {
 //            _.defer(function () {
 //                this.recalculatePlaylist()
 //            }.bind(this))
 //        }.bind(this)
-    })
+        })
 
 //    if(options && options.type == "calendar") {
 //        //todo use later
@@ -186,30 +187,37 @@ function Playlist(appendToElementExpression, options) {
 //    }
 
     Playlist.prototype.listenFunction = function(key, action) {
-        this.recalculateSortable()
         console.log(key + ' has been ' + action)
-        console.log(this.sortableArray)
-        console.log($.jStorage.get(key))
-        arrayEq = function(a, b) {
-            return _.all(_.zip(a, b), function(x) {
-                return x[0] === x[1];
-            });
-        };
-        if(arrayEq(this.sortableArray, $.jStorage.get(key))) {
-            console.log('nothing changed')
+        var storagePlaylist = $.jStorage.get(key);
+        console.log(storagePlaylist)
+        if (storagePlaylist.source != this.uid) {
+            storagePlaylist = storagePlaylist.data
+            this.recalculateSortable()
+            console.log(storagePlaylist)
+            console.log(this.sortableArray)
+            arrayEq = function (a, b) {
+                return _.all(_.zip(a, b), function (x) {
+                    return x[0] === x[1];
+                });
+            };
+            if (arrayEq(this.sortableArray, storagePlaylist)) {
+                console.log('nothing changed')
+            } else {
+                var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
+                if (videoFeed) {
+                    var id = '#' + videoFeed.type + '\\=' + videoFeed.id
+                }
+                console.log(this.jPlaylist)
+                this.jPlaylist.empty()
+                this.addSongsToPlaylist(this.parseSongIds(storagePlaylist.join(',')), null, null, true)
+                if (videoFeed) {
+                    this.jPlaylist.find(id).addClass('selected')
+                }
+            }
         } else {
-            var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
-            if(videoFeed) {
-                var id = '#' + videoFeed.type + '\\=' + videoFeed.id
-            }
-            console.log(this.jPlaylist)
-            this.jPlaylist.empty()
-            this.addSongsToPlaylist(this.parseSongIds($.jStorage.get(key).join(',')))
-            if(videoFeed) {
-                this.jPlaylist.find(id).addClass('selected')
-            }
+            console.log('not talking to self')
         }
-        if(this.options && typeof this.options.listenKeyChangeCallback == 'function') {
+        if (this.options && typeof this.options.listenKeyChangeCallback == 'function') {
             this.options.listenKeyChangeCallback(this)
         }
     }
@@ -221,24 +229,26 @@ function Playlist(appendToElementExpression, options) {
         $.jStorage.listenKeyChange(id, this.listenFunction.bind(this))
     }
 
-    this.recalculatePlaylist = function () {
-        _.defer(this.immediateRecalculatePlaylist.bind(this))
+    this.recalculatePlaylist = function (dontInvokeListener) {
+        _.defer(function() {this.immediateRecalculatePlaylist.call(this, dontInvokeListener)}.bind(this))
     }
 
-    this.immediateRecalculatePlaylist = function() {
+    this.immediateRecalculatePlaylist = function(dontInvokeListener) {
         this.playlist = this.jPlaylist.find(">div.pti-state-default").filter(function (index, item) {
             item = $(item)
             return item
         })
         this.recalculateSortable()
 
-        if (this.id) {
-            $.jStorage.set(this.id, this.sortableArray)
+        if (!dontInvokeListener && this.id) {
+            console.log('setting to storage')
+            var storagePlaylist = {source:this.uid, data:this.sortableArray}
+            $.jStorage.set(this.id, storagePlaylist)
         }
     }
 
-    this.debounceRecalculatePlaylist = _.debounce(function () {
-        this.recalculatePlaylist();
+    this.debounceRecalculatePlaylist = _.debounce(function (dontInvokeListener) {
+        this.recalculatePlaylist(dontInvokeListener);
         console.log('playFirstLoaded debounce')
         if(typeof playFirstLoaded == "function") {
             playFirstLoaded();
@@ -280,7 +290,7 @@ function Playlist(appendToElementExpression, options) {
         }.bind(this))
     }
 
-    this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback) {
+    this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback, dontInvokeListener) {
         if (unique == true) {
             var oldLinks = this.parseSongIds(this.jPlaylist.sortable('toArray').join(','))
             links = _.filter(links, function (newSong) {
@@ -305,7 +315,7 @@ function Playlist(appendToElementExpression, options) {
                 loadVideoFeedCallback: afterLoadVideoFeed
             }
             siteHandlerManager.loadVideoFeed(linkContext)
-            this.debounceRecalculatePlaylist()
+            this.debounceRecalculatePlaylist(dontInvokeListener)
         }.bind(this))
     }
 

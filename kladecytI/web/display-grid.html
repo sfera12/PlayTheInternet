@@ -207,7 +207,7 @@ $.each(gimpedAnimation, function (index, item) {
             $.jStorage.publish('windowIds', windowId)
         })
 //    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
-        $.jStorage.set(windowId, window.location.hash.replace(/.*#(.*)/, '$1').split(','))
+        $.jStorage.set(windowId, {data:window.location.hash.replace(/.*#(.*)/, '$1').split(',')})
         window.ulFirst = new Playlist('#ulFirst')
         window.calendarPlaylist = new Playlist('#calendarPlaylist', {type: 'calendar'})
         window.playlist = new Playlist("#ulSecond",
