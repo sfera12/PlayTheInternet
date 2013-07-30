@@ -1,0 +1,29 @@
+{
+    "name": "PlayTheInternet",
+    "version": "0.5",
+    "description": "Plays the internet!",
+    "icons": { "128": "favicon.ico" },
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["jquery-1.9.1.js", "underscore.js", "siteHandlers.js", "parse.js"]
+        }
+    ],
+    "permissions": [
+        "notifications",
+        "storage",
+        "http://*/*", "https://*/*"
+    ],
+    "browser_action": {
+        "default_title": "",
+        "default_icon": "favicon.ico",
+        "default_popup": "display-grid.html"
+    },
+    "options_page": "options.html",
+
+    "manifest_version": 2,
+    "content_security_policy" : "default-src 'unsafe-eval'; img-src 'self'; script-src 'unsafe-eval' https://; object-src 'unsafe-eval'; frame-src 'unsafe-eval' https://; style-src 'unsafe-inline'"
+}

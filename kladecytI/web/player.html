@@ -1,0 +1,19 @@
+<script type="text/javascript" src="swfobject.js"></script>
+<div id="ytapiplayer">
+    You need Flash player 8+ and JavaScript enabled to view this video.
+</div>
+
+<script type="text/javascript">
+
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myytplayer" };
+    swfobject.embedSWF("http://www.youtube.com/v/jQBFF54eU_k?enablejsapi=1&playerapiid=ytplayer&version=3",
+            "ytapiplayer", "425", "356", "8", null, null, params, atts);
+
+    function onYouTubePlayerReady(playerId) {
+        ytplayer = document.getElementById("myytplayer");
+        ytplayer.playVideo()
+        console.log("------------------------------------------------------")
+        ytplayer.stopVideo()
+    }
+</script>

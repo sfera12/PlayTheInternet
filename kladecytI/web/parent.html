@@ -1,0 +1,90 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>postMessage - send messages between iframes and windows - robertnyman.com</title>
+    <link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+    <style>
+        iframe {
+            width: 500px;
+            height: 300px;
+            margin: 20px auto;
+            border: 1px solid #000;
+        }
+    </style>
+    <!--[if lte IE 8]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script>
+        window.onload = function () {
+            var iframeWin = document.getElementById("da-iframe").contentWindow,
+                    form = document.getElementById("the-form"),
+                    myMessage = document.getElementById("my-message");
+
+            myMessage.select();
+
+            form.onsubmit = function () {
+                iframeWin.postMessage("RECEIVED", "http://localhost:8888");
+                return false;
+            };
+        };
+    </script>
+    <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script></head>
+
+<body>
+
+<div id="container">
+    <header role="banner">
+        <h1>postMessage <a href="http://robertnyman.com/html5">- To: Information and samples for HTML5 and related APIs</a></h1>
+        <p>Using postMessage to post messages between windows &amp; iframes.</p>
+    </header>
+
+    <div role="main">
+        <section id="main-content">
+            <form id="the-form" action="/">
+                <input type="text" id="my-message" value="Your message">
+                <input type="submit" value="postMessage">
+            </form>
+
+            <iframe id="da-iframe" src="http://localhost:8888/linkRenderer.html"></iframe>
+
+            <h2>Code used in this page</h2>
+            <div class="syntaxhighlighter " id="highlighter_391531" style=""><div class="bar"><div class="toolbar"><a href="#viewSource" title="view source" style="width: 16px; height: 16px;" class="item viewSource">view source</a><a href="#printSource" title="print" style="width: 16px; height: 16px;" class="item printSource">print</a><a href="#about" title="?" style="width: 16px; height: 16px;" class="item about">?</a></div></div><div class="lines"><div class="line alt1"><code class="number">01.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="plain">window.onload = </code><code class="keyword">function</code> <code class="plain">() {</code></span></span></div><div class="line alt2"><code class="number">02.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="keyword">var</code> <code class="plain">iframeWin = document.getElementById(</code><code class="string">"da-iframe"</code><code class="plain">).contentWindow,</code></span></span></div><div class="line alt1"><code class="number">03.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="plain">form = document.getElementById(</code><code class="string">"the-form"</code><code class="plain">),</code></span></span></div><div class="line alt2"><code class="number">04.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="plain">myMessage = document.getElementById(</code><code class="string">"my-message"</code><code class="plain">);</code></span></span></div><div class="line alt1"><code class="number">05.</code><span class="content"><span class="block" style="margin-left: 0px !important;">&nbsp;</span></span></div><div class="line alt2"><code class="number">06.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">myMessage.select(); </code></span></span></div><div class="line alt1"><code class="number">07.</code><span class="content"><span class="block" style="margin-left: 0px !important;">&nbsp;</span></span></div><div class="line alt2"><code class="number">08.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">form.onsubmit = </code><code class="keyword">function</code> <code class="plain">() {</code></span></span></div><div class="line alt1"><code class="number">09.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="plain">iframeWin.postMessage(myMessage.value, </code><code class="string">"<a href="http://robertnyman.com">http://robertnyman.com</a>"</code><code class="plain">);</code></span></span></div><div class="line alt2"><code class="number">10.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="keyword">return</code> <code class="keyword">false</code><code class="plain">;</code></span></span></div><div class="line alt1"><code class="number">11.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">};</code></span></span></div><div class="line alt2"><code class="number">12.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="plain">};</code></span></span></div></div></div>
+
+            <h2>Code used in the iframe</h2>
+            <div class="syntaxhighlighter " id="highlighter_101707" style=""><div class="bar"><div class="toolbar"><a href="#viewSource" title="view source" style="width: 16px; height: 16px;" class="item viewSource">view source</a><a href="#printSource" title="print" style="width: 16px; height: 16px;" class="item printSource">print</a><a href="#about" title="?" style="width: 16px; height: 16px;" class="item about">?</a></div></div><div class="lines"><div class="line alt1"><code class="number">01.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="keyword">function</code> <code class="plain">displayMessage (evt) {</code></span></span></div><div class="line alt2"><code class="number">02.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="keyword">var</code> <code class="plain">message;</code></span></span></div><div class="line alt1"><code class="number">03.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="keyword">if</code> <code class="plain">(evt.origin !== </code><code class="string">"<a href="http://robertnyman.com">http://robertnyman.com</a>"</code><code class="plain">) {</code></span></span></div><div class="line alt2"><code class="number">04.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="plain">message = </code><code class="string">"You are not worthy"</code><code class="plain">;</code></span></span></div><div class="line alt1"><code class="number">05.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">}</code></span></span></div><div class="line alt2"><code class="number">06.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="keyword">else</code> <code class="plain">{</code></span></span></div><div class="line alt1"><code class="number">07.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 56px !important;"><code class="plain">message = </code><code class="string">"I got "</code> <code class="plain">+ evt.data + </code><code class="string">" from "</code> <code class="plain">+ evt.origin;</code></span></span></div><div class="line alt2"><code class="number">08.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">}&nbsp;&nbsp; </code></span></span></div><div class="line alt1"><code class="number">09.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">document.getElementById(</code><code class="string">"received-message"</code><code class="plain">).innerHTML = message;</code></span></span></div><div class="line alt2"><code class="number">10.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="plain">}</code></span></span></div><div class="line alt1"><code class="number">11.</code><span class="content"><span class="block" style="margin-left: 0px !important;">&nbsp;</span></span></div><div class="line alt2"><code class="number">12.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="keyword">if</code> <code class="plain">(window.addEventListener) {</code></span></span></div><div class="line alt1"><code class="number">13.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="comments">// For standards-compliant web browsers</code></span></span></div><div class="line alt2"><code class="number">14.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">window.addEventListener(</code><code class="string">"message"</code><code class="plain">, displayMessage, </code><code class="keyword">false</code><code class="plain">);</code></span></span></div><div class="line alt1"><code class="number">15.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="plain">}</code></span></span></div><div class="line alt2"><code class="number">16.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="keyword">else</code> <code class="plain">{</code></span></span></div><div class="line alt1"><code class="number">17.</code><span class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><span class="block" style="margin-left: 28px !important;"><code class="plain">window.attachEvent(</code><code class="string">"onmessage"</code><code class="plain">, displayMessage);</code></span></span></div><div class="line alt2"><code class="number">18.</code><span class="content"><span class="block" style="margin-left: 0px !important;"><code class="plain">}</code></span></span></div></div></div>
+        </section>
+    </div>
+
+    <footer id="page-footer" role="contentinfo">
+        Created by <a href="http://robertnyman.com/">Robert Nyman</a>
+    </footer>
+</div>
+
+<!-- Syntax highlighting -->
+<script type="text/javascript" src="../syntax-highlighter/scripts/shHTMLJavaScript.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.all();
+</script>
+
+<script>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-56164-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+    })();
+
+    var sc_project=593937,
+            sc_partition=4,
+            sc_security="175a1fec";
+</script>
+
+<script src="http://www.statcounter.com/counter/counter_xhtml.js"></script><span class="statcounter"><a class="statcounter" href="http://www.statcounter.com" target="_blank"><img src="http://c.statcounter.com/t.php?sc_project=593937&amp;resolution=1920&amp;h=1200&amp;camefrom=http%3A//robertnyman.com/2010/03/18/postmessage-in-html5-to-send-messages-between-windows-and-iframes/&amp;u=http%3A//robertnyman.com/html5/postMessage/postMessage.html&amp;t=postMessage%20-%20send%20messages%20between%20iframes%20and%20windows%20-%20robertnyman.com&amp;java=1&amp;security=175a1fec&amp;sc_random=0.923793418565765&amp;sc_snum=1&amp;p=0" alt="StatCounter - Free Web Tracker and Counter" border="0"></a></span>
+<noscript>&lt;div class="statcounter"&gt;&lt;a class="statcounter" href="http://www.statcounter.com/"&gt;&lt;img class="statcounter" src="http://c5.statcounter.com/counter.php?sc_project=593937&amp;amp;java=0&amp;amp;security=175a1fec" alt="free geoip"&gt;&lt;/a&gt;&lt;/div&gt;</noscript>
+
+
+
+
+</body></html>
