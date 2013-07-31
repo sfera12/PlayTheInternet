@@ -25,5 +25,5 @@
     "options_page": "options.html",
 
     "manifest_version": 2,
-    "content_security_policy" : "default-src 'unsafe-eval'; img-src 'self'; script-src 'unsafe-eval' https://; object-src 'unsafe-eval'; frame-src 'unsafe-eval' https://; style-src 'unsafe-inline'"
+    "content_security_policy" : "default-src 'unsafe-eval' http:// https://; img-src 'self' https:// http://; script-src 'unsafe-eval' https://; object-src 'unsafe-eval'; frame-src 'unsafe-eval' https://; style-src 'unsafe-inline'"
 }

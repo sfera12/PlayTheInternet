@@ -118,9 +118,17 @@ function YoutubeHandler() {
         });
     }
     function onPlayerReady(event) {
-        $('#ulFirst, #ulSecond').click(function(evt) {
-            playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
-        })
+        if(!chrome.extension) {
+            $('#ulFirst, #ulSecond').click(function(evt) {
+                playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
+            })
+        } else {
+            $('#ulFirst, #ulSecond').click(function(evt) {
+                chrome.runtime.sendMessage({operation: 'playVideoFeed', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
+                    console.log(response)
+                })
+            })
+        }
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
@@ -130,8 +138,18 @@ function YoutubeHandler() {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
     }
+
     function onError() {
-        SiteHandlerManager.prototype.stateChange("ERROR")
+        console.log('error')
+        setTimeout(function () {
+            if (youtube.getDuration() <= 0) {
+                SiteHandlerManager.prototype.stateChange("ERROR");
+                console.log(youtube.getCurrentTime());
+            } else {
+                console.log('no error playing video')
+                console.log(youtube.getCurrentTime());
+            }
+        }, 2000)
     }
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')
