@@ -134,6 +134,7 @@ $('#tabs').tabs({
         $(ui.oldTab).removeClass('active')
     }
 })
+$($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'none');
 
 var matchTitleRegExp
 var matchText = function (node) {

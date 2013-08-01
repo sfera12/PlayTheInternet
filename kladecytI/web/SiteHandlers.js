@@ -118,17 +118,18 @@ function YoutubeHandler() {
         });
     }
     function onPlayerReady(event) {
-        if(!chrome.extension) {
+//        if(!chrome.extension) {
             $('#ulFirst, #ulSecond').click(function(evt) {
                 playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
+                console.log($($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed').original)
             })
-        } else {
-            $('#ulFirst, #ulSecond').click(function(evt) {
-                chrome.runtime.sendMessage({operation: 'playVideoFeed', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
-                    console.log(response)
-                })
-            })
-        }
+//        } else {
+//            $('#ulFirst, #ulSecond').click(function(evt) {
+//                chrome.runtime.sendMessage({operation: 'playVideoFeed', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
+//                    console.log(response)
+//                })
+//            })
+//        }
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
@@ -149,7 +150,7 @@ function YoutubeHandler() {
                 console.log('no error playing video')
                 console.log(youtube.getCurrentTime());
             }
-        }, 2000)
+        }, 5000)
     }
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span><b><%= title %></b><br>by <%= uploader %></span></div>')

@@ -36,6 +36,7 @@ function VideoFeed(item, parent) {
         this.error = "incompatible type"
         console.log("incompatible type" + item)
     }
+    this.original = item
 }
 
 
