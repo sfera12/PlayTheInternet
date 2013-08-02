@@ -125,7 +125,7 @@ function YoutubeHandler() {
             })
 //        } else {
 //            $('#ulFirst, #ulSecond').click(function(evt) {
-//                chrome.runtime.sendMessage({operation: 'playVideoFeed', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
+//                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
 //                    console.log(response)
 //                })
 //            })

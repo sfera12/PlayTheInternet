@@ -1,5 +1,8 @@
 var onceLoaded = _.once(function () {
-    playlist.playVideoDiv(playlist.lookupNextSong())
+    var currVideo = playlist.getCurrentVideo()
+    currVideo = currVideo ? currVideo : playlist.lookupNextSong()
+    console.log(currVideo)
+    playlist.playVideoDiv(currVideo)
 })
 var playFirstLoaded = _.after(3, function () {
     console.log('playFirstLoaded')

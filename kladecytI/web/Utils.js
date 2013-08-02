@@ -348,6 +348,10 @@ function Playlist(appendToElementExpression, options) {
         playlist.playVideoDiv(playlist.lookupNextSong())
     }
 
+    Playlist.prototype.getCurrentVideo = function() {
+        return $(this.jPlaylist.find('.selected'))[0]
+    }
+
     if(options && options.id) {
         this.setId(options.id)
     }
