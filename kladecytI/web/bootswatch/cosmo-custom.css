@@ -1,0 +1,27 @@
+.nav.no-height {
+    height: 0px;
+}
+
+.nav-pills > li > a {
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: #007fff;
+}
+.nav-pills > li > a:focus {
+    background-color: #FFFFFF;
+}
+
+.nav > .active > a, .nav > .active > a > div, .nav > .active > a:hover, .nav > .active > a:hover > div{
+    outline:none;
+}
+
+.nav-pills > .active > a > div, .nav-pills > .active > a:hover > div {
+    color: #ffffff;
+    background-color: #007fff;
+}
+
+.nav-pills > li > a:hover, .nav-pills > li > a:hover > div  {
+    background-color: #d4fff7;
+    color: #007fff;
+}

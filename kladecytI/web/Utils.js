@@ -41,7 +41,7 @@ function VideoFeed(item, parent) {
 
 
 function Playlist(appendToElementExpression, options) {
-    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-droppable-target"><%=name%></label>')
+    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-default-droppable-target"><%=name%></label>')
     this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jPlaylist = $(this.containerElementExpression)
@@ -73,7 +73,7 @@ function Playlist(appendToElementExpression, options) {
     }
     this.jPlaylist.selectable({
         filter: 'div.pti-state-default',
-        cancel: 'div.image-div, label.pti-state-droppable-target'
+        cancel: 'div.image-div, label.pti-state-default-droppable-target'
     })
         .sortable({
             connectWith:'.connectedSortable',
@@ -81,11 +81,11 @@ function Playlist(appendToElementExpression, options) {
             tolerance:'pointer',
             distance:25,
             handle: 'div.image-div',
-            placeholder: 'ui-state-highlight',
+            placeholder: 'pti-state-default-sortable-placeholder',
 //            update:function (event, ui) {
 //                this.recalculatePlaylist()
 //            }.bind(this),
-            cancel:'.pti-state-droppable-target',
+            cancel:'.pti-state-default-droppable-target',
 //        sort : function(event, ui) {
 //            var $helper = $('.ui-sortable-helper'), hTop = $helper.offset().top, hStyle = $helper.attr('style'), hId = $helper.attr('id');
 //            if (first_rows.length > 1) {
@@ -102,8 +102,8 @@ function Playlist(appendToElementExpression, options) {
                 if(options && options.type == 'calendar') {
                     this.blockSort = true
                 }
-                console.log('start')
-                console.log(this)
+//                console.log('start')
+//                console.log(this)
                 if (ui.item.hasClass('ui-selected') && this.jPlaylist.find('.ui-selected').length > 1) {
                     this.first_rows = this.jPlaylist.find('.ui-selected').map(function(i, e) {
                         var $tr = $(e);
@@ -117,19 +117,20 @@ function Playlist(appendToElementExpression, options) {
                 ui.placeholder.html('<td class="pti-state-default">&nbsp;</td>');
             }.bind(this),
             stop: function(event, ui) {
-                console.log('stop')
-                console.log(this)
+//                console.log('stop')
+//                console.log(this)
                 if(this.blockSort) {
-                    console.log('preventDefault')
+//                    console.log('preventDefault')
                     event.preventDefault()
                 } else {
-                    console.log('preventDefaultElse')
+//                    console.log('preventDefaultElse')
                     var targetParent = ui.item.parent().data('playlist')
-                    console.log(targetParent)
-                    console.log(this.first_rows)
+//                    console.log(targetParent)
+//                    console.log(this.first_rows)
                     if (this.first_rows.length > 1) {
                         $.each(this.first_rows, function(i, item) {
-                            console.log($(item.tr).removeAttr('style').insertBefore(ui.item))
+                            var logItem = $(item.tr).removeAttr('style').insertBefore(ui.item);
+//                            console.log(logItem)
                         });
                         $('.cloned').remove();
                     }
@@ -142,8 +143,8 @@ function Playlist(appendToElementExpression, options) {
                 this.blockSort = false
             }.bind(this),
             remove: function(event, ui) {
-                console.log('remove')
-                console.log(this)
+//                console.log('remove')
+//                console.log(this)
                 this.blockSort = false
             }.bind(this)
 //        ,receive: function(event, ui) {
@@ -190,12 +191,12 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.listenFunction = function(key, action) {
         console.log(key + ' has been ' + action)
         var storagePlaylist = $.jStorage.get(key);
-        console.log(storagePlaylist)
+//        console.log(storagePlaylist)
         if (storagePlaylist.source != this.uid) {
             storagePlaylist = storagePlaylist.data
             this.recalculateSortable()
-            console.log(storagePlaylist)
-            console.log(this.sortableArray)
+//            console.log(storagePlaylist)
+//            console.log(this.sortableArray)
             arrayEq = function (a, b) {
                 return _.all(_.zip(a, b), function (x) {
                     return x[0] === x[1];
@@ -206,9 +207,9 @@ function Playlist(appendToElementExpression, options) {
             } else {
                 var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
                 if (videoFeed) {
-                    var id = '#' + videoFeed.type + '\\=' + videoFeed.id
+                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
                 }
-                console.log(this.jPlaylist)
+//                console.log(this.jPlaylist)
                 this.jPlaylist.empty()
                 this.addSongsToPlaylist(this.parseSongIds(storagePlaylist.join(',')), null, null, true)
                 if (videoFeed) {
@@ -250,9 +251,8 @@ function Playlist(appendToElementExpression, options) {
 
     this.debounceRecalculatePlaylist = _.debounce(function (dontInvokeListener) {
         this.recalculatePlaylist(dontInvokeListener);
-        console.log('playFirstLoaded debounce')
-        if(typeof playFirstLoaded == "function") {
-            playFirstLoaded();
+        if(this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function") {
+            this.options.debounceRecalculatePlaylistCallback()
         }
     }, 50)
 
@@ -277,7 +277,7 @@ function Playlist(appendToElementExpression, options) {
             var element = $(Playlist.prototype.groupHeaderTemplate(group)).click(function() {hideGroupContentsHandler(element)})
             this.jPlaylist.append(element)
             group.links.forEach(function (videoFeed) {
-                console.log(videoFeed)
+//                console.log(videoFeed)
                 var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
                 var linkContext = {
                     videoElement:videoElement,
@@ -330,13 +330,10 @@ function Playlist(appendToElementExpression, options) {
         this.sortableArray = this.jPlaylist.sortable('toArray')
         return this.sortableArray
     }
-
     Playlist.prototype.playVideoDiv = function (videoDiv) {
         var videoFeed = $(videoDiv).data('videoFeed')
         if (videoFeed) {
-            this.playlist.removeClass("selected")
-            this.currSong = videoDiv
-            $(this.currSong).addClass("selected")
+            this.selectVideo(videoDiv)
             document.title = windowId + ' - ' + videoFeed.title
             SiteHandlerManager.prototype.playVideoFeed(videoFeed)
         } else {
@@ -350,6 +347,26 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.getCurrentVideo = function() {
         return $(this.jPlaylist.find('.selected'))[0]
+    }
+
+
+    Playlist.prototype.selectVideo = function(videoDiv) {
+        this.playlist.removeClass("selected")
+        this.currSong = videoDiv
+        $(this.currSong).addClass("selected")
+    }
+
+
+    Playlist.prototype.escapeUrl = function(first, second) {
+        var concated
+        if(first && second) {
+            concated = first + "=" + second
+        } else if (first) {
+            concated = first
+        } else {
+            throw "escapeURL called with empty or null parameters"
+        }
+        return concated.replace(/([=])/g, '\\$1')
     }
 
     if(options && options.id) {
@@ -414,7 +431,7 @@ function formatDate(dateObj) {
 
 function calendarSorted(callback) {
     $.ajax({url:'/calendarSorted?start=0', success:function (data) {
-        console.log(data)
+//        console.log(data)
         window.calendarData = data
         typeof callback == "function" && callback(data)
     }})

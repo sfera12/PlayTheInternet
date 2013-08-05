@@ -3,29 +3,31 @@
 <head>
     <meta charset="utf-8">
     <title>jQuery UI Sortable - Display as grid</title>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="https://rawgithub.com/andris9/jStorage/master/jstorage.js"></script>
-    <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
+    <script src="jquery-1.9.1.js"></script>
+    <script src="jstorage.js"></script>
+    <script src="underscore.js"></script>
     <script src="jqC/js/jquery-ui-1.10.1.js"></script>
-    <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
+    <!--<link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">-->
     <script src="jqC/js/jquery.slimscroll.js"></script>
     <link rel="stylesheet" href="playlist.css"/>
+    <link rel="stylesheet" href="common.css"/>
+    <link rel="stylesheet" href="temp.css"/>
     <script src="SiteHandlers.js"></script>
     <script src="Utils.js"></script>
 </head>
 <body>
 <div id="dPLists">
     <div id="firstView">
-        <div id="ctrlFirst" class="ctrlFirst" style="height: 12%;">
-            <label id="saveHistoryStatus" style="position:absolute">Status<br></label>
-            <a style="position:relative; left: 27px; padding-right: 27px; " href="thisislink" id="nwWndFirst">Open in new window</a>
+        <div id="ctrlFirst" class="ctrlFirst temp-height-ctrls">
+            <label id="saveHistoryStatus" class="temp-absolute">Status<br></label>
+            <a class="temp-openNewWindow" href="thisislink" id="nwWndFirst">Open in new window</a>
         </div>
         <div id="ulFirst" class="connectedSortable playlistFrame">
         </div>
     </div>
 
     <div id="secondView">
-        <div id="ctrlSecond" class="ctrlSecond" style="height: 12%;">
+        <div id="ctrlSecond" class="ctrlSecond temp-height-ctrls" >
             <a href="thisislink" id="nwWndSecond">Open in new window</a>
         </div>
         <div id="ulSecond" class="connectedSortable playlistFrame">

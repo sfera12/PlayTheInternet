@@ -1,9 +1,9 @@
 var onceLoaded = _.once(function () {
     var currVideo = playlist.getCurrentVideo()
     currVideo = currVideo ? currVideo : playlist.lookupNextSong()
-    console.log(currVideo)
     playlist.playVideoDiv(currVideo)
 })
+
 var playFirstLoaded = _.after(3, function () {
     console.log('playFirstLoaded')
     onceLoaded()
@@ -57,7 +57,11 @@ $(document).ready(function () {
                 } catch (e) {
                     console.log(e)
                 }
-            }
+            },
+            debounceRecalculatePlaylistCallback: _.once(function() {
+                console.log('playFirstLoaded debounce')
+                playFirstLoaded()
+            })
         });
     playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
 
@@ -129,7 +133,7 @@ function propagateCalendar() {
 $('#tabs').tabs({
     activate:function (event, ui) {
         var newTab = $(ui.newTab);
-        console.log(newTab.text())
+//        console.log(newTab.text())
 //            if(newTab.text() == "Calendar") {
 //                propagateCalendar()
 //            }
@@ -198,7 +202,7 @@ var filterDurationLess = function (node) {
 window.regEx = /(((\d+)([d:\s]*))?((\d+)([h:\s]*))?)?((\d+)([m:\s]*))?(\d+)([s\s]*)/
 var stringToSeconds = function (string) {
     var result = string.match(regEx)
-    console.log(result)
+//    console.log(result)
     if (result) {
         var day = result[2] != undefined ? Number(result[2]) : 0
         var hour = result[5] != undefined ? Number(result[5]) : 0

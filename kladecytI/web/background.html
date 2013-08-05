@@ -18,6 +18,8 @@
     <!--<link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css">    -->
     <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
     <!--<link rel="stylesheet" href="https://rawgithub.com/eternicode/bootstrap-datepicker/master/css/datepicker.css">-->
+    <link rel="stylesheet" href="bootswatch/cosmo.css">
+    <link rel="stylesheet" href="bootswatch/cosmo-custom.css">
     <link rel="stylesheet" href="datepicker.css">
     <!--<link rel="stylesheet" href="https://rawgithub.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
     <script src="jquery-1.9.1.js"></script>
@@ -39,32 +41,8 @@
     <script src="jquery.qrcode.js"></script>
     <script src="qrcode.js"></script>
     <link rel="stylesheet" href="playlist.css">
-    <link rel="stylesheet" href="bootswatch/cosmo.css">
-    <style>
-        .nav-pills > li > a {
-            margin-right: 0px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-            color: #007fff;
-        }
-        .nav-pills > li > a:focus {
-            background-color: #FFFFFF;
-        }
-
-        .nav > .active > a, .nav > .active > a > div, .nav > .active > a:hover, .nav > .active > a:hover > div{
-            outline:none;
-        }
-
-        .nav-pills > .active > a > div, .nav-pills > .active > a:hover > div {
-            color: #ffffff;
-            background-color: #007fff;
-        }
-
-        .nav-pills > li > a:hover, .nav-pills > li > a:hover > div  {
-            background-color: #d4fff7;
-            color: #007fff;
-        }
-    </style>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="temp.css">
 </head>
 <body>
 <!--<script type="text/javascript">-->
@@ -81,12 +59,13 @@
 <!--</script>-->
 <div id="dPLists">
     <div id="firstView">
-        <div id="tabs" class="playlistFrame">
-            <ul style="height: 0px;" class="nav nav-pills">
+        <div id="tabs" class="leftFull">
+            <ul class="nav nav-pills temp-no-height">
                 <li class="active"><a href="#player">Player<div id="podPlayer" style="position: fixed; z-index: -1; left: 0px; width: 65px;"></div></a></li>
                 <li><a href="#tAreaDiv">Text Area<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
                 <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
                 <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
+                <li><a href="#parsedDiv">Parsed<div id="podParsed" style="position: fixed; z-index: -1; left: 229px; width: 46px; display: none;"></div></a></li>
                 <li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
             </ul>
             <div id="player">
@@ -96,7 +75,7 @@
                 <br>
                 <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
             </div>
-            <div id="optionsDiv" class="playlistFrame">
+            <div id="optionsDiv" class="leftFull">
                 <fieldset>
                     <legend>Share this link</legend>
                     <input id="buildHash" type="button" value="Build link"/>
@@ -111,13 +90,16 @@
                 </fieldset>
                 <fieldset>
                     <legend>Go mobile</legend>
-                    <div style="position: absolute; left: 30px" id="qrcode"></div>
+                    <div class="temp-alignQRCode" id="qrcode"></div>
                 </fieldset>
             </div>
-            <div id="recycleBinDiv" class="playlistFrame">
+            <div id="recycleBinDiv" class="leftFull">
                 <div id="ulFirst" class="connectedSortable playlistFrame"></div>
             </div>
-            <div id="calendarDiv" class="playlistFrame">
+            <div id="parsedDiv" class="leftFull display-none" >
+                <div id="parsedPlaylist" class="connectedSortable playlistFrame"></div>
+            </div>
+            <div id="calendarDiv" class="leftFull">
                 <div class="input-daterange">
                     <input class="input-small datepicker" name="start" id="calendarStart" data-date-format="dd-mm-yyyy"/>
                     <span class="add-on">to</span>
@@ -134,10 +116,8 @@
                 </div>
                 <div id="calendarPlaylist" class="connectedSortable playlistFrame"></div>
             </div>
-            <!--<div id="taFirst" class="playlistFrame internalFrame">-->
-            <!--</div>-->
-            <div id="players" class="playlistFrame">
-                <div id="soundCloudContainer" class="playlistFrame" style="width: 0%">
+            <div id="players" class="leftFull">
+                <div id="soundCloudContainer" class="leftFull temp-width-zero-percent" >
                     <div id="soundCloud">
                         <iframe id="sc-widget"
                                 src="https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us"
@@ -145,17 +125,21 @@
                         </iframe>
                     </div>
                 </div>
-                <div id="youtubeContainer" class="playlistFrame" style="width: 100%">
+                <div id="youtubeContainer" class="leftFull temp-width-hundred-percent">
                     <div id="youtube"></div>
                 </div>
-                <div id="vimeoContainer" class="playlistFrame" style="width: 0%">
+                <div id="vimeoContainer" class="leftFull temp-width-zero-percent">
                 </div>
             </div>
         </div>
     </div>
 
     <div id="secondView">
+        <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
+        <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
         <div id="ulSecond" class="connectedSortable playlistFrame"></div>
+        <!--</div>-->
+        <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
     </div>
 
 </div>
@@ -163,6 +147,6 @@
 
 </body>
 <script src="display-grid.js"></script>
-<script src="popup.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
+<script src="popup.js"></script>
 </html>

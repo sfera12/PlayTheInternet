@@ -1,0 +1,8 @@
+.temp-no-height { height: 0px; }
+.temp-height-ctrls { height: 12%; }
+.temp-absolute { position: absolute; }
+.temp-openNewWindow { position:relative; left: 27px; padding-right: 27px;  }
+.temp-alignQRCode { position: absolute; left: 30px }
+.temp-display-none { display: none; }
+.temp-width-zero-percent { width: 0% }
+.temp-width-hundred-percent { width: 100% }

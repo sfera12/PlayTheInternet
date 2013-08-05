@@ -1,63 +1,39 @@
-.display-none { width:0px!important; height: 0px!important; float: right!important;}
-
-body { height: 100%; }
-.taArea {width: 100%; height: 200px; }
-.max-width {width: 100% }
-.auto {width: auto; height: auto;}
-#dPLists { position: fixed; float: left; width: 100%; height: 98.8%; }
-#firstView, #secondView { float: left; width: 50%; height: 100%; }
-#ulSecond >:nth-child(1) >:first-child, #ulSecond >:nth-child(2) >:first-child { margin-top: 0px!important; }
-#ulSecond >:nth-child(1) , #ulSecond >:nth-child(2) { height: 90px!important; }
+/* slim scroll wrapper */
 .slimScrollDiv { float:left; width: 100%; height: 100%; }
-.ui-sortable-helper { width: 50%; }
-.internalFrame { float: left; width: 100%; height: 50%; overflow-x: hidden; overflow-y: scroll; }
+
+/* playlist container */
 .playlistFrame { float: left; width: 100%; height: 99%; }
+
+/* video container */
 .pti-state-default { float:left; cursor: default; width: 50%; height: 91px; }
-.pti-state-default > div { height: 90px; width:auto ; margin: 0.5px; }
-.pti-state-default { font-weight: normal/*{fwDefault}*/; color: #555555/*{fcDefault}*/; }
-.pti-state-default > div {
-    background-color: #f1f1f1;
-}
-
-.pti-state-default > div > span, .pti-state-default:hover > div > span {
-    color: #007FFF;
-}
-.pti-state-default:hover > div {
-    background-color: #D4FFF7;
-    color: #007FFF
-}
-
-.pti-state-default:hover > div > span {
-    color: #007FFF
-}
-
-.selected > div, .selected:hover > div {
-    background-color: #007FFF;
-}
-
-.post-hover {
-    background-color: rgb(220, 220, 220)
-}
-
-
-.selected > div> span, .selected:hover > div > span {
-    color: white;
-}
-
-.selected > div{ background-color: #007FFF;}
-.image-div { float: left; position: relative; width: 123px; height: 90px; }
-.playlistFrame img, .parsePlaylistFrame img { float: left; height: 90px; }
-.duration-caption { position: absolute; width: auto; height: auto; right: 5px; bottom: 3px; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
-.playlistFrame span, .parsePlaylistFrame span { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
-.error-text { position: relative; left: 10px; top:35%; }
-.disabled-Video { opacity: 0.4 }
-#ytplayer { width: 100% }
-.pti-state-droppable-target { clear: both; float: left; width: 100%;}
-
-.pti-state-default>div>div.sort { float: left; position: relative; width: 10px; height: 90px; background: url('http://cdn3.iconfinder.com/data/icons/pyconic-icons-2-1/512/arrow-double-up-down-128.png') 0px 50% no-repeat; background-size: 100% 90%;}
+.playlistFrame > :nth-child(1).pti-state-default:not(.display-none), .playlistFrame > :nth-child(2).pti-state-default:not(.display-none) { height: 90px!important; }
+.playlistFrame > :nth-child(1).pti-state-default:not(.display-none) > :first-child, .playlistFrame > :nth-child(2).pti-state-default:not(.display-none) > :first-child { margin-top: 0px!important; }
+.pti-state-default > div { height: 90px; width:auto ; margin: 0.5px; background-color: #f1f1f1; }
+.pti-state-default:hover > div { background-color: #D4FFF7; color: #007FFF }
+.pti-state-default.selected > div, .pti-state-default.selected:hover > div { background-color: #007FFF; }
 .pti-state-default.ui-selected>div { background-color: orange!important; }
 .pti-state-default.ui-selected.selected>div { background-color: orangered!important; }
-.ui-state-highlight { float:left!important; position:relative!important; width: 50%!important; height: 91px!important; margin: 0px; padding: 0px; border: none;}
-.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
-div.playlistFrame:not(.calendar)>.pti-state-default>div>div>div.pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
-div.playlistFrame:not(.calendar)>.pti-state-default.selected>div>div>div.pti-logo { background-image: none; }
+
+/* various elements */
+.pti-state-default .image-div { float: left; position: relative; width: 123px; height: 90px; }
+.pti-state-default .image-div img, .pti-state-default .image-div img { float: left; height: 90px; }
+
+.pti-state-default .duration-caption { position: absolute; width: auto; height: auto; right: 5px; bottom: 3px; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+
+.pti-state-default .videoText, .pti-state-default .videoText { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
+.pti-state-default .videoText, .pti-state-default:hover .videoText { color: #007FFF; }
+.pti-state-default.selected .videoText, .pti-state-default.selected:hover .videoText, .pti-state-default.selected .error-text>b>a:link { color: white!important; }
+.pti-state-default .error-text { position: relative; left: 10px; top:35%; }
+
+.pti-state-default-droppable-target { display:inline; clear: both; float: left; width: 100%;}
+.pti-state-default-sortable-placeholder { float:left!important; position:relative!important; width: 50%!important; height: 91px!important; margin: 0px; padding: 0px; border: none;}
+.playlistFrame .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.playlistFrame:not(.calendar)>.pti-state-default .pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
+.playlistFrame:not(.calendar)>.pti-state-default.selected .pti-logo { background-image: none; }
+
+.playlistFrame .display-none { width:0px!important; height: 0px!important; float: right!important;}
+
+
+
+
+
