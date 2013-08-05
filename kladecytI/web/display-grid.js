@@ -68,6 +68,7 @@ $(document).ready(function () {
     setSlimScroll('#calendarPlaylist', "100%")
     setSlimScroll('#ulFirst', "100%")
     setSlimScroll('#ulSecond', "100%")
+    setSlimScroll('#parsedPlaylist', '100%')
     $('.datepicker').datepicker()
     $('#searchCalendar').click(function (evt) {
         propagateCalendar()
