@@ -1,37 +1,92 @@
 /* slim scroll wrapper */
 .slimScrollDiv { float:left; width: 100%; height: 100%; }
 
+
 /* playlist container */
-.playlistFrame { float: left; width: 100%; height: 99%; }
+.playlistFrame { float: left; width: 100%; height: 100%; margin-top: -1px; }
+
+
+/* playlist header */
+
+.playlistFrame .header { height: 30px; }
+.playlistFrame .header .size-button { float: left; height: 100%; line-height: 30px; cursor: default; }
+.playlistFrame .header .size-button:hover { background-color: #D4FFF7; }
+
+
+/* playlist playlist */
+
+.playlistFrame .playlist { height: 100%; }
 
 /* video container */
-.pti-state-default { float:left; cursor: default; width: 50%; height: 91px; }
-.playlistFrame > :nth-child(1).pti-state-default:not(.display-none), .playlistFrame > :nth-child(2).pti-state-default:not(.display-none) { height: 90px!important; }
-.playlistFrame > :nth-child(1).pti-state-default:not(.display-none) > :first-child, .playlistFrame > :nth-child(2).pti-state-default:not(.display-none) > :first-child { margin-top: 0px!important; }
-.pti-state-default > div { height: 90px; width:auto ; margin: 0.5px; background-color: #f1f1f1; }
-.pti-state-default:hover > div { background-color: #D4FFF7; color: #007FFF }
-.pti-state-default.selected > div, .pti-state-default.selected:hover > div { background-color: #007FFF; }
-.pti-state-default.ui-selected>div { background-color: orange!important; }
-.pti-state-default.ui-selected.selected>div { background-color: orangered!important; }
+.playlistFrame .playlist>* { float: left; cursor: default; overflow: hidden; }
+/*.playlistFrame .playlist>:nth-child(1):not(.display-none), .playlistFrame .playlist>:nth-child(2):not(.display-none) { height: 90px!important; }*/
+/*.playlistFrame .playlist>:nth-child(1):not(.display-none)>:first-child , .playlistFrame .playlist>:nth-child(2):not(.display-none)>:first-child { margin: 0px!important; }*/
+.playlistFrame .playlist>*>* { margin: 0.5px; background-color: #f1f1f1; }
+.playlistFrame .playlist>*:hover>* { background-color: #D4FFF7; color: #007FFF }
+.playlistFrame .playlist>*.selected>div, .playlistFrame .playlist>*.selected:hover>div { background-color: #007FFF; }
+.playlistFrame .playlist>*.ui-selected>div { background-color: orange!important; }
+.playlistFrame .playlist>*.ui-selected.selected>div { background-color: orangered!important; }
 
-/* various elements */
-.pti-state-default .image-div { float: left; position: relative; width: 123px; height: 90px; }
-.pti-state-default .image-div img, .pti-state-default .image-div img { float: left; height: 90px; }
+.playlistFrame .playlist.pti-view-big>.pti-element-song { width: 50%; height: 91px; }
+.playlistFrame .playlist.pti-view-big>*>* { height: 90px; }
 
-.pti-state-default .duration-caption { position: absolute; width: auto; height: auto; right: 5px; bottom: 3px; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.playlistFrame .playlist.pti-view-list>.pti-element-song { width: 100%; height: 21px; font-size: 11px;}
+.playlistFrame .playlist.pti-view-list>*>* { height: 20px; }
 
-.pti-state-default .videoText, .pti-state-default .videoText { word-break: break-all; font-family: Arial, Helvetica, sans-serif; font-size: 11px; padding-top: 2px; }
-.pti-state-default .videoText, .pti-state-default:hover .videoText { color: #007FFF; }
-.pti-state-default.selected .videoText, .pti-state-default.selected:hover .videoText, .pti-state-default.selected .error-text>b>a:link { color: white!important; }
-.pti-state-default .error-text { position: relative; left: 10px; top:35%; }
 
-.pti-state-default-droppable-target { display:inline; clear: both; float: left; width: 100%;}
-.pti-state-default-sortable-placeholder { float:left!important; position:relative!important; width: 50%!important; height: 91px!important; margin: 0px; padding: 0px; border: none;}
-.playlistFrame .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
-.playlistFrame:not(.calendar)>.pti-state-default .pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
-.playlistFrame:not(.calendar)>.pti-state-default.selected .pti-logo { background-image: none; }
+/*
+ various elements
+                    */
 
-.playlistFrame .display-none { width:0px!important; height: 0px!important; float: right!important;}
+/* image-div */
+.playlistFrame .playlist>* .image-div { float: left; }
+
+.playlistFrame .playlist.pti-view-big>* .image-div { position: relative; width: 123px; height: 90px; }
+.playlistFrame .playlist.pti-view-big>* .image-div img, .playlistFrame .playlist.pti-view-big>* .image-div img { float: left; height: 90px; }
+
+.playlistFrame .playlist.pti-view-list>* .image-div { width: 42px; height: 20px; }
+.playlistFrame .playlist.pti-view-list>* .image-div img { display: none;}
+.playlistFrame .playlist.pti-view-list>* .image-div .duration-caption { height: 20px;}
+.playlistFrame .playlist.pti-view-list>* .image-div .pti-logo { display: none;}
+
+.playlistFrame .playlist.pti-view-big>* .duration-caption { position: absolute; width: auto; height: auto; right: 5px; bottom: 3px; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.playlistFrame .playlist.pti-view-list>* .duration-caption { color: #007FFF; text-align: right; }
+
+
+/* videoText error-text */
+.playlistFrame .playlist>* .videoText, .playlistFrame .playlist>*:hover .videoText { color: #007FFF; }
+.playlistFrame .playlist>* .error-text { position: relative; left: 10px; }
+.playlistFrame .playlist>* .videoText, .playlistFrame .playlist>* .videoText { word-break: break-all; font-family: Arial, Helvetica, sans-serif; }
+.playlistFrame .playlist>*.selected .videoText, .playlistFrame .playlist>*.selected:hover .videoText, .playlistFrame .playlist>*.selected .error-text>b>a:link, .playlistFrame .playlist>*.selected .duration-caption  { color: white!important; }
+
+.playlistFrame .playlist.pti-view-big>* .videoText, .playlistFrame .playlist.pti-view-big>* .videoText { font-size: 11px; padding-top: 2px; }
+.playlistFrame .playlist.pti-view-big>* .error-text { top:35%; }
+
+.playlistFrame .playlist.pti-view-list>* .videoText { margin-left: 5px }
+.playlistFrame .playlist.pti-view-list>* .videoText br { display: none;}
+.playlistFrame .playlist.pti-view-list>* .videoText, .playlistFrame .playlist.pti-view-list>* .videoText {  }
+.playlistFrame .playlist.pti-view-list>* .error-text {  }
+.playlistFrame .playlist.pti-view-list>* .videoText>:first-child:after { content: " " }
+
+
+/* sortable, droppable, selectable, playlist type */
+.playlistFrame .playlist .pti-droppable-target { display:inline; clear: both; float: left; width: 100%;}
+
+
+.playlistFrame .playlist>*.pti-sortable-placeholder { float:left; }
+
+.playlistFrame .playlist.pti-view-big>*.pti-sortable-placeholder { width: 50%; height: 91px; margin: 0px; padding: 0px; border: none;}
+
+.playlistFrame .playlist.pti-view-list>*.pti-sortable-placeholder { width: 100%; height: 21px;}
+
+
+.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.playlistFrame .playlist:not(.calendar)>.pti-view-big .pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
+.playlistFrame .playlist:not(.calendar)>.pti-view-big.selected .pti-logo { background-image: none; }
+
+
+/* misc */
+.playlistFrame .playlist .display-none { width:0px!important; height: 0px!important; float: right!important;}
 
 
 

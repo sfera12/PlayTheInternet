@@ -22,7 +22,7 @@
             <label id="saveHistoryStatus" class="temp-absolute">Status<br></label>
             <a class="temp-openNewWindow" href="thisislink" id="nwWndFirst">Open in new window</a>
         </div>
-        <div id="ulFirst" class="connectedSortable playlistFrame">
+        <div id="ulFirst" class=" playlistFrame">
         </div>
     </div>
 
@@ -30,7 +30,7 @@
         <div id="ctrlSecond" class="ctrlSecond temp-height-ctrls" >
             <a href="thisislink" id="nwWndSecond">Open in new window</a>
         </div>
-        <div id="ulSecond" class="connectedSortable playlistFrame">
+        <div id="ulSecond" class=" playlistFrame">
         </div>
     </div>
 
@@ -88,16 +88,16 @@
     var videos = function(elementExpression) {
         return $(elementExpression + " > div").map(function(index, div) { return $(div).data("videoFeed") } ).map(function(index, item) { return {type: item.type, id: item.id } }).toArray()
     }
-    var videoIds = function(elementExpression) {
-        return $(elementExpression).sortable('toArray').join(',')
+    var videoIds = function(playlist) {
+        return playlist.sortableArray
     }
 
-    var generateHref = function (elementExpression, containerElementExpression) {
+    var generateHref = function (elementExpression, playlist) {
         var proceed = $(elementExpression)
         proceed.attr("target", "_blank")
         proceed.css("font-size", "medium")
         proceed.click(function () {
-            proceed.attr("href", "/display-grid.html#" + videoIds(containerElementExpression))
+            proceed.attr("href", "/display-grid.html#" + videoIds(playlist))
             setTimeout(function () {
                 window.close()
             }, 10000)
@@ -158,8 +158,8 @@
             $.jStorage.publish('queryWindowIds', 'give me');
         }, 3000)
 
-        generateHref("#nwWndFirst", "#ulFirst")
-        generateHref("#nwWndSecond", "#ulSecond")
+        generateHref("#nwWndFirst", pll)
+        generateHref("#nwWndSecond", plr)
     })
 </script>
 </body>

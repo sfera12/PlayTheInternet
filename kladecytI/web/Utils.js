@@ -4,7 +4,7 @@ function VideoElement(videoFeed, appendTo) {
     this.createDiv = function (videoFeed) {
         var childDiv = $('<div/>')
         this.div = $('<div/>').append(childDiv)
-        this.div.addClass('pti-state-default')
+        this.div.addClass('pti-element-song')
         this.div.attr('id', videoFeed.type + '=' + videoFeed.id)
         $(appendTo).append(this.div)
     }
@@ -41,10 +41,12 @@ function VideoFeed(item, parent) {
 
 
 function Playlist(appendToElementExpression, options) {
-    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-state-default-droppable-target"><%=name%></label>')
+    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-droppable-target"><%=name%></label>')
     this.options = options
     this.containerElementExpression = appendToElementExpression
-    this.jPlaylist = $(this.containerElementExpression)
+    this.jContainer = $(this.containerElementExpression)
+    this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
+    this.jPlaylist = $('<div class="playlist connectedSortable"/>').appendTo(this.jContainer)
     this.sortableArray = new Array()
     this.playlist
     this.currSong
@@ -52,6 +54,25 @@ function Playlist(appendToElementExpression, options) {
     this.first_rows = {}
     this.blockSort = false
     this.uid = GUID() + new Date().getTime()
+
+
+    Playlist.prototype.createHeader = function() {
+        var bigView = $('<div class="set-big-view size-button">BIG</div>').appendTo(this.jHeader)
+        var listView = $('<div class="set-list-view size-button">LIST</div>').appendTo(this.jHeader)
+        bigView.click(function() {
+            $(this.jPlaylist).attr('class', function(i ,c) {
+                return c.replace(/pti-view-[^\s]+/g, 'pti-view-big')
+            }.bind(this))
+        }.bind(this))
+        listView.click(function() {
+            $(this.jPlaylist).attr('class', function(i ,c) {
+                return c.replace(/pti-view-[^\s]+/, 'pti-view-list')
+            }.bind(this))
+        }.bind(this))
+    }
+    if(this.createHeader) {
+        this.createHeader()
+    }
 
     Playlist.prototype.hideGroupContents = function(element) {
         var headerTagName = element[0].tagName;
@@ -68,24 +89,25 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.jPlaylist.data('playlist', this)
+    this.jPlaylist.addClass('pti-view-list')
     if(this.options && this.options.type && this.options.type=='calendar') {
         this.jPlaylist.addClass('calendar')
     }
     this.jPlaylist.selectable({
-        filter: 'div.pti-state-default',
-        cancel: 'div.image-div, label.pti-state-default-droppable-target'
+        filter: 'div.pti-element-song',
+        cancel: 'div.image-div, label.pti-droppable-target'
     })
         .sortable({
             connectWith:'.connectedSortable',
             scrollSensitivity:50,
             tolerance:'pointer',
-            distance:25,
+            distance:7,
             handle: 'div.image-div',
-            placeholder: 'pti-state-default-sortable-placeholder',
+            placeholder: 'pti-sortable-placeholder',
 //            update:function (event, ui) {
 //                this.recalculatePlaylist()
 //            }.bind(this),
-            cancel:'.pti-state-default-droppable-target',
+            cancel:'.pti-droppable-target',
 //        sort : function(event, ui) {
 //            var $helper = $('.ui-sortable-helper'), hTop = $helper.offset().top, hStyle = $helper.attr('style'), hId = $helper.attr('id');
 //            if (first_rows.length > 1) {
@@ -114,7 +136,7 @@ function Playlist(appendToElementExpression, options) {
                     }).get();
                     this.jPlaylist.find('.ui-selected').addClass('cloned');
                 }
-                ui.placeholder.html('<td class="pti-state-default">&nbsp;</td>');
+//                ui.placeholder.html('<td class="pti-view-big">&nbsp;</td>');
             }.bind(this),
             stop: function(event, ui) {
 //                console.log('stop')
@@ -192,6 +214,10 @@ function Playlist(appendToElementExpression, options) {
         console.log(key + ' has been ' + action)
         var storagePlaylist = $.jStorage.get(key);
 //        console.log(storagePlaylist)
+        if(!storagePlaylist) {
+            console.log("listenFunction called with empty or null storagePlaylist, might be first initialization")
+            return
+        }
         if (storagePlaylist.source != this.uid) {
             storagePlaylist = storagePlaylist.data
             this.recalculateSortable()
@@ -236,7 +262,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.immediateRecalculatePlaylist = function(dontInvokeListener) {
-        this.playlist = this.jPlaylist.find(">div.pti-state-default").filter(function (index, item) {
+        this.playlist = this.jPlaylist.find(">div.pti-element-song").filter(function (index, item) {
             item = $(item)
             return item
         })
@@ -278,7 +304,7 @@ function Playlist(appendToElementExpression, options) {
             this.jPlaylist.append(element)
             group.links.forEach(function (videoFeed) {
 //                console.log(videoFeed)
-                var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
+                var videoElement = new VideoElement(videoFeed, this.jPlaylist)
                 var linkContext = {
                     videoElement:videoElement,
                     videoFeed:videoFeed,
@@ -308,7 +334,7 @@ function Playlist(appendToElementExpression, options) {
         }
 
         links.forEach(function (videoFeed) {
-            var videoElement = new VideoElement(videoFeed, this.containerElementExpression)
+            var videoElement = new VideoElement(videoFeed, this.jPlaylist)
             var linkContext = {
                 videoElement:videoElement,
                 videoFeed:videoFeed,

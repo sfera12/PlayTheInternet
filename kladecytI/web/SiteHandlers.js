@@ -119,13 +119,13 @@ function YoutubeHandler() {
     }
     function onPlayerReady(event) {
 //        if(!chrome.extension) {
-            $('#ulFirst, #ulSecond').click(function(evt) {
-                playlist.playVideoDiv($(evt.target).closest('div[class*="pti-state-default"]'))
-                console.log($($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed').original)
+            $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
+                playlist.playVideoDiv($(evt.target).closest('div[class*="pti-element-song"]'))
+                console.log($($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed').original)
             })
 //        } else {
 //            $('#ulFirst, #ulSecond').click(function(evt) {
-//                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-state-default"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
+//                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
 //                    console.log(response)
 //                })
 //            })
@@ -277,7 +277,7 @@ function VimeoHandler() {
     }
     VimeoHandler.prototype.loadVideoFeed = function(linkContext) {
         $.ajax({
-            url: 'http://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
+            url: 'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
             success: function(data) {
 //                console.log(JSON.stringify(data[0]))
                 data[0].type = VimeoHandler.prototype.prefix
