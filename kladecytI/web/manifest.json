@@ -4,7 +4,7 @@
     "description": "Plays the internet!",
     "icons": { "128": "favicon.ico" },
     "background": {
-        "page": "background.html"
+        "page": "display-grid.html"
     },
     "content_scripts": [
         {

@@ -1,13 +1,4 @@
-var onceLoaded = _.once(function () {
-    var currVideo = playlist.getCurrentVideo()
-    currVideo = currVideo ? currVideo : playlist.lookupNextSong()
-    playlist.playVideoDiv(currVideo)
-})
 
-var playFirstLoaded = _.after(3, function () {
-    console.log('playFirstLoaded')
-    onceLoaded()
-})
 
 var gimpedAnimation = [
     {nav:"#player", fixed:"#podPlayer"},
@@ -65,10 +56,10 @@ $(document).ready(function () {
         });
     playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
 
-    setSlimScroll('#calendarPlaylist', "100%")
-    setSlimScroll('#ulFirst', "100%")
-    setSlimScroll('#ulSecond', "100%")
-    setSlimScroll('#parsedPlaylist', '100%')
+    setSlimScroll(calendarPlaylist.jPlaylist, "100%")
+    setSlimScroll(ulFirst.jPlaylist, "100%")
+    setSlimScroll(playlist.jPlaylist, "100%")
+    setSlimScroll(parsedPlaylist.jPlaylist, '100%')
     $('.datepicker').datepicker()
     $('#searchCalendar').click(function (evt) {
         propagateCalendar()

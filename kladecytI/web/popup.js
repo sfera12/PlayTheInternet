@@ -8,11 +8,6 @@
             var parsedDivStyle = $($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'list-item');
 
             window.parsedPlaylist = new Playlist('#parsedPlaylist');
-            $(window).ready(function() {
-                window.playlist.setId(chrome.extension.getBackgroundPage().windowId)
-                $.jStorage.publish('backgroundPage', {operation: 'getCurrentVideoFeed'})
-            })
-
 
             chrome.runtime.onMessage.addListener(
                 function (request, sender, sendResponse) {
@@ -28,10 +23,7 @@
                     }
                 }
             );
-            chrome.tabs.executeScript(null, {file:"parsePage.js"});
-            addEventListener("unload", function (event) {
-                $.jStorage.publish('backgroundPage', {operation:'playCurrentVideoFeed', data:$(playlist.jPlaylist.find('.selected')).data('videoFeed')})
-            }, true);
+
 
             $.jStorage.subscribe('popupPage', function(channel, payload) {
 //                console.log(payload)
@@ -40,30 +32,35 @@
                     playlist.addSongsToPlaylist(playlist.parseSongIds(payload.playlist.join(',')));
                     var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
                     playlist.playVideoDiv(playVideoDiv);
-                } else if(payload.operation == 'currentVideoFeed') {
+                } else if(payload.operation == 'selectVideoFeed') {
                     if (payload.data) {
                     var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
                     playlist.selectVideo(playVideoDiv);
                     } else {
                         throw "currentVideoFeed operation in popupPage is called with empty or null data"
                     }
+                } else if (payload.operation == 'playVideoFeed') {
+                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
+                    console.log(payload.playerState)
+                    playlist.playVideoDiv(playVideoDiv, payload.playerState);
                 }
             })
         }
 
         if (chrome.extension.getBackgroundPage() == window) {
             $.jStorage.subscribe('backgroundPage', function(channel, payload) {
-//                console.log(payload)
-                if (payload.operation == "playCurrentVideoFeed") {
+                console.log(payload)
+                if (payload.operation == "playVideoFeed") {
 //                    playlist.jPlaylist.empty();
 //                    playlist.addSongsToPlaylist(playlist.parseSongIds(payload.playlist.join(',')));
                     var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
-                    playlist.playVideoDiv(playVideoDiv);
-                } else if (payload.operation == "getPlaylist") {
-                    $.jStorage.publish('popupPage', {operation:'backgroundPagePlaylist', data:$(playlist.jPlaylist.find('.selected')).data('videoFeed'), playlist:playlist.sortableArray})
-                    youtube.stopVideo()
-                } else if (payload.operation == "getCurrentVideoFeed") {
-                    $.jStorage.publish('popupPage', {operation:'currentVideoFeed', data:$(playlist.jPlaylist.find('.selected')).data('videoFeed')})
+                    console.log(payload.playerState)
+                    playlist.playVideoDiv(playVideoDiv, payload.playerState);
+                } else if (payload.operation == "getSelectedVideoFeed") {
+                    var playerState = SiteHandlerManager.prototype.getPlayerState();
+                    $.jStorage.publish('popupPage', {operation: payload.callback, data:$(playlist.getSelectedVideo()).data('videoFeed'), playerState: playerState})
+                } else if (payload.operation == "stopVideo") {
+                    console.log('stopVideo')
                     youtube.stopVideo()
                 }
 

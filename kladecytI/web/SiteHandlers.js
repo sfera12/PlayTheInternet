@@ -38,11 +38,11 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.playVideoFeed = function(videoFeed) {
+    SiteHandlerManager.prototype.playVideoFeed = function(videoFeed, playerState) {
         clearTimeout(SiteHandlerManager.prototype.errorTimeout)
         var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
         SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
-        siteHandler.playVideoFeed(videoFeed)
+        siteHandler.playVideoFeed(videoFeed, playerState)
     }
 
     SiteHandlerManager.prototype.hide = function(siteHandler) {
@@ -99,6 +99,16 @@ function SiteHandlerManager() {
         }
     }
 
+    SiteHandlerManager.prototype.getPlayerState = function() {
+        var selectedVideo = playlist.getSelectedVideo();
+        var selectedVideoFeed = $(selectedVideo).data('videoFeed')
+        var handler = SiteHandlerManager.prototype.getHandler(selectedVideoFeed.type);
+        if(selectedVideoFeed) {
+            var playerState = handler.getPlayerState();
+            return playerState
+        }
+    }
+
     $.each(siteHandlers, function (index, item) {
         SiteHandlerManager.prototype.mapping[item.prefix] = item
     })
@@ -118,22 +128,28 @@ function YoutubeHandler() {
         });
     }
     function onPlayerReady(event) {
-//        if(!chrome.extension) {
+        if(!chrome.extension) {
             $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
                 playlist.playVideoDiv($(evt.target).closest('div[class*="pti-element-song"]'))
                 console.log($($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed').original)
             })
-//        } else {
-//            $('#ulFirst, #ulSecond').click(function(evt) {
+        } else {
+            $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
+                var selectedVideo = $(evt.target).closest('div[class*="pti-element-song"]');
+                playlist.selectVideo(selectedVideo)
+                $.jStorage.publish('backgroundPage', { operation: 'playVideoFeed', data: $(selectedVideo).data('videoFeed')})
 //                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
 //                    console.log(response)
 //                })
-//            })
-//        }
+            })
+        }
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
     function change(state) {
+        if( state.data == 1 && typeof seekToOnce == "function") {
+            seekToOnce()
+        }
         console.log(state)
         if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
@@ -142,7 +158,7 @@ function YoutubeHandler() {
 
     function onError() {
         console.log('error')
-        setTimeout(function () {
+        YoutubeHandler.prototype.playTimeout = setTimeout(function () {
             if (youtube.getDuration() <= 0) {
                 SiteHandlerManager.prototype.stateChange("ERROR");
                 console.log(youtube.getCurrentTime());
@@ -156,9 +172,12 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
     YoutubeHandler.prototype.errorTemplate = _.template('<div><div class="image-div"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');
     YoutubeHandler.prototype.prefix = "y"
-    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^\s&\'\'<>\/\\.,#]{11})/
+    //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
+    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 4
     YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
+    YoutubeHandler.prototype.playTimeout
+    var seekToOnce
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
@@ -196,12 +215,30 @@ function YoutubeHandler() {
         })
     }
 
-    YoutubeHandler.prototype.playVideoFeed = function (videoFeed) {
+    YoutubeHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
         var videoId = videoFeed.id
-        youtube.loadVideoById(videoId)
-    }
+        seekToOnce = null
+        if(playerState) {
+            seekToOnce = _.once(function() {
+                youtube.seekTo(playerState.start)
+            })
+            youtube.loadVideoById(videoId)
+        } else {
+            youtube.loadVideoById(videoId)
+        }
+    }.bind(this)
     YoutubeHandler.prototype.stop = function() {
         youtube.stopVideo()
+    }
+
+    YoutubeHandler.prototype.clearTimeout = function() {
+        clearTimeout(YoutubeHandler.prototype.playTimeout)
+    }
+
+    YoutubeHandler.prototype.getPlayerState = function() {
+        var currentTime = youtube.getCurrentTime();
+        var playerState = youtube.getPlayerState();
+        return { start: currentTime, state: playerState }
     }
 }
 

@@ -356,12 +356,12 @@ function Playlist(appendToElementExpression, options) {
         this.sortableArray = this.jPlaylist.sortable('toArray')
         return this.sortableArray
     }
-    Playlist.prototype.playVideoDiv = function (videoDiv) {
+    Playlist.prototype.playVideoDiv = function (videoDiv, playerState) {
         var videoFeed = $(videoDiv).data('videoFeed')
         if (videoFeed) {
             this.selectVideo(videoDiv)
             document.title = windowId + ' - ' + videoFeed.title
-            SiteHandlerManager.prototype.playVideoFeed(videoFeed)
+            SiteHandlerManager.prototype.playVideoFeed(videoFeed, playerState)
         } else {
             throw "videoFeed is empty"
         }
@@ -371,7 +371,7 @@ function Playlist(appendToElementExpression, options) {
         playlist.playVideoDiv(playlist.lookupNextSong())
     }
 
-    Playlist.prototype.getCurrentVideo = function() {
+    Playlist.prototype.getSelectedVideo = function() {
         return $(this.jPlaylist.find('.selected'))[0]
     }
 
