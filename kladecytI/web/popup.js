@@ -1,9 +1,6 @@
 (function () {
     if (chrome.extension) {
         if (chrome.extension.getBackgroundPage() != window) {
-            var body = $('body');
-            body.width(800);
-            body.height(600);
 //        $($('#tabs>ul>li[aria-controls="player"]')).css('display', 'none')
             var parsedDivStyle = $($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'list-item');
 

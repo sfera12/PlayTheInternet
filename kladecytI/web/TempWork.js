@@ -1,3 +1,11 @@
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function(details) {
+        details.requestHeaders.push({name: "Referer", value: "chrome-extension://hnelbfkfkaieecemgnpkpnopdpmffkii/"})
+        return {requestHeaders: details.requestHeaders};
+    },
+    {urls: ["<all_urls>"]},
+    ["blocking", "requestHeaders"]);
+
 _.flatten(_.reduce(sortedData, function (memo, item) {
     _.each(item.data, function (item) {
         item.date = this.meta.date

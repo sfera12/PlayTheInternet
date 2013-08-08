@@ -204,7 +204,11 @@ function YoutubeHandler() {
                 if (data.responseText.match(/too_many_recent_calls/)) {
                     setTimeout(function () {
                         console.log("retrying video")
-                        YoutubeHandler.prototype.loadVideoFeed(linkContext)
+                        if ($(linkContext.videoElement.div).parent().length > 0) {
+                            YoutubeHandler.prototype.loadVideoFeed(linkContext)
+                        } else {
+                            console.log('playlist was emptied, wont continue loading info for this video')
+                        }
                     }, 35000)
                 } else {
                     typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
@@ -275,7 +279,9 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
     }
-    SoundCloudHandler.prototype.playVideoFeed = function(videoFeed) {
+    SoundCloudHandler.prototype.playVideoFeed = function(videoFeed, playerState) {
+        console.log(videoFeed)
+        console.log(playerState)
         SoundCloudHandler.prototype.properties.dontPlay = false
         var playerUrl = 'https://w.soundcloud.com/player/?url='
         var id = videoFeed.id.replace(/^\/?(.*)/, '/$1').replace(/\\/g, '')
@@ -285,9 +291,24 @@ function SoundCloudHandler() {
         SoundCloudHandler.prototype.properties.errorTimeout = setTimeout(function() {
             SiteHandlerManager.prototype.stateChange("ERROR")
         }, 5000)
-        scWidget.load(url, {callback: function() {
+        scWidget.load(url, {auto_play: true, callback: function() {
             clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
             if(!SoundCloudHandler.prototype.properties.dontPlay) {
+                if(playerState) {
+                    var seekToOnce = _.once(function() {
+                        scWidget.unbind(SC.Widget.Events.PLAY_PROGRESS)
+                        scWidget.seekTo(playerState.start)
+                    })
+                    var playProgressThrottle = _.throttle(function(position) {
+                        if(position > 0) {
+                            console.log(position)
+                            seekToOnce()
+                        }
+                    }, 200)
+                    scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
+                        scWidget.getPosition(playProgressThrottle)
+                    })
+                }
                 scWidget.play()
             }
         }})
@@ -342,11 +363,11 @@ function VimeoHandler() {
         player.addEvent('ready', function(id) {
             clearInterval(VimeoHandler.prototype.playInterval)
             player.addEvent('play', function () {
-//                console.log('playing')
+                console.log('playing')
                 clearInterval(VimeoHandler.prototype.playInterval)
                 clearTimeout(VimeoHandler.prototype.playTimeout)
                 player.addEvent('finish', function() {
-//                    console.log('finish')
+                    console.log('finish')
                     SiteHandlerManager.prototype.stateChange("NEXT")
                 })
             })

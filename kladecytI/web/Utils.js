@@ -392,7 +392,7 @@ function Playlist(appendToElementExpression, options) {
         } else {
             throw "escapeURL called with empty or null parameters"
         }
-        return concated.replace(/([=])/g, '\\$1')
+        return concated.replace(/([/=])/g, '\\$1')
     }
 
     if(options && options.id) {
