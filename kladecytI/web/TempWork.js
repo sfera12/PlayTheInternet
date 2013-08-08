@@ -6,6 +6,9 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     {urls: ["<all_urls>"]},
     ["blocking", "requestHeaders"]);
 
+//TODO strange vimeo player, check for seekTo and other methods
+http://vimeo.com/67160485#
+
 _.flatten(_.reduce(sortedData, function (memo, item) {
     _.each(item.data, function (item) {
         item.date = this.meta.date
