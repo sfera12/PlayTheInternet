@@ -122,6 +122,7 @@ function propagateCalendar() {
     })
 }
 
+var tabsPlayerContainer = $('#tabs .tabs-player-container')
 $('#tabs').tabs({
     activate:function (event, ui) {
         var newTab = $(ui.newTab);
@@ -129,6 +130,13 @@ $('#tabs').tabs({
 //            if(newTab.text() == "Calendar") {
 //                propagateCalendar()
 //            }
+            if(newTab.text() == "Player") {
+                tabsPlayerContainer.removeClass('leftFull')
+                tabsPlayerContainer.addClass('tabs-player-container')
+            } else {
+                tabsPlayerContainer.addClass('leftFull')
+                tabsPlayerContainer.removeClass('tabs-player-container')
+            }
         newTab.addClass('active')
         $(ui.oldTab).removeClass('active')
     }

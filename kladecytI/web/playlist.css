@@ -1,9 +1,9 @@
 /* slim scroll wrapper */
-.slimScrollDiv { float:left; width: 100%; height: 100%; }
+.slimScrollDiv { position: absolute!important; top: 30px;  bottom: 0px; width: 100%; height: auto!important;}
 
 
 /* playlist container */
-.playlistFrame { float: left; width: 100%; height: 100%; margin-top: -1px; }
+.playlistFrame { position: relative; width: 100%; height: 100%; margin-top: -1px; }
 
 
 /* playlist header */
