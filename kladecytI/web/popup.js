@@ -1,5 +1,12 @@
 (function () {
     if (chrome.extension) {
+        chrome.webRequest.onBeforeSendHeaders.addListener(
+            function(details) {
+                details.requestHeaders.push({name: "Referer", value: "chrome-extension://hnelbfkfkaieecemgnpkpnopdpmffkii/"})
+                return {requestHeaders: details.requestHeaders};
+            },
+            {urls: ["<all_urls>"]},
+            ["blocking", "requestHeaders"]);
         if (chrome.extension.getBackgroundPage() != window) {
 //        $($('#tabs>ul>li[aria-controls="player"]')).css('display', 'none')
             var parsedDivStyle = $($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'list-item');

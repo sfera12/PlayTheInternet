@@ -4,7 +4,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         return {requestHeaders: details.requestHeaders};
     },
     {urls: ["<all_urls>"]},
-    ["blocking", "requestHeaders"]);
+    ["requestHeaders"]);
 
 //TODO strange vimeo player, check for seekTo and other methods
 http://vimeo.com/67160485#

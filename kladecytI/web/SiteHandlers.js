@@ -3,8 +3,13 @@ siteHandlers = [new YoutubeHandler(), new SoundCloudHandler(), new VimeoHandler(
 siteHandlerManager = new SiteHandlerManager();
 
 function SiteHandlerManager() {
+    var currentPlayingHandler
     SiteHandlerManager.prototype.mapping = new Object();
     SiteHandlerManager.prototype.errorTimeout
+
+    SiteHandlerManager.prototype.getCurrentPlayingHandler = function () {
+        return currentPlayingHandler
+    }
 
     SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
         $.jStorage.set(videoFeed.id, videoFeed)
@@ -43,6 +48,7 @@ function SiteHandlerManager() {
         var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
         SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
         siteHandler.playVideoFeed(videoFeed, playerState)
+        currentPlayingHandler = siteHandler
     }
 
     SiteHandlerManager.prototype.hide = function(siteHandler) {
@@ -147,9 +153,6 @@ function YoutubeHandler() {
         playFirstLoaded();
     }
     function change(state) {
-        if( state.data == 1 && typeof seekToOnce == "function") {
-            seekToOnce()
-        }
         console.log(state)
         if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
@@ -158,15 +161,7 @@ function YoutubeHandler() {
 
     function onError() {
         console.log('error')
-        YoutubeHandler.prototype.playTimeout = setTimeout(function () {
-            if (youtube.getDuration() <= 0) {
-                SiteHandlerManager.prototype.stateChange("ERROR");
-                console.log(youtube.getCurrentTime());
-            } else {
-                console.log('no error playing video')
-                console.log(youtube.getCurrentTime());
-            }
-        }, 5000)
+        SiteHandlerManager.prototype.stateChange("ERROR");
     }
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
@@ -177,7 +172,6 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.regexGroup = 4
     YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playTimeout
-    var seekToOnce
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
@@ -221,12 +215,8 @@ function YoutubeHandler() {
 
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
         var videoId = videoFeed.id
-        seekToOnce = null
         if(playerState) {
-            seekToOnce = _.once(function() {
-                youtube.seekTo(playerState.start)
-            })
-            youtube.loadVideoById(videoId)
+            youtube.loadVideoById({videoId: videoId, startSeconds: playerState.start})
         } else {
             youtube.loadVideoById(videoId)
         }
@@ -247,7 +237,12 @@ function YoutubeHandler() {
 }
 
 function SoundCloudHandler() {
-    SoundCloudHandler.prototype.initializePlayer = function() {
+    var currentTime
+    var currentSoundIndex
+    var state
+    var seekToOnce
+    var playProgressThrottle
+    SoundCloudHandler.prototype.initializePlayer = function () {
         var scWidgetIframe = document.getElementById('sc-widget');
         window.scWidget = SC.Widget(scWidgetIframe);
 
@@ -263,23 +258,45 @@ function SoundCloudHandler() {
                         }
                     })
                 })
+            });
+            playProgressThrottle = _.throttle(function (position) {
+                if (position > 0) {
+                console.log(position)
+                    if (typeof seekToOnce == "function") {
+                        seekToOnce()
+                    }
+                }
+                currentTime = position
+                scWidget.isPaused(function (paused) {
+                    paused ? state = 2 : state = 1;
+                })
+                scWidget.getCurrentSoundIndex(function (index) {
+                    currentSoundIndex = index
+                })
+            }, 200)
+            scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
+                scWidget.getPosition(playProgressThrottle)
             })
-        });
+        })
     }
-    SoundCloudHandler.prototype.properties = { errorTimeout: null, dontPlay: true }
+    SoundCloudHandler.prototype.properties = { errorTimeout:null, dontPlay:true }
     SoundCloudHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
     SoundCloudHandler.prototype.prefix = "s"
     //%3F
     SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^\s,?"=&#<]+)/
     SoundCloudHandler.prototype.regexGroup = 5
     SoundCloudHandler.prototype.playerContainer = 'soundCloudContainer'
-    SoundCloudHandler.prototype.clearTimeout = function() {
+    SoundCloudHandler.prototype.clearTimeout = function () {
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
     }
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
     }
-    SoundCloudHandler.prototype.playVideoFeed = function(videoFeed, playerState) {
+    SoundCloudHandler.prototype.getPlayerState = function () {
+        return { start:currentTime, state:state, index:currentSoundIndex}
+    }
+
+    SoundCloudHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
         console.log(videoFeed)
         console.log(playerState)
         SoundCloudHandler.prototype.properties.dontPlay = false
@@ -288,32 +305,27 @@ function SoundCloudHandler() {
         var url = playerUrl + id
 //        console.log(url)
         clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
-        SoundCloudHandler.prototype.properties.errorTimeout = setTimeout(function() {
+        SoundCloudHandler.prototype.properties.errorTimeout = setTimeout(function () {
             SiteHandlerManager.prototype.stateChange("ERROR")
         }, 5000)
-        scWidget.load(url, {auto_play: true, callback: function() {
+        scWidget.load(url, {callback:function () {
             clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
-            if(!SoundCloudHandler.prototype.properties.dontPlay) {
-                if(playerState) {
-                    var seekToOnce = _.once(function() {
-                        scWidget.unbind(SC.Widget.Events.PLAY_PROGRESS)
+            if (!SoundCloudHandler.prototype.properties.dontPlay) {
+                seekToOnce = null
+                if (playerState) {
+                    seekToOnce = _.once(function () {
                         scWidget.seekTo(playerState.start)
                     })
-                    var playProgressThrottle = _.throttle(function(position) {
-                        if(position > 0) {
-                            console.log(position)
-                            seekToOnce()
-                        }
-                    }, 200)
-                    scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
-                        scWidget.getPosition(playProgressThrottle)
-                    })
                 }
-                scWidget.play()
+                if (playerState && playerState.index) {
+                    scWidget.skip(playerState.index)
+                } else {
+                    scWidget.skip(0) //without this sometimes sc's player play_progress won't start start publishing events
+                }
             }
         }})
     }
-    SoundCloudHandler.prototype.stop = function() {
+    SoundCloudHandler.prototype.stop = function () {
         SoundCloudHandler.prototype.properties.dontPlay = true
         scWidget.pause()
     }
@@ -329,6 +341,15 @@ function VimeoHandler() {
     VimeoHandler.prototype.playerContainer = 'vimeoContainer'
     VimeoHandler.prototype.playInterval
     VimeoHandler.prototype.playTimeout
+    VimeoHandler.prototype.playProgressThrottle = _.throttle(function(playProgress) {
+        console.log(playProgress)
+        currentTime = playProgress.seconds
+    }, 500)
+    var currentTime
+    var state
+    VimeoHandler.prototype.getPlayerState = function() {
+        return {start: currentTime, state: state}
+    }
     VimeoHandler.prototype.clearTimeout = function() {
         clearInterval(VimeoHandler.prototype.playInterval)
         clearTimeout(VimeoHandler.prototype.playTimeout)
@@ -353,32 +374,46 @@ function VimeoHandler() {
             timeout: 10000
         })
     }
-    VimeoHandler.prototype.playVideoFeed = function(videoFeed) {
+    VimeoHandler.prototype.playVideoFeed = function(videoFeed, playerState) {
         $('#' + VimeoHandler.prototype.playerContainer).empty().append(VimeoHandler.prototype.playerTemplate(videoFeed))
-        var player = $f($('#vimeo')[0])
+        window.vimeo = $f($('#vimeo')[0])
         VimeoHandler.prototype.playTimeout = setTimeout(function() {
             clearInterval(VimeoHandler.prototype.playInterval)
             SiteHandlerManager.prototype.stateChange("ERROR")
-        }, 5000)
-        player.addEvent('ready', function(id) {
+        }, 15000)
+        vimeo.addEvent('ready', function(id) {
             clearInterval(VimeoHandler.prototype.playInterval)
-            player.addEvent('play', function () {
+            vimeo.addEvent('play', function () {
                 console.log('playing')
+                state = 1
                 clearInterval(VimeoHandler.prototype.playInterval)
                 clearTimeout(VimeoHandler.prototype.playTimeout)
-                player.addEvent('finish', function() {
+                vimeo.removeEvent('play')
+                if(playerState) {
+                    vimeo.api('seekTo', playerState.start)
+                }
+                vimeo.addEvent('play', function() {
+                    state = 1
+                })
+                vimeo.addEvent('pause', function() {
+                    state = 2
+                })
+                vimeo.addEvent('playProgress', VimeoHandler.prototype.playProgressThrottle.bind(this))
+                vimeo.addEvent('finish', function() {
                     console.log('finish')
+                    state = 0
                     SiteHandlerManager.prototype.stateChange("NEXT")
                 })
             })
             VimeoHandler.prototype.playInterval = setInterval(function () {
-                player.api('play')
+                vimeo.api('play')
 //                console.log('interval')
             }, 100)
 //            console.log('ready')
         })
     }
     VimeoHandler.prototype.stop = function() {
+        currentTime = null
         $('#' + VimeoHandler.prototype.playerContainer).empty()
 //        console.log('empty')
     }
