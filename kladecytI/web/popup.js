@@ -52,6 +52,7 @@
                     return {requestHeaders: details.requestHeaders};
                 },
                 {urls: ["*://*/*origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii"]},
+//                {urls: ["<all_urls>"]},
                 ["blocking", "requestHeaders"]);
             $.jStorage.subscribe('backgroundPage', function(channel, payload) {
                 console.log(payload)
@@ -66,7 +67,7 @@
                     $.jStorage.publish('popupPage', {operation: payload.callback, data:$(playlist.getSelectedVideo()).data('videoFeed'), playerState: playerState})
                 } else if (payload.operation == "stopVideo") {
                     console.log('stopVideo')
-                    youtube.stopVideo()
+                    SiteHandlerManager.prototype.getCurrentPlayingHandler().stop()
                 }
 
 

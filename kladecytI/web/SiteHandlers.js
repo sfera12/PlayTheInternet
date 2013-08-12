@@ -154,6 +154,9 @@ function YoutubeHandler() {
     }
     function change(state) {
         console.log(state)
+        if( state.data == 1 && typeof seekToOnce == "function") {
+            seekToOnce()
+        }
         if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
@@ -172,6 +175,7 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.regexGroup = 4
     YoutubeHandler.prototype.playerContainer = 'youtubeContainer'
     YoutubeHandler.prototype.playTimeout
+    var seekToOnce
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
@@ -215,8 +219,12 @@ function YoutubeHandler() {
 
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
         var videoId = videoFeed.id
-        if(playerState) {
-            youtube.loadVideoById({videoId: videoId, startSeconds: playerState.start})
+        seekToOnce = null
+        if (playerState) {
+            seekToOnce = _.once(function () {
+                youtube.seekTo(playerState.start)
+            })
+            youtube.loadVideoById(videoId)
         } else {
             youtube.loadVideoById(videoId)
         }
