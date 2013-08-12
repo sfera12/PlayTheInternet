@@ -243,6 +243,7 @@ function SoundCloudHandler() {
     var seekToOnce
     var playProgressThrottle
     SoundCloudHandler.prototype.initializePlayer = function () {
+        $('#soundCloud').append(SoundCloudHandler.prototype.playerTemplate())
         var scWidgetIframe = document.getElementById('sc-widget');
         window.scWidget = SC.Widget(scWidgetIframe);
 
@@ -281,6 +282,9 @@ function SoundCloudHandler() {
     }
     SoundCloudHandler.prototype.properties = { errorTimeout:null, dontPlay:true }
     SoundCloudHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
+    SoundCloudHandler.prototype.playerUrl = chrome.extension ? "https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us&origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii" : "https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us"
+    SoundCloudHandler.prototype.playerTemplate = _.template('<iframe id="sc-widget" src="' + SoundCloudHandler.prototype.playerUrl + '" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>')
+
     SoundCloudHandler.prototype.prefix = "s"
     //%3F
     SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^\s,?"=&#<]+)/
@@ -334,7 +338,8 @@ function SoundCloudHandler() {
 function VimeoHandler() {
     VimeoHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://www.siliconrepublic.com/fs/img/news/201208/rs-120x90/vimeo.jpg"><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
     VimeoHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
-    VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
+    VimeoHandler.prototype.playerUrl = chrome.extension ? "http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo&origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii" : "http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo"
+    VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="' + VimeoHandler.prototype.playerUrl + '" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
     VimeoHandler.prototype.regex = /vimeo.com\\?\/(\d+)/
     VimeoHandler.prototype.regexGroup = 1
@@ -380,7 +385,7 @@ function VimeoHandler() {
         VimeoHandler.prototype.playTimeout = setTimeout(function() {
             clearInterval(VimeoHandler.prototype.playInterval)
             SiteHandlerManager.prototype.stateChange("ERROR")
-        }, 15000)
+        }, 5000)
         vimeo.addEvent('ready', function(id) {
             clearInterval(VimeoHandler.prototype.playInterval)
             vimeo.addEvent('play', function () {
