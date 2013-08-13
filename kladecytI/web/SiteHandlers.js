@@ -4,6 +4,7 @@ siteHandlerManager = new SiteHandlerManager();
 
 function SiteHandlerManager() {
     var currentPlayingHandler
+    var blockPlayback = false
     SiteHandlerManager.prototype.mapping = new Object();
     SiteHandlerManager.prototype.errorTimeout
 
@@ -115,6 +116,27 @@ function SiteHandlerManager() {
         }
     }
 
+    SiteHandlerManager.prototype.blockPlayback = function(flag) {
+        if(flag != null) {
+            blockPlayback = flag
+            if(flag) {
+                SiteHandlerManager.prototype.stopAll()
+            }
+            return blockPlayback
+        } else {
+            return blockPlayback
+        }
+    }
+
+    SiteHandlerManager.prototype.stopAll = function() {
+        $.each(siteHandlers, function(index, item) {
+            var siteHandler = SiteHandlerManager.prototype.mapping[item.prefix];
+            if(typeof siteHandler.stop == "function") {
+                siteHandler.stop()
+            }
+        })
+    }
+
     $.each(siteHandlers, function (index, item) {
         SiteHandlerManager.prototype.mapping[item.prefix] = item
     })
@@ -154,6 +176,11 @@ function YoutubeHandler() {
     }
     function change(state) {
         console.log(state)
+        if(state.data == 1 && SiteHandlerManager.prototype.blockPlayback()) {
+            YoutubeHandler.prototype.stop()
+            console.log('blocked yt playback')
+            seekToOnce = null
+        }
         if( state.data == 1 && typeof seekToOnce == "function") {
             seekToOnce()
         }
@@ -218,15 +245,20 @@ function YoutubeHandler() {
     }
 
     YoutubeHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
-        var videoId = videoFeed.id
-        seekToOnce = null
-        if (playerState) {
-            seekToOnce = _.once(function () {
-                youtube.seekTo(playerState.start)
-            })
-            youtube.loadVideoById(videoId)
+        if (SiteHandlerManager.prototype.blockPlayback()) {
+            YoutubeHandler.prototype.stop()
+            console.log('blocked yt playback in playVideoFeed')
         } else {
-            youtube.loadVideoById(videoId)
+            var videoId = videoFeed.id
+            seekToOnce = null
+            if (playerState) {
+                seekToOnce = _.once(function () {
+                    youtube.seekTo(playerState.start)
+                })
+                youtube.loadVideoById(videoId)
+            } else {
+                youtube.loadVideoById(videoId)
+            }
         }
     }.bind(this)
     YoutubeHandler.prototype.stop = function() {
@@ -269,12 +301,6 @@ function SoundCloudHandler() {
                 })
             });
             playProgressThrottle = _.throttle(function (position) {
-                if (position > 0) {
-                console.log(position)
-                    if (typeof seekToOnce == "function") {
-                        seekToOnce()
-                    }
-                }
                 currentTime = position
                 scWidget.isPaused(function (paused) {
                     paused ? state = 2 : state = 1;
@@ -282,6 +308,17 @@ function SoundCloudHandler() {
                 scWidget.getCurrentSoundIndex(function (index) {
                     currentSoundIndex = index
                 })
+                if (SoundCloudHandler.prototype.properties.dontPlay || SiteHandlerManager.prototype.blockPlayback()) {
+                    SoundCloudHandler.prototype.stop()
+                    console.log('blocked sc playback in play_progress')
+                } else {
+                    if (position > 0) {
+                        console.log(position)
+                        if (typeof seekToOnce == "function") {
+                            seekToOnce()
+                        }
+                    }
+                }
             }, 200)
             scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
                 scWidget.getPosition(playProgressThrottle)
@@ -322,7 +359,10 @@ function SoundCloudHandler() {
         }, 5000)
         scWidget.load(url, {callback:function () {
             clearTimeout(SoundCloudHandler.prototype.properties.errorTimeout)
-            if (!SoundCloudHandler.prototype.properties.dontPlay) {
+            if (SoundCloudHandler.prototype.properties.dontPlay && SiteHandlerManager.prototype.blockPlayback()) {
+                SoundCloudHandler.prototype.stop()
+                console.log('blocked sc playback in load callback')
+            }  else {
                 seekToOnce = null
                 if (playerState) {
                     seekToOnce = _.once(function () {
@@ -354,9 +394,26 @@ function VimeoHandler() {
     VimeoHandler.prototype.playerContainer = 'vimeoContainer'
     VimeoHandler.prototype.playInterval
     VimeoHandler.prototype.playTimeout
+    var lastPlayProgress
+    var stuckPlayProgressCounter = 0
+    var stuckPlayProgress = function() {
+        if(lastPlayProgress == currentTime) {
+            if(++stuckPlayProgressCounter >= 5) {
+                vimeo.api('seekTo', Math.ceil(currentTime))
+                console.log('stuckPlayProgress kicked in')
+                stuckPlayProgressCounter = 0
+            }
+        }
+        lastPlayProgress = currentTime
+    }
     VimeoHandler.prototype.playProgressThrottle = _.throttle(function(playProgress) {
+        if(SiteHandlerManager.prototype.blockPlayback()) {
+            VimeoHandler.prototype.stop()
+            console.log('blocked vimeo playback')
+        }
         console.log(playProgress)
         currentTime = playProgress.seconds
+        stuckPlayProgress()
     }, 500)
     var currentTime
     var state

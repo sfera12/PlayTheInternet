@@ -59,6 +59,7 @@
                 if (payload.operation == "playVideoFeed") {
 //                    playlist.jPlaylist.empty();
 //                    playlist.addSongsToPlaylist(playlist.parseSongIds(payload.playlist.join(',')));
+                    SiteHandlerManager.prototype.blockPlayback(false)
                     var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
                     console.log(payload.playerState)
                     playlist.playVideoDiv(playVideoDiv, payload.playerState);
@@ -67,7 +68,7 @@
                     $.jStorage.publish('popupPage', {operation: payload.callback, data:$(playlist.getSelectedVideo()).data('videoFeed'), playerState: playerState})
                 } else if (payload.operation == "stopVideo") {
                     console.log('stopVideo')
-                    SiteHandlerManager.prototype.getCurrentPlayingHandler().stop()
+                    SiteHandlerManager.prototype.blockPlayback(true)
                 }
 
 
