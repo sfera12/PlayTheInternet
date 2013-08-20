@@ -36,7 +36,6 @@ function VideoFeed(item, parent) {
         this.error = "incompatible type"
         console.log("incompatible type" + item)
     }
-    this.original = item
 }
 
 
@@ -49,8 +48,9 @@ function Playlist(appendToElementExpression, options) {
     this.jPlaylist = $('<div class="playlist connectedSortable"/>').appendTo(this.jContainer)
     this.sortableArray = new Array()
     this.playlist
-    this.currSong
+    this.currVideoDiv
     this.id
+    this.currVideoFeed
     this.first_rows = {}
     this.blockSort = false
     this.uid = GUID() + new Date().getTime()
@@ -210,17 +210,59 @@ function Playlist(appendToElementExpression, options) {
 //        }.bind(this))
 //    }
 
-    Playlist.prototype.listenFunction = function(key, action) {
+    Playlist.prototype.manualRedrawPlaylistFromCache = function() {
+        Playlist.prototype.genericRedrawPlaylistFromCache.call(this, this.id, 'manual redraw from cache', 'manual redraw playlist from cache')
+    }
+
+    Playlist.prototype.listenRedrawPlaylistFromCache = function(key, action) {
+        Playlist.prototype.genericRedrawPlaylistFromCache.call(this, key, action, 'listener redraw playlist from cache', true)
+    }
+
+    Playlist.prototype.genericRedrawPlaylistFromCache = function(key, action, functionName, filterOwn) {
+        var storagePlaylist = Playlist.prototype.getCachePlaylist.call(this, key, action, functionName, filterOwn)
+        storagePlaylist && Playlist.prototype.redrawPlaylist.call(this, storagePlaylist)
+        this.options && typeof this.options.listenKeyChangeCallback == 'function' && this.options.listenKeyChangeCallback(this)
+    }
+
+    Playlist.prototype.getCachePlaylist = function(key, action, functionName, filterOwn) {
         console.log(key + ' has been ' + action)
-        var storagePlaylist = $.jStorage.get(key);
-//        console.log(storagePlaylist)
-        if(!storagePlaylist) {
-            console.log("listenFunction called with empty or null storagePlaylist, might be first initialization")
+        var storageData = $.jStorage.get(key);
+        console.log(storageData)
+        if(!storageData) {
+            console.log(functionName + " called with empty or null storageData")
             return
         }
-        if (storagePlaylist.source != this.uid) {
+        if (!(filterOwn && storageData.source == this.uid)) {
+            return storageData
+        } else {
+            console.log('not talking to self')
+        }
+    }
+
+    Playlist.prototype.redrawPlaylist = function (storagePlaylist) {
+        if (storagePlaylist) {
+            var storageSelectedVideoFeed = $.jStorage.get(this.id + '_selected')
+            var selectedVideoFeed = storageSelectedVideoFeed && storageSelectedVideoFeed.data
+            var selectVideoCallback = null
+            var videoFeed = this.currVideoFeed
+            if (selectedVideoFeed || videoFeed) {
+                selectVideoCallback = function () {
+                    var id = ''
+                    selectedVideoFeed ? id += Playlist.prototype.concatId(selectedVideoFeed.type, selectedVideoFeed.id) : id += Playlist.prototype.concatId(videoFeed.type, videoFeed.id)
+//                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
+                    console.log(id)
+                    this.selectVideo({ videoDiv:this.jPlaylist.find(id) }, {dontCache: true})
+//                    if (this.options && this.options.type != 'publisher') {
+//                        if (!(videoFeed && videoFeed.type == selectedVideoFeed.type && videoFeed.id == selectedVideoFeed.id)) {
+//                            console.log(selectedVideoFeed)
+//                            this.playVideoDiv(this.getSelectedVideoDiv())
+//                        }
+//                    }
+                }.bind(this)
+            }
+//            selectVideo()
             storagePlaylist = storagePlaylist.data
-            this.recalculateSortable()
+            this.recalculateSortableArray()
 //            console.log(storagePlaylist)
 //            console.log(this.sortableArray)
             arrayEq = function (a, b) {
@@ -231,55 +273,56 @@ function Playlist(appendToElementExpression, options) {
             if (arrayEq(this.sortableArray, storagePlaylist)) {
                 console.log('nothing changed')
             } else {
-                var videoFeed = this.jPlaylist.find('.selected').data('videoFeed');
-                if (videoFeed) {
-                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
-                }
 //                console.log(this.jPlaylist)
                 this.jPlaylist.empty()
                 this.addSongsToPlaylist(this.parseSongIds(storagePlaylist.join(',')), null, null, true)
-                if (videoFeed) {
-                    this.jPlaylist.find(id).addClass('selected')
-                }
             }
-        } else {
-            console.log('not talking to self')
         }
-        if (this.options && typeof this.options.listenKeyChangeCallback == 'function') {
-            this.options.listenKeyChangeCallback(this)
-        }
+        selectVideoCallback && typeof selectVideoCallback == "function" && selectVideoCallback()
     }
+
+    Playlist.prototype.listenPlaySelectedVideo = function(key, action) {
+        console.log(key + ' has been ' + action)
+        var storageData = $.jStorage.get(key);
+        if(storageData && storageData.data && storageData.source != this.uid) {
+            this.playVideo({videoFeed: storageData.data}, null, {dontCache: true})
+        }
+    };
+
+//    Playlist.prototype.manualRedrawSelectedVideoFromCache = function() {
+//        console.log('manual redraw selected video from cache')
+//        Playlist.prototype.listenSelectedVideo.call(this, this.id + '_selected', 'manual redraw selected video from cache')
+//    }
 
     Playlist.prototype.setId = function(id) {
         $.jStorage.stopListening(id, this.listenFunction)
         this.id = id
-        this.listenFunction(id, 'custom call')
-        $.jStorage.listenKeyChange(id, this.listenFunction.bind(this))
+        Playlist.prototype.manualRedrawPlaylistFromCache.call(this, id, 'manual redraw from cache')
+        $.jStorage.listenKeyChange(id, this.listenRedrawPlaylistFromCache.bind(this))
+        $.jStorage.listenKeyChange(id + '_selected', this.listenPlaySelectedVideo.bind(this))
     }
 
-    this.recalculatePlaylist = function (dontInvokeListener) {
-        _.defer(function() {this.immediateRecalculatePlaylist.call(this, dontInvokeListener)}.bind(this))
+    this.recalculatePlaylist = function (dontCache) {
+        _.defer(function() {this.immediateRecalculatePlaylist.call(this, dontCache)}.bind(this))
     }
 
-    this.immediateRecalculatePlaylist = function(dontInvokeListener) {
+    this.immediateRecalculatePlaylist = function(dontCache) {
         this.playlist = this.jPlaylist.find(">div.pti-element-song").filter(function (index, item) {
             item = $(item)
             return item
         })
-        this.recalculateSortable()
+        this.recalculateSortableArray()
 
-        if (!dontInvokeListener && this.id) {
+        if (!dontCache && this.id) {
             console.log('setting to storage')
-            var storagePlaylist = {source:this.uid, data:this.sortableArray}
+            var storagePlaylist = {source:this.uid, data: this.getPlaylist()}
             $.jStorage.set(this.id, storagePlaylist)
         }
     }
 
-    this.debounceRecalculatePlaylist = _.debounce(function (dontInvokeListener) {
-        this.recalculatePlaylist(dontInvokeListener);
-        if(this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function") {
-            this.options.debounceRecalculatePlaylistCallback()
-        }
+    this.debounceRecalculatePlaylist = _.debounce(function (dontCache) {
+        this.recalculatePlaylist(dontCache);
+        this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function" && this.options.debounceRecalculatePlaylistCallback()
     }, 50)
 
     Playlist.prototype.playlistVideos = function() {
@@ -287,7 +330,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.buildHash = function () {
-        return "#" + this.prototype.sortable()
+        return "#" + this.sortableArray
     }
 
     Playlist.prototype.lookupNextSong = function () {
@@ -317,7 +360,7 @@ function Playlist(appendToElementExpression, options) {
         }.bind(this))
     }
 
-    this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback, dontInvokeListener) {
+    this.addSongsToPlaylist = function (links, unique, loadVideoFeedCallback, dontCache) {
         if (unique == true) {
             var oldLinks = this.parseSongIds(this.jPlaylist.sortable('toArray').join(','))
             links = _.filter(links, function (newSong) {
@@ -342,7 +385,7 @@ function Playlist(appendToElementExpression, options) {
                 loadVideoFeedCallback: afterLoadVideoFeed
             }
             siteHandlerManager.loadVideoFeed(linkContext)
-            this.debounceRecalculatePlaylist(dontInvokeListener)
+            this.debounceRecalculatePlaylist(dontCache)
         }.bind(this))
     }
 
@@ -352,38 +395,78 @@ function Playlist(appendToElementExpression, options) {
         })
     }
 
-    Playlist.prototype.recalculateSortable = function() {
+    Playlist.prototype.recalculateSortableArray = function() {
         this.sortableArray = this.jPlaylist.sortable('toArray')
         return this.sortableArray
     }
-    Playlist.prototype.playVideoDiv = function (videoDiv, playerState) {
-        var videoFeed = $(videoDiv).data('videoFeed')
-        if (videoFeed) {
-            this.selectVideo(videoDiv)
+    function setWindowTitle(videoFeed) {
+        if(typeof windowId != "undefined") {
             document.title = windowId + ' - ' + videoFeed.title
-            SiteHandlerManager.prototype.playVideoFeed(videoFeed, playerState)
-        } else {
-            throw "videoFeed is empty"
         }
     }
 
+    Playlist.prototype.playVideo = function (video, playerState, dontCache) {
+        var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
+        this.selectVideo(videoObject, dontCache)
+        SiteHandlerManager.prototype.playVideoFeed(this.currVideoFeed, playerState)
+    }
+
     Playlist.prototype.playNextVideo = function () {
-        playlist.playVideoDiv(playlist.lookupNextSong())
+        playlist.playVideo({videoDiv: playlist.lookupNextSong()})
     }
 
-    Playlist.prototype.getSelectedVideo = function() {
-        return $(this.jPlaylist.find('.selected'))[0]
+    Playlist.prototype.getSelectedVideoDiv = function() {
+        return this.currVideoDiv
     }
 
-
-    Playlist.prototype.selectVideo = function(videoDiv) {
-        this.playlist.removeClass("selected")
-        this.currSong = videoDiv
-        $(this.currSong).addClass("selected")
+    Playlist.prototype.getSelectedVideoFeed = function() {
+        return this.currVideoFeed
     }
 
+    Playlist.prototype.getVideoDivAndFeed = function(video) {
+        var videoDiv
+        var videoFeed
+        if(video && video.videoDiv && video.videoFeed) {
+            return video
+        }
+        if (video && video.videoDiv) {
+            videoDiv = video.videoDiv
+            videoFeed = $(videoDiv).data('videoFeed')
+        } else if (video && video.videoFeed) {
+            videoFeed = video.videoFeed
+            videoDiv = this.jPlaylist.find(Playlist.prototype.concatId(videoFeed.type, videoFeed.id))
+        }
+        if(!videoFeed) {
+            throw "videoFeed or video is empty in getVideoDivAndFeed"
+        }
+        return {videoFeed: videoFeed, videoDiv: videoDiv}
+    }
 
-    Playlist.prototype.escapeUrl = function(first, second) {
+    Playlist.prototype.selectVideo = function(video, properties) {
+//        if(video && (video.videoDiv || video.videoFeed)) {
+        if(this.playlist) {
+            this.playlist.removeClass("selected")
+        }
+        var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
+        var videoFeed = videoObject.videoFeed
+        var videoDiv = videoObject.videoDiv
+//            if (videoFeed) {
+        this.currVideoFeed = videoFeed
+        if(this.id && !(properties && properties.dontCache)) {
+            console.log('setting currVideoFeed to storage')
+            $.jStorage.set(this.id + '_selected', { source: this.uid, data: this.currVideoFeed})
+        }
+        this.currVideoDiv = videoDiv
+        $(this.currVideoDiv).addClass("selected")
+        setWindowTitle(this.currVideoFeed);
+//            } else {
+//                this.currVideoFeed = null
+//                throw "videoFeed is empty"
+//            }
+//        }
+    }
+
+    Playlist.prototype.concatId = function(first, second) {
         var concated
         if(first && second) {
             concated = first + "=" + second
@@ -392,7 +475,11 @@ function Playlist(appendToElementExpression, options) {
         } else {
             throw "escapeURL called with empty or null parameters"
         }
-        return concated.replace(/([/=])/g, '\\$1')
+        return concated.replace(/([/=])/g, '\\$1').replace(/^#?(.*)$/, '#$1')
+    }
+
+    Playlist.prototype.getPlaylist = function() {
+        return this.sortableArray
     }
 
     if(options && options.id) {

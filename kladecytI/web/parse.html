@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="temp.css"/>
     <script src="SiteHandlers.js"></script>
     <script src="Utils.js"></script>
+    <style>
+        #firstView, #secondView { position: relative }
+    </style>
 </head>
 <body>
 <div id="dPLists">
@@ -79,7 +82,7 @@
             }
         })
     }.bind(this))
-    pll.addSongsToPlaylist(pll.parseSongIds(window.location.hash), true, saveToHistory)
+    pll.addSongsToPlaylist(pll.parseSongIds(window.location.hash), true, saveToHistory, true)
 
 </script>
 <script>
@@ -160,6 +163,10 @@
 
         generateHref("#nwWndFirst", pll)
         generateHref("#nwWndSecond", plr)
+        $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
+            var playlist = $(this).data('playlist');
+            playlist.playVideo({videoDiv: $(evt.target).closest('div[class*="pti-element-song"]')})
+        })
     })
 </script>
 </body>

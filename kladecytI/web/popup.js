@@ -27,19 +27,20 @@
                 if (payload.operation == "backgroundPagePlaylist") {
                     playlist.jPlaylist.empty();
                     playlist.addSongsToPlaylist(playlist.parseSongIds(payload.playlist.join(',')));
-                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
-                    playlist.playVideoDiv(playVideoDiv);
-                } else if(payload.operation == 'selectVideoFeed') {
-                    if (payload.data) {
-                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
-                    playlist.selectVideo(playVideoDiv);
-                    } else {
-                        throw "currentVideoFeed operation in popupPage is called with empty or null data"
-                    }
+                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.concatId(payload.data.type, payload.data.id));
+                    playlist.playVideo({videoDiv: playVideoDiv});
+//                }
+//                else if(payload.operation == 'selectVideoFeed') {
+//                    if (payload.data) {
+//                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
+//                    playlist.selectVideo(playVideoDiv);
+//                    } else {
+//                        throw "currentVideoFeed operation in popupPage is called with empty or null data"
+//                    }
                 } else if (payload.operation == 'playVideoFeed') {
-                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
+                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.concatId(payload.data.type, payload.data.id));
                     console.log(payload.playerState)
-                    playlist.playVideoDiv(playVideoDiv, payload.playerState);
+                    playlist.playVideo({videoDiv: playVideoDiv}, payload.playerState);
                 }
             })
         }
@@ -60,12 +61,12 @@
 //                    playlist.jPlaylist.empty();
 //                    playlist.addSongsToPlaylist(playlist.parseSongIds(payload.playlist.join(',')));
                     SiteHandlerManager.prototype.blockPlayback(false)
-                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.escapeUrl(payload.data.type, payload.data.id));
+                    var playVideoDiv = playlist.jPlaylist.find('#' + Playlist.prototype.concatId(payload.data.type, payload.data.id));
                     console.log(payload.playerState)
-                    playlist.playVideoDiv(playVideoDiv, payload.playerState);
+                    playlist.playVideo({videoDiv: playVideoDiv}, payload.playerState);
                 } else if (payload.operation == "getSelectedVideoFeed") {
                     var playerState = SiteHandlerManager.prototype.getPlayerState();
-                    $.jStorage.publish('popupPage', {operation: payload.callback, data:$(playlist.getSelectedVideo()).data('videoFeed'), playerState: playerState})
+                    $.jStorage.publish('popupPage', {operation: payload.callback, data:playlist.getSelectedVideoFeed(), playerState: playerState})
                 } else if (payload.operation == "stopVideo") {
                     console.log('stopVideo')
                     SiteHandlerManager.prototype.blockPlayback(true)

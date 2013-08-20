@@ -107,7 +107,7 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.getPlayerState = function() {
-        var selectedVideo = playlist.getSelectedVideo();
+        var selectedVideo = playlist.getSelectedVideoDiv();
         var selectedVideoFeed = $(selectedVideo).data('videoFeed')
         var handler = SiteHandlerManager.prototype.getHandler(selectedVideoFeed.type);
         if(selectedVideoFeed) {
@@ -158,13 +158,13 @@ function YoutubeHandler() {
     function onPlayerReady(event) {
         if(!chrome.extension) {
             $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
-                playlist.playVideoDiv($(evt.target).closest('div[class*="pti-element-song"]'))
+                playlist.playVideo({videoDiv: $(evt.target).closest('div[class*="pti-element-song"]')})
                 console.log($($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed').original)
             })
         } else {
             $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
                 var selectedVideo = $(evt.target).closest('div[class*="pti-element-song"]');
-                playlist.selectVideo(selectedVideo)
+                playlist.selectVideo({videoDiv: selectedVideo})
                 $.jStorage.publish('backgroundPage', { operation: 'playVideoFeed', data: $(selectedVideo).data('videoFeed')})
 //                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
 //                    console.log(response)
@@ -175,7 +175,7 @@ function YoutubeHandler() {
         playFirstLoaded();
     }
     function change(state) {
-        console.log(state)
+//        console.log(state)
         if(state.data == 1 && SiteHandlerManager.prototype.blockPlayback()) {
             YoutubeHandler.prototype.stop()
             console.log('blocked yt playback')
@@ -313,7 +313,7 @@ function SoundCloudHandler() {
                     console.log('blocked sc playback in play_progress')
                 } else {
                     if (position > 0) {
-                        console.log(position)
+//                        console.log(position)
                         if (typeof seekToOnce == "function") {
                             seekToOnce()
                         }
@@ -346,8 +346,8 @@ function SoundCloudHandler() {
     }
 
     SoundCloudHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
-        console.log(videoFeed)
-        console.log(playerState)
+//        console.log(videoFeed)
+//        console.log(playerState)
         SoundCloudHandler.prototype.properties.dontPlay = false
         var playerUrl = 'https://w.soundcloud.com/player/?url='
         var id = videoFeed.id.replace(/^\/?(.*)/, '/$1').replace(/\\/g, '')
@@ -411,7 +411,7 @@ function VimeoHandler() {
             VimeoHandler.prototype.stop()
             console.log('blocked vimeo playback')
         }
-        console.log(playProgress)
+//        console.log(playProgress)
         currentTime = playProgress.seconds
         stuckPlayProgress()
     }, 500)
