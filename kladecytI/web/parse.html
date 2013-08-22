@@ -55,8 +55,8 @@
 
 
 
-    var pll = new Playlist("#ulFirst")
-    var plr = new Playlist('#ulSecond');
+    var pll = new Playlist("#ulFirst", {dontPlay: true})
+    var plr = new Playlist('#ulSecond', {dontPlay:true});
     var saveToHistory = _.once(function() {
         var now = new Date().getTime();
         var user = 'sichain'
@@ -107,8 +107,6 @@
         })
     }
     $(document).ready(function () {
-        setSlimScroll("#ulFirst", "93.5%")
-        setSlimScroll("#ulSecond", "93.5%")
 
         var drawSelectDifferences = function(ctrl, firstPlt, secondPlt) {
             var input = $('<input type="button"/>')
@@ -163,10 +161,6 @@
 
         generateHref("#nwWndFirst", pll)
         generateHref("#nwWndSecond", plr)
-        $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
-            var playlist = $(this).data('playlist');
-            playlist.playVideo({videoDiv: $(evt.target).closest('div[class*="pti-element-song"]')})
-        })
     })
 </script>
 </body>

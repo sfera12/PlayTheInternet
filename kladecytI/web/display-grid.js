@@ -28,38 +28,13 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
 $(document).ready(function () {
-    window.windowId = GUID()
     $.jStorage.subscribe('queryWindowIds', function (message) {
 //        console.log(message)
         $.jStorage.publish('windowIds', windowId)
     })
-//    var yt1 = new YoutubePlayer(null, new Playlist("#ulFirst"))
-    $.jStorage.set(windowId, {data:window.location.hash.replace(/.*#(.*)/, '$1').split(',')})
-    window.ulFirst = new Playlist('#ulFirst')
-    window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar'})
-    window.playlist = new Playlist("#ulSecond",
-        {
-            id:windowId,
-            listenKeyChangeCallback:function (playlist) {
-                window.location.hash = playlist.jPlaylist.sortable('toArray')
-                $('#qrcode').empty()
-                try {
-                    $('#qrcode').qrcode(window.location.href)
-                } catch (e) {
-                    console.log(e)
-                }
-            },
-            debounceRecalculatePlaylistCallback: _.once(function() {
-                console.log('playFirstLoaded debounce')
-                playFirstLoaded()
-            })
-        });
-    playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
+    window.ulFirst = new Playlist('#ulFirst', {dontPlay: true})
+    window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar', dotPlay: true})
 
-    setSlimScroll(calendarPlaylist.jPlaylist, "100%")
-    setSlimScroll(ulFirst.jPlaylist, "100%")
-    setSlimScroll(playlist.jPlaylist, "100%")
-    setSlimScroll(parsedPlaylist.jPlaylist, '100%')
     $('.datepicker').datepicker()
     $('#searchCalendar').click(function (evt) {
         propagateCalendar()
@@ -90,7 +65,6 @@ $(document).ready(function () {
     }, 1500)
     $('#calendarFilter').keyup(filterThrottle)
 
-    document.title = windowId
     SoundCloudHandler.prototype.initializePlayer();
 })
 

@@ -156,21 +156,6 @@ function YoutubeHandler() {
         });
     }
     function onPlayerReady(event) {
-        if(!chrome.extension) {
-            $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
-                playlist.playVideo({videoDiv: $(evt.target).closest('div[class*="pti-element-song"]')})
-                console.log($($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed').original)
-            })
-        } else {
-            $('#ulFirst .playlist, #ulSecond .playlist').click(function(evt) {
-                var selectedVideo = $(evt.target).closest('div[class*="pti-element-song"]');
-                playlist.selectVideo({videoDiv: selectedVideo})
-                $.jStorage.publish('backgroundPage', { operation: 'playVideoFeed', data: $(selectedVideo).data('videoFeed')})
-//                chrome.runtime.sendMessage({operation: 'playVideoDiv', data: $($(evt.target).closest('div[class*="pti-element-song"]')).data('videoFeed'), playlist: playlist.sortableArray}, function(response) {
-//                    console.log(response)
-//                })
-            })
-        }
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
@@ -181,18 +166,26 @@ function YoutubeHandler() {
             console.log('blocked yt playback')
             seekToOnce = null
         }
-        if( state.data == 1 && typeof seekToOnce == "function") {
-            seekToOnce()
+        if( state.data == 1) {
+            typeof seekToOnce == "function" && seekToOnce()
+            if(YoutubeHandler.prototype.errorTimeout) {
+                clearTimeout(YoutubeHandler.prototype.errorTimeout)
+                console.log('no error')
+            }
         }
         if(state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
     }
 
-    function onError() {
-        console.log('error')
-        SiteHandlerManager.prototype.stateChange("ERROR");
+    function onError(error) {
+        console.log(error)
+        clearTimeout(YoutubeHandler.prototype.errorTimeout)
+        YoutubeHandler.prototype.errorTimeout = setTimeout(function () {
+            SiteHandlerManager.prototype.stateChange("ERROR")
+        }, 2000)
     }
+    YoutubeHandler.prototype.errorTimeout
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
     YoutubeHandler.prototype.errorTemplate = _.template('<div><div class="image-div"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');

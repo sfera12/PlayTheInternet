@@ -51,6 +51,7 @@ function Playlist(appendToElementExpression, options) {
     this.currVideoDiv
     this.id
     this.currVideoFeed
+    var self = this
     this.first_rows = {}
     this.blockSort = false
     this.uid = GUID() + new Date().getTime()
@@ -215,16 +216,16 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.listenRedrawPlaylistFromCache = function(key, action) {
-        Playlist.prototype.genericRedrawPlaylistFromCache.call(this, key, action, 'listener redraw playlist from cache', true)
+        Playlist.prototype.genericRedrawPlaylistFromCache.call(this, this.id, action, 'listener redraw playlist from cache', true)
     }
 
     Playlist.prototype.genericRedrawPlaylistFromCache = function(key, action, functionName, filterOwn) {
-        var storagePlaylist = Playlist.prototype.getCachePlaylist.call(this, key, action, functionName, filterOwn)
+        var storagePlaylist = Playlist.prototype.getGenericCacheObject.call(this, key, action, functionName, filterOwn)
         storagePlaylist && Playlist.prototype.redrawPlaylist.call(this, storagePlaylist)
         this.options && typeof this.options.listenKeyChangeCallback == 'function' && this.options.listenKeyChangeCallback(this)
     }
 
-    Playlist.prototype.getCachePlaylist = function(key, action, functionName, filterOwn) {
+    Playlist.prototype.getGenericCacheObject = function(key, action, functionName, filterOwn) {
         console.log(key + ' has been ' + action)
         var storageData = $.jStorage.get(key);
         console.log(storageData)
@@ -251,16 +252,10 @@ function Playlist(appendToElementExpression, options) {
                     selectedVideoFeed ? id += Playlist.prototype.concatId(selectedVideoFeed.type, selectedVideoFeed.id) : id += Playlist.prototype.concatId(videoFeed.type, videoFeed.id)
 //                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
                     console.log(id)
-                    this.selectVideo({ videoDiv:this.jPlaylist.find(id) }, {dontCache: true})
-//                    if (this.options && this.options.type != 'publisher') {
-//                        if (!(videoFeed && videoFeed.type == selectedVideoFeed.type && videoFeed.id == selectedVideoFeed.id)) {
-//                            console.log(selectedVideoFeed)
-//                            this.playVideoDiv(this.getSelectedVideoDiv())
-//                        }
-//                    }
+                    var findDiv = this.jPlaylist.find(id)[0];
+                    findDiv && this.selectVideo({ videoDiv:findDiv }, {dontCache: true})
                 }.bind(this)
             }
-//            selectVideo()
             storagePlaylist = storagePlaylist.data
             this.recalculateSortableArray()
 //            console.log(storagePlaylist)
@@ -282,11 +277,8 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.listenPlaySelectedVideo = function(key, action) {
-        console.log(key + ' has been ' + action)
-        var storageData = $.jStorage.get(key);
-        if(storageData && storageData.data && storageData.source != this.uid) {
-            this.playVideo({videoFeed: storageData.data}, null, {dontCache: true})
-        }
+        var storageData = Playlist.prototype.getGenericCacheObject.call(this, key, action, 'listen play selected video', true)
+        storageData && storageData.data && this.playVideo({videoFeed: storageData.data}, storageData.playerState, {dontCache: true})
     };
 
 //    Playlist.prototype.manualRedrawSelectedVideoFromCache = function() {
@@ -294,10 +286,12 @@ function Playlist(appendToElementExpression, options) {
 //        Playlist.prototype.listenSelectedVideo.call(this, this.id + '_selected', 'manual redraw selected video from cache')
 //    }
 
-    Playlist.prototype.setId = function(id) {
+    Playlist.prototype.setId = function(id, manualRedraw) {
         $.jStorage.stopListening(id, this.listenFunction)
         this.id = id
-        Playlist.prototype.manualRedrawPlaylistFromCache.call(this, id, 'manual redraw from cache')
+        if(manualRedraw) {
+            Playlist.prototype.manualRedrawPlaylistFromCache.call(this, id, 'manual redraw from cache')
+        }
         $.jStorage.listenKeyChange(id, this.listenRedrawPlaylistFromCache.bind(this))
         $.jStorage.listenKeyChange(id + '_selected', this.listenPlaySelectedVideo.bind(this))
     }
@@ -400,15 +394,29 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
     function setWindowTitle(videoFeed) {
-        if(typeof windowId != "undefined") {
-            document.title = windowId + ' - ' + videoFeed.title
-        }
+        typeof windowId != "undefined" && (document.title = windowId + ' - ' + videoFeed.title)
     }
 
     Playlist.prototype.playVideo = function (video, playerState, dontCache) {
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         this.selectVideo(videoObject, dontCache)
-        SiteHandlerManager.prototype.playVideoFeed(this.currVideoFeed, playerState)
+        if(this.options && !this.options.dontPlay) {
+            SiteHandlerManager.prototype.playVideoFeed(this.currVideoFeed, playerState)
+        } else {
+            console.log('not a player type')
+        }
+    }
+
+    Playlist.prototype.playerType = function(boolean) {
+        if(typeof boolean == "undefined") {
+            return !this.options.dontPlay
+        }
+        if(boolean) {
+            this.options.dontPlay = false
+        } else {
+            this.options.dontPlay = true
+        }
+        return !this.options.dontPlay
     }
 
     Playlist.prototype.playNextVideo = function () {
@@ -416,10 +424,12 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.getSelectedVideoDiv = function() {
+        this.currVideoDiv = this.jPlaylist.find('.selected')[0]
         return this.currVideoDiv
     }
 
     Playlist.prototype.getSelectedVideoFeed = function() {
+        this.currVideoFeed = $(this.getSelectedVideoDiv()).data('videoFeed')
         return this.currVideoFeed
     }
 
@@ -450,20 +460,14 @@ function Playlist(appendToElementExpression, options) {
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         var videoFeed = videoObject.videoFeed
         var videoDiv = videoObject.videoDiv
-//            if (videoFeed) {
         this.currVideoFeed = videoFeed
+        this.currVideoDiv = videoDiv
+        $(this.currVideoDiv).addClass("selected")
         if(this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
             $.jStorage.set(this.id + '_selected', { source: this.uid, data: this.currVideoFeed})
         }
-        this.currVideoDiv = videoDiv
-        $(this.currVideoDiv).addClass("selected")
         setWindowTitle(this.currVideoFeed);
-//            } else {
-//                this.currVideoFeed = null
-//                throw "videoFeed is empty"
-//            }
-//        }
     }
 
     Playlist.prototype.concatId = function(first, second) {
@@ -482,8 +486,25 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
 
+    this.jPlaylist.on('click', '.pti-element-song', function() {
+        console.log(this)
+        Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
+    })
+
+    Playlist.prototype.setSlimScroll = function(element, height) {
+        $(element).slimScroll({
+            height:height,
+            color:'rgb(0, 50, 255)',
+            railVisible:true,
+            railColor:'#000000',
+            disableFadeOut:true
+        });
+    }
+
+    Playlist.prototype.setSlimScroll(this.jPlaylist, "100%")
+
     if(options && options.id) {
-        this.setId(options.id)
+        this.setId(options.id, options.redraw)
     }
 }
 
@@ -500,15 +521,6 @@ function GUID() {
 }
 
 
-var setSlimScroll = function (elementExpression, height) {
-    $(elementExpression).slimScroll({
-        height:height,
-        color:'rgb(0, 50, 255)',
-        railVisible:true,
-        railColor:'#000000',
-        disableFadeOut:true
-    });
-}
 function convert(duration) {
     var tbl = [
         [ 7 * 24 * 60 * 60, 'week' ],
@@ -578,4 +590,14 @@ var map = function (grouped) {
             return item.id + item.type
         })}
     })
+}
+
+function redrawHashAndQRCode(playlist) {
+    window.location.hash = playlist.jPlaylist.sortable('toArray')
+    $('#qrcode').empty()
+    try {
+        $('#qrcode').qrcode(window.location.href)
+    } catch (e) {
+        console.log(e)
+    }
 }
