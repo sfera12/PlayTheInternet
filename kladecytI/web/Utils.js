@@ -57,32 +57,32 @@ function Playlist(appendToElementExpression, options) {
     this.uid = GUID() + new Date().getTime()
 
 
-    Playlist.prototype.createHeader = function() {
+    Playlist.prototype.createHeader = function () {
         var bigView = $('<div class="set-big-view size-button">BIG</div>').appendTo(this.jHeader)
         var listView = $('<div class="set-list-view size-button">LIST</div>').appendTo(this.jHeader)
-        bigView.click(function() {
-            $(this.jPlaylist).attr('class', function(i ,c) {
+        bigView.click(function () {
+            $(this.jPlaylist).attr('class', function (i, c) {
                 return c.replace(/pti-view-[^\s]+/g, 'pti-view-big')
             }.bind(this))
         }.bind(this))
-        listView.click(function() {
-            $(this.jPlaylist).attr('class', function(i ,c) {
+        listView.click(function () {
+            $(this.jPlaylist).attr('class', function (i, c) {
                 return c.replace(/pti-view-[^\s]+/, 'pti-view-list')
             }.bind(this))
         }.bind(this))
     }
-    if(this.createHeader) {
+    if (this.createHeader) {
         this.createHeader()
     }
 
-    Playlist.prototype.hideGroupContents = function(element) {
+    Playlist.prototype.hideGroupContents = function (element) {
         var headerTagName = element[0].tagName;
         var headers = this.jPlaylist.find(headerTagName)
         var headerIndex = headers.index(element)
         var playlistElements = calendarPlaylist.jPlaylist.find('>*')
         var childStartIndex = playlistElements.index(element) + 1;
         var childEndIndex = 9999
-        if(!(headerIndex == headers.length - 1)) {
+        if (!(headerIndex == headers.length - 1)) {
             childEndIndex = playlistElements.index(headers[headerIndex + 1])
         }
         this.jPlaylist.find('>*').slice(childStartIndex, childEndIndex).toggleClass('display-none')
@@ -91,20 +91,20 @@ function Playlist(appendToElementExpression, options) {
 
     this.jPlaylist.data('playlist', this)
     this.jPlaylist.addClass('pti-view-list')
-    if(this.options && this.options.type && this.options.type=='calendar') {
+    if (this.options && this.options.type && this.options.type == 'calendar') {
         this.jPlaylist.addClass('calendar')
     }
     this.jPlaylist.selectable({
-        filter: 'div.pti-element-song',
-        cancel: 'div.image-div, label.pti-droppable-target'
+        filter:'div.pti-element-song',
+        cancel:'div.image-div, label.pti-droppable-target'
     })
         .sortable({
             connectWith:'.connectedSortable',
             scrollSensitivity:50,
             tolerance:'pointer',
             distance:7,
-            handle: 'div.image-div',
-            placeholder: 'pti-sortable-placeholder',
+            handle:'div.image-div',
+            placeholder:'pti-sortable-placeholder',
 //            update:function (event, ui) {
 //                this.recalculatePlaylist()
 //            }.bind(this),
@@ -120,29 +120,29 @@ function Playlist(appendToElementExpression, options) {
 //                });
 //            }
 //        },
-            start: function(event, ui) {
+            start:function (event, ui) {
                 $('.cloned').removeClass('cloned')
-                if(options && options.type == 'calendar') {
+                if (options && options.type == 'calendar') {
                     this.blockSort = true
                 }
 //                console.log('start')
 //                console.log(this)
                 if (ui.item.hasClass('ui-selected') && this.jPlaylist.find('.ui-selected').length > 1) {
-                    this.first_rows = this.jPlaylist.find('.ui-selected').map(function(i, e) {
+                    this.first_rows = this.jPlaylist.find('.ui-selected').map(function (i, e) {
                         var $tr = $(e);
                         return {
-                            tr : $tr.clone(true),
-                            id : $tr.attr('id')
+                            tr:$tr.clone(true),
+                            id:$tr.attr('id')
                         };
                     }).get();
                     this.jPlaylist.find('.ui-selected').addClass('cloned');
                 }
 //                ui.placeholder.html('<td class="pti-view-big">&nbsp;</td>');
             }.bind(this),
-            stop: function(event, ui) {
+            stop:function (event, ui) {
 //                console.log('stop')
 //                console.log(this)
-                if(this.blockSort) {
+                if (this.blockSort) {
 //                    console.log('preventDefault')
                     event.preventDefault()
                 } else {
@@ -151,7 +151,7 @@ function Playlist(appendToElementExpression, options) {
 //                    console.log(targetParent)
 //                    console.log(this.first_rows)
                     if (this.first_rows.length > 1) {
-                        $.each(this.first_rows, function(i, item) {
+                        $.each(this.first_rows, function (i, item) {
                             var logItem = $(item.tr).removeAttr('style').insertBefore(ui.item);
 //                            console.log(logItem)
                         });
@@ -165,7 +165,7 @@ function Playlist(appendToElementExpression, options) {
                 this.first_rows = {};
                 this.blockSort = false
             }.bind(this),
-            remove: function(event, ui) {
+            remove:function (event, ui) {
 //                console.log('remove')
 //                console.log(this)
                 this.blockSort = false
@@ -211,25 +211,25 @@ function Playlist(appendToElementExpression, options) {
 //        }.bind(this))
 //    }
 
-    Playlist.prototype.manualRedrawPlaylistFromCache = function() {
+    Playlist.prototype.manualRedrawPlaylistFromCache = function () {
         Playlist.prototype.genericRedrawPlaylistFromCache.call(this, this.id, 'manual redraw from cache', 'manual redraw playlist from cache')
     }
 
-    Playlist.prototype.listenRedrawPlaylistFromCache = function(key, action) {
+    Playlist.prototype.listenRedrawPlaylistFromCache = function (key, action) {
         Playlist.prototype.genericRedrawPlaylistFromCache.call(this, this.id, action, 'listener redraw playlist from cache', true)
     }
 
-    Playlist.prototype.genericRedrawPlaylistFromCache = function(key, action, functionName, filterOwn) {
+    Playlist.prototype.genericRedrawPlaylistFromCache = function (key, action, functionName, filterOwn) {
         var storagePlaylist = Playlist.prototype.getGenericCacheObject.call(this, key, action, functionName, filterOwn)
         storagePlaylist && Playlist.prototype.redrawPlaylist.call(this, storagePlaylist)
         this.options && typeof this.options.listenKeyChangeCallback == 'function' && this.options.listenKeyChangeCallback(this)
     }
 
-    Playlist.prototype.getGenericCacheObject = function(key, action, functionName, filterOwn) {
+    Playlist.prototype.getGenericCacheObject = function (key, action, functionName, filterOwn) {
         console.log(key + ' has been ' + action)
         var storageData = $.jStorage.get(key);
         console.log(storageData)
-        if(!storageData) {
+        if (!storageData) {
             console.log(functionName + " called with empty or null storageData")
             return
         }
@@ -253,7 +253,7 @@ function Playlist(appendToElementExpression, options) {
 //                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
                     console.log(id)
                     var findDiv = this.jPlaylist.find(id)[0];
-                    findDiv && this.selectVideo({ videoDiv:findDiv }, {dontCache: true})
+                    findDiv && this.selectVideo({ videoDiv:findDiv }, {dontCache:true})
                 }.bind(this)
             }
             storagePlaylist = storagePlaylist.data
@@ -276,9 +276,9 @@ function Playlist(appendToElementExpression, options) {
         selectVideoCallback && typeof selectVideoCallback == "function" && selectVideoCallback()
     }
 
-    Playlist.prototype.listenPlaySelectedVideo = function(key, action) {
+    Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
         var storageData = Playlist.prototype.getGenericCacheObject.call(this, key, action, 'listen play selected video', true)
-        storageData && storageData.data && this.playVideo({videoFeed: storageData.data}, storageData.playerState, {dontCache: true})
+        storageData && storageData.data && this.playVideo({videoFeed:storageData.data}, storageData.playerState, {dontCache:true})
     };
 
 //    Playlist.prototype.manualRedrawSelectedVideoFromCache = function() {
@@ -286,10 +286,10 @@ function Playlist(appendToElementExpression, options) {
 //        Playlist.prototype.listenSelectedVideo.call(this, this.id + '_selected', 'manual redraw selected video from cache')
 //    }
 
-    Playlist.prototype.setId = function(id, manualRedraw) {
+    Playlist.prototype.setId = function (id, manualRedraw) {
         $.jStorage.stopListening(id, this.listenFunction)
         this.id = id
-        if(manualRedraw) {
+        if (manualRedraw) {
             Playlist.prototype.manualRedrawPlaylistFromCache.call(this, id, 'manual redraw from cache')
         }
         $.jStorage.listenKeyChange(id, this.listenRedrawPlaylistFromCache.bind(this))
@@ -297,10 +297,12 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.recalculatePlaylist = function (dontCache) {
-        _.defer(function() {this.immediateRecalculatePlaylist.call(this, dontCache)}.bind(this))
+        _.defer(function () {
+            this.immediateRecalculatePlaylist.call(this, dontCache)
+        }.bind(this))
     }
 
-    this.immediateRecalculatePlaylist = function(dontCache) {
+    this.immediateRecalculatePlaylist = function (dontCache) {
         this.playlist = this.jPlaylist.find(">div.pti-element-song").filter(function (index, item) {
             item = $(item)
             return item
@@ -309,7 +311,7 @@ function Playlist(appendToElementExpression, options) {
 
         if (!dontCache && this.id) {
             console.log('setting to storage')
-            var storagePlaylist = {source:this.uid, data: this.getPlaylist()}
+            var storagePlaylist = {source:this.uid, data:this.getPlaylist()}
             $.jStorage.set(this.id, storagePlaylist)
         }
     }
@@ -319,8 +321,10 @@ function Playlist(appendToElementExpression, options) {
         this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function" && this.options.debounceRecalculatePlaylistCallback()
     }, 50)
 
-    Playlist.prototype.playlistVideos = function() {
-        return _.map(this.playlist, function(item) { return $(item).data('videoFeed') })
+    Playlist.prototype.playlistVideos = function () {
+        return _.map(this.playlist, function (item) {
+            return $(item).data('videoFeed')
+        })
     }
 
     Playlist.prototype.buildHash = function () {
@@ -337,7 +341,9 @@ function Playlist(appendToElementExpression, options) {
         var hideGroupContentsHandler = this.hideGroupContents.bind(this)
         groups.forEach(function (group) {
             console.log(group.name)
-            var element = $(Playlist.prototype.groupHeaderTemplate(group)).click(function() {hideGroupContentsHandler(element)})
+            var element = $(Playlist.prototype.groupHeaderTemplate(group)).click(function () {
+                hideGroupContentsHandler(element)
+            })
             this.jPlaylist.append(element)
             group.links.forEach(function (videoFeed) {
 //                console.log(videoFeed)
@@ -362,11 +368,11 @@ function Playlist(appendToElementExpression, options) {
             })
         }
 
-        links = _.filter(links, function(validSong) {
+        links = _.filter(links, function (validSong) {
             return (validSong.id && validSong.type)
         })
 
-        if(typeof loadVideoFeedCallback == "function") {
+        if (typeof loadVideoFeedCallback == "function") {
             var afterLoadVideoFeed = _.after(links.length, loadVideoFeedCallback)
         }
 
@@ -376,7 +382,7 @@ function Playlist(appendToElementExpression, options) {
                 videoElement:videoElement,
                 videoFeed:videoFeed,
                 retryCounter:0,
-                loadVideoFeedCallback: afterLoadVideoFeed
+                loadVideoFeedCallback:afterLoadVideoFeed
             }
             siteHandlerManager.loadVideoFeed(linkContext)
             this.debounceRecalculatePlaylist(dontCache)
@@ -389,7 +395,7 @@ function Playlist(appendToElementExpression, options) {
         })
     }
 
-    Playlist.prototype.recalculateSortableArray = function() {
+    Playlist.prototype.recalculateSortableArray = function () {
         this.sortableArray = this.jPlaylist.sortable('toArray')
         return this.sortableArray
     }
@@ -400,18 +406,18 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.playVideo = function (video, playerState, dontCache) {
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         this.selectVideo(videoObject, dontCache)
-        if(this.options && !this.options.dontPlay) {
+        if (this.options && !this.options.dontPlay) {
             SiteHandlerManager.prototype.playVideoFeed(this.currVideoFeed, playerState)
         } else {
             console.log('not a player type')
         }
     }
 
-    Playlist.prototype.playerType = function(boolean) {
-        if(typeof boolean == "undefined") {
+    Playlist.prototype.playerType = function (boolean) {
+        if (typeof boolean == "undefined") {
             return !this.options.dontPlay
         }
-        if(boolean) {
+        if (boolean) {
             this.options.dontPlay = false
         } else {
             this.options.dontPlay = true
@@ -420,23 +426,23 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.playNextVideo = function () {
-        playlist.playVideo({videoDiv: playlist.lookupNextSong()})
+        playlist.playVideo({videoDiv:playlist.lookupNextSong()})
     }
 
-    Playlist.prototype.getSelectedVideoDiv = function() {
+    Playlist.prototype.getSelectedVideoDiv = function () {
         this.currVideoDiv = this.jPlaylist.find('.selected')[0]
         return this.currVideoDiv
     }
 
-    Playlist.prototype.getSelectedVideoFeed = function() {
+    Playlist.prototype.getSelectedVideoFeed = function () {
         this.currVideoFeed = $(this.getSelectedVideoDiv()).data('videoFeed')
         return this.currVideoFeed
     }
 
-    Playlist.prototype.getVideoDivAndFeed = function(video) {
+    Playlist.prototype.getVideoDivAndFeed = function (video) {
         var videoDiv
         var videoFeed
-        if(video && video.videoDiv && video.videoFeed) {
+        if (video && video.videoDiv && video.videoFeed) {
             return video
         }
         if (video && video.videoDiv) {
@@ -446,15 +452,15 @@ function Playlist(appendToElementExpression, options) {
             videoFeed = video.videoFeed
             videoDiv = this.jPlaylist.find(Playlist.prototype.concatId(videoFeed.type, videoFeed.id))
         }
-        if(!videoFeed) {
+        if (!videoFeed) {
             throw "videoFeed or video is empty in getVideoDivAndFeed"
         }
-        return {videoFeed: videoFeed, videoDiv: videoDiv}
+        return {videoFeed:videoFeed, videoDiv:videoDiv}
     }
 
-    Playlist.prototype.selectVideo = function(video, properties) {
+    Playlist.prototype.selectVideo = function (video, properties) {
 //        if(video && (video.videoDiv || video.videoFeed)) {
-        if(this.playlist) {
+        if (this.playlist) {
             this.playlist.removeClass("selected")
         }
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
@@ -463,16 +469,16 @@ function Playlist(appendToElementExpression, options) {
         this.currVideoFeed = videoFeed
         this.currVideoDiv = videoDiv
         $(this.currVideoDiv).addClass("selected")
-        if(this.id && !(properties && properties.dontCache)) {
+        if (this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
-            $.jStorage.set(this.id + '_selected', { source: this.uid, data: this.currVideoFeed})
+            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed})
         }
         setWindowTitle(this.currVideoFeed);
     }
 
-    Playlist.prototype.concatId = function(first, second) {
+    Playlist.prototype.concatId = function (first, second) {
         var concated
-        if(first && second) {
+        if (first && second) {
             concated = first + "=" + second
         } else if (first) {
             concated = first
@@ -482,16 +488,16 @@ function Playlist(appendToElementExpression, options) {
         return concated.replace(/([/=])/g, '\\$1').replace(/^#?(.*)$/, '#$1')
     }
 
-    Playlist.prototype.getPlaylist = function() {
+    Playlist.prototype.getPlaylist = function () {
         return this.sortableArray
     }
 
-    this.jPlaylist.on('click', '.pti-element-song', function() {
+    this.jPlaylist.on('click', '.pti-element-song', function () {
         console.log(this)
-        Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
+        Playlist.prototype.playVideo.call(self, {videoDiv:$(this)})
     })
 
-    Playlist.prototype.setSlimScroll = function(element, height) {
+    Playlist.prototype.setSlimScroll = function (element, height) {
         $(element).slimScroll({
             height:height,
             color:'rgb(0, 50, 255)',
@@ -503,7 +509,7 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.setSlimScroll(this.jPlaylist, "100%")
 
-    if(options && options.id) {
+    if (options && options.id) {
         this.setId(options.id, options.redraw)
     }
 }
@@ -550,7 +556,7 @@ function formatDate(dateObj) {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    var newdate = ("0" + day).slice(-2) + "-" + ("0" + month).slice(-2) + "-" +  year;
+    var newdate = ("0" + day).slice(-2) + "-" + ("0" + month).slice(-2) + "-" + year;
     return newdate
 }
 

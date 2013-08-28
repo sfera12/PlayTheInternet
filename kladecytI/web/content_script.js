@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 console.log('yo');
 var additionalInfo = {
-  "title": document.title,
-  "selection": playTheInternetParse(document.documentElement.innerHTML)
+    "title":document.title,
+    "selection":playTheInternetParse(document.documentElement.innerHTML)
 };
 chrome.runtime.connect().postMessage(additionalInfo);

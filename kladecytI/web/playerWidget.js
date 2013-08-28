@@ -32,33 +32,33 @@ function PlayerWidget(elementExpression) {
     })
     this.jPlayerWidget.on('click', '.next', function () {
     })
-    this.jPlayerWidget.on('click', '.progressBarContainer', function(evt) {
+    this.jPlayerWidget.on('click', '.progressBarContainer', function (evt) {
         var jElement = $(this)
         var moveTo = evt.offsetX / jElement.width() * 100
         self.progressBar(moveTo)
     })
 
-    this.jPlayerWidget.on('mousedown', '.button', function() {
+    this.jPlayerWidget.on('mousedown', '.button', function () {
         var jElement = $(this)
         jElement.addClass('mouseDown')
     })
-    this.jPlayerWidget.on('mouseup', '.button', function() {
+    this.jPlayerWidget.on('mouseup', '.button', function () {
         var jElement = $(this)
         jElement.removeClass('mouseDown')
     })
 
-    var throttleMouseMove = _.throttle(function(jElement, evt) {
-        var progress = evt.offsetX / jElement.width() * 100
-        var seconds = self.trackLength * ( progress / 100)
-        self.jProgressBarContainer.tooltip("option", "content", convert(seconds))
-    }, 100
+    var throttleMouseMove = _.throttle(function (jElement, evt) {
+            var progress = evt.offsetX / jElement.width() * 100
+            var seconds = self.trackLength * ( progress / 100)
+            self.jProgressBarContainer.tooltip("option", "content", convert(seconds))
+        }, 100
 //        , {trailing: false}
     )
 
-    this.jPlayerWidget.on('mousemove', '.progressBarContainer', function(evt) {
+    this.jPlayerWidget.on('mousemove', '.progressBarContainer', function (evt) {
         throttleMouseMove($(this), evt)
     })
-    self.jProgressBarContainer.tooltip({track: true})
+    self.jProgressBarContainer.tooltip({track:true})
 
 
 }

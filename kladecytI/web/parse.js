@@ -1,5 +1,5 @@
 function playTheInternetParseTemp(htmlText) {
-    var unique = function(arr) {
+    var unique = function (arr) {
         var newarr = [];
         var unique = {};
 
@@ -12,7 +12,7 @@ function playTheInternetParseTemp(htmlText) {
         });
         return newarr;
     };
-    if(htmlText == null) {
+    if (htmlText == null) {
         htmlText = document.documentElement.innerHTML;
     }
     var youtube = /thisisregex/g;
@@ -21,12 +21,12 @@ function playTheInternetParseTemp(htmlText) {
     var result = new Array();
     for (var i = 0; i < youtubeLinks.length; i++) {
         youtubeLinks[i].replace(local,
-        'matchfunction'
+            'matchfunction'
         );
     }
     result = unique(result);
     var hash = '';
-    result.forEach(function(item) {
+    result.forEach(function (item) {
         hash += item.type + '=' + item.id + ',';
     });
     return hash;

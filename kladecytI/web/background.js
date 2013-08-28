@@ -1,11 +1,11 @@
 if (chrome.extension && chrome.extension.getBackgroundPage() == window) {
     chrome.webRequest.onBeforeSendHeaders.addListener(
-        function(details) {
+        function (details) {
             console.log(details)
-            details.requestHeaders.push({name: "Referer", value: window.location.href})
-            return {requestHeaders: details.requestHeaders};
+            details.requestHeaders.push({name:"Referer", value:window.location.href})
+            return {requestHeaders:details.requestHeaders};
         },
-        {urls: ["*://*/*origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii"]},
+        {urls:["*://*/*origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii"]},
 //                {urls: ["<all_urls>"]},
         ["blocking", "requestHeaders"])
     $(document).ready(function () {
@@ -18,7 +18,7 @@ if (chrome.extension && chrome.extension.getBackgroundPage() == window) {
                     console.log('playFirstLoaded debounce')
                     playFirstLoaded()
                 }),
-                redraw: true
+                redraw:true
             });
 
 //        $.jStorage.subscribe('backgroundPage', function (channel, payload) {

@@ -1,5 +1,3 @@
-
-
 var gimpedAnimation = [
     {nav:"#player", fixed:"#podPlayer"},
     {nav:"#tAreaDiv", fixed:"#podTa"},
@@ -32,8 +30,8 @@ $(document).ready(function () {
 //        console.log(message)
         $.jStorage.publish('windowIds', windowId)
     })
-    window.ulFirst = new Playlist('#ulFirst', {dontPlay: true})
-    window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar', dotPlay: true})
+    window.ulFirst = new Playlist('#ulFirst', {dontPlay:true})
+    window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar', dotPlay:true})
 
     $('.datepicker').datepicker()
     $('#searchCalendar').click(function (evt) {
@@ -104,13 +102,13 @@ $('#tabs').tabs({
 //            if(newTab.text() == "Calendar") {
 //                propagateCalendar()
 //            }
-            if(newTab.text() == "Player") {
-                tabsPlayerContainer.removeClass('leftFull')
-                tabsPlayerContainer.addClass('tabs-player-container')
-            } else {
-                tabsPlayerContainer.addClass('leftFull')
-                tabsPlayerContainer.removeClass('tabs-player-container')
-            }
+        if (newTab.text() == "Player") {
+            tabsPlayerContainer.removeClass('leftFull')
+            tabsPlayerContainer.addClass('tabs-player-container')
+        } else {
+            tabsPlayerContainer.addClass('leftFull')
+            tabsPlayerContainer.removeClass('tabs-player-container')
+        }
         newTab.addClass('active')
         $(ui.oldTab).removeClass('active')
     }
