@@ -24,7 +24,7 @@
     "browser_action":{
         "default_title":"",
         "default_icon":"favicon.ico",
-        "default_popup":"display-grid.html"
+        "default_popup":"iframe-parent.html"
     },
     "options_page":"options.html",
 

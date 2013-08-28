@@ -16,7 +16,7 @@ function SiteHandlerManager() {
         $.jStorage.set(videoFeed.id, videoFeed)
     }
 
-    SiteHandlerManager.prototype.getHandler = function(type) {
+    SiteHandlerManager.prototype.getHandler = function (type) {
         var handler = SiteHandlerManager.prototype.mapping[type]
         if (handler) {
             return handler
@@ -26,7 +26,7 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
-        if(linkContext.videoFeed && linkContext.videoFeed.template) {
+        if (linkContext.videoFeed && linkContext.videoFeed.template) {
             var value = linkContext.videoFeed
         } else {
             var value = $.jStorage.get(linkContext.videoFeed.id)
@@ -44,27 +44,31 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.playVideoFeed = function(videoFeed, playerState) {
-        clearTimeout(SiteHandlerManager.prototype.errorTimeout)
-        var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
-        SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
-        siteHandler.playVideoFeed(videoFeed, playerState)
-        currentPlayingHandler = siteHandler
+    SiteHandlerManager.prototype.playVideoFeed = function (videoFeed, playerState) {
+        if (chrome.extension) {
+            pti.yt.loadVideo(videoFeed.id, playerState)
+        } else {
+            clearTimeout(SiteHandlerManager.prototype.errorTimeout)
+            var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)
+            SiteHandlerManager.prototype.showPlayer(siteHandler.playerContainer)
+            siteHandler.playVideoFeed(videoFeed, playerState)
+            currentPlayingHandler = siteHandler
+        }
     }
 
-    SiteHandlerManager.prototype.hide = function(siteHandler) {
+    SiteHandlerManager.prototype.hide = function (siteHandler) {
         var playerContainer = $('#' + siteHandler.playerContainer);
         playerContainer.width('0%')
         playerContainer.height('0%')
     }
 
-    SiteHandlerManager.prototype.show = function(siteHandler) {
+    SiteHandlerManager.prototype.show = function (siteHandler) {
         var playerContainer = $('#' + siteHandler.playerContainer);
         playerContainer.width('100%')
         playerContainer.height('100%')
     }
 
-    SiteHandlerManager.prototype.showPlayer = function(id) {
+    SiteHandlerManager.prototype.showPlayer = function (id) {
         id = id.replace(/^#?(.*)/, '#$1')
         id = $(id).attr('id')
         $.each(siteHandlers, function (index, item) {
@@ -78,8 +82,8 @@ function SiteHandlerManager() {
         })
     }
 
-    SiteHandlerManager.prototype.stateChange = function(state) {
-        if(state == "NEXT") {
+    SiteHandlerManager.prototype.stateChange = function (state) {
+        if (state == "NEXT") {
             playlist.playNextVideo()
         } else if (state == "ERROR") {
             SiteHandlerManager.prototype.errorTimeout = setTimeout(function () {
@@ -88,15 +92,15 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.fillVideoElement = function(linkContext) {
+    SiteHandlerManager.prototype.fillVideoElement = function (linkContext) {
         var videoFeed = linkContext.videoFeed;
         var videoElement = linkContext.videoElement;
         var handler = SiteHandlerManager.prototype.getHandler(videoFeed.type);
-        if(videoFeed) {
+        if (videoFeed) {
             videoElement.div.html(handler[videoFeed.template](videoFeed))
             videoElement.div.data('videoFeed', videoFeed)
             //todo workaround start
-            if(videoFeed.template == "completeTemplate" || linkContext.fromCache) {
+            if (videoFeed.template == "completeTemplate" || linkContext.fromCache) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 //todo workaroung end
             }
@@ -106,20 +110,20 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.getPlayerState = function() {
+    SiteHandlerManager.prototype.getPlayerState = function () {
         var selectedVideo = playlist.getSelectedVideoDiv();
         var selectedVideoFeed = $(selectedVideo).data('videoFeed')
         var handler = SiteHandlerManager.prototype.getHandler(selectedVideoFeed.type);
-        if(selectedVideoFeed) {
+        if (selectedVideoFeed) {
             var playerState = handler.getPlayerState();
             return playerState
         }
     }
 
-    SiteHandlerManager.prototype.blockPlayback = function(flag) {
-        if(flag != null) {
+    SiteHandlerManager.prototype.blockPlayback = function (flag) {
+        if (flag != null) {
             blockPlayback = flag
-            if(flag) {
+            if (flag) {
                 SiteHandlerManager.prototype.stopAll()
             }
             return blockPlayback
@@ -128,10 +132,10 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.stopAll = function() {
-        $.each(siteHandlers, function(index, item) {
+    SiteHandlerManager.prototype.stopAll = function () {
+        $.each(siteHandlers, function (index, item) {
             var siteHandler = SiteHandlerManager.prototype.mapping[item.prefix];
-            if(typeof siteHandler.stop == "function") {
+            if (typeof siteHandler.stop == "function") {
                 siteHandler.stop()
             }
         })
@@ -143,15 +147,15 @@ function SiteHandlerManager() {
 }
 
 function YoutubeHandler() {
-    window.onYouTubeIframeAPIReady = function() {
+    window.onYouTubeIframeAPIReady = function () {
         window.youtube = new YT.Player('youtube', {
-            height: '100%',
-            width: '100%',
-            videoId: 'MK6TXMsvgQg',
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': change,
-                'onError': onError
+            height:'100%',
+            width:'100%',
+            videoId:'MK6TXMsvgQg',
+            events:{
+                'onReady':onPlayerReady,
+                'onStateChange':change,
+                'onError':onError
             }
         });
     }
@@ -159,21 +163,22 @@ function YoutubeHandler() {
         console.log('playFirstLoaded yt')
         playFirstLoaded();
     }
+
     function change(state) {
 //        console.log(state)
-        if(state.data == 1 && SiteHandlerManager.prototype.blockPlayback()) {
+        if (state.data == 1 && SiteHandlerManager.prototype.blockPlayback()) {
             YoutubeHandler.prototype.stop()
             console.log('blocked yt playback')
             seekToOnce = null
         }
-        if( state.data == 1) {
+        if (state.data == 1) {
             typeof seekToOnce == "function" && seekToOnce()
-            if(YoutubeHandler.prototype.errorTimeout) {
+            if (YoutubeHandler.prototype.errorTimeout) {
                 clearTimeout(YoutubeHandler.prototype.errorTimeout)
                 console.log('no error')
             }
         }
-        if(state.data == 0) {
+        if (state.data == 0) {
             SiteHandlerManager.prototype.stateChange("NEXT")
         }
     }
@@ -185,6 +190,7 @@ function YoutubeHandler() {
             SiteHandlerManager.prototype.stateChange("ERROR")
         }, 2000)
     }
+
     YoutubeHandler.prototype.errorTimeout
     YoutubeHandler.prototype.rawTemplate = _.template('<div><div class="image-div"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
     YoutubeHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
@@ -254,18 +260,18 @@ function YoutubeHandler() {
             }
         }
     }.bind(this)
-    YoutubeHandler.prototype.stop = function() {
+    YoutubeHandler.prototype.stop = function () {
         youtube.stopVideo()
     }
 
-    YoutubeHandler.prototype.clearTimeout = function() {
+    YoutubeHandler.prototype.clearTimeout = function () {
         clearTimeout(YoutubeHandler.prototype.playTimeout)
     }
 
-    YoutubeHandler.prototype.getPlayerState = function() {
+    YoutubeHandler.prototype.getPlayerState = function () {
         var currentTime = youtube.getCurrentTime();
         var playerState = youtube.getPlayerState();
-        return { start: currentTime, state: playerState }
+        return { start:currentTime, state:playerState }
     }
 }
 
@@ -355,7 +361,7 @@ function SoundCloudHandler() {
             if (SoundCloudHandler.prototype.properties.dontPlay && SiteHandlerManager.prototype.blockPlayback()) {
                 SoundCloudHandler.prototype.stop()
                 console.log('blocked sc playback in load callback')
-            }  else {
+            } else {
                 seekToOnce = null
                 if (playerState) {
                     seekToOnce = _.once(function () {
@@ -389,9 +395,9 @@ function VimeoHandler() {
     VimeoHandler.prototype.playTimeout
     var lastPlayProgress
     var stuckPlayProgressCounter = 0
-    var stuckPlayProgress = function() {
-        if(lastPlayProgress == currentTime) {
-            if(++stuckPlayProgressCounter >= 5) {
+    var stuckPlayProgress = function () {
+        if (lastPlayProgress == currentTime) {
+            if (++stuckPlayProgressCounter >= 5) {
                 vimeo.api('seekTo', Math.ceil(currentTime))
                 console.log('stuckPlayProgress kicked in')
                 stuckPlayProgressCounter = 0
@@ -399,8 +405,8 @@ function VimeoHandler() {
         }
         lastPlayProgress = currentTime
     }
-    VimeoHandler.prototype.playProgressThrottle = _.throttle(function(playProgress) {
-        if(SiteHandlerManager.prototype.blockPlayback()) {
+    VimeoHandler.prototype.playProgressThrottle = _.throttle(function (playProgress) {
+        if (SiteHandlerManager.prototype.blockPlayback()) {
             VimeoHandler.prototype.stop()
             console.log('blocked vimeo playback')
         }
@@ -410,41 +416,41 @@ function VimeoHandler() {
     }, 500)
     var currentTime
     var state
-    VimeoHandler.prototype.getPlayerState = function() {
-        return {start: currentTime, state: state}
+    VimeoHandler.prototype.getPlayerState = function () {
+        return {start:currentTime, state:state}
     }
-    VimeoHandler.prototype.clearTimeout = function() {
+    VimeoHandler.prototype.clearTimeout = function () {
         clearInterval(VimeoHandler.prototype.playInterval)
         clearTimeout(VimeoHandler.prototype.playTimeout)
     }
-    VimeoHandler.prototype.loadVideoFeed = function(linkContext) {
+    VimeoHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
-            url: 'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
-            success: function(data) {
+            url:'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
+            success:function (data) {
 //                console.log(JSON.stringify(data[0]))
                 data[0].type = VimeoHandler.prototype.prefix
                 linkContext.videoFeed = new VideoFeed(data[0])
                 linkContext.videoFeed.template = "completeTemplate"
                 SiteHandlerManager.prototype.fillVideoElement(linkContext)
             },
-            error: function(error) {
+            error:function (error) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
                 console.log('error in vimeoHandler loadVideoFeed start')
                 console.log(error)
                 console.log('error in vimeoHandler loadVideoFeed end')
             },
-            dataType: 'jsonp',
-            timeout: 10000
+            dataType:'jsonp',
+            timeout:10000
         })
     }
-    VimeoHandler.prototype.playVideoFeed = function(videoFeed, playerState) {
+    VimeoHandler.prototype.playVideoFeed = function (videoFeed, playerState) {
         $('#' + VimeoHandler.prototype.playerContainer).empty().append(VimeoHandler.prototype.playerTemplate(videoFeed))
         window.vimeo = $f($('#vimeo')[0])
-        VimeoHandler.prototype.playTimeout = setTimeout(function() {
+        VimeoHandler.prototype.playTimeout = setTimeout(function () {
             clearInterval(VimeoHandler.prototype.playInterval)
             SiteHandlerManager.prototype.stateChange("ERROR")
         }, 5000)
-        vimeo.addEvent('ready', function(id) {
+        vimeo.addEvent('ready', function (id) {
             clearInterval(VimeoHandler.prototype.playInterval)
             vimeo.addEvent('play', function () {
                 console.log('playing')
@@ -452,17 +458,17 @@ function VimeoHandler() {
                 clearInterval(VimeoHandler.prototype.playInterval)
                 clearTimeout(VimeoHandler.prototype.playTimeout)
                 vimeo.removeEvent('play')
-                if(playerState) {
+                if (playerState) {
                     vimeo.api('seekTo', playerState.start)
                 }
-                vimeo.addEvent('play', function() {
+                vimeo.addEvent('play', function () {
                     state = 1
                 })
-                vimeo.addEvent('pause', function() {
+                vimeo.addEvent('pause', function () {
                     state = 2
                 })
                 vimeo.addEvent('playProgress', VimeoHandler.prototype.playProgressThrottle.bind(this))
-                vimeo.addEvent('finish', function() {
+                vimeo.addEvent('finish', function () {
                     console.log('finish')
                     state = 0
                     SiteHandlerManager.prototype.stateChange("NEXT")
@@ -475,7 +481,7 @@ function VimeoHandler() {
 //            console.log('ready')
         })
     }
-    VimeoHandler.prototype.stop = function() {
+    VimeoHandler.prototype.stop = function () {
         currentTime = null
         $('#' + VimeoHandler.prototype.playerContainer).empty()
 //        console.log('empty')

@@ -4,13 +4,14 @@ if (chrome.extension) {
         window.playlist = new Playlist("#ulSecond",
             {
                 id:chrome.extension.getBackgroundPage().windowId,
-                redraw: true,
+                redraw:true,
                 listenKeyChangeCallback:redrawHashAndQRCode,
                 debounceRecalculatePlaylistCallback:_.once(function () {
                     console.log('playFirstLoaded debounce')
                     playFirstLoaded()
                 }),
-                dontPlay:true
+                //2013-08-27 temporary while working on PTI
+                dontPlay:false
             });
 
         var parsedDivStyle = $($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'list-item');
@@ -39,7 +40,7 @@ if (chrome.extension) {
                 var selectedVideoFeed = playlist.getSelectedVideoFeed();
                 var selectedVideoPlayerState = siteHandlerManager.getPlayerState();
                 backgroundWindow.playlist.playerType(true)
-                backgroundWindow.playlist.playVideo({videoFeed: selectedVideoFeed}, selectedVideoPlayerState)
+                backgroundWindow.playlist.playVideo({videoFeed:selectedVideoFeed}, selectedVideoPlayerState)
             }, true);
             var backgroundWindow = chrome.extension.getBackgroundPage()
             backgroundWindow.playlist.playerType(false)
@@ -47,7 +48,7 @@ if (chrome.extension) {
             var backgroundSelectedVideoFeed = backgroundWindow.playlist.getSelectedVideoFeed();
             var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
-            playlist.playVideo({videoFeed: backgroundSelectedVideoFeed}, backgroundPlayerState)
+            playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundPlayerState)
         })
         $('#tabs a[href="#player"]').click(function () {
             popupPlayerMain();

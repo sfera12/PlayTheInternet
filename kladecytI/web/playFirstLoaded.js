@@ -3,6 +3,7 @@ var playFirstLoaded = _.after(3, function () {
     console.log('playFirstLoaded')
     onceLoaded()
 })
-if(chrome.extension) {
-    var onceLoaded = function() {}
+if (chrome.extension) {
+    var onceLoaded = function () {
+    }
 }
