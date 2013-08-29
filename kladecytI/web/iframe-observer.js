@@ -4,6 +4,7 @@ var pti = new PTI({blockPlaybackCallback:[function (blockPlayback) {
 
 var playerIframe = $('iframe')[0].contentWindow
 var playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]
+//var playerIframeHosts = ["http://playtheinternet.appspot.com"]
 
 new pti.Player('y', {
     loadVideoCallback:[function (videoObject, playerState) {
@@ -13,20 +14,17 @@ new pti.Player('y', {
         iw.postMessage('y', 'stopVideo')
     }],
     currentTimeCallback:[function (time) {
-        console.log('observer time')
+    }],
+    playerStateCallback:[function (state) {
+        if (state == 0) {
+            SiteHandlerManager.prototype.stateChange('NEXT')
+        }
+    }],
+    errorCallback:[function (error) {
+        SiteHandlerManager.prototype.stateChange('ERROR')
     }]
 })
 
 
 var iw = new IframeWrapper(playerIframe, playerIframeHosts)
-iw.addEvent('y', 'currentTime', function (time) {
-    pti['y'].currentTime(time)
-})
-iw.addEvent('y', 'error', function (error) {
-    pti['y'].error(error)
-})
-iw.addEvent('y', 'playerState', function (playerState) {
-    pti['y'].playerState(playerState)
-})
-
-
+iw.listenAllEvents(pti)     //currentTime, error, playerState

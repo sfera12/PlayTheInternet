@@ -63,7 +63,6 @@ $(document).ready(function () {
     }, 1500)
     $('#calendarFilter').keyup(filterThrottle)
 
-    SoundCloudHandler.prototype.initializePlayer();
 })
 
 function propagateCalendar() {

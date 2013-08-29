@@ -493,7 +493,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.jPlaylist.on('click', '.pti-element-song', function () {
-        console.log(this)
+//        console.log(this)
         Playlist.prototype.playVideo.call(self, {videoDiv:$(this)})
     })
 

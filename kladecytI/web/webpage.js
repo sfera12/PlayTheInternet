@@ -24,5 +24,6 @@ if (!chrome.extension) {
                 })
             });
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
+        SoundCloudHandler.prototype.initializePlayer();
     })
 }

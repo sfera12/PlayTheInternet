@@ -5,23 +5,15 @@ function ptiReturnPlayerTypeAndId(sortable) {
 
 
 var iw = new IframeWrapper(parent, ["chrome-extension://hnelbfkfkaieecemgnpkpnopdpmffkii"])
-iw.addEvent('y', 'loadVideo', function (videoId) {
-    pti['y'].loadVideo(videoId)
-})
-iw.addEvent('y', 'stopVideo', function () {
-    pti['y'].stopVideo()
-})
-iw.addEvent('pti', 'blockPlayback', function (blockPlayback) {
-    pti.blockPlayback(blockPlayback)
-})
+iw.listenAllEvents(pti) // loadVideo, stopVideo, pti-blockPlayback
 
 pti.yt.options.currentTimeCallback.push(function (time, type, operation) {
     iw.postMessage(type, operation, time)
 })
 
 pti.yt.options.playerStateCallback.push(function (playerState, type, operation) {
-    iw.postMessage(type, operation, playerState.data)
+    iw.postMessage(type, operation, playerState)
 })
 function ptiErrorCallback(error, type, operation) {
-    iw.postMessage(type, operation, error.data)
+    iw.postMessage(type, operation, error)
 }

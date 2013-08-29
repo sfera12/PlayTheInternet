@@ -6,11 +6,14 @@ new pti.Player("y", {
 //        console.log(playerapiid)
         console.log('player ready')
     }],
+    beforePlayerStateCore:function(state){
+        return state ? state.data : null
+    },
     playerStateCallback:[function (state) {
-        if (state.data == 1 && pti.blockPlayback()) {
+        if (state == 1 && pti.blockPlayback()) {
             youtube.stopVideo()
             clearInterval(pti.yt.temp['playProgressInterval'])
-        } else if (state.data == 1) {
+        } else if (state == 1) {
             if (pti.yt.temp['errorTimeout']) {
                 clearTimeout(pti.yt.temp['errorTimeout'])
                 console.log('no error')
@@ -19,13 +22,16 @@ new pti.Player("y", {
             pti.yt.temp['playProgressInterval'] = setInterval(function () {
                 pti.yt.currentTime(youtube.getCurrentTime())
             }, 750)
-        } else if (state.data == 0) {
+        } else if (state == 0) {
             console.log('NEXT')
         } else {
             clearInterval(pti.yt.temp['playProgressInterval'])
         }
         console.log(state)
     }],
+    beforeErrorCore:function(error) {
+        return error ? error.data : null
+    },
     errorCallback:[function (error) {
         console.log(error)
         clearTimeout(pti.yt.temp['errorTimeout'])
