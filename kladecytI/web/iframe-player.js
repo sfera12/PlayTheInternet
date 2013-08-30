@@ -2,14 +2,14 @@ var pti = new PTI()
 
 
 new pti.Player("y", {
-    playerReadyCallback:[function (playerapiid) {
+    onPlayerReady:function (playerapiid) {
 //        console.log(playerapiid)
         console.log('player ready')
-    }],
-    beforePlayerStateCore:function(state){
-        return state ? state.data : null
     },
-    playerStateCallback:[function (state) {
+    onBeforePlayerState:function (state) {
+        return state ? [state.data] : null
+    },
+    onPlayerState:function (state) {
         if (state == 1 && pti.blockPlayback()) {
             youtube.stopVideo()
             clearInterval(pti.yt.temp['playProgressInterval'])
@@ -28,11 +28,11 @@ new pti.Player("y", {
             clearInterval(pti.yt.temp['playProgressInterval'])
         }
         console.log(state)
-    }],
-    beforeErrorCore:function(error) {
-        return error ? error.data : null
     },
-    errorCallback:[function (error) {
+    onBeforeError:function (error) {
+        return error ? [error.data] : null
+    },
+    onError:function (error) {
         console.log(error)
         clearTimeout(pti.yt.temp['errorTimeout'])
         pti.yt.temp['errorTimeout'] = setTimeout(function () {
@@ -40,11 +40,11 @@ new pti.Player("y", {
             ptiErrorCallback(error)
             console.log('ERROR NEXT')
         }, 2000)
-    }],
-    stopVideoCallback:[function () {
+    },
+    onStopVideo:function () {
         youtube.stopVideo()
-    }],
-    loadVideoCallback:[function (videoId, playerState) {
+    },
+    onLoadVideo:function (videoId, playerState) {
         if (pti.blockPlayback()) {
             youtube.stopVideo()
         } else {
@@ -59,10 +59,10 @@ new pti.Player("y", {
             }
         }
 //        console.log('load video')
-    }],
-    currentTimeCallback:[function (time) {
+    },
+    onCurrentTime:function (time) {
 //        console.log(time)
-    }]
+    }
 })
 
 window.onYouTubeIframeAPIReady = function (id) {

@@ -1,28 +1,28 @@
-var pti = new PTI({blockPlaybackCallback:[function (blockPlayback) {
-    iw.postMessage('pti', 'blockPlayback', blockPlayback)
-}]})
+var pti = new PTI({onBlockPlayback:function (blockPlayback) {
+    iw.postMessage(this.type, this.operation, blockPlayback)
+}})
 
 var playerIframe = $('iframe')[0].contentWindow
 var playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]
 //var playerIframeHosts = ["http://playtheinternet.appspot.com"]
 
 new pti.Player('y', {
-    loadVideoCallback:[function (videoObject, playerState) {
-        iw.postMessage('y', 'loadVideo', videoObject, playerState)
-    }],
-    stopVideoCallback:[function () {
-        iw.postMessage('y', 'stopVideo')
-    }],
-    currentTimeCallback:[function (time) {
-    }],
-    playerStateCallback:[function (state) {
+    onLoadVideo:function (videoObject, playerState) {
+        iw.postMessage(this.type, this.operation, videoObject, playerState)
+    },
+    onStopVideo:function () {
+        iw.postMessage(this.type, this.operation)
+    },
+    onCurrentTime:function (time) {
+    },
+    onPlayerState:function (state) {
         if (state == 0) {
             SiteHandlerManager.prototype.stateChange('NEXT')
         }
-    }],
-    errorCallback:[function (error) {
+    },
+    onError:function (error) {
         SiteHandlerManager.prototype.stateChange('ERROR')
-    }]
+    }
 })
 
 

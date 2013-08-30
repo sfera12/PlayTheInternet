@@ -1,10 +1,12 @@
 function PTI(options) {
     options ? this.options = options : this.options = {}
-    this.data = {blockPlayback: false}
+    this.data = {blockPlayback:false}
     var self = this
     this.pti = this
-    this.blockPlayback = function (input) {
-        this.data.blockPlayback = PTI.prototype.returnNotNullCallCallbacks(input, this.options.beforeBlockPlayback, this.options.blockPlaybackCallback, this.data.blockPlayback)
+    this.name = 'pti'
+    this.blockPlayback = function (flag) {
+        var output = PTI.prototype.composeAndRunLifeCycle(this, 'blockPlayback', flag)
+        !_.isUndefined(output[0]) && (this.data.blockPlayback = output[0])
         return this.data.blockPlayback
     }.bind(this)
     this.Player = function (name, options) {
@@ -13,6 +15,7 @@ function PTI(options) {
             name == "v" && self && (self.vm = this) && (self.v = this)
             name == "s" && self && (self.sc = this) && (self.s = this)
             options ? this.options = options : this.options = {}
+            this.name = name
             this.data = {currentTime:null,
                 playerState:null,
                 videoId:null,
@@ -22,32 +25,38 @@ function PTI(options) {
                 seekTo:null}
             this.temp = {}
             this.currentTime = function (time) {
-                this.data.currentTime = PTI.prototype.returnNotNullCallCallbacks(time, this.options.beforeCurrentTimeCore, this.options.currentTimeCallback, this.data.currentTime, name, 'currentTime')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'currentTime', time)
+                !_.isUndefined(output[0]) && (this.data.currentTime = output[0])
                 return this.data.currentTime
             }.bind(this)
             this.playerState = function (state) {
-                this.data.playerState = PTI.prototype.returnNotNullCallCallbacks(state, this.options.beforePlayerStateCore, this.options.playerStateCallback, this.data.playerState, name, 'playerState')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'playerState', state)
+                !_.isUndefined(output[0]) && (this.data.playerState = output[0])
                 return this.data.playerState
             }.bind(this)
             this.error = function (error) {
-                this.data.error = PTI.prototype.returnNotNullCallCallbacks(error, this.options.beforeErrorCore, this.options.errorCallback, this.data.error, name, 'error')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'error', error)
+                !_.isUndefined(output[0]) && (this.data.error = output[0])
                 return this.data.error
             }.bind(this)
             this.loadVideo = function (id, seekTo) {
-                this.seekTo = seekTo
-                this.data.videoId = PTI.prototype.returnNotNullCallCallbacks(id, this.options.beforeLoadVideoCore, this.options.loadVideoCallback, this.data.videoId, name, 'loadVideo')
-                return this.data.videoId
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', id, seekTo)
+                !_.isUndefined(output[0]) && (this.data.videoId = output[0])
+                !_.isUndefined(output[1]) && (this.data.seekTo = output[1])
+                return [this.data.videoId, this.data.seekTo]
             }.bind(this)
             this.stopVideo = function () {
-                PTI.prototype.runCallback(this.options.stopVideoCallback, null, name, 'stopVideo')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'stopVideo')
                 return
             }.bind(this)
             this.playerReady = function (playerReady) {
-                this.data.playerReady = PTI.prototype.returnNotNullCallCallbacks(playerReady, this.options.beforePlayerReadyCore, this.options.playerReadyCallback, this.data.playerReady, name, 'playerReady')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'playerReady', playerReady)
+                !_.isUndefined(output[0]) && (this.data.playerReady = output[0])
                 return this.data.playerReady
             }.bind(this)
             this.apiReady = function (readyState) {
-                this.data.apiReady = PTI.prototype.returnNotNullCallCallbacks(readyState, this.options.beforeApiReadyCore, this.options.apiReadyCallback, this.data.apiReady, name, 'apiReady')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'apiReady', readyState)
+                !_.isUndefined(output[0]) && (this.data.apiReady = output[0])
                 return this.data.apiReady
             }.bind(this)
         } else {
@@ -55,39 +64,29 @@ function PTI(options) {
         }
     }
 }
-
-PTI.prototype.runCallback = function (callback, input, type, operation) {
-    if (_.isArray(callback)) {
-        var callbacks = callback
-        for (var i = 0; i < callbacks.length; i++) {
-            var callback = callbacks[i]
-            typeof callback == "function" && callback(input, type, operation)
-        }
-    } else {
-        typeof callback == "function" && callback(input, type, operation)
-    }
+PTI.prototype.composeAndRunLifeCycle = function (scope, operation, data1, data2, data3) {
+    var scope = {scope:scope, type:scope.name, operation:operation}
+    return PTI.prototype.runLifeCycle.call(scope, data1, data2, data3)
 }
 
-PTI.prototype.runBeforeCore = function(input, beforeCore, own, type, operation) {
-    if(_.isFunction(beforeCore)) {
-        return beforeCore(input, type, operation)
-    }
-    return input
-}
+PTI.prototype.runLifeCycle = function (data1, data2, data3) {
+    var operation = this.operation.charAt(0).toUpperCase() + this.operation.slice(1)
+    var onBefore = this.scope.options['onBefore' + operation]
+    var onBeforeCallback = this.scope.options['onBefore' + operation + 'Callback']
+    var onCore = this.scope.options['on' + operation]
+    var onCoreCallback = this.scope.options['on' + operation + 'Callback']
+    var onAfter = this.scope.options['onAfter' + operation]
+    var onAfterCallback = this.scope.options['onAfter' + operation + 'Callback']
 
-PTI.prototype.returnNotNullCallCallbacks = function (input, beforeCore, callback, own, type, operation) {
-    var result = input
-    input = PTI.prototype.runBeforeCore(input, beforeCore, own, type, operation)
-    result = PTI.prototype.runCallbacks(input, callback, own, type, operation)
-    return result
-}
-PTI.prototype.runCallbacks = function(input, callback, own, type, operation) {
-    if (!_.isUndefined(input)) {
-        PTI.prototype.runCallback(callback, input, type, operation);
-        return input
-    }
-    return own
+    var inputs = arguments
+    this.callback = onBeforeCallback
+    inputs = _.isFunction(onBefore) ? onBefore.call(this, inputs[0], inputs[1], inputs[2]) : inputs
+    this.callback = onCoreCallback
+    _.isFunction(onCore) && onCore.call(this, inputs[0], inputs[1], inputs[2])
+    this.callback = onAfterCallback
+    _.isFunction(onAfter) && onAfter.call(this, inputs[0], inputs[1], inputs[2])
+    return inputs
 }
 
 var pti = new PTI()
-new pti.Player("yt")
+new pti.Player("y")
