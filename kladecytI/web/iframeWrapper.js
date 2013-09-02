@@ -1,20 +1,20 @@
-function IframeWrapper(iframe, origins) {
+this.IframeWrapper = function(iframe, origins) {
     this.iframe = iframe
     this.origins = origins
 
     this.listOperations = {}
     this.listenAllCallbackObjects = []
-    IframeWrapper.prototype.addEvent = function (type, operation, callback) {
+    this.addEvent = function(type, operation, callback) {
         _.isUndefined(this.listOperations[type]) && (this.listOperations[type] = {})
         _.isUndefined(this.listOperations[type][operation]) && (this.listOperations[type][operation] = [])
         this.listOperations[type][operation].push(callback)
     }.bind(this)
 
-    IframeWrapper.prototype.listenAllEvents = function (callbackObject) {
+    this.listenAllEvents = function (callbackObject) {
         this.listenAllCallbackObjects.push(callbackObject)
     }.bind(this)
 
-    IframeWrapper.prototype.runListeners = function (type, operation, data1, data2, data3) {
+    this.runListeners = function(type, operation, data1, data2, data3) {
         if (this.listOperations[type] && this.listOperations[type][operation]) {
             var callback = this.listOperations[type][operation]
             if (_.isArray(callback)) {
@@ -29,7 +29,7 @@ function IframeWrapper(iframe, origins) {
         }
     }.bind(this)
 
-    IframeWrapper.prototype.runAllListeners = function (type, operation, data1, data2, data3) {
+    this.runAllListeners = function(type, operation, data1, data2, data3) {
         for (var i = 0; i < this.listenAllCallbackObjects.length; i++) {
             var listenObject = this.listenAllCallbackObjects[i]
             if (_.isFunction(listenObject[type][operation])) {
@@ -40,7 +40,7 @@ function IframeWrapper(iframe, origins) {
         }
     }.bind(this)
 
-    IframeWrapper.prototype.listenOperations = function (event) {
+    this.listenOperations = function(event) {
         if (this.matchOrigin(event.origin)) {
             var type = event.data.type
 //            console.log(event.data)
@@ -53,15 +53,15 @@ function IframeWrapper(iframe, origins) {
         }
     }.bind(this)
 
-    IframeWrapper.prototype.matchOrigin = function (origin) {
-        if (_.isArray(origins)) {
-            for (var i = 0; i < origins.length; i++) {
-                if (origins[i].match(origin)) {
+    this.matchOrigin = function(origin) {
+        if (_.isArray(this.origins)) {
+            for (var i = 0; i < this.origins.length; i++) {
+                if (this.origins[i].match(origin)) {
                     return true
                 }
             }
         } else {
-            return origin == origins
+            return origin == this.origins
         }
     }.bind(this)
 

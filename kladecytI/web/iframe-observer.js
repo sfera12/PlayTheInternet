@@ -24,6 +24,27 @@ new pti.Player('y', {
         SiteHandlerManager.prototype.stateChange('ERROR')
     }
 })
+new pti.Player('s', {
+    onLoadVideo:function(videoId, playerState) {
+        iw.postMessage(this.type, this.operation, videoId, playerState)
+    },
+    onInitializePlayer:function() {
+        iw.postMessage(this.type, this.operation)
+    },
+    onCurrentTime:function(time) {
+//        console.log('from main')
+//        console.log(time)
+    }
+})
+new pti.Player('v', {
+    onLoadVideo:function(videoId, playerState) {
+        iw.postMessage(this.type, this.operation, videoId, playerState)
+    },
+    onCurrentTime:function(time) {
+//        console.log('from main')
+//        console.log(time)
+    }
+})
 
 
 var iw = new IframeWrapper(playerIframe, playerIframeHosts)

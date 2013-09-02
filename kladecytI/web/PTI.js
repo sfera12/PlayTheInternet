@@ -22,7 +22,8 @@ function PTI(options) {
                 playerReady:null,
                 apiReady:null,
                 error:null,
-                seekTo:null}
+                seekTo:null,
+                soundIndex:null}
             this.temp = {}
             this.currentTime = function (time) {
                 var output = PTI.prototype.composeAndRunLifeCycle(this, 'currentTime', time)
@@ -59,6 +60,19 @@ function PTI(options) {
                 !_.isUndefined(output[0]) && (this.data.apiReady = output[0])
                 return this.data.apiReady
             }.bind(this)
+            this.initializePlayer = function () {
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'initializePlayer')
+                return
+            }.bind(this)
+            this.soundIndex = function (index) {
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'soundIndex')
+                !_.isUndefined(output[0]) && (this.data.soundIndex = output[0])
+                return this.data.soundIndex
+            }.bind(this)
+            this.clearTimeout = function() {
+                PTI.prototype.composeAndRunLifeCycle(this, 'clearTimeout')
+                return
+            }
         } else {
             throw "can't create player without name"
         }
