@@ -11,7 +11,7 @@ if (chrome.extension) {
                     playFirstLoaded()
                 }),
                 //TODO 2013-08-27 temporary while working on PTI
-                dontPlay:false
+                dontPlay:true
             });
 
         var parsedDivStyle = $($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'list-item');
@@ -36,19 +36,20 @@ if (chrome.extension) {
         var popupPlayerMain = _.once(function () {
             window.addEventListener("unload", function (event) {
                 backgroundWindow.playlist.playerType(true)
-                backgroundWindow.siteHandlerManager.blockPlayback(false)
+                backgroundWindow.pti.blockPlayback(false)
                 var selectedVideoFeed = playlist.getSelectedVideoFeed();
-                var selectedVideoPlayerState = siteHandlerManager.getPlayerState();
+                var selectedVideoPlayerState = {start: pti[selectedVideoFeed.type].currentTime()};
                 backgroundWindow.playlist.playerType(true)
                 backgroundWindow.playlist.playVideo({videoFeed:selectedVideoFeed}, selectedVideoPlayerState)
             }, true);
             var backgroundWindow = chrome.extension.getBackgroundPage()
             backgroundWindow.playlist.playerType(false)
-            backgroundWindow.siteHandlerManager.blockPlayback(true)
+            backgroundWindow.pti.blockPlayback(true)
             var backgroundSelectedVideoFeed = backgroundWindow.playlist.getSelectedVideoFeed();
-            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
+            var backgroundSelectedVideoPlayerState = {start: backgroundWindow.pti[backgroundSelectedVideoFeed.type].currentTime()};
+//            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
-            playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundPlayerState)
+            playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
         })
         $('#tabs a[href="#player"]').click(function () {
             popupPlayerMain();
