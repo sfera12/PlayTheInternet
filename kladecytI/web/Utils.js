@@ -287,7 +287,8 @@ function Playlist(appendToElementExpression, options) {
 //    }
 
     Playlist.prototype.setId = function (id, manualRedraw) {
-        $.jStorage.stopListening(id, this.listenFunction)
+        $.jStorage.stopListening(id, this.listenRedrawPlaylistFromCache)
+        $.jStorage.stopListening(id + '_selected', this.listenPlaySelectedVideo)
         this.id = id
         if (manualRedraw) {
             Playlist.prototype.manualRedrawPlaylistFromCache.call(this, id, 'manual redraw from cache')
