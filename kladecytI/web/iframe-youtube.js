@@ -4,7 +4,7 @@ new pti.Player("y", {
         console.log('player ready')
     },
     onBeforePlayerState:function (state) {
-        return state ? [state.data] : null
+        return state ? [state.data] : []
     },
     onPlayerState:function (state) {
         if (state == 1 && pti.blockPlayback()) {
@@ -20,14 +20,14 @@ new pti.Player("y", {
                 pti.yt.currentTime(youtube.getCurrentTime())
             }, 750)
         } else if (state == 0) {
-            console.log('NEXT')
+            console.log('YT NEXT')
         } else {
             clearInterval(pti.yt.temp['playProgressInterval'])
         }
         console.log(state)
     },
     onBeforeError:function (error) {
-        return error ? [error.data] : null
+        return error ? [error.data] : []
     },
     onError:function (error) {
         console.log(error)
@@ -42,6 +42,7 @@ new pti.Player("y", {
         youtube.stopVideo()
     },
     onLoadVideo:function (videoId, playerState) {
+        pti.yt.showPlayer()
         if (pti.blockPlayback()) {
             youtube.stopVideo()
         } else {
@@ -60,7 +61,7 @@ new pti.Player("y", {
     onCurrentTime:function (time) {
 //        console.log(time)
     }
-})
+}, 'youtubeContainer')
 
 window.onYouTubeIframeAPIReady = function (id) {
     window.youtube = new YT.Player('youtube', {

@@ -25,27 +25,37 @@ new pti.Player('y', {
     }
 })
 new pti.Player('s', {
-    onLoadVideo:function(videoId, playerState) {
+    onLoadVideo:function (videoId, playerState) {
         iw.postMessage(this.type, this.operation, videoId, playerState)
     },
-    onInitializePlayer:function() {
+    onInitializePlayer:function () {
         iw.postMessage(this.type, this.operation)
     },
-    onCurrentTime:function(time) {
+    onCurrentTime:function (time) {
 //        console.log('from main')
 //        console.log(time)
+    },
+    onPlayerState:function (state) {
+        if (state == 0) {
+            SiteHandlerManager.prototype.stateChange('NEXT')
+        }
     }
 })
 new pti.Player('v', {
-    onLoadVideo:function(videoId, playerState) {
+    onLoadVideo:function (videoId, playerState) {
         iw.postMessage(this.type, this.operation, videoId, playerState)
     },
-    onCurrentTime:function(time) {
+    onCurrentTime:function (time) {
 //        console.log('from main')
 //        console.log(time)
+    },
+    onPlayerState:function (state) {
+        if (state == 0) {
+            SiteHandlerManager.prototype.stateChange('NEXT')
+        }
     }
 })
 
 
 var iw = new IframeWrapper(playerIframe, playerIframeHosts)
-iw.listenAllEvents(pti)     //currentTime, error, playerState
+iw.listenAllEvents(pti.players)     //currentTime, error, playerState

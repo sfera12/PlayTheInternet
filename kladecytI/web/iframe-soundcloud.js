@@ -11,6 +11,7 @@ new pti.Player("s", {
         scWidget.pause()
     },
     onLoadVideo:function (videoId, playerState) {
+        pti.sc.showPlayer()
         //        console.log(videoFeed)
 //        console.log(playerState)
         var self = this.scope
@@ -60,7 +61,8 @@ new pti.Player("s", {
                     scWidget.getSounds(function (sounds) {
                         console.log('finished sounds count: ' + sounds.length + ' and current index: ' + data)
                         if (data == sounds.length - 1) {
-                            console.log("NEXT")
+                            console.log("SC NEXT")
+                            self.playerState(0)
                         }
                     })
                 })
@@ -94,6 +96,6 @@ new pti.Player("s", {
         var self = this.scope
         clearTimeout(self.temp.errorTimeout)
     }
-})
+}, 'soundCloudContainer')
 
 pti.s.initializePlayer()

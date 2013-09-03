@@ -10,6 +10,7 @@ new pti.Player("v", {
         $('#vimeoContainer').empty()
     },
     onLoadVideo:function (videoId, playerState) {
+        pti.v.showPlayer()
         var self = this.scope
         var playProgressThrottle = _.throttle(function (playProgress) {
             if (pti.blockPlayback()) {
@@ -66,4 +67,4 @@ new pti.Player("v", {
         clearInterval(self.temp.playInterval)
         clearTimeout(self.temp.playTimeout)
     }
-})
+}, 'vimeoContainer')

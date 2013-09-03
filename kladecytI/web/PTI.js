@@ -1,21 +1,39 @@
 function PTI(options) {
     options ? this.options = options : this.options = {}
     this.data = {blockPlayback:false}
+    this.players = {}
     var self = this
-    this.pti = this
+    this.pti = this && (this.players['pti'] = this)
     this.name = 'pti'
     this.blockPlayback = function (flag) {
         var output = PTI.prototype.composeAndRunLifeCycle(this, 'blockPlayback', flag)
         !_.isUndefined(output[0]) && (this.data.blockPlayback = output[0])
         return this.data.blockPlayback
     }.bind(this)
-    this.Player = function (name, options) {
+    this.showPlayer = function (name) {
+        for (var playerName in this.players) {
+            var player = this.players[playerName];
+            _.isFunction(player.clearTimeout) && player.clearTimeout()
+            if (playerName == name) {
+                var playerContainer = $('#' + player.playerContainer)
+                playerContainer.width('100%')
+                playerContainer.height('100%')
+            } else {
+                var playerContainer = $('#' + player.playerContainer)
+                playerContainer.width('0%')
+                playerContainer.height('0%')
+                _.isFunction(player.stopVideo) && player.stopVideo()
+            }
+        }
+    }.bind(this)
+    this.Player = function (name, options, playerContainer) {
         if (name) {
-            name == "y" && self && (self.yt = this) && (self.y = this)
-            name == "v" && self && (self.vm = this) && (self.v = this)
-            name == "s" && self && (self.sc = this) && (self.s = this)
+            name == "y" && self && (self.yt = this) && (self.y = this) && (self.players['y'] = this)
+            name == "v" && self && (self.vm = this) && (self.v = this) && (self.players['v'] = this)
+            name == "s" && self && (self.sc = this) && (self.s = this) && (self.players['s'] = this)
             options ? this.options = options : this.options = {}
             this.name = name
+            this.playerContainer = playerContainer
             this.data = {currentTime:null,
                 playerState:null,
                 videoId:null,
@@ -69,10 +87,13 @@ function PTI(options) {
                 !_.isUndefined(output[0]) && (this.data.soundIndex = output[0])
                 return this.data.soundIndex
             }.bind(this)
-            this.clearTimeout = function() {
+            this.clearTimeout = function () {
                 PTI.prototype.composeAndRunLifeCycle(this, 'clearTimeout')
                 return
-            }
+            }.bind(this)
+            this.showPlayer = function () {
+                self.showPlayer(this.name)
+            }.bind(this)
         } else {
             throw "can't create player without name"
         }
@@ -103,4 +124,3 @@ PTI.prototype.runLifeCycle = function (data1, data2, data3) {
 }
 
 var pti = new PTI()
-new pti.Player("y")

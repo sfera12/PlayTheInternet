@@ -5,7 +5,7 @@ function ptiReturnPlayerTypeAndId(sortable) {
 
 
 var iw = new IframeWrapper(parent, ["chrome-extension://hnelbfkfkaieecemgnpkpnopdpmffkii"])
-iw.listenAllEvents(pti) // loadVideo, stopVideo, pti-blockPlayback
+iw.listenAllEvents(pti.players) // loadVideo, stopVideo, pti-blockPlayback
 
 pti.yt.options.onAfterCurrentTime = function (time, playerState) {
     iw.postMessage(this.type, this.operation, time, playerState)
