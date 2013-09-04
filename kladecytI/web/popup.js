@@ -10,7 +10,6 @@ if (chrome.extension) {
                     console.log('playFirstLoaded debounce')
                     playFirstLoaded()
                 }),
-                //TODO 2013-08-27 temporary while working on PTI
                 dontPlay:true
             });
 

@@ -30,11 +30,12 @@ new pti.Player("y", {
         return error ? [error.data] : []
     },
     onError:function (error) {
-        console.log(error)
+        var scope = this
+        var callback = this.callback
         clearTimeout(pti.yt.temp['errorTimeout'])
         pti.yt.temp['errorTimeout'] = setTimeout(function () {
             pti.yt.temp['errorTimeout'] = null
-            ptiErrorCallback(error)
+            callback.call(scope, error)
             console.log('ERROR NEXT')
         }, 2000)
     },

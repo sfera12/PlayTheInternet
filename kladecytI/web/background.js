@@ -1,13 +1,4 @@
 if (chrome.extension && chrome.extension.getBackgroundPage() == window) {
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        function (details) {
-            console.log(details)
-            details.requestHeaders.push({name:"Referer", value:window.location.href})
-            return {requestHeaders:details.requestHeaders};
-        },
-        {urls:["*://*/*origin=chrome-extension%3A%2F%2Fhnelbfkfkaieecemgnpkpnopdpmffkii"]},
-//                {urls: ["<all_urls>"]},
-        ["blocking", "requestHeaders"])
     $(document).ready(function () {
         window.windowId = 'backgroundPageId'
         window.playlist = new Playlist("#ulSecond",
