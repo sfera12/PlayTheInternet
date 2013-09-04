@@ -1,10 +1,28 @@
 function PTI(options) {
     options ? this.options = options : this.options = {}
-    this.data = {blockPlayback:false}
+    this.data = {blockPlayback:false, videoId:null, currentPlayer:null, trackLength: null}
     this.players = {}
     var self = this
     this.pti = this && (this.players['pti'] = this)
     this.name = 'pti'
+    this.loadVideo = function (type, videoId, playerState, trackLength) {
+        var player = this.players[type]
+        if (!_.isUndefined(player)) {
+            var output = player.loadVideo(videoId, playerState)
+            !_.isUndefined(output[0]) && (this.data.videoId = output[0])
+            this.data.currentPlayer = type
+            this.data.trackLength = trackLength
+            return output
+        }
+    }.bind(this)
+    this.get = function (functions) {
+        var output = []
+        var currentPlayer = this.players[this.data.currentPlayer];
+        for (var i = 0; i < functions.length; i++) {
+            output.push(_.result(currentPlayer, functions[i]))
+        }
+        return output
+    }.bind(this)
     this.blockPlayback = function (flag) {
         var output = PTI.prototype.composeAndRunLifeCycle(this, 'blockPlayback', flag)
         !_.isUndefined(output[0]) && (this.data.blockPlayback = output[0])
@@ -83,7 +101,7 @@ function PTI(options) {
                 return
             }.bind(this)
             this.soundIndex = function (index) {
-                var output = PTI.prototype.composeAndRunLifeCycle(this, 'soundIndex')
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'soundIndex', index)
                 !_.isUndefined(output[0]) && (this.data.soundIndex = output[0])
                 return this.data.soundIndex
             }.bind(this)

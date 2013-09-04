@@ -4,7 +4,8 @@ body { height: 100%; }
 .post-hover { background-color: rgb(220, 220, 220) }
 #ytplayer { width: 100% }
 .taArea {width: 100%; height: 200px; }
-#dPLists { position: fixed; float: left; width: 100%; height: 100%; }
+.dPLists { position: fixed; float: left; width: 100%; height: 100%; }
+.iframeParentdPLists { position: absolute; top: 40px; bottom: 0px; width:100%; }
 #firstView, #secondView { float: left; width: 50%; height: 100%; }
 #iframeView { float: left; width: 100%; height: 100%; }
 .leftFull { float: left; width: 100%; height: 100% }

@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>Play The Internet</title>
-    <LINK REL="SHORTCUT ICON" HREF="favicon.ico" />
+    <LINK REL="SHORTCUT ICON" HREF="favicon.ico"/>
     <!--<script src="jqC/development-bundle/jquery-1.7.1.js"></script>-->
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>-->
     <!--<script src="jqC/development-bundle/ui/jquery.ui.core.js"></script>-->
@@ -23,12 +23,15 @@
     <link rel="stylesheet" href="bootswatch/cosmo-custom.css">
     <link rel="stylesheet" href="datepicker.css">
     <!--<link rel="stylesheet" href="https://rawgithub.com/littlesparkvt/flatstrap/master/assets/css/bootstrap.css">-->
+    <!-- TODO 2013-09-04 CUSTOMIZE THIS CSS FOR PLAYER WIDGET-->
+    <!--<link rel="stylesheet" href="jquery-ui-1.10.3.custom.min.css">-->
     <script src="jquery-2.0.3.min.js"></script>
     <script src="jquery-ui-1.10.3.custom.min.js"></script>
     <!--<script src="bootstrap/js/bootstrap.js"></script>-->
     <!--<script src="https://rawgithub.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js"></script>-->
     <script src="bootstrap-datepicker.js"></script>
     <script src="jstorage.min.js"></script>
+    <!--TODO 2013-09-04 CONFLICTS WITH JQUERY TOOLTIP -->
     <script src="bootstrapCustom/js/bootstrap.js"></script>
     <script src="underscore-min.js"></script>
     <script src="SiteHandlers.js"></script>
@@ -42,6 +45,8 @@
     <link rel="stylesheet" href="playlist.css">
     <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="temp.css">
+    <link rel="stylesheet" href="player-widget.css">
+    <script src="playerWidget.js"></script>
 </head>
 <body>
 <!--<script type="text/javascript">-->
@@ -56,7 +61,8 @@
 <!--})();-->
 
 <!--</script>-->
-<div id="dPLists">
+<div id="playerWidgetContainer" class="temp-player-widget"></div>
+<div id="dPLists" class="iframeParentdPLists">
     <div id="firstView">
         <div id="tabs" class="leftFull temp-position-relative">
             <ul class="nav nav-pills temp-no-height">
@@ -115,7 +121,7 @@
                 </div>
                 <div id="calendarPlaylist" class=" playlistFrame"></div>
             </div>
-            <div class="tabs-player-container" id="players" class="leftFull">
+            <div id="players" class="tabs-player-container leftFull">
                 <iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>
                 <!--<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://playtheinternet.appspot.com/iframe-player.html"></iframe>-->
             </div>

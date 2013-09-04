@@ -32,6 +32,12 @@ if (chrome.extension) {
             }
         );
 
+        $(document).ready(function() {
+            window.playerWidget = new PlayerWidget('#playerWidgetContainer')
+            var backgroundWindow = chrome.extension.getBackgroundPage()
+            playerWidget.data.listenObject = backgroundWindow.pti
+        })
+
         var popupPlayerMain = _.once(function () {
             window.addEventListener("unload", function (event) {
                 backgroundWindow.playlist.playerType(true)
@@ -49,6 +55,7 @@ if (chrome.extension) {
 //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
             playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
+            playerWidget.data.listenObject = pti
         })
         $('#tabs a[href="#player"]').click(function () {
             popupPlayerMain();

@@ -46,7 +46,7 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.playVideoFeed = function (videoFeed, playerState) {
         if (chrome.extension) {
-            pti[videoFeed.type].loadVideo(videoFeed.id, playerState)
+            pti.loadVideo(videoFeed.type, videoFeed.id, playerState, videoFeed.duration)
         } else {
             clearTimeout(SiteHandlerManager.prototype.errorTimeout)
             var siteHandler = SiteHandlerManager.prototype.getHandler(videoFeed.type)

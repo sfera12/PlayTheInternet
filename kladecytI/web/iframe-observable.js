@@ -27,6 +27,9 @@ pti.s.options.onCurrentTime = function (time) {
 pti.s.options.onPlayerReady = function (ready) {
     iw.postMessage(this.type, this.operation, ready)
 }
+pti.s.options.onSoundIndex = function(index) {
+    iw.postMessage(this.type, this.operation, index)
+}
 
 pti.v.options.onAfterPlayerState = function (playerState) {
     iw.postMessage(this.type, this.operation, playerState)

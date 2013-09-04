@@ -1,5 +1,6 @@
 function PlayerWidget(elementExpression) {
     var self = this
+    this.data = {listenObject:pti}
     this.jPlayerWidget = $('<div class="playerWidget"><div class="prev button"></div><div class="play button"></div><div class="next button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
 
     this.trackLength = 60
@@ -60,5 +61,11 @@ function PlayerWidget(elementExpression) {
     })
     self.jProgressBarContainer.tooltip({track:true})
 
-
+    this.listenInterval = setInterval(function () {
+        var currentTime = self.data.listenObject.get(['currentTime'])[0];
+//        console.log(currentTime)
+        self.trackLength = self.data.listenObject.data.trackLength
+        var progress = currentTime / self.trackLength * 100
+        self.progressBar(progress)
+    }.bind(this), 100)
 }
