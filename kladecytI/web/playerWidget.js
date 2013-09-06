@@ -22,12 +22,14 @@ function PlayerWidget(elementExpression) {
         var jElement = $(this)
         jElement.removeClass('play')
         jElement.addClass('pause')
+        self.data.listenObject.pauseVideo()
     })
 
     this.jPlayerWidget.on('click', '.pause', function () {
         var jElement = $(this)
         jElement.removeClass('pause')
         jElement.addClass('play')
+        self.data.listenObject.playVideo()
     })
     this.jPlayerWidget.on('click', '.prev', function () {
     })
@@ -37,6 +39,8 @@ function PlayerWidget(elementExpression) {
         var jElement = $(this)
         var moveTo = evt.offsetX / jElement.width() * 100
         self.progressBar(moveTo)
+        var seconds = self.trackLength * ( moveTo / 100)
+        self.data.listenObject.seekTo(seconds)
     })
 
     this.jPlayerWidget.on('mousedown', '.button', function () {
@@ -62,10 +66,20 @@ function PlayerWidget(elementExpression) {
     self.jProgressBarContainer.tooltip({track:true})
 
     this.listenInterval = setInterval(function () {
-        var currentTime = self.data.listenObject.get(['currentTime'])[0];
+        var props = self.data.listenObject.get(['currentTime', 'duration', 'playerState']);
+        var currentTime = props[0];
+        var duration = props[1]
+        var playerState = props[2]
 //        console.log(currentTime)
-        self.trackLength = self.data.listenObject.data.trackLength
+        self.trackLength = duration
         var progress = currentTime / self.trackLength * 100
         self.progressBar(progress)
+        if (playerState == 1) {
+            self.jPlay.removeClass('pause')
+            self.jPlay.addClass('play')
+        } else if (playerState == 2) {
+            self.jPlay.removeClass('play')
+            self.jPlay.addClass('pause')
+        }
     }.bind(this), 100)
 }

@@ -74,8 +74,12 @@ new pti.Player("s", {
                 scWidget.isPaused(function (paused) {
                     paused ? self.playerState(2) : self.playerState(1);
                 })
+                //TODO 2013-09-06 maybe move getSoundIndex and duration to .FINISH event
                 scWidget.getCurrentSoundIndex(function (index) {
                     self.soundIndex(index)
+                })
+                scWidget.getDuration(function(duration) {
+                    self.duration(duration)
                 })
                 if (self.temp.dontPlay || pti.blockPlayback()) {
                     self.stopVideo()
@@ -92,9 +96,24 @@ new pti.Player("s", {
             })
         })
     },
-    onClearTimeout:function() {
+    onClearTimeout:function () {
         var self = this.scope
         clearTimeout(self.temp.errorTimeout)
+    },
+    onPlayVideo:function () {
+        scWidget.play()
+    },
+    onPauseVideo:function () {
+        scWidget.pause()
+    },
+    onSeekTo:function (seekTo) {
+        scWidget.seekTo(seekTo * 1000)
+    },
+    onBeforeCurrentTime:function(inputs) {
+        return inputs ? [inputs/1000] : []
+    },
+    onBeforeDuration:function(inputs) {
+        return inputs ? [inputs/1000] : []
     }
 }, 'soundCloudContainer')
 

@@ -1,19 +1,29 @@
 function PTI(options) {
     options ? this.options = options : this.options = {}
-    this.data = {blockPlayback:false, videoId:null, currentPlayer:null, trackLength: null}
+    this.data = {blockPlayback:false, videoId:null, currentPlayer:null, seekTo:null}
     this.players = {}
     var self = this
     this.pti = this && (this.players['pti'] = this)
     this.name = 'pti'
-    this.loadVideo = function (type, videoId, playerState, trackLength) {
-        var player = this.players[type]
-        if (!_.isUndefined(player)) {
-            var output = player.loadVideo(videoId, playerState)
-            !_.isUndefined(output[0]) && (this.data.videoId = output[0])
-            this.data.currentPlayer = type
-            this.data.trackLength = trackLength
-            return output
-        }
+    this.loadVideo = function (type, videoId, playerState) {
+        var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', type, videoId, playerState)
+        !_.isUndefined(output[0]) && (this.data.currentPlayer = output[0])
+        !_.isUndefined(output[1]) && (this.data.videoId = output[1])
+        !_.isUndefined(output[2]) && (this.data.playerState = output[2])
+        return [this.data.currentPlayer, this.data.videoId, this.data.playerState]
+    }.bind(this)
+    this.playVideo = function () {
+        PTI.prototype.composeAndRunLifeCycle(this, 'playVideo')
+        return
+    }.bind(this)
+    this.pauseVideo = function () {
+        PTI.prototype.composeAndRunLifeCycle(this, 'pauseVideo')
+        return
+    }.bind(this)
+    this.seekTo = function (seekTo) {
+        var output = PTI.prototype.composeAndRunLifeCycle(this, 'seekTo', seekTo)
+        !_.isUndefined(output[0]) && (this.data.seekTo = output[0])
+        return this.data.seekTo
     }.bind(this)
     this.get = function (functions) {
         var output = []
@@ -111,6 +121,24 @@ function PTI(options) {
             }.bind(this)
             this.showPlayer = function () {
                 self.showPlayer(this.name)
+            }.bind(this)
+            this.playVideo = function () {
+                PTI.prototype.composeAndRunLifeCycle(this, 'playVideo')
+                return
+            }.bind(this)
+            this.pauseVideo = function () {
+                PTI.prototype.composeAndRunLifeCycle(this, 'pauseVideo')
+                return
+            }.bind(this)
+            this.seekTo = function (seekTo) {
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'seekTo', seekTo)
+                !_.isUndefined(output[0]) && (this.data.seekTo = output[0])
+                return this.data.seekTo
+            }.bind(this)
+            this.duration = function (duration) {
+                var output = PTI.prototype.composeAndRunLifeCycle(this, 'duration', duration)
+                !_.isUndefined(output[0]) && (this.data.duration = output[0])
+                return this.data.duration
             }.bind(this)
         } else {
             throw "can't create player without name"

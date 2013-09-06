@@ -17,6 +17,9 @@ pti.yt.options.onAfterPlayerState = function (playerState) {
 pti.y.options.onErrorCallback = function (error) {
     iw.postMessage(this.type, this.operation, error)
 }
+pti.y.options.onAfterDuration = function(duration) {
+    iw.postMessage(this.type, this.operation, duration)
+}
 
 pti.s.options.onAfterPlayerState = function (playerState) {
     iw.postMessage(this.type, this.operation, playerState)
@@ -30,10 +33,16 @@ pti.s.options.onPlayerReady = function (ready) {
 pti.s.options.onSoundIndex = function(index) {
     iw.postMessage(this.type, this.operation, index)
 }
+pti.s.options.onAfterDuration = function(duration) {
+    iw.postMessage(this.type, this.operation, duration)
+}
 
 pti.v.options.onAfterPlayerState = function (playerState) {
     iw.postMessage(this.type, this.operation, playerState)
 }
 pti.v.options.onCurrentTime = function (time) {
     iw.postMessage(this.type, this.operation, time)
+}
+pti.v.options.onAfterDuration = function(duration) {
+    iw.postMessage(this.type, this.operation, duration)
 }

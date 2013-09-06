@@ -7,22 +7,24 @@ new pti.Player("y", {
         return state ? [state.data] : []
     },
     onPlayerState:function (state) {
+        var self = this.scope
         if (state == 1 && pti.blockPlayback()) {
             youtube.stopVideo()
-            clearInterval(pti.yt.temp['playProgressInterval'])
+            clearInterval(self.temp['playProgressInterval'])
         } else if (state == 1) {
-            if (pti.yt.temp['errorTimeout']) {
-                clearTimeout(pti.yt.temp['errorTimeout'])
+            self.duration(youtube.getDuration())
+            if (self.temp['errorTimeout']) {
+                clearTimeout(self.temp['errorTimeout'])
                 console.log('no error')
             }
-            typeof pti.yt.temp['seekToOnce'] == "function" && pti.yt.temp['seekToOnce']()
-            pti.yt.temp['playProgressInterval'] = setInterval(function () {
-                pti.yt.currentTime(youtube.getCurrentTime())
+            typeof self.temp['seekToOnce'] == "function" && self.temp['seekToOnce']()
+            self.temp['playProgressInterval'] = setInterval(function () {
+                self.currentTime(youtube.getCurrentTime())
             }, 750)
         } else if (state == 0) {
             console.log('YT NEXT')
         } else {
-            clearInterval(pti.yt.temp['playProgressInterval'])
+            clearInterval(self.temp['playProgressInterval'])
         }
         console.log(state)
     },
@@ -31,10 +33,11 @@ new pti.Player("y", {
     },
     onError:function (error) {
         var scope = this
+        self = this.scope
         var callback = this.callback
-        clearTimeout(pti.yt.temp['errorTimeout'])
-        pti.yt.temp['errorTimeout'] = setTimeout(function () {
-            pti.yt.temp['errorTimeout'] = null
+        clearTimeout(self.temp['errorTimeout'])
+        self.temp['errorTimeout'] = setTimeout(function () {
+            self.temp['errorTimeout'] = null
             callback.call(scope, error)
             console.log('ERROR NEXT')
         }, 2000)
@@ -43,13 +46,14 @@ new pti.Player("y", {
         youtube.stopVideo()
     },
     onLoadVideo:function (videoId, playerState) {
-        pti.yt.showPlayer()
+        var self = this.scope
+        self.showPlayer()
         if (pti.blockPlayback()) {
             youtube.stopVideo()
         } else {
-            pti.yt.temp['seekToOnce'] = null
+            self.temp['seekToOnce'] = null
             if (playerState) {
-                pti.yt.temp['seekToOnce'] = _.once(function () {
+                self.temp['seekToOnce'] = _.once(function () {
                     youtube.seekTo(playerState.start)
                 })
                 youtube.loadVideoById(videoId)
@@ -61,6 +65,15 @@ new pti.Player("y", {
     },
     onCurrentTime:function (time) {
 //        console.log(time)
+    },
+    onPlayVideo:function () {
+        youtube.playVideo()
+    },
+    onPauseVideo:function () {
+        youtube.pauseVideo()
+    },
+    onSeekTo:function(seekTo) {
+        youtube.seekTo(seekTo)
     }
 }, 'youtubeContainer')
 

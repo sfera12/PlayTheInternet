@@ -1,6 +1,20 @@
-var pti = new PTI({onBlockPlayback:function (blockPlayback) {
-    iw.postMessage(this.type, this.operation, blockPlayback)
-}})
+var pti = new PTI({
+    onBlockPlayback:function (blockPlayback) {
+        iw.postMessage(this.type, this.operation, blockPlayback)
+    },
+    onLoadVideo:function (type, videoId, playerState) {
+        iw.postMessage(this.type, this.operation, type, videoId, playerState)
+    },
+    onPlayVideo:function () {
+        iw.postMessage(this.type, this.operation)
+    },
+    onPauseVideo:function () {
+        iw.postMessage(this.type, this.operation)
+    },
+    onSeekTo:function (seekTo) {
+        iw.postMessage(this.type, this.operation, seekTo)
+    }
+})
 
 var playerIframe = $('iframe')[0].contentWindow
 var playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]

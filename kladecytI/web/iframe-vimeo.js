@@ -21,7 +21,7 @@ new pti.Player("v", {
             self.currentTime(playProgress.seconds)
 //            stuckPlayProgress()
         }, 500)
-        $('#vimeoContainer').empty().append(self.options.playerTemplate({id: videoId}))
+        $('#vimeoContainer').empty().append(self.options.playerTemplate({id:videoId}))
         window.vimeo = $f($('#vimeo')[0])
         self.temp.playTimeout = setTimeout(function () {
             clearInterval(self.temp.playInterval)
@@ -35,6 +35,9 @@ new pti.Player("v", {
                 clearInterval(self.temp.playInterval)
                 clearTimeout(self.temp.playTimeout)
                 vimeo.removeEvent('play')
+                vimeo.api('getDuration', function(duration) {
+                    self.duration(duration)
+                })
                 if (playerState) {
                     vimeo.api('seekTo', playerState.start)
                 }
@@ -62,9 +65,18 @@ new pti.Player("v", {
     },
     onInitializePlayer:function () {
     },
-    onClearTimeout:function() {
+    onClearTimeout:function () {
         var self = this.scope
         clearInterval(self.temp.playInterval)
         clearTimeout(self.temp.playTimeout)
+    },
+    onPlayVideo:function () {
+        vimeo.api('play')
+    },
+    onPauseVideo:function () {
+        vimeo.api('pause')
+    },
+    onSeekTo:function (seekTo) {
+        vimeo.api('seekTo', seekTo)
     }
 }, 'vimeoContainer')
