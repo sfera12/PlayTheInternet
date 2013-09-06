@@ -33,7 +33,7 @@ new pti.Player("s", {
                 self.temp.seekToOnce = null
                 if (playerState) {
                     self.temp.seekToOnce = _.once(function () {
-                        scWidget.seekTo(playerState.start)
+                        scWidget.seekTo(playerState.start * 1000)
                     })
                 }
                 if (playerState && playerState.index) {
