@@ -27,12 +27,12 @@ if (chrome.extension) {
                 if (request.operation == "parsedPlaylist") {
                     parsedPlaylist.jPlaylist.empty();
                     parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data))
-                    $("#tabs").tabs("option", "active", 4);
                 }
             }
         );
 
         $(document).ready(function() {
+            $("#tabs").tabs("option", "active", 4);
             window.playerWidget = new PlayerWidget('#playerWidgetContainer')
             var backgroundWindow = chrome.extension.getBackgroundPage()
             playerWidget.data.listenObject = backgroundWindow.pti

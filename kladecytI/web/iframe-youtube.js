@@ -17,10 +17,16 @@ new pti.Player("y", {
                 clearTimeout(self.temp['errorTimeout'])
                 console.log('no error')
             }
-            typeof self.temp['seekToOnce'] == "function" && self.temp['seekToOnce']()
             self.temp['playProgressInterval'] = setInterval(function () {
-                self.currentTime(youtube.getCurrentTime())
+                //for cursor in playerWidget
+                if(!_.isNull(self.temp['useThis']) ) {
+                    self.currentTime(self.temp['useThis'])
+                } else {
+                    self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
+                }
+                //for cursor in playerWidget end
             }, 750)
+            _.result(self.temp, 'seekToOnce')
         } else if (state == 0) {
             console.log('YT NEXT')
         } else {
@@ -53,8 +59,19 @@ new pti.Player("y", {
         } else {
             self.temp['seekToOnce'] = null
             if (playerState) {
+//                var state = playerState.state
+//                var start = playerState.start
                 self.temp['seekToOnce'] = _.once(function () {
-                    youtube.seekTo(playerState.start)
+                    if (playerState.state == 2) {
+                        clearInterval(self.temp['playProgressInterval']) //for cursor in playerWidget
+                        youtube.pauseVideo()
+                        self.temp['useThis'] = playerState.start           //for cursor in playerWidget
+                        self.currentTime(playerState.start) //for cursor in playerWidget
+                        self.temp['seekToOnce'] = _.once(function() {
+                            self.temp['useThis'] = null     //for cursor in playerWidget
+                            youtube.seekTo(playerState.start)
+                        })
+                    }
                 })
                 youtube.loadVideoById(videoId)
             } else {
@@ -72,7 +89,7 @@ new pti.Player("y", {
     onPauseVideo:function () {
         youtube.pauseVideo()
     },
-    onSeekTo:function(seekTo) {
+    onSeekTo:function (seekTo) {
         youtube.seekTo(seekTo)
     }
 }, 'youtubeContainer')
