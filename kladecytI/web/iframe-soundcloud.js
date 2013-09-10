@@ -32,9 +32,22 @@ new pti.Player("s", {
             } else {
                 self.temp.seekToOnce = null
                 if (playerState) {
-                    self.temp.seekToOnce = _.once(function () {
-                        scWidget.seekTo(playerState.start * 1000)
-                    })
+                    if (playerState.state == 2) {
+                        self.temp.seekToOnce = _.once(function () {
+                            scWidget.pause()
+                            self.temp.isPausedDebounceObject = { start: playerState.start * 1000, state: playerState.state }
+                            self.temp.seekToOnce = _.once(function () {
+                                scWidget.play()
+                                self.temp.seekToOnce = _.once(function () {
+                                    scWidget.seekTo(playerState.start * 1000)
+                                })
+                            })
+                        })
+                    } else {
+                        self.temp.seekToOnce = _.once(function () {
+                            scWidget.seekTo(playerState.start * 1000)
+                        })
+                    }
                 }
                 if (playerState && playerState.index) {
                     scWidget.skip(playerState.index)
@@ -67,18 +80,23 @@ new pti.Player("s", {
                     })
                 })
             });
+            self.temp.isPausedDebounce = _.debounce(function() {
+                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.state && self.playerState(self.temp.isPausedDebounceObject.state)
+                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start)
+            }, 550)
             self.temp.playProgressThrottle = _.throttle(function (position) {
 //                console.log(position)
                 self.currentTime(position)
 
                 scWidget.isPaused(function (paused) {
+                    self.temp.isPausedDebounce()
                     paused ? self.playerState(2) : self.playerState(1);
                 })
                 //TODO 2013-09-06 maybe move getSoundIndex and duration to .FINISH event
                 scWidget.getCurrentSoundIndex(function (index) {
                     self.soundIndex(index)
                 })
-                scWidget.getDuration(function(duration) {
+                scWidget.getDuration(function (duration) {
                     self.duration(duration)
                 })
                 if (self.temp.dontPlay || pti.blockPlayback()) {
@@ -90,7 +108,7 @@ new pti.Player("s", {
                         _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
                     }
                 }
-            }, 500)
+            }, 250)
             scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
                 scWidget.getPosition(self.temp.playProgressThrottle)
             })
@@ -109,11 +127,11 @@ new pti.Player("s", {
     onSeekTo:function (seekTo) {
         scWidget.seekTo(seekTo * 1000)
     },
-    onBeforeCurrentTime:function(inputs) {
-        return inputs ? [inputs/1000] : []
+    onBeforeCurrentTime:function (inputs) {
+        return inputs ? [inputs / 1000] : []
     },
-    onBeforeDuration:function(inputs) {
-        return inputs ? [inputs/1000] : []
+    onBeforeDuration:function (inputs) {
+        return inputs ? [inputs / 1000] : []
     }
 }, 'soundCloudContainer')
 
