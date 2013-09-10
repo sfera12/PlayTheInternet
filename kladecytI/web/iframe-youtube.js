@@ -59,14 +59,17 @@ new pti.Player("y", {
         } else {
             self.temp['seekToOnce'] = null
             if (playerState) {
-//                var state = playerState.state
-//                var start = playerState.start
                 self.temp['seekToOnce'] = _.once(function () {
                     if (playerState.state == 2) {
                         clearInterval(self.temp['playProgressInterval']) //for cursor in playerWidget
                         youtube.pauseVideo()
                         self.temp['useThis'] = playerState.start           //for cursor in playerWidget
                         self.currentTime(playerState.start) //for cursor in playerWidget
+                        self.temp['seekToOnce'] = _.once(function() {
+                            self.temp['useThis'] = null     //for cursor in playerWidget
+                            youtube.seekTo(playerState.start)
+                        })
+                    } else {
                         self.temp['seekToOnce'] = _.once(function() {
                             self.temp['useThis'] = null     //for cursor in playerWidget
                             youtube.seekTo(playerState.start)
