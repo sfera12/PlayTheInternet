@@ -4,7 +4,7 @@ new pti.Player("y", {
         console.log('player ready')
     },
     onBeforePlayerState:function (state) {
-        return state && state.data ? [state.data] : [state]
+        return state && state.data != null ? [state.data] : [state]
     },
     onPlayerState:function (state) {
         var self = this.scope
