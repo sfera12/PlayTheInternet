@@ -39,6 +39,11 @@ new pti.Player("v", {
                     self.duration(duration)
                 })
                 if (playerState) {
+                    if(playerState.state == 2) {
+                        vimeo.api('pause')
+                        self.currentTime(playerState.start)
+                        self.playerState(playerState.state)
+                    }
                     vimeo.api('seekTo', playerState.start)
                 }
                 vimeo.addEvent('play', function () {

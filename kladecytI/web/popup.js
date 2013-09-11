@@ -43,7 +43,8 @@ if (chrome.extension) {
                 backgroundWindow.playlist.playerType(true)
                 backgroundWindow.pti.blockPlayback(false)
                 var selectedVideoFeed = playlist.getSelectedVideoFeed();
-                var selectedVideoPlayerState = {start: pti[selectedVideoFeed.type].currentTime()};
+                var currentPtiState = pti.get(['currentTime', 'playerState'])
+                var selectedVideoPlayerState = {start: currentPtiState[0], state: currentPtiState[1]};
                 backgroundWindow.playlist.playerType(true)
                 backgroundWindow.playlist.playVideo({videoFeed:selectedVideoFeed}, selectedVideoPlayerState)
             }, true);
@@ -51,7 +52,8 @@ if (chrome.extension) {
             backgroundWindow.playlist.playerType(false)
             backgroundWindow.pti.blockPlayback(true)
             var backgroundSelectedVideoFeed = backgroundWindow.playlist.getSelectedVideoFeed();
-            var backgroundSelectedVideoPlayerState = {start: backgroundWindow.pti[backgroundSelectedVideoFeed.type].currentTime()};
+            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState'])
+            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1]};
 //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
             playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)

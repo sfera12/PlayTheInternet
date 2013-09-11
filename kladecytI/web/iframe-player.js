@@ -4,7 +4,7 @@ var pti = new PTI({
             var players = this.scope.players
             for (var playerName in players) {
                 var player = players[playerName]
-                _.result(player, 'stopVideo')
+                _.isFunction(player.stopVideo) && player.stopVideo()
             }
             console.log('stopped all players')
         }

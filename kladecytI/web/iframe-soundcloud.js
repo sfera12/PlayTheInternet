@@ -35,12 +35,15 @@ new pti.Player("s", {
                     if (playerState.state == 2) {
                         self.temp.seekToOnce = _.once(function () {
                             scWidget.pause()
-                            self.temp.isPausedDebounceObject = { start: playerState.start * 1000, state: playerState.state }
+                            self.temp.isPausedDebounceObject = { start:playerState.start * 1000, state:playerState.state }
                             self.temp.seekToOnce = _.once(function () {
-                                scWidget.play()
-                                self.temp.seekToOnce = _.once(function () {
-                                    scWidget.seekTo(playerState.start * 1000)
-                                })
+                                //elegant solution
+                                scWidget.seekTo(playerState.start * 1000)
+                                scWidget.seekTo(playerState.start * 1000)
+                                scWidget.seekTo(playerState.start * 1000)
+                                scWidget.seekTo(playerState.start * 1000)
+                                scWidget.seekTo(playerState.start * 1000)
+                                //elegant solution end
                             })
                         })
                     } else {
@@ -80,10 +83,10 @@ new pti.Player("s", {
                     })
                 })
             });
-            self.temp.isPausedDebounce = _.debounce(function() {
+            self.temp.isPausedDebounce = _.debounce(function () {
                 self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.state && self.playerState(self.temp.isPausedDebounceObject.state)
-                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start)
-            }, 550)
+                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start) && console.log(self.temp.isPausedDebounceObject.start)
+            }, 1100)
             self.temp.playProgressThrottle = _.throttle(function (position) {
 //                console.log(position)
                 self.currentTime(position)
@@ -108,7 +111,7 @@ new pti.Player("s", {
                         _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
                     }
                 }
-            }, 250)
+            }, 500)
             scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
                 scWidget.getPosition(self.temp.playProgressThrottle)
             })
