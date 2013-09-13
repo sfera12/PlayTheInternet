@@ -1,4 +1,7 @@
 new pti.Player("y", {
+    onBeforePlayerReady:function() {
+        return [1]
+    },
     onPlayerReady:function (playerapiid) {
 //        console.log(playerapiid)
         console.log('player ready')
@@ -39,7 +42,7 @@ new pti.Player("y", {
         clearTimeout(self.temp.errorTimeout)
         self.temp.errorTimeout = setTimeout(function () {
             self.temp.errorTimeout = null
-            callback.call(scope, error)
+            _.isFunction(callback) && callback.call(scope, error)
             console.log('ERROR NEXT')
         }, 2000)
     },

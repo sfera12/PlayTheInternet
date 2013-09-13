@@ -169,4 +169,3 @@ PTI.prototype.runLifeCycle = function (data1, data2, data3) {
     return inputs
 }
 
-var pti = new PTI()
