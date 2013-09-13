@@ -9,4 +9,4 @@
 .temp-position-relative { position: relative }
 .temp-border-none { border: none; }
 .temp-margin-none { margin: 0px; }
-.temp-player-widget { position: relative; width: 800px; height: 40px; margin: auto;}
+.temp-player-widget { position: relative; width: 100%; height: 40px; margin: auto;}

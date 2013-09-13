@@ -18,7 +18,7 @@
     <!--<link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css">    -->
     <!--<link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">-->
     <!--<link rel="stylesheet" href="https://rawgithub.com/eternicode/bootstrap-datepicker/master/css/datepicker.css">-->
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="webpage.css">
     <link rel="stylesheet" href="bootswatch/cosmo.css">
     <link rel="stylesheet" href="bootswatch/cosmo-custom.css">
     <link rel="stylesheet" href="datepicker.css">
@@ -29,7 +29,8 @@
     <!--<script src="https://rawgithub.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js"></script>-->
     <script src="bootstrap-datepicker.js"></script>
     <script src="jstorage.min.js"></script>
-    <script src="bootstrapCustom/js/bootstrap.js"></script>
+    <!--TODO 2013-09-04 CONFLICTS WITH JQUERY TOOLTIP -->
+    <!--<script src="bootstrapCustom/js/bootstrap.js"></script>-->
     <script src="underscore-min.js"></script>
     <script src="SiteHandlers.js"></script>
     <!--<script src="js/jqui1.10.3/jquery-ui-1.10.3.custom.min.js"></script>-->
@@ -44,6 +45,8 @@
     <link rel="stylesheet" href="playlist.css">
     <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="temp.css">
+    <link rel="stylesheet" href="player-widget.css">
+    <script src="playerWidget.js"></script>
 </head>
 <body>
 <!--<script type="text/javascript">-->
@@ -58,7 +61,8 @@
     <!--})();-->
 
 <!--</script>-->
-<div id="dPLists" class="dPLists">
+<div id="playerWidgetContainer" class="temp-player-widget"></div>
+<div id="dPLists" class="iframeParentdPLists">
     <div id="firstView">
         <div id="tabs" class="leftFull temp-position-relative">
             <ul class="nav nav-pills temp-no-height">

@@ -1,8 +1,8 @@
 .playerWidget {
     position: absolute;
     width: 100%;
-    height: 40px;
-    border: 1px solid black;
+    height: 39px;
+    margin-bottom: 1px;
 }
 
 .playerWidget .button.mouseDown {
@@ -25,9 +25,9 @@
 
 .playerWidget .button {
     float: left;
-    background-size: 40px!important;
-    width: 40px;
-    height: 40px;
+    background-size: 39px!important;
+    width: 39px;
+    height: 39px;
 }
 
 .playerWidget .progressBarContainer {
@@ -35,12 +35,12 @@
     background: #D4FFF7;
     left: 120px;
     right: 0px;
-    height: 40px;
+    height: 39px;
 }
 
 .playerWidget .progressBar {
     position: relative;
     background: #007FFF;
     width: 0%;
-    height: 40px;
+    height: 39px;
 }

@@ -23,6 +23,7 @@ if (!chrome.extension) {
                     playFirstLoaded()
                 })
             });
+        var playerWidget = new PlayerWidget('#playerWidgetContainer')
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
     })
 }

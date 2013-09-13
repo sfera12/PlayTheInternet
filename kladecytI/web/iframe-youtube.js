@@ -1,5 +1,5 @@
 new pti.Player("y", {
-    onBeforePlayerReady:function() {
+    onBeforePlayerReady:function () {
         return [1]
     },
     onPlayerReady:function (playerapiid) {
@@ -27,7 +27,7 @@ new pti.Player("y", {
             _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
         } else if (state == 0) {
             console.log('YT NEXT')
-        } else {
+        } else if (!_.isUndefined(state)) {
             clearInterval(self.temp.playProgressInterval)
         }
         console.log(state)
