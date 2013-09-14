@@ -11,3 +11,13 @@ var urlParams = {};
 })();
 //window.location.hash.match(/(#|;)([^=]+)=([^;]+)/g)
 //alert(urlParams["auth"]);
+
+//TODO URLSHORTENER
+$.ajax({
+    url:'https://www.googleapis.com/urlshortener/v1/url',
+    type: 'post',
+    contentType: 'application/json',
+    data:'{"longUrl":"' + window.location.href + '"}',
+    success: function() { console.log(arguments); $('#qrcode').empty(); $('#qrcode').qrcode(arguments[0].id)},
+    error: function() {console.log(arguments)}
+})
