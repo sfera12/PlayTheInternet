@@ -17,7 +17,7 @@ $.ajax({
     url:'https://www.googleapis.com/urlshortener/v1/url',
     type: 'post',
     contentType: 'application/json',
-    data:'{"longUrl":"' + window.location.href + '"}',
+    data:'{"longUrl":"' + window.location.href.substr(0,2039) + '"}',
     success: function() { console.log(arguments); $('#qrcode').empty(); $('#qrcode').qrcode(arguments[0].id)},
     error: function() {console.log(arguments)}
 })
