@@ -26,35 +26,11 @@ $.each(gimpedAnimation, function (index, item) {
 })
 
 $(document).ready(function () {
-    $.jStorage.subscribe('queryWindowIds', function (message) {
-//        console.log(message)
-        $.jStorage.publish('windowIds', windowId)
-    })
-    window.ulFirst = new Playlist('#ulFirst', {dontPlay:true})
     window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar', dotPlay:true})
-
     $('.datepicker').datepicker()
     $('#searchCalendar').click(function (evt) {
         propagateCalendar()
     })
-    $('#tAreaParseButton').click(function () {
-        var tAreaText = $('#tArea').val()
-        playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
-    })
-    $('#buildHash').click(function () {
-        $('#buildHashInput').val(window.location.origin + '/display-grid.html' + playlist.buildHash())
-    })
-    $('#renameWindow').click(function () {
-        var renameWindowInputVal = $('#renameWindowInput').val();
-        if (renameWindowInputVal.length > 0) {
-            document.title = document.title.replace(windowId, renameWindowInputVal)
-            windowId = renameWindowInputVal
-        }
-    })
-
-    if (window.location.hash.length == 0) {
-        $("#tabs").tabs("option", "active", 1);
-    }
     var filterThrottle = _.throttle(function () {
         matchTitleRegExp = new RegExp($('#calendarFilterTitle').val(), "gi")
         filterDurationMoreValue = $('#calendarFilterDurationMore').val()
@@ -93,25 +69,7 @@ function propagateCalendar() {
     })
 }
 
-var tabsPlayerContainer = $('#tabs .tabs-player-container')
-$('#tabs').tabs({
-    activate:function (event, ui) {
-        var newTab = $(ui.newTab);
-//        console.log(newTab.text())
-//            if(newTab.text() == "Calendar") {
-//                propagateCalendar()
-//            }
-        if (newTab.text() == "Player") {
-            tabsPlayerContainer.removeClass('leftFull')
-            tabsPlayerContainer.addClass('tabs-player-container')
-        } else {
-            tabsPlayerContainer.addClass('leftFull')
-            tabsPlayerContainer.removeClass('tabs-player-container')
-        }
-        newTab.addClass('active')
-        $(ui.oldTab).removeClass('active')
-    }
-})
+
 //$($('#tabs>ul>li[aria-controls="parsedDiv"]')).css('display', 'none');
 
 var matchTitleRegExp

@@ -304,6 +304,8 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.immediateRecalculatePlaylist = function (dontCache) {
+        this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function" && this.options.debounceRecalculatePlaylistCallback()
+
         this.playlist = this.jPlaylist.find(">div.pti-element-song").filter(function (index, item) {
             item = $(item)
             return item
@@ -319,7 +321,6 @@ function Playlist(appendToElementExpression, options) {
 
     this.debounceRecalculatePlaylist = _.debounce(function (dontCache) {
         this.recalculatePlaylist(dontCache);
-        this.options && typeof this.options.debounceRecalculatePlaylistCallback == "function" && this.options.debounceRecalculatePlaylistCallback()
     }, 50)
 
     Playlist.prototype.playlistVideos = function () {
@@ -599,12 +600,3 @@ var map = function (grouped) {
     })
 }
 
-function redrawHashAndQRCode(playlist) {
-    window.location.hash = playlist.jPlaylist.sortable('toArray')
-    $('#qrcode').empty()
-    try {
-        $('#qrcode').qrcode(window.location.href)
-    } catch (e) {
-        console.log(e)
-    }
-}
