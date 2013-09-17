@@ -23,8 +23,8 @@ if (!chrome.extension) {
                     playFirstLoaded()
                 })
             });
-        var playerWidget = new PlayerWidget('#playerWidgetContainer')
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
+        var playerWidget = new PlayerWidget('#playerWidgetContainer')
         $.jStorage.subscribe('queryWindowIds', function (message) {
 //        console.log(message)
             $.jStorage.publish('windowIds', windowId)

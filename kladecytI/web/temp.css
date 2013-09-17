@@ -4,8 +4,8 @@
 .temp-openNewWindow { position:relative; left: 27px; padding-right: 27px;  }
 .temp-alignQRCode { position: absolute; left: 30px }
 .temp-display-none { display: none; }
-.temp-width-zero-percent { width: 0% }
-.temp-width-hundred-percent { width: 100% }
+.temp-width-zero-percent { width: 0%; position: relative; }
+.temp-width-hundred-percent { width: 100%; position: relative; }
 .temp-position-relative { position: relative }
 .temp-border-none { border: none; }
 .temp-margin-none { margin: 0px; }

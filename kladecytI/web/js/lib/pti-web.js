@@ -1,5 +1,5 @@
 pti.y.options.onAfterPlayerReady = function () {
-    window.playFirstLoaded()
+    playFirstLoaded()
 }
 pti.y.options.onAfterPlayerState = function (state) {
     if (state == 0) {
@@ -11,6 +11,7 @@ pti.y.options.onAfterError = function (error) {
 }
 
 pti.s.options.onAfterPlayerReady = function () {
+    console.log('play first loaded sc')
     playFirstLoaded()
 }
 pti.s.options.onAfterPlayerState = function (state) {
