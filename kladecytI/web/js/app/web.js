@@ -10,8 +10,7 @@ require(["jquery", "underscore"], function () {
         onceLoaded()
     })
 })
-console.log('play first loaded initialized')
-define(["playlist", "pti-web", "youtube-api", "soundcloud", "vimeo", "playerwidget"], function (a, b, c, d) {
+define(["playlist", "pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget"], function (a, b, c, d) {
     $(document).ready(function () {
         var tabsPlayerContainer = $('#tabs .tabs-player-container')
         $('#tabs').tabs({
