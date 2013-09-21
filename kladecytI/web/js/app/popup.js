@@ -94,6 +94,7 @@ define(["playlist", "pti", "player-widget"], function () {
             playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
             playerWidget.data.listenObject = pti
         }
+        //TODO listen to events even before iframe is created and add iframe after(make IframeWrapper AMD module)
         $('#players').html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
         require(["iframe-popup"], function () {
             window.afterPlayerReady()
