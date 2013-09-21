@@ -1,12 +1,14 @@
-window.playFirstLoaded = function() {}
-window.redrawHashAndQRCode = function() {}
+window.playFirstLoaded = function () {
+}
+window.redrawHashAndQRCode = function () {
+}
 var link = document.createElement("link");
 link.type = "text/css";
 link.rel = "stylesheet";
 link.href = "popup.css";
 document.getElementsByTagName("head")[0].appendChild(link);
 
-define(["playlist", "iframe-observer", "player-widget"], function() {
+define(["playlist", "pti", "player-widget"], function () {
     window.windowId = GUID()
     window.playlist = new Playlist("#ulSecond",
         {
@@ -25,7 +27,7 @@ define(["playlist", "iframe-observer", "player-widget"], function() {
         activate:function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {
-                require(["qrcode"], function() {
+                require(["qrcode"], function () {
                     buildQR()
                 })
             }
@@ -62,7 +64,8 @@ define(["playlist", "iframe-observer", "player-widget"], function() {
         }
     );
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        require(["parse-content"])
         $("#tabs").tabs("option", "active", 4);
         var backgroundWindow = chrome.extension.getBackgroundPage()
         window.playerWidget = new PlayerWidget('#playerWidgetContainer')
@@ -75,20 +78,26 @@ define(["playlist", "iframe-observer", "player-widget"], function() {
             backgroundWindow.pti.blockPlayback(false)
             var selectedVideoFeed = playlist.getSelectedVideoFeed();
             var currentPtiState = pti.get(['currentTime', 'playerState'])
-            var selectedVideoPlayerState = {start: currentPtiState[0], state: currentPtiState[1]};
+            var selectedVideoPlayerState = {start:currentPtiState[0], state:currentPtiState[1]};
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.playlist.playVideo({videoFeed:selectedVideoFeed}, selectedVideoPlayerState)
         }, true);
-        var backgroundWindow = chrome.extension.getBackgroundPage()
-        backgroundWindow.playlist.playerType(false)
-        backgroundWindow.pti.blockPlayback(true)
-        var backgroundSelectedVideoFeed = backgroundWindow.playlist.getSelectedVideoFeed();
-        var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState'])
-        var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1]};
-//            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
-        playlist.playerType(true)
-        playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
-        playerWidget.data.listenObject = pti
+        window.playerReady = function() {
+            window.backgroundWindow = chrome.extension.getBackgroundPage()
+            backgroundWindow.playlist.playerType(false)
+            backgroundWindow.pti.blockPlayback(true)
+            var backgroundSelectedVideoFeed = backgroundWindow.playlist.getSelectedVideoFeed();
+            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState'])
+            var backgroundSelectedVideoPlayerState = {start:backgroundCurrentPtiState[0], state:backgroundCurrentPtiState[1]};
+            //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
+            playlist.playerType(true)
+            playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
+            playerWidget.data.listenObject = pti
+        }
+        $('#players').html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
+        require(["iframe-popup"], function () {
+            window.afterPlayerReady()
+        })
     })
     $('#tabs a[href="#player"]').click(function () {
         popupPlayerMain();

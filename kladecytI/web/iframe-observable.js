@@ -20,6 +20,9 @@ pti.y.options.onErrorCallback = function (error) {
 pti.y.options.onAfterDuration = function(duration) {
     iw.postMessage(this.type, this.operation, duration)
 }
+pti.y.options.onPlayerReady = function() {
+    iw.postMessage(this.type, this.operation)
+}
 
 pti.s.options.onAfterPlayerState = function (playerState) {
     iw.postMessage(this.type, this.operation, playerState)

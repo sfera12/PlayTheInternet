@@ -41,7 +41,8 @@ requirejs.config({
         "vimeo":["pti", "vimeo-api", "jquery", "underscore"],
         "pti-web":["youtube", "soundcloud", "vimeo", "jquery", "underscore"],
         "iframe-wrapper":["underscore"],
-        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"]
+        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
+        "iframe-popup":["iframe-observer"]
     }
 });
 
