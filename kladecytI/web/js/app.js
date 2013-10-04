@@ -1,7 +1,3 @@
-// Place third party dependencies in the lib folder
-//
-// Configure loading modules from the lib directory,
-// except 'app' ones, 
 requirejs.config({
     "baseUrl":"js/lib",
     "paths":{
@@ -27,22 +23,28 @@ requirejs.config({
         "iframe-observer":"iframe-observer"
     },
     "shim":{
+        "underscore": {
+            exports: "_"
+        },
+        "jquery": {
+            exports: "$"
+        },
         "jquery-ui":["jquery"],
         "jstorage":["jquery"],
         "sitehandlers":["jquery", "underscore", "jstorage"],
         "playlist":["sitehandlers", "slimscroll"],
         "slimscroll":["jquery-ui"],
-        "player-widget":["jquery", "underscore"],
+//        "player-widget":["jquery", "underscore"],
         "qrcode":["jquery", "qrcode-core"],
-        "pti":["pti-abstract", "jquery", "underscore"],
-        "youtube":["pti", "jquery", "underscore"],
+//        "pti":["pti-abstract", "jquery", "underscore"],
+//        "youtube":["pti", "jquery", "underscore"],
         "youtube-api":["youtube"],
-        "soundcloud":["pti", "soundcloud-api", "jquery", "underscore"],
-        "vimeo":["pti", "vimeo-api", "jquery", "underscore"],
-        "pti-web":["youtube", "soundcloud", "vimeo", "jquery", "underscore"],
-        "iframe-wrapper":["underscore"],
-        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
-        "iframe-popup":["iframe-observer"]
+//        "soundcloud":["pti", "soundcloud-api", "jquery", "underscore"],
+//        "vimeo":["pti", "vimeo-api", "jquery", "underscore"],
+//        "pti-web":["youtube", "soundcloud", "vimeo", "jquery", "underscore"],
+//        "iframe-wrapper":["underscore"],
+//        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
+//        "iframe-popup":["iframe-observer"]
     }
 });
 

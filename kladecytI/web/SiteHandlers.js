@@ -83,8 +83,8 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.errorTemplate = _.template('<div><div class="image-div"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
-    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
-    YoutubeHandler.prototype.regexGroup = 4
+    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+v=)|(\u0025253Fv\u0025253D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
+    YoutubeHandler.prototype.regexGroup = 7
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",

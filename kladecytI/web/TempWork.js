@@ -27,4 +27,5 @@ var selectMatched = function(node, matchText) { if(matchText(node)) { $(node).ad
 _.each(calendarPlaylist.playlist, function(item) {  })
 
 //TODO youtube parse
+watch(([^ \'\'<>]+v=)|(\u0025253Fv\u0025253D))
 http://www.youtube.com/attribution_link?a=YFxsWIwpFY035tQrnCYesw&u=%2Fwatch%3Fv%3D2O2Aec2o-4w%26feature%3Dshare

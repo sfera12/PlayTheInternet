@@ -64,12 +64,16 @@ define(["playlist", "pti", "player-widget"], function () {
         }
     );
 
+    var backgroundWindow = chrome.extension.getBackgroundPage()
+    window.playerWidget
+    require(['player-widget'], function (PlayerWidget) {
+        window.playerWidget = new PlayerWidget('#playerWidgetContainer')
+        playerWidget.data.listenObject = backgroundWindow.pti
+    })
+
     $(document).ready(function () {
         require(["parse-content"])
         $("#tabs").tabs("option", "active", 4);
-        var backgroundWindow = chrome.extension.getBackgroundPage()
-        window.playerWidget = new PlayerWidget('#playerWidgetContainer')
-        playerWidget.data.listenObject = backgroundWindow.pti
     })
 
     var popupPlayerMain = _.once(function () {

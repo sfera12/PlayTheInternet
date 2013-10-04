@@ -12,12 +12,17 @@ require(["jquery", "underscore"], function () {
 })
 define(["playlist", "pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget"], function (a, b, c, d) {
     $(document).ready(function () {
+        var playerWidget
+        require(['player-widget'], function (PlayerWidget) {
+            playerWidget = new PlayerWidget('#playerWidgetContainer')
+        })
+
         var tabsPlayerContainer = $('#tabs .tabs-player-container')
         $('#tabs').tabs({
             activate:function (event, ui) {
                 var newTab = $(ui.newTab);
                 if (newTab.text() == "Options") {
-                    require(["qrcode"], function() {
+                    require(["qrcode"], function () {
                         buildQR()
                     })
                 }
@@ -75,7 +80,6 @@ define(["playlist", "pti-web", "youtube-api", "soundcloud", "vimeo", "player-wid
         var playlist = window.playlist
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)
 
-        var playerWidget = new PlayerWidget('#playerWidgetContainer')
         $.jStorage.subscribe('queryWindowIds', function (message) {
 //        console.log(message)
             $.jStorage.publish('windowIds', windowId)
