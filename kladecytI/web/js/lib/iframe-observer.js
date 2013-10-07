@@ -1,7 +1,6 @@
-var iw
-var pti
 define('iframe-observer', ["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrapper, $) {
-    pti = new PTI({
+    $('#players').html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
+    var pti = new PTI({
         onBlockPlayback:function (blockPlayback) {
             iw.postMessage(this.type, this.operation, blockPlayback)
         },
@@ -75,4 +74,5 @@ define('iframe-observer', ["pti-abstract", "iframe-wrapper", "jquery"], function
 
     iw = new IframeWrapper(playerIframe, playerIframeHosts)
     iw.listenAllEvents(pti.players)     //currentTime, error, playerState
+    return {pti: pti, iw: iw}
 })

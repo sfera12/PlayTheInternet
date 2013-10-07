@@ -1,7 +1,7 @@
 define('player-widget', ["jquery", "underscore"], function ($, _) {
     function PlayerWidget(elementExpression) {
         var self = this
-        this.data = {listenObject:pti}
+        this.data = {listenObject:null}
         this.jPlayerWidget = $('<div class="playerWidget"><div class="prev button"></div><div class="play button"></div><div class="next button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
 
         this.trackLength = 60

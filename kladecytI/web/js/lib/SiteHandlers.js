@@ -40,7 +40,7 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.playVideoFeed = function (videoFeed, playerState) {
             clearTimeout(SiteHandlerManager.prototype.errorTimeout)
-            pti.loadVideo(videoFeed.type, videoFeed.id, playerState)
+            siteHandlersPti.loadVideo(videoFeed.type, videoFeed.id, playerState)
 //            currentPlayingHandler = siteHandler
     }
 

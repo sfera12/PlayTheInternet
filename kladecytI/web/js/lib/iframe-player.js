@@ -1,6 +1,5 @@
-var pti
 define('pti', ['pti-abstract', 'underscore', 'jquery'], function (PTI, _, $) {
-    pti = new PTI({
+    var pti = new PTI({
         onBlockPlayback:function (flag) {
             if (flag) {
                 var players = this.scope.players

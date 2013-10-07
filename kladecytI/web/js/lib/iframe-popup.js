@@ -1,4 +1,8 @@
-define('iframe-popup', ['iframe-observer'], function() {
+define('iframe-popup', ['iframe-observer'], function(observer) {
+    var pti = observer.pti
+    //TODO getRid of siteHandlersPti
+    window.siteHandlersPti = pti
+    var iw = observer.iw
     window.afterPlayerReady = _.after(3, _.once(function () {
         window.playerReady()
     }))
