@@ -52,7 +52,7 @@ requirejs.config({
 if (!chrome.extension) {
     requirejs(["app/web"]);
 } else if (chrome.extension.getBackgroundPage() == window) {
-
+    requirejs(["app/background"])
 } else {
     requirejs(["app/popup"])
 }
