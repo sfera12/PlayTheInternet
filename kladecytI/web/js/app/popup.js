@@ -8,7 +8,8 @@ link.rel = "stylesheet";
 link.href = "popup.css";
 document.getElementsByTagName("head")[0].appendChild(link);
 
-define(["playlist", "pti", "player-widget", "app/common/hash-qr"], function (a, pti, PlayerWidget, redrawHashAndQRCode) {
+define(["playlist", "app/popup/iframe-popup", "player-widget", "app/common/hash-qr"], function (a, observer, PlayerWidget, redrawHashAndQRCode) {
+    window.pti = observer.pti
     window.windowId = GUID()
     window.playlist = new Playlist("#ulSecond",
         {

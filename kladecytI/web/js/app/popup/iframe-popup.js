@@ -14,4 +14,6 @@ define(['iframe-observer'], function(observer) {
     pti.s.options.onPlayerReady = function (playerState) {
         window.afterPlayerReady()
     }
+
+    return observer
 })
