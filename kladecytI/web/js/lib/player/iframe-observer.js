@@ -1,4 +1,4 @@
-define('iframe-observer', ["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrapper, $) {
+define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrapper, $) {
     $('#players').html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
     var pti = new PTI({
         onBlockPlayback:function (blockPlayback) {

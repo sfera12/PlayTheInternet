@@ -1,4 +1,4 @@
-define('iframe-popup', ['iframe-observer'], function(observer) {
+define(['iframe-observer'], function(observer) {
     var pti = observer.pti
     //TODO getRid of siteHandlersPti
     window.siteHandlersPti = pti

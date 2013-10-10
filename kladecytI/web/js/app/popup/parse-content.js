@@ -13,4 +13,4 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
-chrome.tabs.executeScript(null, {file:"/js/lib/parsePage.js"});
+chrome.tabs.executeScript(null, {file:"/js/app/popup/parsePage.js"});

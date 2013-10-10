@@ -1,4 +1,4 @@
-define('pti-web', ["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], function (pti) {
+define(["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], function (pti) {
     //TODO getRid of siteHandlersPti
     window.siteHandlersPti = pti
     pti.y.options.onAfterPlayerReady = function () {

@@ -1,10 +1,10 @@
-define('tabs', ['jquery', 'jquery-ui'], function ($) {
+define(['jquery', 'jquery-ui'], function ($) {
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
     $('#tabs').tabs({
         activate:function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {
-                require(["hash-qr"], function (redraw) {
+                require(["app/common/hash-qr"], function (redraw) {
                     redraw()
                 })
             }

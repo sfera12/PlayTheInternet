@@ -1,4 +1,4 @@
-define('player-widget', ["jquery", "underscore"], function ($, _) {
+define(["jquery", "underscore"], function ($, _) {
     function PlayerWidget(elementExpression) {
         var self = this
         this.data = {listenObject:null}

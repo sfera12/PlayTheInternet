@@ -1,4 +1,4 @@
-define('hash-qr', ['underscore', 'tabs'], function (_) {
+define(['underscore', 'app/common/tabs'], function (_) {
     function buildQR() {
         var location = window.location.href.replace(/chrome-extension:\/\/[^\/]+/, 'http://playtheinternet.appspot.com').substr(0, 2039)
         $.ajax({

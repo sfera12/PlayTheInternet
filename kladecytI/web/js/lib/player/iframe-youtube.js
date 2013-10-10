@@ -1,4 +1,4 @@
-define('youtube', ["pti", "jquery", "underscore"], function (pti, $, _) {
+define(["pti", "jquery", "underscore"], function (pti, $, _) {
     new pti.Player("y", {
         onBeforePlayerReady:function () {
             return [1]

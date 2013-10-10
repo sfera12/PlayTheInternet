@@ -1,4 +1,4 @@
-define('vimeo', ["pti", "vimeo-api", "jquery", "underscore"], function (pti, vimeoapi, $, _) {
+define(["pti", "vimeo-api", "jquery", "underscore"], function (pti, vimeoapi, $, _) {
     new pti.Player("v", {
         playerTemplate:_.template('<iframe id="vimeo" src="http://player.vimeo.com/video/<%= id %>?api=1&player_id=vimeo" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'),
         onPlayerReady:function (playerapiid) {

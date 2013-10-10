@@ -1,4 +1,4 @@
-define('pti-abstract', ['underscore', 'jquery'], function (_, $) {
+define(['underscore', 'jquery'], function (_, $) {
     function PTI(options) {
         options ? this.options = options : this.options = {}
         this.data = {blockPlayback:false, videoId:null, currentPlayer:null, seekTo:null}

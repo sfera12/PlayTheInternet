@@ -2,25 +2,28 @@ requirejs.config({
     "baseUrl":"js/lib",
     "paths":{
         "app":"../app",
-        "jquery":"jquery-2.0.3.min",
-        "jquery-ui":"jquery-ui-1.10.3.custom.min",
-        "underscore":"underscore-min",
-        "jstorage":"jstorage.min",
+        "jquery":"common/jquery-2.0.3.min",
+        "jquery-ui":"common/jquery-ui-1.10.3.custom.min",
+        "underscore":"common/underscore-min",
+        "jstorage":"common/jstorage.min",
         "sitehandlers":"SiteHandlers",
         "playlist":"Utils",
-        "slimscroll":"jquery.slimscroll",
-        "player-widget":"player-widget",
-        "qrcode":"jquery.qrcode",
-        "pti-abstract":"PTI",
-        "pti":"iframe-player",
-        "youtube":"iframe-youtube",
+        "slimscroll":"common/jquery.slimscroll",
+        "player-widget":"player/player-widget",
+        "qrcode":"common/jquery.qrcode",
+        "qrcode-core":"common/qrcode-core",
+        "pti-abstract":"player/PTI",
+        "pti":"player/iframe-player",
+        "youtube":"player/iframe-youtube",
         "youtube-api":"https://www.youtube.com/iframe_api?lol",
-        "soundcloud":"iframe-soundcloud",
-        "soundcloud-api":"sc-api",
-        "vimeo":"iframe-vimeo",
-        "vimeo-api":"vim-froogaloop2.min",
-        "iframe-wrapper":"iframeWrapper",
-        "iframe-observer":"iframe-observer"
+        "require":"common/require",
+        "soundcloud":"player/iframe-soundcloud",
+        "soundcloud-api":"common/sc-api",
+        "vimeo":"player/iframe-vimeo",
+        "vimeo-api":"common/vim-froogaloop2.min",
+        "iframe-wrapper":"player/iframeWrapper",
+        "iframe-observer":"player/iframe-observer",
+        "iframe-observable":"player/iframe-observable"
     },
     "shim":{
         "underscore": {
@@ -50,7 +53,11 @@ requirejs.config({
 
 // Load the main app module to start the app
 if (!chrome.extension) {
-    requirejs(["app/web"]);
+    if(window.location.href.match('iframe-player') != null) {
+        requirejs(["app/iframe-player"])
+    } else {
+        requirejs(["app/web"]);
+    }
 } else if (chrome.extension.getBackgroundPage() == window) {
     requirejs(["app/background"])
 } else {

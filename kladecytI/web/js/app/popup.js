@@ -8,7 +8,7 @@ link.rel = "stylesheet";
 link.href = "popup.css";
 document.getElementsByTagName("head")[0].appendChild(link);
 
-define(["playlist", "pti", "player-widget", "hash-qr"], function (a, pti, PlayerWidget, redrawHashAndQRCode) {
+define(["playlist", "pti", "player-widget", "app/common/hash-qr"], function (a, pti, PlayerWidget, redrawHashAndQRCode) {
     window.windowId = GUID()
     window.playlist = new Playlist("#ulSecond",
         {
@@ -29,10 +29,10 @@ define(["playlist", "pti", "player-widget", "hash-qr"], function (a, pti, Player
     })
 
     $(document).ready(function () {
-        require(["tabs"], function() {
+        require(["app/common/tabs"], function() {
             $("#tabs").tabs("option", "active", 4);
         })
-        require(["parse-content"])
+        require(["app/popup/parse-content"])
     })
 
     var popupPlayerMain = _.once(function () {
@@ -58,7 +58,7 @@ define(["playlist", "pti", "player-widget", "hash-qr"], function (a, pti, Player
             playerWidget.data.listenObject = pti
         }
         //TODO listen to events even before iframe is created and add iframe after(make IframeWrapper AMD module)
-        require(["iframe-popup"], function () {
+        require(["app/popup/iframe-popup"], function () {
             window.afterPlayerReady()
         })
     })
