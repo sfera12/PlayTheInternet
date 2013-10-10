@@ -10,7 +10,8 @@ require(["jquery", "underscore"], function () {
         onceLoaded()
     })
 })
-define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget"], function (a, b, c, d) {
+define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget"], function (pti, b, c, d) {
+    window.pti = pti
     $(document).ready(function () {
         var playerWidget
         require(['player-widget'], function (PlayerWidget) {

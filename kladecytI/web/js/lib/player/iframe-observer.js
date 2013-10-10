@@ -1,5 +1,27 @@
-define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrapper, $) {
-    $('#players').html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
+define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, $, _) {
+    var iframeContainer = $('#players')
+    iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
+    var playerIframe = iframeContainer.find('iframe')[0].contentWindow
+    var playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]
+//var playerIframeHosts = ["http://playtheinternet.appspot.com"]
+
+    var observerReady = false
+    var readyCallbacks = []
+    function ready(callback) {
+        if (_.isUndefined(callback) && observerReady) {
+            for (var i = 0; i < readyCallbacks.length; i++) {
+                readyCallbacks[i]()
+            }
+        } else {
+            _.isFunction(callback) && readyCallbacks.push(callback)
+            observerReady && ready()
+        }
+    }
+    var afterPlayerReady = _.after(2, function () {
+        observerReady = true
+        ready()
+    })
+
     var pti = new PTI({
         onBlockPlayback:function (blockPlayback) {
             iw.postMessage(this.type, this.operation, blockPlayback)
@@ -18,10 +40,6 @@ define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrappe
         }
     })
 
-    var playerIframe = $('iframe')[0].contentWindow
-    var playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]
-//var playerIframeHosts = ["http://playtheinternet.appspot.com"]
-
     new pti.Player('y', {
         onLoadVideo:function (videoObject, playerState) {
             iw.postMessage(this.type, this.operation, videoObject, playerState)
@@ -38,6 +56,9 @@ define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrappe
         },
         onError:function (error) {
             SiteHandlerManager.prototype.stateChange('ERROR')
+        },
+        onPlayerReady:function (playerState) {
+            afterPlayerReady()
         }
     })
     new pti.Player('s', {
@@ -55,6 +76,9 @@ define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrappe
             if (state == 0) {
                 SiteHandlerManager.prototype.stateChange('NEXT')
             }
+        },
+        onPlayerReady:function (playerState) {
+            afterPlayerReady()
         }
     })
     new pti.Player('v', {
@@ -74,5 +98,5 @@ define(["pti-abstract", "iframe-wrapper", "jquery"], function (PTI, IframeWrappe
 
     iw = new IframeWrapper(playerIframe, playerIframeHosts)
     iw.listenAllEvents(pti.players)     //currentTime, error, playerState
-    return {pti: pti, iw: iw}
+    return {pti:pti, iw:iw, ready:ready}
 })

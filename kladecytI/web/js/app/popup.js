@@ -1,25 +1,16 @@
-window.playFirstLoaded = function () {
-}
-window.redrawHashAndQRCode = function () {
-}
 var link = document.createElement("link");
 link.type = "text/css";
 link.rel = "stylesheet";
 link.href = "popup.css";
 document.getElementsByTagName("head")[0].appendChild(link);
 
-define(["playlist", "app/popup/iframe-popup", "player-widget", "app/common/hash-qr"], function (a, observer, PlayerWidget, redrawHashAndQRCode) {
-    window.pti = observer.pti
+define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
     window.windowId = GUID()
     window.playlist = new Playlist("#ulSecond",
         {
             id:chrome.extension.getBackgroundPage().windowId,
             redraw:true,
             listenKeyChangeCallback:redrawHashAndQRCode,
-            debounceRecalculatePlaylistCallback:_.once(function () {
-                console.log('playFirstLoaded debounce')
-                playFirstLoaded()
-            }),
             dontPlay:true
         });
 
@@ -58,12 +49,14 @@ define(["playlist", "app/popup/iframe-popup", "player-widget", "app/common/hash-
             playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
             playerWidget.data.listenObject = pti
         }
-        //TODO listen to events even before iframe is created and add iframe after(make IframeWrapper AMD module)
-        require(["app/popup/iframe-popup"], function () {
-            window.afterPlayerReady()
-        })
     })
     $('#tabs a[href="#player"]').click(function () {
         popupPlayerMain();
+        require(["iframe-observer"], function(observer) {
+            observer.ready(function() {
+                window.pti = observer.pti
+                window.playerReady()
+            })
+        })
     })
 })

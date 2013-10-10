@@ -1,6 +1,4 @@
 define(["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], function (pti) {
-    //TODO getRid of siteHandlersPti
-    window.siteHandlersPti = pti
     pti.y.options.onAfterPlayerReady = function () {
         playFirstLoaded()
     }
@@ -28,4 +26,6 @@ define(["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], functi
             SiteHandlerManager.prototype.stateChange('NEXT')
         }
     }
+
+    return pti
 })

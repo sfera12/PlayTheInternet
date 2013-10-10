@@ -7,7 +7,5 @@ define(["playlist", "iframe-observer"], function(a, observer) {
                 redraw:true
             });
     })
-    //TODO getRid of siteHandlersPti
-    window.siteHandlersPti = observer.pti
     window.pti = observer.pti
 })
