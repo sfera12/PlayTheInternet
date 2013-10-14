@@ -1,9 +1,3 @@
-var link = document.createElement("link");
-link.type = "text/css";
-link.rel = "stylesheet";
-link.href = "popup.css";
-document.getElementsByTagName("head")[0].appendChild(link);
-
 define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
     window.windowId = GUID()
     window.playlist = new Playlist("#ulSecond",
@@ -25,6 +19,8 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             $("#tabs").tabs("option", "active", 4);
         })
         require(["app/popup/parse-content"])
+        //hack to make scrollbar disappear
+        $('html, body').css('height', '600px')
     })
 
     var popupPlayerMain = _.once(function () {
@@ -49,14 +45,14 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             playlist.playVideo({videoFeed:backgroundSelectedVideoFeed}, backgroundSelectedVideoPlayerState)
             playerWidget.data.listenObject = pti
         }
-    })
-    $('#tabs a[href="#player"]').click(function () {
-        popupPlayerMain();
         require(["iframe-observer"], function(observer) {
             observer.ready(function() {
                 window.pti = observer.pti
                 window.playerReady()
             })
         })
+    })
+    $('#tabs a[href="#player"]').click(function () {
+        popupPlayerMain();
     })
 })

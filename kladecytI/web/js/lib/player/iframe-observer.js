@@ -13,8 +13,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
                 readyCallbacks[i]()
             }
         } else {
-            _.isFunction(callback) && readyCallbacks.push(callback)
-            observerReady && ready()
+            _.isFunction(callback) && readyCallbacks.push(callback) && observerReady && callback()
         }
     }
     var afterPlayerReady = _.after(2, function () {

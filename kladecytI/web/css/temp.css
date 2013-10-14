@@ -10,3 +10,5 @@
 .temp-border-none { border: none; }
 .temp-margin-none { margin: 0px; }
 .temp-player-widget { position: relative; width: 100%; height: 40px; margin: auto;}
+.temp-popup-nav-content { position: absolute; top: 30px; bottom: 0px; width: 100%; }
+.temp-absolute-off-scren { position: absolute; left: -9999px; }

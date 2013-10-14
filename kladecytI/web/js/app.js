@@ -24,7 +24,8 @@ requirejs.config({
         "iframe-wrapper":"player/iframeWrapper",
         "iframe-observer":"player/iframe-observer",
         "iframe-observable":"player/iframe-observable",
-        "datepicker":"common/bootstrap-datepicker"
+        "datepicker":"common/bootstrap-datepicker",
+        "base":"common/base"
     },
     "shim":{
         "underscore": {

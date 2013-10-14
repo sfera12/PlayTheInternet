@@ -30,7 +30,7 @@
 .playlistFrame .playlist.pti-view-big>.pti-element-song { width: 50%; height: 91px; }
 .playlistFrame .playlist.pti-view-big>*>* { height: 90px; }
 
-.playlistFrame .playlist.pti-view-list>.pti-element-song { width: 100%; height: 21px; font-size: 11px;}
+.playlistFrame .playlist.pti-view-list>.pti-element-song { width: 100%; height: 21px; font-size: 11px; line-height: 21px; }
 .playlistFrame .playlist.pti-view-list>*>* { height: 20px; }
 
 

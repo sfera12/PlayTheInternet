@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <head>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/playlist.css">
     <meta charset="utf-8">
     <title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico"/>
     <script data-main="js/app" src="js/lib/common/require.js"></script>
-    <link rel="stylesheet" href="css/popup.css">
     <link rel="stylesheet" href="bootswatch/cosmo.css">
     <link rel="stylesheet" href="bootswatch/cosmo-custom.css">
     <link rel="stylesheet" href="css/datepicker.css">
@@ -12,10 +13,9 @@
     <!--<link rel="stylesheet" href="jquery-ui-1.10.3.custom.min.css">-->
     <!--TODO 2013-09-04 CONFLICTS WITH JQUERY TOOLTIP -->
     <!--<script src="bootstrapCustom/js/bootstrap.js"></script>-->
-    <link rel="stylesheet" href="css/playlist.css">
-    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/temp.css">
     <link rel="stylesheet" href="css/player-widget.css">
+    <link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
 <!--<script type="text/javascript">-->
@@ -40,16 +40,13 @@
                 <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
                 <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
                 <li><a href="#parsedDiv">Parsed<div id="podParsed" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
-                <li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
             </ul>
-            <div id="player">
-            </div>
-            <div id="tAreaDiv">
+            <div id="tAreaDiv" class="temp-popup-nav-content">
                 <textArea id="tArea" class="taArea"></textArea>
                 <br>
                 <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
             </div>
-            <div id="optionsDiv" class="leftFull">
+            <div id="optionsDiv" class="temp-popup-nav-content">
                 <fieldset>
                     <legend>Share this link</legend>
                     <input id="buildHash" type="button" value="Build link"/>
@@ -67,30 +64,13 @@
                     <div class="temp-alignQRCode" id="qrcode"></div>
                 </fieldset>
             </div>
-            <div id="recycleBinDiv" class="leftFull">
+            <div id="recycleBinDiv" class="temp-popup-nav-content">
                 <div id="ulFirst" class=" playlistFrame"></div>
             </div>
-            <div id="parsedDiv" class="leftFull">
+            <div id="parsedDiv" class="temp-popup-nav-content">
                 <div id="parsedPlaylist" class=" playlistFrame"></div>
             </div>
-            <div id="calendarDiv" class="leftFull">
-                <div class="input-daterange">
-                    <input class="input-small datepicker" name="start" id="calendarStart" data-date-format="dd-mm-yyyy"/>
-                    <span class="add-on">to</span>
-                    <input class="input-small datepicker" name="end" id="calendarEnd" data-date-format="dd-mm-yyyy"/>
-                    <button id="searchCalendar" class="btn" type="button">Search</button>
-                </div>
-                <div id="calendarFilter" class="input-append">
-                    <span class="add-on">Title</span>
-                    <input class="input-small" id="calendarFilterTitle">
-                    <span class="add-on">More than</span>
-                    <input class="input-small" id="calendarFilterDurationMore">
-                    <span class="add-on">Less than</span>
-                    <input class="input-small" id="calendarFilterDurationLess">
-                </div>
-                <div id="calendarPlaylist" class=" playlistFrame"></div>
-            </div>
-            <div id="players" class="tabs-player-container leftFull">
+            <div id="players" class="tabs-player-container">
                 <!--<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>-->
                 <!--<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://playtheinternet.appspot.com/iframe-player.html"></iframe>-->
             </div>

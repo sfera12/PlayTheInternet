@@ -13,10 +13,10 @@ define(['jquery', 'jquery-ui'], function ($) {
             //                propagateCalendar()
             //            }
             if (newTab.text() == "Player") {
-                tabsPlayerContainer.removeClass('leftFull')
+                tabsPlayerContainer.removeClass('temp-absolute-off-scren')
                 tabsPlayerContainer.addClass('tabs-player-container')
             } else {
-                tabsPlayerContainer.addClass('leftFull')
+                tabsPlayerContainer.addClass('temp-absolute-off-scren')
                 tabsPlayerContainer.removeClass('tabs-player-container')
             }
             newTab.addClass('active')
