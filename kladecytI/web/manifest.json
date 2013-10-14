@@ -11,7 +11,7 @@
     "content_scripts":[
         {
             "matches":["http://*/*", "https://*/*"],
-            "js":["jquery-1.9.1.js", "underscore.js", "siteHandlers.js", "parse.js"]
+            "js":["js/lib/common/jquery-2.0.3.min.js", "js/lib/common/underscore-min.js", "js/lib/siteHandlers.js", "js/lib/parseWORequire.js"]
         }
     ],
     "permissions":[

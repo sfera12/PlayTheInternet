@@ -35,6 +35,7 @@ function playTheInternetParseTemp(htmlText) {
 (function () {
     var regexs = $.map(siteHandlers,function (item) {
         var regex = String(item.__proto__.regex)
+        //remove '/' regex wrappers and wrap in group '()'
         return("(" + regex.substring(1).substring(0, regex.length - 2) + ")")
     }).join("|")
     var matchFunction = "function(match) {"
@@ -48,24 +49,11 @@ function playTheInternetParseTemp(htmlText) {
         return "if(match.match(local)[" + group + "] != undefined) { result.push({type: '" + prefix + "', id:  match.replace(local, '$" + group + "')})}"
     }).join(';')
     matchFunction = matchFunction + ifs + '}'
-    var playTheInternetParseString = String(window.playTheInternetParseTemp)
+    var playTheInternetParseString = String(playTheInternetParseTemp)
     playTheInternetParseString = playTheInternetParseString
         .replace(/thisisregex/g, regexs)
         .replace(/'matchfunction'/, matchFunction)
         .replace(/Temp/, '')
     console.log(playTheInternetParseString)
-    eval("window.playTheInternetParse = " + playTheInternetParseString)
+    window.playTheInternetParse = new Function(["htmlText"], playTheInternetParseString.replace(/[^f]*function[^p]+playTheInternetParse[^{]+{[^\w]*((.*((\r\n)|\r|\n))*).*}.*$/, '$1'))
 })()
-
-function parsePage() {
-    openWindow(playTheInternetParse());
-}
-function openWindow(links) {
-    var a = window,
-        b = document,
-        c = encodeURIComponent,
-        d = a.open('DOMAIN/parse.html?location=' + encodeURI(window.location.href.replace(/#/g, '&hash;')) + '#' + links, 'bkmk_popup', 'left=' + ((a.screenX || a.screenLeft) + 10) + ',top=' + ((a.screenY || a.screenTop) + 10) + ',height=530px,width=1100px,resizable=1,alwaysRaised=1');
-    a.setTimeout(function () {
-        d.focus();
-    }, 300)
-}

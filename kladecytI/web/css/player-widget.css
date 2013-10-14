@@ -10,17 +10,17 @@
 }
 
 .playerWidget .button.play {
-    background: url('favicon.ico') no-repeat 50% 50%;
+    background: url('../favicon.ico') no-repeat 50% 50%;
 }
 .playerWidget .button.pause {
-    background: url('favicon.ico') no-repeat 50% 50%;
+    background: url('../favicon.ico') no-repeat 50% 50%;
     background-color: black;
 }
 .playerWidget .button.prev {
-    background: url('favicon.ico') no-repeat 50% 50%;
+    background: url('../favicon.ico') no-repeat 50% 50%;
 }
 .playerWidget .button.next {
-    background: url('favicon.ico') no-repeat 50% 50%;
+    background: url('../favicon.ico') no-repeat 50% 50%;
 }
 
 .playerWidget .button {

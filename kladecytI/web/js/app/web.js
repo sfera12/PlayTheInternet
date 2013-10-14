@@ -10,64 +10,18 @@ require(["jquery", "underscore"], function () {
         onceLoaded()
     })
 })
-define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget"], function (pti, b, c, d) {
+define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget", "parse", "app/web/calendar", "app/web/tabsDrool", "app/common/hash-qr"], function (a, pti, c, d, e, f, parse, h, i, redrawHashAndQRCode) {
     window.pti = pti
     $(document).ready(function () {
         var playerWidget
         require(['player-widget'], function (PlayerWidget) {
             playerWidget = new PlayerWidget('#playerWidgetContainer')
+            playerWidget.data.listenObject = pti
         })
 
-        var tabsPlayerContainer = $('#tabs .tabs-player-container')
-        $('#tabs').tabs({
-            activate:function (event, ui) {
-                var newTab = $(ui.newTab);
-                if (newTab.text() == "Options") {
-                    require(["qrcode"], function () {
-                        buildQR()
-                    })
-                }
-//        console.log(newTab.text())
-//            if(newTab.text() == "Calendar") {
-//                propagateCalendar()
-//            }
-                if (newTab.text() == "Player") {
-                    tabsPlayerContainer.removeClass('leftFull')
-                    tabsPlayerContainer.addClass('tabs-player-container')
-                } else {
-                    tabsPlayerContainer.addClass('leftFull')
-                    tabsPlayerContainer.removeClass('tabs-player-container')
-                }
-                newTab.addClass('active')
-                $(ui.oldTab).removeClass('active')
-            }
-        })
         window.windowId = GUID()
         document.title = windowId
 
-        var redrawHashAndQRCode = function (playlist) {
-            window.location.hash = playlist.jPlaylist.sortable('toArray')
-            if ($("#tabs").tabs("option", "active") == 2) {
-                buildQR()
-            }
-        }
-        var buildQR = function () {
-            $.ajax({
-                url:'https://www.googleapis.com/urlshortener/v1/url',
-                type:'post',
-                contentType:'application/json',
-                data:'{"longUrl":"' + window.location.href.substr(0, 2039) + '"}',
-                success:function () {
-                    console.log(arguments);
-                    $('#qrcode').empty();
-                    $('#qrcode').qrcode(arguments[0].id)
-                },
-                error:function () {
-                    console.log('buildqr error');
-                    console.log(arguments)
-                }
-            })
-        }
         window.playlist = new Playlist("#ulSecond",
             {
                 id:windowId,
@@ -88,7 +42,7 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
         window.ulFirst = new Playlist('#ulFirst', {dontPlay:true})
         $('#tAreaParseButton').click(function () {
             var tAreaText = $('#tArea').val()
-            playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
+            playlist.addSongsToPlaylist(playlist.parseSongIds(parse.playTheInternetParse(tAreaText)), true)
         })
         $('#buildHash').click(function () {
             $('#buildHashInput').val(window.location.origin + '/display-grid.html' + playlist.buildHash())
@@ -100,7 +54,6 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
                 windowId = renameWindowInputVal
             }
         })
-
 
         if (window.location.hash.length == 0) {
             $("#tabs").tabs("option", "active", 1);

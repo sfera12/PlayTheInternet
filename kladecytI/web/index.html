@@ -9,10 +9,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <script src="https://rawgithub.com/documentcloud/underscore/master/underscore.js"></script>
-    <script src="jqC/development-bundle/jquery-1.7.1.js"></script>
-    <script src="SiteHandlers.js"></script>
-    <script src="parse.js"></script>
+    <script data-main="js/app" src="js/lib/common/require.js"></script>
     <title>Hello App Engine</title>
 </head>
 
@@ -40,39 +37,5 @@
         <a href="iframe-parent.html">Iframe-Parent</a>
     </tr>
 </table>
-<script>
-    $(document).ready(function () {
-        var regexs = $.map(siteHandlers, function(item) {
-            var regex = String(item.__proto__.regex)
-            return("(" + regex.substring(1).substring(0, regex.length - 2) + ")")
-        }).join("|")
-        var matchFunction = "function(match) {"
-        var lastGroupCount = 0;
-        var ifs = $.map(siteHandlers, function(item, index) {
-            var regex = String(item.__proto__.regex)
-            var group =  item.__proto__.regexGroup + index + 1 + lastGroupCount;
-            var groupCount = regex.split('(').length - 1
-            lastGroupCount = lastGroupCount + groupCount
-            var prefix = item.__proto__.prefix;
-            return "if(match.match(local)[" + group + "] != undefined) { return match.replace(local, '" + prefix +"=$" + group + "')}"
-        }).join(';')
-        matchFunction = matchFunction + ifs + '}'
-        $('#holder').attr('href', 'javascript: (function() {' + playTheInternetParse + openWindow + parsePage + ';parsePage()})()')
-        $('#local').attr('href', $('#holder').attr('href')
-                .replace(/DOMAIN/g, 'http://localhost:8888')
-                .replace(/thisisregex/g, regexs)
-                .replace(/'matchfunction'/, matchFunction)
-        )
-        $('#99').attr('href', $('#holder').attr('href')
-                .replace(/DOMAIN/g, 'http://192.168.1.99:8888')
-                .replace(/thisisregex/g, regexs)
-                .replace(/'matchfunction'/, matchFunction)
-        )
-        $('#production').attr('href', $('#holder').attr('href')
-                .replace(/DOMAIN/g, 'http://playtheinternet.appspot.com')
-                .replace(/thisisregex/g, regexs)
-                .replace(/'matchfunction'/, matchFunction))
-    })
-</script>
 </body>
 </html>

@@ -23,7 +23,8 @@ requirejs.config({
         "vimeo-api":"common/vim-froogaloop2.min",
         "iframe-wrapper":"player/iframeWrapper",
         "iframe-observer":"player/iframe-observer",
-        "iframe-observable":"player/iframe-observable"
+        "iframe-observable":"player/iframe-observable",
+        "datepicker":"common/bootstrap-datepicker"
     },
     "shim":{
         "underscore": {
@@ -47,16 +48,28 @@ requirejs.config({
 //        "pti-web":["youtube", "soundcloud", "vimeo", "jquery", "underscore"],
 //        "iframe-wrapper":["underscore"],
 //        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
-//        "iframe-popup":["iframe-observer"]
+//        "iframe-popup":["iframe-observer"],
+        "datepicker":["jquery"]
     }
 });
 
 // Load the main app module to start the app
 if (!chrome.extension) {
-    if(window.location.href.match('iframe-player') != null) {
+    var href = window.location.href;
+    if(href.match('play.html')) {
+        requirejs(["app/web"])
+    } else if(href.match('iframe-player')) {
         requirejs(["app/iframe-player"])
+    } else if(href.match('parse')) {
+        requirejs(["app/parse"])
+    } else if(href.match('index')) {
+        requirejs(["app/index"])
+    } else if(href.match('jasmine')) {
+        requirejs(["app/jasmine"])
+    } else if(href.match('index')) {
+        requirejs(["app/index"])
     } else {
-        requirejs(["app/web"]);
+        requirejs(["app/index"]);
     }
 } else if (chrome.extension.getBackgroundPage() == window) {
     requirejs(["app/background"])

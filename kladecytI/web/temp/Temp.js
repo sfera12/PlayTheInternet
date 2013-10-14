@@ -180,3 +180,12 @@ $("#iUploadVideo").click(function() {
 });
 
 // RELATED END
+
+//oauth2callback
+<script language="Javascript" type="text/javascript">
+var hash = location.hash.substr(1)
+var token = hash.substr(hash.indexOf('access_token=')).split('&')[0].split('=')[1]
+window.opener.document.getElementById("iLogin").value = 'sichain'
+window.opener.document.getElementById("iToken").value = token
+window.close()
+</script>
