@@ -32,3 +32,6 @@ http://www.youtube.com/attribution_link?a=YFxsWIwpFY035tQrnCYesw&u=%2Fwatch%3Fv%
 
 //TODO youtube not available in your country
 http://www.youtube.com/watch?v=UdB76CMH4rM
+
+//TODO sc secret token
+http://www.nzherald.co.nz/entertainment/news/article.cfm?c_id=1501119&objectid=11138866
