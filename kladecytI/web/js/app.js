@@ -66,8 +66,6 @@ if (!chrome.extension) {
         requirejs(["app/index"])
     } else if(href.match('jasmine')) {
         requirejs(["app/jasmine"])
-    } else if(href.match('index')) {
-        requirejs(["app/index"])
     } else {
         requirejs(["app/index"]);
     }
