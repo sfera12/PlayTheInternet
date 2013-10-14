@@ -487,7 +487,15 @@ function Playlist(appendToElementExpression, options) {
         } else {
             throw "escapeURL called with empty or null parameters"
         }
-        return concated.replace(/([/=])/g, '\\$1').replace(/^#?(.*)$/, '#$1')
+        concated = Playlist.prototype.escapeSelector(concated)
+        return concated.replace(/^#?(.*)$/, '#$1')
+    }
+
+    Playlist.prototype.escapeSelector = function(str) {
+        if( str)
+            return str.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')
+        else
+            return str;
     }
 
     Playlist.prototype.getPlaylist = function () {
