@@ -35,3 +35,6 @@ http://www.youtube.com/watch?v=UdB76CMH4rM
 
 //TODO sc secret token
 http://www.nzherald.co.nz/entertainment/news/article.cfm?c_id=1501119&objectid=11138866
+
+//TODO vimeo
+http://noisey.vice.com/blog/meet-the-two-scottish-rappers-who-conned-the-world
