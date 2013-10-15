@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "hello")
             sendResponse({farewell:"goodbye"});
         if (request.operation == "parsedPlaylist") {
-            parsedPlaylist.jPlaylist.empty();
+            parsedPlaylist.playlistEmpty();
             parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data))
         }
     }

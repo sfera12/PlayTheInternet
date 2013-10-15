@@ -83,8 +83,8 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.errorTemplate = _.template('<div><div class="image-div"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
-    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch[^ \'\'<>]+v=|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
-    YoutubeHandler.prototype.regexGroup = 4
+    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
+    YoutubeHandler.prototype.regexGroup = 11
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
@@ -143,8 +143,8 @@ function VimeoHandler() {
     VimeoHandler.prototype.completeTemplate = _.template('<div><div class="image-div"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')
     VimeoHandler.prototype.playerTemplate = _.template('<iframe id="vimeo" src="' + VimeoHandler.prototype.playerUrl + '" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')
     VimeoHandler.prototype.prefix = 'v'
-    VimeoHandler.prototype.regex = /vimeo.com\\?\/(\d+)/
-    VimeoHandler.prototype.regexGroup = 1
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/(video\/)?(\d+)/
+    VimeoHandler.prototype.regexGroup = 2
     VimeoHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',

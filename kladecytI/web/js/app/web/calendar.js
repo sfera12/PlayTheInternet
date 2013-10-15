@@ -36,7 +36,7 @@ define(['playlist', 'jquery', 'underscore', 'datepicker'], function (a, $, _, d)
 //                var compose = _.compose(map, _.pairs, groupByDate, reduce)
                 var compose = _.compose(map, _.pairs, groupByUrl, reduce)
                 var calendarDays = compose(data)
-                calendarPlaylist.jPlaylist.empty()
+                calendarPlaylist.playlistEmpty()
                 calendarPlaylist.addCalendarSongsToPlaylist(calendarDays)
             }
         })

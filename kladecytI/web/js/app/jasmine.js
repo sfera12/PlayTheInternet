@@ -1,7 +1,7 @@
 define(["sitehandlers", "playlist", "parse"], function (a, b, parse) {
-    require(["https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/6b3459b913ffe7d15f30f8a93d5f7b6d5939ab7e/jasmine.js"], function () {
-        require(["https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/543d56963eb4a36750fef86842213505a7da0657/jasmine-html.js"], function () {
-            require(["https://rawgithub.com/openspectrum/8526bdddbd05238a0ba6/raw/a848d7a6d46b2c20aab4fa7fdc09e5094668fcc3/spec_runner.js"], function () {
+    require(["jasmine"], function () {
+        require(["jasmine-html"], function () {
+            require(["jasmine-runner"], function () {
                 $(document).ready(function () {
                     var playTheInternetParse = parse.playTheInternetParse
                     Playlist()
@@ -32,6 +32,9 @@ define(["sitehandlers", "playlist", "parse"], function (a, b, parse) {
                         it("http://youtube.googleapis.com/v/C2V-Le8N7UU&source=uds", function () {
                             expect(youtube[5]).toEqual({type:"y", id:"C2V-Le8N7UU"});
                         });
+                        it("[link: http://www.youtube.com/attribution_link?u=%2Fwatch%3Fv%3DGbIIBFxrqek%26feature%3Dshare&a=VWFTk5fDhcpcpLcX68GPOg] [regex: watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))]", function () {
+                            expect(youtube[6]).toEqual({type:"y", id:"GbIIBFxrqek"});
+                        });
                     });
                     describe("soundcloud", function () {
                         it("https://soundcloud.com/user-name/sets/000000", function () {
@@ -56,6 +59,9 @@ define(["sitehandlers", "playlist", "parse"], function (a, b, parse) {
                         });
                         it("http://vimeo.com/64530002", function () {
                             expect(vimeo[0]).toEqual({type:"v", id:"64530002"});
+                        });
+                        it("[link: http://player.vimeo.com/video/58994852?title=0&byline=0&portrait=0] [regex: (video\/)?]", function () {
+                            expect(vimeo[1]).toEqual({type:"v", id:"58994852"});
                         });
                     });
 

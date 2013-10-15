@@ -25,7 +25,10 @@ requirejs.config({
         "iframe-observer":"player/iframe-observer",
         "iframe-observable":"player/iframe-observable",
         "datepicker":"common/bootstrap-datepicker",
-        "base":"common/base"
+        "base":"common/base",
+        "jasmine":"jasmine/jasmine",
+        "jasmine-html":"jasmine/jasmine-html",
+        "jasmine-runner":"jasmine/spec_runner"
     },
     "shim":{
         "underscore": {

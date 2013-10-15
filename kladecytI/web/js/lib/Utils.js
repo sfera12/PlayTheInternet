@@ -45,7 +45,7 @@ function Playlist(appendToElementExpression, options) {
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)
     this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
-    this.jPlaylist = $('<div class="playlist connectedSortable"/>').appendTo(this.jContainer)
+    this.jPlaylist = $('<div class="playlist connectedSortable"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
     this.sortableArray = new Array()
     this.playlist
     this.currVideoDiv
@@ -96,7 +96,7 @@ function Playlist(appendToElementExpression, options) {
     }
     this.jPlaylist.selectable({
         filter:'div.pti-element-song',
-        cancel:'div.image-div, label.pti-droppable-target'
+        cancel:'div.image-div, label.pti-droppable-target, div.pti-make-last-droppable-work'
     })
         .sortable({
             connectWith:'.connectedSortable',
@@ -108,7 +108,7 @@ function Playlist(appendToElementExpression, options) {
 //            update:function (event, ui) {
 //                this.recalculatePlaylist()
 //            }.bind(this),
-            cancel:'.pti-droppable-target',
+            cancel:'.pti-droppable-target, .pti-make-last-droppable-work',
 //        sort : function(event, ui) {
 //            var $helper = $('.ui-sortable-helper'), hTop = $helper.offset().top, hStyle = $helper.attr('style'), hId = $helper.attr('id');
 //            if (first_rows.length > 1) {
@@ -269,12 +269,16 @@ function Playlist(appendToElementExpression, options) {
                 console.log('nothing changed')
             } else {
 //                console.log(this.jPlaylist)
-                this.jPlaylist.empty()
+                this.playlistEmpty()
                 this.addSongsToPlaylist(this.parseSongIds(storagePlaylist.join(',')), null, null, true)
             }
         }
         selectVideoCallback && typeof selectVideoCallback == "function" && selectVideoCallback()
     }
+
+    this.playlistEmpty = function() {
+        this.jPlaylist.html('<div class="pti-make-last-droppable-work"/>')
+    }.bind(this)
 
     Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
         var storageData = Playlist.prototype.getGenericCacheObject.call(this, key, action, 'listen play selected video', true)
