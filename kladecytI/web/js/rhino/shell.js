@@ -6,14 +6,14 @@ try{
         
     print("Loading shell for envjs examples");
         
-    load('rhino/env.rhino.js');
+    load('js/rhino/env.rhino.js');
     Envjs.scriptTypes['text/javascript']=true;
-    load('rhino/jquery.js');
+    load('js/rhino/jquery.js');
     load('js/lib/common/underscore-min.js');
     load('js/lib/SiteHandlers.js');
     load('js/lib/parse.js');
-    load('rhino/hello.js');
-    load('rhino/dispatcher.js');
+    load('js/rhino/hello.js');
+    load('js/rhino/dispatcher.js');
     
     print("Loaded shell.");
 }catch(e){
