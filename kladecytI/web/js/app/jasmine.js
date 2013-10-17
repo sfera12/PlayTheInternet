@@ -1,9 +1,8 @@
-define(["sitehandlers", "playlist", "parse"], function (a, b, parse) {
+define(["sitehandlers", "playlist", "parse"], function (a, b, c) {
     require(["jasmine"], function () {
         require(["jasmine-html"], function () {
             require(["jasmine-runner"], function () {
                 $(document).ready(function () {
-                    var playTheInternetParse = parse.playTheInternetParse
                     Playlist()
                     var youtube = Playlist.prototype.parseSongIds(playTheInternetParse($('#youtube').val()))
                     var soundcloud = Playlist.prototype.parseSongIds(playTheInternetParse($('#soundcloud').val()))

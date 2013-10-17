@@ -53,7 +53,8 @@ requirejs.config({
 //        "iframe-wrapper":["underscore"],
 //        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
 //        "iframe-popup":["iframe-observer"],
-        "datepicker":["jquery"]
+        "datepicker":["jquery"],
+        "parse":["sitehandlers"]
     }
 });
 

@@ -1,6 +1,4 @@
-define(['sitehandlers', 'parse', 'jquery', 'underscore'], function (a, parse, $) {
-    playTheInternetParse = parse.playTheInternetParse
-
+define(['parse', 'jquery', 'underscore'], function (a, $, _) {
     function parsePage() {
         openWindow(playTheInternetParse());
     }
@@ -16,7 +14,7 @@ define(['sitehandlers', 'parse', 'jquery', 'underscore'], function (a, parse, $)
     }
 
     $(document).ready(function () {
-        $('#holder').attr('href', 'javascript: (function() {' + parse.playTheInternetParse.toString().replace(/anonymous/, 'playTheInternetParse') + openWindow + parsePage + ';parsePage()})()')
+        $('#holder').attr('href', 'javascript: (function() {' + playTheInternetParse + openWindow + parsePage + ';parsePage()})()')
         $('#local').attr('href', $('#holder').attr('href')
             .replace(/DOMAIN/g, 'http://localhost:8888')
         )

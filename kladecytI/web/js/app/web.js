@@ -10,7 +10,7 @@ require(["jquery", "underscore"], function () {
         onceLoaded()
     })
 })
-define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget", "parse", "app/web/calendar", "app/web/tabsDrool", "app/common/hash-qr"], function (a, pti, c, d, e, f, parse, h, i, redrawHashAndQRCode) {
+define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget", "parse", "app/web/calendar", "app/web/tabsDrool", "app/common/hash-qr"], function (a, pti, c, d, e, f, g, h, i, redrawHashAndQRCode) {
     window.pti = pti
     $(document).ready(function () {
         var playerWidget
@@ -42,7 +42,7 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
         window.ulFirst = new Playlist('#ulFirst', {dontPlay:true})
         $('#tAreaParseButton').click(function () {
             var tAreaText = $('#tArea').val()
-            playlist.addSongsToPlaylist(playlist.parseSongIds(parse.playTheInternetParse(tAreaText)), true)
+            playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)
         })
         $('#buildHash').click(function () {
             $('#buildHashInput').val(window.location.origin + '/display-grid.html' + playlist.buildHash())
