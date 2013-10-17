@@ -1,0 +1,10 @@
+load("C:/java/svn/kladecytI/web/rhino/env.rhino.js")
+Envjs.scriptTypes['text/javascript'] = true;
+load("C:/java/svn/kladecytI/web/js/lib/common/jquery-2.0.3.min.js")
+load("C:/java/svn/kladecytI/web/js/lib/common/underscore-min.js")
+load("C:/java/svn/kladecytI/web/js/lib/SiteHandlers.js")
+load("C:/java/svn/kladecytI/web/js/lib/parse.js")
+print(playTheInternetParseString)
+var writer = new java.io.PrintWriter("C:/java/svn/kladecytI/web/js/lib/cparse.js")
+writer.println(playTheInternetParseString)
+writer.close()
