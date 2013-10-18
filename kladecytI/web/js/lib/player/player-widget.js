@@ -1,8 +1,12 @@
 define(["jquery", "underscore"], function ($, _) {
-    function PlayerWidget(elementExpression) {
+    function PlayerWidget(elementExpression, dontCreateContent) {
         var self = this
         this.data = {listenObject:null}
-        this.jPlayerWidget = $('<div class="playerWidget"><div class="prev button"></div><div class="play button"></div><div class="next button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
+        if(!dontCreateContent) {
+            this.jPlayerWidget = $('<div class="playerWidget"><div class="prev button"></div><div class="play button"></div><div class="next button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
+        } else {
+            this.jPlayerWidget = $($(elementExpression).children()[0])
+        }
 
         this.trackLength = 60
         this.progress = 0

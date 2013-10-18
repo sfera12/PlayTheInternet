@@ -10,15 +10,15 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     require(['player-widget'], function (PlayerWidget) {
-        window.playerWidget = new PlayerWidget('#playerWidgetContainer')
+        window.playerWidget = new PlayerWidget('#playerWidgetContainer', true)
         playerWidget.data.listenObject = backgroundWindow.pti
     })
+    require(["app/common/tabs"], function() {
+        $("#tabs").tabs("option", "active", 4);
+    })
+    require(["app/popup/parse-content"])
 
     $(document).ready(function () {
-        require(["app/common/tabs"], function() {
-            $("#tabs").tabs("option", "active", 4);
-        })
-        require(["app/popup/parse-content"])
         //hack to make scrollbar disappear
         $('html, body').css('height', '600px')
     })
