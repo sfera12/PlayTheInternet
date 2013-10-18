@@ -1,6 +1,6 @@
-define(["pti", "soundcloud-api", "jquery", "underscore"], function (pti, scapi, $, _) {
+define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function (pti, scapi, $, _) {
         new pti.Player("s", {
-            playerTemplate:_.template('<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>'),
+            playerTemplate:PTITemplates.prototype.SoundCloudPlayerTemplate,
             onPlayerReady:function (playerapiid) {
             },
             onPlayerState:function (state) {

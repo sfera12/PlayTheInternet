@@ -69,8 +69,8 @@ define(["underscore"], function (_) {
         window.addEventListener("message", this.listenOperations, false);
 
         IframeWrapper.prototype.postMessage = function (type, operation, data1, data2, data3) {
-            iframe.postMessage({type:type, operation:operation, data1:data1, data2:data2, data3:data3}, origins[0])
-        }
+            this.iframe.postMessage({type:type, operation:operation, data1:data1, data2:data2, data3:data3}, this.origins[0])
+        }.bind(this)
     }
     return IframeWrapper
 })

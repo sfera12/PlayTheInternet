@@ -7,5 +7,6 @@ define(["playlist", "iframe-observer"], function(a, observer) {
                 redraw:true
             });
     })
+    window.observer = observer
     window.pti = observer.pti
 })

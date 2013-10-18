@@ -47,6 +47,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         }
         require(["iframe-observer"], function(observer) {
             observer.ready(function() {
+                window.observer = observer
                 window.pti = observer.pti
                 window.playerReady()
             })

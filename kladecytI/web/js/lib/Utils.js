@@ -40,7 +40,7 @@ function VideoFeed(item, parent) {
 
 
 function Playlist(appendToElementExpression, options) {
-    Playlist.prototype.groupHeaderTemplate = _.template('<label class="pti-droppable-target"><%=name%></label>')
+    Playlist.prototype.groupHeaderTemplate = PTITemplates.prototype.PlaylistGroupHeaderTemplate
     this.options = options
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)

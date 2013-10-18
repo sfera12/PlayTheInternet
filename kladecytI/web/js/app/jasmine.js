@@ -1,5 +1,6 @@
-define(["sitehandlers", "playlist", "parse"], function (a, b, c) {
-    require(["jasmine"], function () {
+define(["sitehandlers", "playlist", "cparse"], function (a, b, c) {
+    window.compiledPlayTheInternetParse = playTheInternetParse
+    require(["jasmine", "parse"], function () {
         require(["jasmine-html"], function () {
             require(["jasmine-runner"], function () {
                 $(document).ready(function () {
@@ -63,6 +64,16 @@ define(["sitehandlers", "playlist", "parse"], function (a, b, c) {
                             expect(vimeo[1]).toEqual({type:"v", id:"58994852"});
                         });
                     });
+
+                    function simplifyParse(func) {
+                        return func.toString().replace(/[ "'\r\n]/g, '')
+                    }
+
+                    describe("playTheInternetParse", function () {
+                        it("playTheInternetParse function equal", function () {
+                            expect(simplifyParse(playTheInternetParse)).toEqual(simplifyParse(compiledPlayTheInternetParse))
+                        })
+                    })
 
                     var jasmineEnv = jasmine.getEnv();
                     jasmineEnv.updateInterval = 1000;

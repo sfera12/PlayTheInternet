@@ -2,6 +2,7 @@ load("C:/java/svn/kladecytI/web/js/rhino/env.rhino.js")
 Envjs.scriptTypes['text/javascript'] = true;
 load("C:/java/svn/kladecytI/web/js/lib/common/jquery-2.0.3.min.js")
 load("C:/java/svn/kladecytI/web/js/lib/common/underscore-min.js")
+load("C:/java/svn/kladecytI/web/js/lib/templates.js")
 load("C:/java/svn/kladecytI/web/js/lib/SiteHandlers.js")
 load("C:/java/svn/kladecytI/web/js/lib/parse.js")
 print(playTheInternetParseString)
