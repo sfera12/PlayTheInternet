@@ -2,12 +2,12 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
     var iframeContainer = $('#players')
     var playerIframe
     var playerIframeHosts
+    var afterPlayerReady
 
-    function init() {
+    function appendIframe() {
         iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>')
         playerIframe = iframeContainer.find('iframe')[0].contentWindow
         playerIframeHosts = ["http://localhost:8888", "http://playtheinternet.appspot.com"]
-//var playerIframeHosts = ["http://playtheinternet.appspot.com"]
 
         var observerReady = false
         var readyCallbacks = []
@@ -22,10 +22,15 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
             }
         }
 
-        var afterPlayerReady = _.after(2, function () {
+        afterPlayerReady = _.after(2, function () {
             observerReady = true
             ready()
         })
+    }
+
+    function init() {
+        appendIframe()
+        //var playerIframeHosts = ["http://playtheinternet.appspot.com"]
 
         pti = new PTI({
             onBlockPlayback:function (blockPlayback) {
@@ -100,21 +105,27 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
                 }
             }
         })
-        initIframeWrapper(playerIframe, playerIframeHosts)
+        initIframeWrapper()
     }
 
-    var initIframeWrapper = function (playerIframe, playerIframeHosts) {
+    var initIframeWrapper = function () {
         instantiateIframeWrapper()
         iw.iframe = playerIframe
     }
 
     var instantiateIframeWrapper = _.once(function () {
         iw = new IframeWrapper(playerIframe, playerIframeHosts)
-        iw.listenAllEvents(pti.players)     //currentTime, error, playerState
+        iw.listenAllEvents(pti.players)
     })
 
     function destroy() {
         iframeContainer.empty()
+    }
+
+    function reinit() {
+        destroy()
+        appendIframe()
+        initIframeWrapper()
     }
 
     var pti;
@@ -123,5 +134,5 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
 
     init()
 
-    return {pti:pti, iw:iw, ready:ready, init:init, destroy:destroy}
+    return {pti:pti, iw:iw, ready:ready, init:init, destroy:destroy, reinit: reinit}
 })
