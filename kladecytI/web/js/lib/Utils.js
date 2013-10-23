@@ -484,7 +484,7 @@ function Playlist(appendToElementExpression, options) {
         $(this.currVideoDiv).addClass("selected")
         if (this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
-            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed})
+            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, date: new Date().getTime()})
         }
         setWindowTitle(this.currVideoFeed);
     }
