@@ -94,6 +94,9 @@ function Playlist(appendToElementExpression, options) {
     if (this.options && this.options.type && this.options.type == 'calendar') {
         this.jPlaylist.addClass('calendar')
     }
+
+    var sortableSlimScroll = { scroll: false }
+    this.jPlaylist.data('sortableSlimScroll', sortableSlimScroll)
     this.jPlaylist.selectable({
         filter:'div.pti-element-song',
         cancel:'div.image-div, label.pti-droppable-target, div.pti-make-last-droppable-work'
@@ -175,6 +178,10 @@ function Playlist(appendToElementExpression, options) {
 //                this.recalculatePlaylist()
 //            }.bind(this))
 //        }.bind(this)
+        }).hover(function() {
+            sortableSlimScroll.scroll = true
+        }, function() {
+            sortableSlimScroll.scroll = false
         })
 
 //    if(options && options.type == "calendar") {

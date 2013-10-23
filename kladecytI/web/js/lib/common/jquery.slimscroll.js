@@ -46,6 +46,7 @@
 
         // used in event handlers and for better minification
         var me = $(this);
+        var sortableSlimScroll = me.data('sortableSlimScroll')
 
         // ensure we are not binding it again
         if (me.parent().hasClass('slimScrollDiv'))
@@ -205,7 +206,14 @@
         var _onWheel = function(e)
         {
           // use mouse wheel only when mouse is over
-          if (!isOverPanel) { return; }
+          if(sortableSlimScroll) {
+            if(sortableSlimScroll.scroll == false) {
+                return;
+            }
+          } else if (!isOverPanel) {
+              return;
+          }
+//          if(!isOverPanel) { return; }
 
           var e = e || window.event;
 

@@ -81,6 +81,7 @@
 
 
 .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.ui-sortable-helper { pointer-events: none; }
 .playlistFrame .playlist:not(.calendar)>.pti-view-big .pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('../favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
 .playlistFrame .playlist:not(.calendar)>.pti-view-big.selected .pti-logo { background-image: none; }
 
