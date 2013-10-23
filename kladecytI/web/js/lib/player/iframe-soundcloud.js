@@ -77,7 +77,7 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                         scWidget.getCurrentSoundIndex(function (data) {
                             scWidget.getSounds(function (sounds) {
                                 console.log('finished sounds count: ' + sounds.length + ' and current index: ' + data)
-                                if (data == sounds.length - 1) {
+                                if (data == null || data == sounds.length - 1) {
                                     console.log("SC NEXT")
                                     self.playerState(0)
                                 }
