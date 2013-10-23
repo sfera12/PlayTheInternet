@@ -3,7 +3,7 @@ define(["jquery", "underscore"], function ($, _) {
         var self = this
         this.data = {listenObject:null}
         if(!dontCreateContent) {
-            this.jPlayerWidget = $('<div class="playerWidget"><div class="prev button"></div><div class="play button"></div><div class="next button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
+            this.jPlayerWidget = $('<div class="playerWidget"><div class="play button"></div></div><div class="next button"><div class="prev button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
         } else {
             this.jPlayerWidget = $($(elementExpression).children()[0])
         }

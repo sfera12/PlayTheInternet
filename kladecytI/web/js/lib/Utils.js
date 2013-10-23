@@ -99,7 +99,7 @@ function Playlist(appendToElementExpression, options) {
     this.jPlaylist.data('sortableSlimScroll', sortableSlimScroll)
     this.jPlaylist.selectable({
         filter:'div.pti-element-song',
-        cancel:'div.image-div, label.pti-droppable-target, div.pti-make-last-droppable-work'
+        cancel:'div.image-div, label.pti-droppable-target, div.pti-make-last-droppable-work, a'
     })
         .sortable({
             connectWith:'.connectedSortable',
@@ -513,9 +513,10 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
 
-    this.jPlaylist.on('click', '.pti-element-song', function () {
+    this.jPlaylist.on('click', '.pti-element-song .image-div', function () {
 //        console.log(this)
-        Playlist.prototype.playVideo.call(self, {videoDiv:$(this)})
+        var ptiSong = $(this).parent().parent()
+        Playlist.prototype.playVideo.call(self, {videoDiv:$(ptiSong)})
     })
 
     Playlist.prototype.setSlimScroll = function (element, height) {

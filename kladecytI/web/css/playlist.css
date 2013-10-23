@@ -57,7 +57,7 @@
 .playlistFrame .playlist>* .videoText, .playlistFrame .playlist>*:hover .videoText { color: #007FFF; }
 .playlistFrame .playlist>* .error-text { position: relative; left: 10px; }
 .playlistFrame .playlist>* .videoText, .playlistFrame .playlist>* .videoText { word-break: break-all; font-family: Arial, Helvetica, sans-serif; }
-.playlistFrame .playlist>*.selected .videoText, .playlistFrame .playlist>*.selected:hover .videoText, .playlistFrame .playlist>*.selected .error-text>b>a:link, .playlistFrame .playlist>*.selected .duration-caption  { color: white!important; }
+.playlistFrame .playlist>*.selected .videoText, .playlistFrame .playlist>*.selected:hover .videoText, .playlistFrame .playlist>*.selected .error-text>b>a:link, .playlistFrame .playlist>*.selected .error-text>b>a, .playlistFrame .playlist>*.selected .duration-caption  { color: white!important; }
 
 .playlistFrame .playlist.pti-view-big>* .videoText, .playlistFrame .playlist.pti-view-big>* .videoText { font-size: 11px; padding-top: 2px; }
 .playlistFrame .playlist.pti-view-big>* .error-text { top:35%; }
