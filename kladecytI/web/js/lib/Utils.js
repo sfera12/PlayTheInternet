@@ -41,7 +41,8 @@ function VideoFeed(item, parent) {
 
 function Playlist(appendToElementExpression, options) {
     Playlist.prototype.groupHeaderTemplate = PTITemplates.prototype.PlaylistGroupHeaderTemplate
-    this.options = options
+    this.options = _.isUndefined(options) ? {} : options
+    this.options && _.isUndefined(this.options.fillVideoElement) && (this.options.fillVideoElement = true)
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)
     this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
@@ -397,7 +398,7 @@ function Playlist(appendToElementExpression, options) {
                 retryCounter:0,
                 loadVideoFeedCallback:afterLoadVideoFeed
             }
-            siteHandlerManager.loadVideoFeed(linkContext)
+            this.options  && this.options.fillVideoElement && siteHandlerManager.loadVideoFeed(linkContext)
             this.debounceRecalculatePlaylist(dontCache)
         }.bind(this))
     }
@@ -513,10 +514,10 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
 
-    this.jPlaylist.on('click', '.pti-element-song .image-div', function () {
-//        console.log(this)
-        var ptiSong = $(this).parent().parent()
-        Playlist.prototype.playVideo.call(self, {videoDiv:$(ptiSong)})
+    this.jPlaylist.on('click', '.pti-element-song', function (event) {
+        if($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+            Playlist.prototype.playVideo.call(self, {videoDiv:$(this)})
+        }
     })
 
     Playlist.prototype.setSlimScroll = function (element, height) {

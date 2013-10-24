@@ -24,6 +24,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                 self.temp.playProgressInterval = setInterval(function () {
                     _.isFunction(self.temp.debouncePlayProgress) && self.temp.debouncePlayProgress()
                     self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
+                    self.data.playerState = youtube.getPlayerState() //for cursor in playerWidget (this one is necessary)
                 }, 750)
                 _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
             } else if (state == 0) {

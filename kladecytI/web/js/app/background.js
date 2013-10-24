@@ -4,7 +4,8 @@ define(["playlist", "iframe-observer"], function(a, observer) {
         window.playlist = new Playlist("#ulSecond",
             {
                 id:windowId,
-                redraw:true
+                redraw:true,
+                fillVideoElement:false
             });
     })
     window.observer = observer

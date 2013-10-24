@@ -10,6 +10,8 @@ chrome.runtime.onMessage.addListener(
         if (request.operation == "parsedPlaylist") {
             parsedPlaylist.playlistEmpty();
             parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data))
+        } else if(request.operation == "parsePlayTheInternetParseFunctionMissing") {
+            $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing(request))
         }
     }
 );
