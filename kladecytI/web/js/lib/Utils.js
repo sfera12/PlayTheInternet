@@ -251,20 +251,21 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.redrawPlaylist = function (storagePlaylist) {
         if (storagePlaylist) {
-            var storageSelectedVideoFeed = $.jStorage.get(this.id + '_selected')
-            var selectedVideoFeed = storageSelectedVideoFeed && storageSelectedVideoFeed.data
             var selectVideoCallback = null
-            var videoFeed = this.currVideoFeed
-            if (selectedVideoFeed || videoFeed) {
-                selectVideoCallback = function () {
-                    var id = ''
-                    selectedVideoFeed ? id += Playlist.prototype.concatId(selectedVideoFeed.type, selectedVideoFeed.id) : id += Playlist.prototype.concatId(videoFeed.type, videoFeed.id)
-//                    var id = '#' + Playlist.prototype.escapeUrl(videoFeed.type, videoFeed.id)
-                    console.log(id)
-                    var findDiv = this.jPlaylist.find(id)[0];
-                    findDiv && this.selectVideo({ videoDiv:findDiv }, {dontCache:true})
-                }.bind(this)
+            function find(collection, filter) {
+                for (var i = 0; i < collection.length; i++) {
+                    if(filter(collection[i], i, collection)) {
+                        return i;
+                    }
+                }
+                return -1;
             }
+            selectVideoCallback = function () {
+                var index = find(storagePlaylist, function(item) {
+                    return item.match(/^sel_/) != null
+                }) - 1 // remove pti.workaround
+                index >= 0 && this.selectVideo({index:index}, {dontCache: true})
+            }.bind(this)
             storagePlaylist = storagePlaylist.data
             this.recalculateSortableArray()
 //            console.log(storagePlaylist)
@@ -291,7 +292,7 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
         var storageData = Playlist.prototype.getGenericCacheObject.call(this, key, action, 'listen play selected video', true)
-        storageData && storageData.data && this.playVideo({videoFeed:storageData.data}, storageData.playerState, {dontCache:true})
+        storageData && storageData.data && this.playVideo({videoFeed:storageData.data,index:storageData.index}, storageData.playerState, {dontCache:true})
     };
 
 //    Playlist.prototype.manualRedrawSelectedVideoFromCache = function() {
@@ -419,6 +420,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.playVideo = function (video, playerState, dontCache) {
+        console.log(video)
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         this.selectVideo(videoObject, dontCache)
         if (this.options && !this.options.dontPlay) {
@@ -454,11 +456,23 @@ function Playlist(appendToElementExpression, options) {
         return this.currVideoFeed
     }
 
+    Playlist.prototype.getSelectedVideoIndex = function() {
+        return this.jPlaylist.find('div.pti-element-song').index(this.currVideoDiv)
+    }
+
     Playlist.prototype.getVideoDivAndFeed = function (video) {
+        console.log(video)
         var videoDiv
         var videoFeed
+        var index = _.isUndefined(video.index) ? this.jPlaylist.find('div.pti-element-song').index(video.videoDiv) : video.index
+        console.log(index)
         if (video && video.videoDiv && video.videoFeed) {
             return video
+        }
+        if(video && video.index >= 0) {
+            videoDiv = this.jPlaylist.find('div.pti-element-song')[video.index]
+            videoFeed = $(videoDiv).data('videoFeed')
+            return {videoFeed:videoFeed, videoDiv:videoDiv, index:index}
         }
         if (video && video.videoDiv) {
             videoDiv = video.videoDiv
@@ -470,23 +484,29 @@ function Playlist(appendToElementExpression, options) {
         if (!videoFeed) {
             throw "videoFeed or video is empty in getVideoDivAndFeed"
         }
-        return {videoFeed:videoFeed, videoDiv:videoDiv}
+        return {videoFeed:videoFeed, videoDiv:videoDiv, index:index}
     }
 
     Playlist.prototype.selectVideo = function (video, properties) {
 //        if(video && (video.videoDiv || video.videoFeed)) {
-        if (this.playlist) {
-            this.playlist.removeClass("selected")
-        }
+        var selected = this.jPlaylist.find('div.selected, [id^=sel_]')
+        selected.removeClass("selected")
+        selected.length && selected.attr('id', selected.attr('id').replace(/sel_(.*)/, '$1'))
+        console.log(selected)
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         var videoFeed = videoObject.videoFeed
-        var videoDiv = videoObject.videoDiv
+        var index = videoObject.index
+        var videoDiv = this.jPlaylist.find('div.pti-element-song')[index]
+//        var videoDiv = videoObject.videoDiv
         this.currVideoFeed = videoFeed
         this.currVideoDiv = videoDiv
-        $(this.currVideoDiv).addClass("selected")
+        var jCurrVideoDiv = $(this.currVideoDiv);
+        jCurrVideoDiv.attr('id', jCurrVideoDiv.attr('id').replace(/^(.*)$/, 'sel_$1'))
+        jCurrVideoDiv.addClass("selected")
         if (this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
-            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, date: new Date().getTime()})
+            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, index: videoObject.index, date: new Date().getTime()})
+            $.jStorage.set(this.id, {source:this.uid, data:this.jPlaylist.sortable('toArray')})
         }
         setWindowTitle(this.currVideoFeed);
     }
