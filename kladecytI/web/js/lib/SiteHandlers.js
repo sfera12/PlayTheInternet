@@ -60,7 +60,6 @@ function SiteHandlerManager() {
         var handler = SiteHandlerManager.prototype.getHandler(videoFeed.type);
         if (videoFeed) {
             videoElement.div.html(handler[videoFeed.template](videoFeed))
-            videoElement.div.data('videoFeed', videoFeed)
             //todo workaround start
             if (videoFeed.template == "completeTemplate" || linkContext.fromCache) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()

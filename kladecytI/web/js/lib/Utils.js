@@ -6,6 +6,7 @@ function VideoElement(videoFeed, appendTo) {
         this.div = $('<div/>').append(childDiv)
         this.div.addClass('pti-element-song')
         this.div.attr('id', videoFeed.type + '=' + videoFeed.id)
+        $(this.div).data('videoFeed', videoFeed)
         $(appendTo).append(this.div)
     }
 
