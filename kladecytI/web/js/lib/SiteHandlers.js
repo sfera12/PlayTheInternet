@@ -140,7 +140,7 @@ function YoutubeHandler() {
         YoutubeHandler.prototype.queueNext()
     }
     YoutubeHandler.prototype.queueNext = function() {
-        if (YoutubeHandler.prototype.queue.length && YoutubeHandler.prototype.queueConcurrent <= YoutubeHandler.prototype.queueConcurrentMax) {
+        if (YoutubeHandler.prototype.queue.length && YoutubeHandler.prototype.queueConcurrent < YoutubeHandler.prototype.queueConcurrentMax) {
             var current = YoutubeHandler.prototype.queue[0]
             YoutubeHandler.prototype.queue = YoutubeHandler.prototype.queue.splice(1)
             YoutubeHandler.prototype.queueExecute(current)
