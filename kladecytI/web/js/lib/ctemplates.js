@@ -95,9 +95,9 @@ return __p;
 PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="parsedError" class="temp-parsed-error"> <div> <div> <div class="alert alert-danger"><b>Please refresh current tab!</b><br><br>'+
+__p+='<div id="parsedError" class="temp-parsed-error"> <div> <div> <div class="alert alert-danger"><b>Please refresh(F5) currently open tab</b><br>('+
 ((__t=(href))==null?'':__t)+
-'</div> </div> </div> </div>';
+')</div> </div> </div> </div>';
 }
 return __p;
 }

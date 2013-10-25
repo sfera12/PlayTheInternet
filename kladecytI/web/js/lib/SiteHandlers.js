@@ -85,10 +85,15 @@ function YoutubeHandler() {
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
     YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 11
-    YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
+    YoutubeHandler.prototype.queue = new Array()
+    YoutubeHandler.prototype.queueConcurrent = 0
+    YoutubeHandler.prototype.queueConcurrentMax = 25
+    YoutubeHandler.prototype.queueExecute = function(linkContext) {
+        YoutubeHandler.prototype.queueConcurrent++
         $.ajax({
-            url:"http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
-            success:function (data) {
+            url: "http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
+            success: function (data) {
+                YoutubeHandler.prototype.queueConcurrent--
                 try {
                     data.data.type = "y"
                     var videoFeed = new VideoFeed(data.data)
@@ -96,34 +101,52 @@ function YoutubeHandler() {
                     linkContext.videoFeed = videoFeed
                     SiteHandlerManager.prototype.fillVideoElement(linkContext)
                 } finally {
-
+                    YoutubeHandler.prototype.queueNext()
                 }
             },
-            error:function (data) {
-//                console.log(data.responseText)
+            error: function (data) {
                 try {
-                    linkContext.videoFeed.error = $.parseJSON(data.responseText).error.message
-                } catch (e) {
-                    linkContext.videoFeed.error = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
-                }
-                linkContext.videoFeed.template = "errorTemplate"
-                SiteHandlerManager.prototype.fillVideoElement(linkContext)
-                if (data.responseText.match(/too_many_recent_calls/)) {
-                    setTimeout(function () {
-                        console.log("retrying video")
-                        if ($(linkContext.videoElement.div).parent().length > 0) {
+                    YoutubeHandler.prototype.queueConcurrent--
+//                console.log(data.responseText)
+                    try {
+                        linkContext.videoFeed.error = $.parseJSON(data.responseText).error.message
+                    } catch (e) {
+                        linkContext.videoFeed.error = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
+                    }
+                    linkContext.videoFeed.template = "errorTemplate"
+                    SiteHandlerManager.prototype.fillVideoElement(linkContext)
+                    if (data.responseText.match(/too_many_recent_calls/)) {
+                        setTimeout(function () {
                             YoutubeHandler.prototype.loadVideoFeed(linkContext)
-                        } else {
-                            console.log('playlist was emptied, wont continue loading info for this video')
-                        }
-                    }, 35000)
-                } else {
-                    typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
+                            console.log("retrying video")
+                            if ($(linkContext.videoElement.div).parent().length > 0) {
+                            } else {
+                                console.log('playlist was emptied, wont continue loading info for this video')
+                            }
+                        }, 35000)
+                    } else {
+                        typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
+                    }
+                } finally {
+                    YoutubeHandler.prototype.queueNext()
                 }
             },
-            context:linkContext,
-            dataType:'json'
+            context: linkContext,
+            dataType: 'json'
         })
+    }
+    YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
+        YoutubeHandler.prototype.queue.push(linkContext)
+        YoutubeHandler.prototype.queueNext()
+    }
+    YoutubeHandler.prototype.queueNext = function() {
+        if (YoutubeHandler.prototype.queue.length && YoutubeHandler.prototype.queueConcurrent <= YoutubeHandler.prototype.queueConcurrentMax) {
+            var current = YoutubeHandler.prototype.queue[0]
+            YoutubeHandler.prototype.queue = YoutubeHandler.prototype.queue.splice(1)
+            YoutubeHandler.prototype.queueExecute(current)
+        } else {
+//            console.log('QueueNext end: [QueueLength: ' + YoutubeHandler.prototype.queue.length + '] [QueueConcurrent: ' + YoutubeHandler.prototype.queueConcurrent + ']')
+        }
     }
 }
 
