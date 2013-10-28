@@ -252,20 +252,12 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.redrawPlaylist = function (storagePlaylist) {
         if (storagePlaylist) {
             var selectVideoCallback = null
-            function find(collection, filter) {
-                for (var i = 0; i < collection.length; i++) {
-                    if(filter(collection[i], i, collection)) {
-                        return i;
-                    }
-                }
-                return -1;
+            var storageSelectedVideo = $.jStorage.get(this.id + '_selected')
+            if(storageSelectedVideo && storageSelectedVideo.index >= 0) {
+                selectVideoCallback = function() {
+                    this.selectVideo({index: storageSelectedVideo.index}, {dontCache: true})
+                }.bind(this)
             }
-            selectVideoCallback = function () {
-                var index = find(storagePlaylist, function(item) {
-                    return item.match(/^sel_/) != null
-                }) - 1 // remove pti.workaround
-                index >= 0 && this.selectVideo({index:index}, {dontCache: true})
-            }.bind(this)
             storagePlaylist = storagePlaylist.data
             this.recalculateSortableArray()
 //            console.log(storagePlaylist)
@@ -330,6 +322,7 @@ function Playlist(appendToElementExpression, options) {
             console.log('setting to storage')
             var storagePlaylist = {source:this.uid, data:this.getPlaylist()}
             $.jStorage.set(this.id, storagePlaylist)
+            $.jStorage.set(this.id + '_selected', {source: this.uid, index: this.getSelectedVideoIndex()})
         }
     }
 
@@ -457,7 +450,7 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.getSelectedVideoIndex = function() {
-        return this.jPlaylist.find('div.pti-element-song').index(this.currVideoDiv)
+        return this.jPlaylist.find('div.pti-element-song').index(this.jPlaylist.find('div.selected'))
     }
 
     Playlist.prototype.getVideoDivAndFeed = function (video) {
@@ -489,24 +482,18 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.selectVideo = function (video, properties) {
 //        if(video && (video.videoDiv || video.videoFeed)) {
-        var selected = this.jPlaylist.find('div.selected, [id^=sel_]')
-        selected.removeClass("selected")
-        selected.length && selected.attr('id', selected.attr('id').replace(/sel_(.*)/, '$1'))
-        console.log(selected)
+        if (this.playlist) {
+            this.playlist.removeClass("selected")
+        }
         var videoObject = Playlist.prototype.getVideoDivAndFeed.call(this, video)
         var videoFeed = videoObject.videoFeed
-        var index = videoObject.index
-        var videoDiv = this.jPlaylist.find('div.pti-element-song')[index]
-//        var videoDiv = videoObject.videoDiv
+        var videoDiv = videoObject.videoDiv
         this.currVideoFeed = videoFeed
         this.currVideoDiv = videoDiv
-        var jCurrVideoDiv = $(this.currVideoDiv);
-        jCurrVideoDiv.attr('id', jCurrVideoDiv.attr('id').replace(/^(.*)$/, 'sel_$1'))
-        jCurrVideoDiv.addClass("selected")
+        $(this.currVideoDiv).addClass("selected")
         if (this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
-            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, index: videoObject.index, date: new Date().getTime()})
-            $.jStorage.set(this.id, {source:this.uid, data:this.jPlaylist.sortable('toArray')})
+            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, date: new Date().getTime(), index: this.getSelectedVideoIndex()})
         }
         setWindowTitle(this.currVideoFeed);
     }
