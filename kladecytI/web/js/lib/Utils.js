@@ -157,8 +157,10 @@ function Playlist(appendToElementExpression, options) {
 //                    console.log(this.first_rows)
                     if (this.first_rows.length > 1) {
                         $.each(this.first_rows, function (i, item) {
-                            var logItem = $(item.tr).removeAttr('style').insertBefore(ui.item);
+                            var trs = $(item.tr)
+                            var logItem = trs.removeAttr('style').insertBefore(ui.item);
 //                            console.log(logItem)
+                            trs.removeClass('selected')
                         });
                         $('.cloned').remove();
                     }
@@ -174,7 +176,10 @@ function Playlist(appendToElementExpression, options) {
 //                console.log('remove')
 //                console.log(this)
                 this.blockSort = false
-            }.bind(this)
+            }.bind(this),
+            receive: function(event, ui) {
+                $(ui.item).removeClass('selected')
+            }
 //        ,receive: function(event, ui) {
 //            _.defer(function () {
 //                this.recalculatePlaylist()
@@ -255,7 +260,7 @@ function Playlist(appendToElementExpression, options) {
             var storageSelectedVideo = $.jStorage.get(this.id + '_selected')
             if(storageSelectedVideo && storageSelectedVideo.index >= 0) {
                 selectVideoCallback = function() {
-                    this.selectVideo({index: storageSelectedVideo.index}, {dontCache: true})
+                    this.selectVideo({index: storageSelectedVideo.index}, {dontCache:true})
                 }.bind(this)
             }
             storagePlaylist = storagePlaylist.data
@@ -284,7 +289,7 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
         var storageData = Playlist.prototype.getGenericCacheObject.call(this, key, action, 'listen play selected video', true)
-        storageData && storageData.data && this.playVideo({videoFeed:storageData.data,index:storageData.index}, storageData.playerState, {dontCache:true})
+        storageData && storageData.play && storageData.index >= 0 && this.playVideo({index:storageData.index}, storageData.playerState, {dontCache:true})
     };
 
 //    Playlist.prototype.manualRedrawSelectedVideoFromCache = function() {
@@ -457,27 +462,19 @@ function Playlist(appendToElementExpression, options) {
         console.log(video)
         var videoDiv
         var videoFeed
-        var index = _.isUndefined(video.index) ? this.jPlaylist.find('div.pti-element-song').index(video.videoDiv) : video.index
-        console.log(index)
-        if (video && video.videoDiv && video.videoFeed) {
-            return video
-        }
         if(video && video.index >= 0) {
             videoDiv = this.jPlaylist.find('div.pti-element-song')[video.index]
             videoFeed = $(videoDiv).data('videoFeed')
-            return {videoFeed:videoFeed, videoDiv:videoDiv, index:index}
+            return {videoFeed:videoFeed, videoDiv:videoDiv, index:video.index}
         }
-        if (video && video.videoDiv) {
-            videoDiv = video.videoDiv
-            videoFeed = $(videoDiv).data('videoFeed')
-        } else if (video && video.videoFeed) {
-            videoFeed = video.videoFeed
-            videoDiv = this.jPlaylist.find(Playlist.prototype.concatId(videoFeed.type, videoFeed.id))
+        if(video && video.videoDiv) {
+            var index = this.jPlaylist.find('div.pti-element-song').index(video.videoDiv)
+            videoFeed = $(video.videoDiv).data('videoFeed')
+            return {videoFeed:videoFeed, videoDiv:video.videoDiv, index:index}
         }
         if (!videoFeed) {
             throw "videoFeed or video is empty in getVideoDivAndFeed"
         }
-        return {videoFeed:videoFeed, videoDiv:videoDiv, index:index}
     }
 
     Playlist.prototype.selectVideo = function (video, properties) {
@@ -493,7 +490,7 @@ function Playlist(appendToElementExpression, options) {
         $(this.currVideoDiv).addClass("selected")
         if (this.id && !(properties && properties.dontCache)) {
             console.log('setting currVideoFeed to storage')
-            $.jStorage.set(this.id + '_selected', { source:this.uid, data:this.currVideoFeed, date: new Date().getTime(), index: this.getSelectedVideoIndex()})
+            $.jStorage.set(this.id + '_selected', { source:this.uid, index:this.getSelectedVideoIndex(), play: true, date: new Date().getTime()})
         }
         setWindowTitle(this.currVideoFeed);
     }
