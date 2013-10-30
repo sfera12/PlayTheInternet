@@ -47,7 +47,7 @@ function Playlist(appendToElementExpression, options) {
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)
     this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
-    this.jPlaylist = $('<div class="playlist connectedSortable"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
+    this.jPlaylist = $('<div class="playlist pti-split-one connectedSortable"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
     this.sortableArray = new Array()
     this.playlist
     this.currVideoDiv
@@ -61,15 +61,33 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.createHeader = function () {
         var bigView = $('<div class="set-big-view size-button">BIG</div>').appendTo(this.jHeader)
+        var mediumView = $('<div class="set-medium-view size-button">MED</div>').appendTo(this.jHeader)
         var listView = $('<div class="set-list-view size-button">LIST</div>').appendTo(this.jHeader)
+        var splitOne = $('<div class="set-split-one size-button">ONE</div>').appendTo(this.jHeader)
+        var splitTwo = $('<div class="set-split-two size-button">TWO</div>').appendTo(this.jHeader)
         bigView.click(function () {
             $(this.jPlaylist).attr('class', function (i, c) {
                 return c.replace(/pti-view-[^\s]+/g, 'pti-view-big')
             }.bind(this))
         }.bind(this))
+        mediumView.click(function () {
+            $(this.jPlaylist).attr('class', function (i, c) {
+                return c.replace(/pti-view-[^\s]+/g, 'pti-view-medium')
+            }.bind(this))
+        }.bind(this))
         listView.click(function () {
             $(this.jPlaylist).attr('class', function (i, c) {
                 return c.replace(/pti-view-[^\s]+/, 'pti-view-list')
+            }.bind(this))
+        }.bind(this))
+        splitOne.click(function () {
+            $(this.jPlaylist).attr('class', function (i, c) {
+                return c.replace(/pti-split-[^\s]+/, 'pti-split-one')
+            }.bind(this))
+        }.bind(this))
+        splitTwo.click(function () {
+            $(this.jPlaylist).attr('class', function (i, c) {
+                return c.replace(/pti-split-[^\s]+/, 'pti-split-two')
             }.bind(this))
         }.bind(this))
     }

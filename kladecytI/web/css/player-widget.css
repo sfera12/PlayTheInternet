@@ -20,7 +20,7 @@
     background: url('../favicon.ico') no-repeat 50% 50%;
 }
 .playerWidget .button.next {
-    background: url('../favicon.ico') no-repeat 50% 50%;
+    background: url('./resources/next.ico') no-repeat 50% 50%;
 }
 
 .playerWidget .button {
