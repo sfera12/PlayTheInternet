@@ -5,16 +5,20 @@
     margin-bottom: 1px;
 }
 
-.playerWidget .button.mouseDown {
+.playerWidget .button.mouseDown, .playerWidget .button.mouseDown:hover {
     background-color: gray!important;
+}
+
+.playerWidget .button:hover {
+    background-color: #D4FFF7!important;
 }
 
 .playerWidget .button.play {
     background: url('../favicon.ico') no-repeat 50% 50%;
 }
-.playerWidget .button.pause {
+.playerWidget .button.pause, .playerWidget .button.pause:hover {
     background: url('../favicon.ico') no-repeat 50% 50%;
-    background-color: black;
+    background-color: black!important;
 }
 .playerWidget .button.prev {
     background: url('../favicon.ico') no-repeat 50% 50%;
