@@ -74,6 +74,9 @@
 .playlistFrame .playlist.pti-view-big>* .videoText, .playlistFrame .playlist.pti-view-big>* .videoText, .playlistFrame .playlist.pti-view-medium>* .videoText, .playlistFrame .playlist.pti-view-medium>* .videoText { font-size: 11px; padding-top: 2px; }
 .playlistFrame .playlist.pti-view-big>* .error-text, .playlistFrame .playlist.pti-view-medium>* .error-text { top:35%; }
 
+.playlistFrame .playlist.pti-view-medium>* .videoText br { display: none;}
+.playlistFrame .playlist.pti-view-medium>* .videoText>:first-child:after { content: " " }
+
 .playlistFrame .playlist.pti-view-list>* .videoText { margin-left: 5px }
 .playlistFrame .playlist.pti-view-list>* .videoText br { display: none;}
 .playlistFrame .playlist.pti-view-list>* .videoText, .playlistFrame .playlist.pti-view-list>* .videoText {  }
