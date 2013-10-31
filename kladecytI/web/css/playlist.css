@@ -1,5 +1,5 @@
 /* slim scroll wrapper */
-.slimScrollDiv { position: absolute!important; top: 30px;  bottom: 0px; width: 100%; height: auto!important;}
+.slimScrollDiv { margin-top: 1px; position: absolute!important; top: 30px;  bottom: 0px; width: 100%; height: auto!important;}
 
 
 /* playlist container */
@@ -9,9 +9,9 @@
 /* playlist header */
 
 .playlistFrame .header { height: 30px; }
-.playlistFrame .header .size-button { float: left; height: 100%; line-height: 30px; cursor: default; }
-.playlistFrame .header .size-button:hover { background-color: #D4FFF7; }
-
+.playlistFrame .header .header-button { background-color: #f1f1f1; color: #007FFF; margin-left: 1px; float: left; width: 30px; height: 100%; line-height: 30px; text-align: center; cursor: default; }
+.playlistFrame .header .header-button:hover { background-color: #D4FFF7; }
+.playlistFrame .header .header-button.selected { background-color: #007FFF; color: white; }
 
 /* playlist playlist */
 
@@ -23,7 +23,7 @@
 .playlistFrame .playlist>* { float: left; cursor: default; overflow: hidden; position: relative; }
 /*.playlistFrame .playlist>:nth-child(1):not(.display-none), .playlistFrame .playlist>:nth-child(2):not(.display-none) { height: 90px!important; }*/
 /*.playlistFrame .playlist>:nth-child(1):not(.display-none)>:first-child , .playlistFrame .playlist>:nth-child(2):not(.display-none)>:first-child { margin: 0px!important; }*/
-.playlistFrame .playlist>*>* { margin: 0.5px; background-color: #f1f1f1; }
+.playlistFrame .playlist>*>* { margin: 0px 0.5px 0.5px 0.5px; background-color: #f1f1f1; }
 .playlistFrame .playlist>*:hover>* { background-color: #D4FFF7; color: #007FFF }
 .playlistFrame .playlist>*.selected>div, .playlistFrame .playlist>*.selected:hover>div { background-color: #007FFF; }
 .playlistFrame .playlist>*.ui-selected>div { background-color: orange!important; }

@@ -41,6 +41,7 @@ function VideoFeed(item, parent) {
 
 
 function Playlist(appendToElementExpression, options) {
+    var me = this
     Playlist.prototype.groupHeaderTemplate = PTITemplates.prototype.PlaylistGroupHeaderTemplate
     this.options = _.isUndefined(options) ? {} : options
     this.options && _.isUndefined(this.options.fillVideoElement) && (this.options.fillVideoElement = true)
@@ -60,40 +61,25 @@ function Playlist(appendToElementExpression, options) {
 
 
     Playlist.prototype.createHeader = function () {
-        var bigView = $('<div class="set-big-view size-button">BIG</div>').appendTo(this.jHeader)
-        var mediumView = $('<div class="set-medium-view size-button">MED</div>').appendTo(this.jHeader)
-        var listView = $('<div class="set-list-view size-button">LIST</div>').appendTo(this.jHeader)
-        var splitOne = $('<div class="set-split-one size-button">ONE</div>').appendTo(this.jHeader)
-        var splitTwo = $('<div class="set-split-two size-button">TWO</div>').appendTo(this.jHeader)
-        bigView.click(function () {
-            $(this.jPlaylist).attr('class', function (i, c) {
-                return c.replace(/pti-view-[^\s]+/g, 'pti-view-big')
-            }.bind(this))
-        }.bind(this))
-        mediumView.click(function () {
-            $(this.jPlaylist).attr('class', function (i, c) {
-                return c.replace(/pti-view-[^\s]+/g, 'pti-view-medium')
-            }.bind(this))
-        }.bind(this))
-        listView.click(function () {
-            $(this.jPlaylist).attr('class', function (i, c) {
-                return c.replace(/pti-view-[^\s]+/, 'pti-view-list')
-            }.bind(this))
-        }.bind(this))
-        splitOne.click(function () {
-            $(this.jPlaylist).attr('class', function (i, c) {
-                return c.replace(/pti-split-[^\s]+/, 'pti-split-one')
-            }.bind(this))
-        }.bind(this))
-        splitTwo.click(function () {
-            $(this.jPlaylist).attr('class', function (i, c) {
-                return c.replace(/pti-split-[^\s]+/, 'pti-split-two')
-            }.bind(this))
-        }.bind(this))
+        var groupToReplace = { '.size-button': /pti-view-[^\s]+/, '.split-button': /pti-split-[^\s]+/ }
+        var setSizeActive = function(selected) {
+            var $selected = $(this);
+            $selected.addClass('selected')
+            var classes = $selected.attr('class').split(' ')
+            var sizeClass = classes[0].replace(/set/, 'pti')
+            var groupClass = '.' + classes[2]
+            me.jHeader.find(groupClass).not(this).removeClass('selected')
+            me.jPlaylist.attr('class', function (i, c) {
+                return (c.replace(groupToReplace[groupClass], sizeClass))
+            })
+        }
+        var bigView = $('<div class="set-view-big header-button size-button">L</div>').appendTo(this.jHeader).click(setSizeActive)
+        var mediumView = $('<div class="set-view-medium header-button size-button">M</div>').appendTo(this.jHeader).click(setSizeActive)
+        var listView = $('<div class="set-view-list header-button size-button selected">S</div>').appendTo(this.jHeader).click(setSizeActive)
+        var splitOne = $('<div class="set-split-one header-button split-button selected temp-playlist-header-margin-left">1</div>').appendTo(this.jHeader).click(setSizeActive)
+        var splitTwo = $('<div class="set-split-two header-button split-button">2</div>').appendTo(this.jHeader).click(setSizeActive)
     }
-    if (this.createHeader) {
-        this.createHeader()
-    }
+    this.createHeader && this.createHeader()
 
     Playlist.prototype.hideGroupContents = function (element) {
         var headerTagName = element[0].tagName;

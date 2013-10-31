@@ -17,3 +17,4 @@
 .temp-parsed-error>div>div { display: table-cell; vertical-align: middle; text-align: center; height: 23px; line-height: 23px; }
 .temp-parsed-error>div>div>div { max-height: 200px; }
 .temp-parse-page-playlist { position: absolute; width:100%; top: 70px; bottom: 0px; }
+.temp-playlist-header-margin-left { margin-left: 10px!important; }
