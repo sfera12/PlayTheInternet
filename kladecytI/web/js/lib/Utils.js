@@ -45,10 +45,12 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.groupHeaderTemplate = PTITemplates.prototype.PlaylistGroupHeaderTemplate
     this.options = _.isUndefined(options) ? {} : options
     this.options && _.isUndefined(this.options.fillVideoElement) && (this.options.fillVideoElement = true)
+    _.isUndefined(this.options.elementSize) && (_.isUndefined(this.options.elementSize = "big"))
+    _.isUndefined(this.options.elementSplit) && (_.isUndefined(this.options.elementSplit = "two"))
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)
     this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
-    this.jPlaylist = $('<div class="playlist pti-split-one connectedSortable"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
+    this.jPlaylist = $('<div class="playlist connectedSortable"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
     this.sortableArray = new Array()
     this.playlist
     this.currVideoDiv
@@ -72,12 +74,17 @@ function Playlist(appendToElementExpression, options) {
             me.jPlaylist.attr('class', function (i, c) {
                 return (c.replace(groupToReplace[groupClass], sizeClass))
             })
+            _.isFunction(me.options.headerClick) && me.options.headerClick($selected)
         }
         var bigView = $('<div class="set-view-big header-button size-button">L</div>').appendTo(this.jHeader).click(setSizeActive)
         var mediumView = $('<div class="set-view-medium header-button size-button">M</div>').appendTo(this.jHeader).click(setSizeActive)
-        var listView = $('<div class="set-view-list header-button size-button selected">S</div>').appendTo(this.jHeader).click(setSizeActive)
-        var splitOne = $('<div class="set-split-one header-button split-button selected temp-playlist-header-margin-left">1</div>').appendTo(this.jHeader).click(setSizeActive)
+        var listView = $('<div class="set-view-list header-button size-button">S</div>').appendTo(this.jHeader).click(setSizeActive)
+        var splitOne = $('<div class="set-split-one header-button split-button temp-playlist-header-margin-left">1</div>').appendTo(this.jHeader).click(setSizeActive)
         var splitTwo = $('<div class="set-split-two header-button split-button">2</div>').appendTo(this.jHeader).click(setSizeActive)
+        me.jHeader.find("[class*=set-view-" + me.options.elementSize + "]").addClass('selected')
+        me.jPlaylist.addClass('pti-view-' + me.options.elementSize)
+        me.jHeader.find("[class*=set-split-" + me.options.elementSplit + "]").addClass('selected')
+        me.jPlaylist.addClass('pti-split-' + me.options.elementSplit)
     }
     this.createHeader && this.createHeader()
 
@@ -96,7 +103,6 @@ function Playlist(appendToElementExpression, options) {
     }
 
     this.jPlaylist.data('playlist', this)
-    this.jPlaylist.addClass('pti-view-list')
     if (this.options && this.options.type && this.options.type == 'calendar') {
         this.jPlaylist.addClass('calendar')
     }

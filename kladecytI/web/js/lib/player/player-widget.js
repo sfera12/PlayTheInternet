@@ -3,7 +3,8 @@ define(["jquery", "underscore"], function ($, _) {
         var self = this
         this.data = {listenObject:null}
         if(!dontCreateContent) {
-            this.jPlayerWidget = $('<div class="playerWidget"><div class="play button"></div><div class="next button"></div><div class="prev button"></div><a class="progressBarContainer" title="yoyoyoyo"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
+//            this.jPlayerWidget = $('<div class="playerWidget"><div class="play button"></div><div class="next button"></div><div class="prev button"></div><a class="progressBarContainer" <!-- TOOLTIP title="yoyoyoyo" --> ><div class="progressBar"></div></a></div>').appendTo(elementExpression)
+            this.jPlayerWidget = $('<div class="playerWidget"><div class="play button"></div><div class="next button"></div><div class="prev button"></div><a class="progressBarContainer"><div class="progressBar"></div></a></div>').appendTo(elementExpression)
         } else {
             this.jPlayerWidget = $($(elementExpression).children()[0])
         }
@@ -60,7 +61,7 @@ define(["jquery", "underscore"], function ($, _) {
         var throttleMouseMove = _.throttle(function (jElement, evt) {
                 var progress = evt.offsetX / jElement.width() * 100
                 var seconds = self.trackLength * ( progress / 100)
-                self.jProgressBarContainer.tooltip("option", "content", convert(seconds))
+//                self.jProgressBarContainer.tooltip("option", "content", convert(seconds))
             }, 100
 //        , {trailing: false}
         )
@@ -68,7 +69,7 @@ define(["jquery", "underscore"], function ($, _) {
         this.jPlayerWidget.on('mousemove', '.progressBarContainer', function (evt) {
             throttleMouseMove($(this), evt)
         })
-        self.jProgressBarContainer.tooltip({track:true})
+//        self.jProgressBarContainer.tooltip({track:true})
 
         this.listenInterval = setInterval(function () {
             var props = self.data.listenObject.get(['currentTime', 'duration', 'playerState']);

@@ -45,39 +45,36 @@
         <div id="tabs" class="leftFull temp-position-relative">
             <ul class="nav nav-pills temp-no-height">
                 <li><a href="#player">Player<div id="podPlayer" style="position: fixed; z-index: -1; left: 0px; width: 65px;"></div></a></li>
-                <li><a href="#tAreaDiv">Text Area<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
+                <li><a href="#tAreaDiv">Text<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
                 <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
-                <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
                 <li class="active"><a href="#parsedDiv">Parsed<div id="podParsed" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
             </ul>
             <div id="tAreaDiv" class="temp-popup-nav-content temp-display-none">
-                <textArea id="tArea" class="taArea"></textArea>
+                <textArea id="tArea" class="taArea" placeholder="Paste text from Skype in here or any text that contains links"></textArea>
                 <br>
-                <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
+                <input id="tAreaParseButton" class="temp-parse-button btn btn-primary" type="button" value="Parse"/>
+                <div class="temp-textarea-parse-playlist-wrapper">
+                    <div id="textAreaParsePlaylist" class="playlistFrame"></div>
+                </div>
             </div>
             <div id="optionsDiv" class="temp-popup-nav-content temp-display-none">
                 <fieldset>
                     <legend>Share this link</legend>
-                    <input id="buildHash" type="button" value="Build link"/>
-                    <br>
+                    Long
                     <input id="buildHashInput" class="max-width" type="text"/>
-                </fieldset>
-                <fieldset>
-                    <legend>Rename window</legend>
-                    <input id="renameWindow" type="button" value="Rename window"/>
+                    <a id="longLinkA" href="" target="_blank">Open</a>
                     <br>
-                    <input id="renameWindowInput" class="max-width" type="text"/>
+                    Short
+                    <input id="shortBuildHashInput" class="max-width" type="text"/>
+                    <a id="shortLinkA" href="" target="_blank">Open</a>
                 </fieldset>
                 <fieldset>
                     <legend>Go mobile</legend>
                     <div class="temp-alignQRCode" id="qrcode"></div>
                 </fieldset>
             </div>
-            <div id="recycleBinDiv" class="temp-popup-nav-content temp-display-none">
-                <div id="ulFirst" class=" playlistFrame"></div>
-            </div>
             <div id="parsedDiv" class="temp-popup-nav-content">
-                <div id="parsedPlaylist" class=" playlistFrame"></div>
+                <div id="parsedPlaylist" class="playlistFrame"></div>
             </div>
             <div id="players" class="tabs-player-container">
                 <!--<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://localhost:8888/iframe-player.html"></iframe>-->
@@ -89,7 +86,7 @@
     <div id="secondView">
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
         <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
-        <div id="ulSecond" class=" playlistFrame"></div>
+        <div id="ulSecond" class="playlistFrame"></div>
         <!--</div>-->
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
     </div>

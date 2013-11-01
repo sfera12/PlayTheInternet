@@ -110,7 +110,7 @@ function YoutubeHandler() {
                     try {
                         linkContext.videoFeed.error = $.parseJSON(data.responseText).error.message
                     } catch (e) {
-                        linkContext.videoFeed.error = data.responseText.replace(/.*<code>(\w+)<\/code>.*/, "$1")
+                        linkContext.videoFeed.error = data.responseText.replace(/[\r\n]/g, '').replace(/.*((<code>)|(TITLE>))([\w\s]+)((<)|(<\/code>)).*/, "$4")
                     }
                     linkContext.videoFeed.template = "errorTemplate"
                     SiteHandlerManager.prototype.fillVideoElement(linkContext)

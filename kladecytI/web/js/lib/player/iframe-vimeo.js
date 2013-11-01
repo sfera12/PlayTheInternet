@@ -20,6 +20,16 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
                 }
 //        console.log(playProgress)
                 self.currentTime(playProgress.seconds)
+                vimeo.api('paused', function(status) {
+                    console.log(status)
+                    if(status != true) {
+                        console.log(1)
+                        self.playerState(1)
+                    } else {
+                        console.log(2)
+                        self.playerState(2)
+                    }
+                })
 //            stuckPlayProgress()
             }, 500)
             $('#vimeoContainer').empty().append(self.options.playerTemplate({id:videoId}))
