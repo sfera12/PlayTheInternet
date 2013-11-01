@@ -12,16 +12,17 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         })
         chrome.storage.local.set(this)
     }
-    var prepareOptions = function(options) {
+    var prepareOptions = function(options, defaults) {
         var values = _.values(options)[0]
         values = values ? values : {}
-        options = _.defaults(values, {size: undefined, split: undefined})
+		defaults = defaults ? defaults : { size: undefined, split: undefined }
+        options = _.defaults(values, defaults)
         return options
     }
 
     window.windowId = GUID()
     chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
-        options = prepareOptions(options)
+        options = prepareOptions(options, { size: 'list', split: 'one'})
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
                 redraw: true,
@@ -39,7 +40,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
     })
 
     chrome.storage.local.get(['textAreaParseHeaderOptions'], function(options) {
-        options = prepareOptions(options)
+        options = prepareOptions(options, { size: 'list', split: 'one'})
         var createPlaylist = _.once(function() {
             window.textAreaParsePlaylist = new Playlist("#textAreaParsePlaylist", {
                     dontPlay: true,
@@ -69,7 +70,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
     })
 
     chrome.storage.local.get(['parseHeaderOptions'], function (options) {
-        options = prepareOptions(options)
+        options = prepareOptions(options, { size: 'list', split: 'one'})
         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                 elementSize: options.size,
                 elementSplit: options.split,
