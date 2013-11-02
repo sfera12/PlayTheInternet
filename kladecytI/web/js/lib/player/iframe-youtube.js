@@ -24,7 +24,6 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                 self.temp.playProgressInterval = setInterval(function () {
                     _.isFunction(self.temp.debouncePlayProgress) && self.temp.debouncePlayProgress()
                     self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
-                    self.data.playerState = youtube.getPlayerState() //for cursor in playerWidget (this one is necessary)
                 }, 750)
                 _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
             } else if (state == 0) {
@@ -96,6 +95,32 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
         }
     }, 'youtubeContainer')
 
+
+    var beforeDebounceStateChange = function(state) {
+        console.log('yt before debounce long ' + new Date().getTime())
+        console.log('yt before debounce state.data ' + state.data)
+        debounceStateChange(state)
+    }
+
+    var debounceStateChange = _.debounce(function(state) {
+        console.log('yt debounce state.data ' + state.data)
+        if(state && state.data == 2) {
+            setTimeout(function() {
+                var ytState = youtube.getPlayerState();
+                if(ytState == 2) {
+                    console.log('voistinu pause')
+                    pti.yt.playerState({data: 2})
+                } else {
+                    console.log('yt nevoistinu pause ' + state.data + ' ' + ytState)
+                }
+            }, 300)
+        } else {
+            var ytState = youtube.getPlayerState();
+            console.log('yt getPlayerState ' + ytState)
+            pti.yt.playerState(ytState)
+        }
+    }, 200)
+
     window.onYouTubeIframeAPIReady = function (id) {
         window.youtube = new YT.Player('youtube', {
             height:'100%',
@@ -103,7 +128,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             videoId:'MK6TXMsvgQg',
             events:{
                 'onReady':pti.yt.playerReady,
-                'onStateChange':pti.yt.playerState,
+                'onStateChange':beforeDebounceStateChange,
                 'onError':pti.yt.error
             }
         });
