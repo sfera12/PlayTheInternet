@@ -15,6 +15,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             if (state == 1 && pti.blockPlayback()) {
                 youtube.stopVideo()
                 clearInterval(self.temp.playProgressInterval)
+                clearTimeout(self.temp.errorTimeout)
             } else if (state == 1) {
                 self.duration(youtube.getDuration())
                 if (self.temp.errorTimeout) {
@@ -45,7 +46,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                 self.temp.errorTimeout = null
                 _.isFunction(callback) && callback.call(scope, error)
                 console.log('ERROR NEXT')
-            }, 2000)
+            }, 5000)
         },
         onStopVideo:function () {
             youtube.stopVideo()
@@ -55,6 +56,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             self.temp.debouncePlayProgress = _.debounce(function () {
                 self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.state && self.playerState(self.temp.isPausedDebounceObject.state)
                 self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start)
+                self.temp.debouncePlayProgress = null
             }, 1100)
             self.showPlayer()
             if (pti.blockPlayback()) {
@@ -78,6 +80,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                     })
                 }
                 youtube.loadVideoById(videoId)
+                self.error({data:'manual'})
             }
 //        console.log('load video')
         },
@@ -95,32 +98,6 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
         }
     }, 'youtubeContainer')
 
-
-    var beforeDebounceStateChange = function(state) {
-        console.log('yt before debounce long ' + new Date().getTime())
-        console.log('yt before debounce state.data ' + state.data)
-        debounceStateChange(state)
-    }
-
-    var debounceStateChange = _.debounce(function(state) {
-        console.log('yt debounce state.data ' + state.data)
-        if(state && state.data == 2) {
-            setTimeout(function() {
-                var ytState = youtube.getPlayerState();
-                if(ytState == 2) {
-                    console.log('voistinu pause')
-                    pti.yt.playerState({data: 2})
-                } else {
-                    console.log('yt nevoistinu pause ' + state.data + ' ' + ytState)
-                }
-            }, 300)
-        } else {
-            var ytState = youtube.getPlayerState();
-            console.log('yt getPlayerState ' + ytState)
-            pti.yt.playerState(ytState)
-        }
-    }, 200)
-
     window.onYouTubeIframeAPIReady = function (id) {
         window.youtube = new YT.Player('youtube', {
             height:'100%',
@@ -128,8 +105,8 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             videoId:'MK6TXMsvgQg',
             events:{
                 'onReady':pti.yt.playerReady,
-                'onStateChange':beforeDebounceStateChange,
-                'onError':pti.yt.error
+                'onStateChange':pti.yt.playerState,
+//                'onError':pti.yt.error
             }
         });
     }
