@@ -14,12 +14,11 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             var self = this.scope
             if (state == 1 && pti.blockPlayback()) {
                 youtube.stopVideo()
-                clearInterval(self.temp.playProgressInterval)
-                clearTimeout(self.temp.errorTimeout)
+                clearInterval(self.temp.playProgressInterval) & clearTimeout(self.temp.errorTimeout) & (self.temp.errorTimeout = null)
             } else if (state == 1) {
                 self.duration(youtube.getDuration())
                 if (self.temp.errorTimeout) {
-                    clearTimeout(self.temp.errorTimeout)
+                    clearTimeout(self.temp.errorTimeout) & (self.temp.errorTimeout = null)
                     console.log('no error')
                 }
                 self.temp.playProgressInterval = setInterval(function () {
