@@ -38,3 +38,6 @@ http://www.nzherald.co.nz/entertainment/news/article.cfm?c_id=1501119&objectid=1
 
 //TODO vimeo
 http://noisey.vice.com/blog/meet-the-two-scottish-rappers-who-conned-the-world
+
+//TODO exclude soundcloud
+https://soundcloud.com/.../on-the-block-prod-by-boi-ape …
