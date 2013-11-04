@@ -1,5 +1,6 @@
 define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, $, _) {
     var iframeContainer = $('#players')
+    var reinitInterval = 5 * 60000
     var playerIframe
     var playerIframeHosts
     var afterPlayerReady
@@ -25,92 +26,114 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
         afterPlayerReady = _.after(2, function () {
             observerReady = true
             ready()
+            lastReady = new Date().getTime()
         })
     }
 
+    var lastReady = 0
+    var initAndListen = _.throttle(function (thistype, thisoperation, type, videoId, playerState) {
+        reinit()
+        clearTimeout(initFailTimeout)
+        var initFailTimeout = setTimeout(function () {
+            console.log('failed to init players in observer, retrying')
+            initAndListen(thistype, thisoperation, type, videoId, playerState)
+        }, reinitInterval + 1000)
+        ready(function () {
+            clearTimeout(initFailTimeout)
+            iw.postMessage(thistype, thisoperation, type, videoId, playerState)
+        })
+    }, reinitInterval)
+    var lazyLoadVideo = function (thistype, thisoperation, type, videoId, playerState) {
+        var now = new Date().getTime()
+        if (now - lastReady >= reinitInterval) {
+            initAndListen(thistype, thisoperation, type, videoId, playerState)
+        } else {
+            iw.postMessage(thistype, thisoperation, type, videoId, playerState)
+        }
+    }
+
+    pti = new PTI({
+        onBlockPlayback: function (blockPlayback) {
+            iw.postMessage(this.type, this.operation, blockPlayback)
+        },
+        onLoadVideo: function (type, videoId, playerState) {
+            lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
+        },
+        onPlayVideo: function () {
+            iw.postMessage(this.type, this.operation)
+        },
+        onPauseVideo: function () {
+            iw.postMessage(this.type, this.operation)
+        },
+        onSeekTo: function (seekTo) {
+            iw.postMessage(this.type, this.operation, seekTo)
+        }
+    })
+
+    new pti.Player('y', {
+        onLoadVideo: function (videoObject, playerState) {
+            iw.postMessage(this.type, this.operation, videoObject, playerState)
+        },
+        onStopVideo: function () {
+            iw.postMessage(this.type, this.operation)
+        },
+        onCurrentTime: function (time) {
+        },
+        onPlayerState: function (state) {
+            if (state == 0) {
+                SiteHandlerManager.prototype.stateChange('NEXT')
+            }
+        },
+        onError: function (error) {
+            SiteHandlerManager.prototype.stateChange('ERROR')
+        },
+        onPlayerReady: function (playerState) {
+            afterPlayerReady()
+        }
+    })
+    new pti.Player('s', {
+        onLoadVideo: function (videoId, playerState) {
+            iw.postMessage(this.type, this.operation, videoId, playerState)
+        },
+        onInitializePlayer: function () {
+            iw.postMessage(this.type, this.operation)
+        },
+        onCurrentTime: function (time) {
+//        console.log('from main')
+//        console.log(time)
+        },
+        onPlayerState: function (state) {
+            if (state == 0) {
+                SiteHandlerManager.prototype.stateChange('NEXT')
+            }
+        },
+        onPlayerReady: function (playerState) {
+            afterPlayerReady()
+        },
+        onError: function (error) {
+            SiteHandlerManager.prototype.stateChange('ERROR')
+        }
+    })
+    new pti.Player('v', {
+        onLoadVideo: function (videoId, playerState) {
+            iw.postMessage(this.type, this.operation, videoId, playerState)
+        },
+        onCurrentTime: function (time) {
+//        console.log('from main')
+//        console.log(time)
+        },
+        onPlayerState: function (state) {
+            if (state == 0) {
+                SiteHandlerManager.prototype.stateChange('NEXT')
+            }
+        },
+        onError: function (error) {
+            SiteHandlerManager.prototype.stateChange('ERROR')
+        }
+    })
+
     function init() {
         appendIframe()
-        //var playerIframeHosts = ["http://playtheinternet.appspot.com"]
-
-        pti = new PTI({
-            onBlockPlayback:function (blockPlayback) {
-                iw.postMessage(this.type, this.operation, blockPlayback)
-            },
-            onLoadVideo:function (type, videoId, playerState) {
-                iw.postMessage(this.type, this.operation, type, videoId, playerState)
-            },
-            onPlayVideo:function () {
-                iw.postMessage(this.type, this.operation)
-            },
-            onPauseVideo:function () {
-                iw.postMessage(this.type, this.operation)
-            },
-            onSeekTo:function (seekTo) {
-                iw.postMessage(this.type, this.operation, seekTo)
-            }
-        })
-
-        new pti.Player('y', {
-            onLoadVideo:function (videoObject, playerState) {
-                iw.postMessage(this.type, this.operation, videoObject, playerState)
-            },
-            onStopVideo:function () {
-                iw.postMessage(this.type, this.operation)
-            },
-            onCurrentTime:function (time) {
-            },
-            onPlayerState:function (state) {
-                if (state == 0) {
-                    SiteHandlerManager.prototype.stateChange('NEXT')
-                }
-            },
-            onError:function (error) {
-                SiteHandlerManager.prototype.stateChange('ERROR')
-            },
-            onPlayerReady:function (playerState) {
-                afterPlayerReady()
-            }
-        })
-        new pti.Player('s', {
-            onLoadVideo:function (videoId, playerState) {
-                iw.postMessage(this.type, this.operation, videoId, playerState)
-            },
-            onInitializePlayer:function () {
-                iw.postMessage(this.type, this.operation)
-            },
-            onCurrentTime:function (time) {
-//        console.log('from main')
-//        console.log(time)
-            },
-            onPlayerState:function (state) {
-                if (state == 0) {
-                    SiteHandlerManager.prototype.stateChange('NEXT')
-                }
-            },
-            onPlayerReady:function (playerState) {
-                afterPlayerReady()
-            },
-            onError:function (error) {
-                SiteHandlerManager.prototype.stateChange('ERROR')
-            }
-        })
-        new pti.Player('v', {
-            onLoadVideo:function (videoId, playerState) {
-                iw.postMessage(this.type, this.operation, videoId, playerState)
-            },
-            onCurrentTime:function (time) {
-//        console.log('from main')
-//        console.log(time)
-            },
-            onPlayerState:function (state) {
-                if (state == 0) {
-                    SiteHandlerManager.prototype.stateChange('NEXT')
-                }
-            },
-            onError:function (error) {
-                SiteHandlerManager.prototype.stateChange('ERROR')
-            }
-        })
         initIframeWrapper()
     }
 
@@ -138,7 +161,5 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
     var iw;
     var ready;
 
-    init()
-
-    return {pti:pti, iw:iw, ready:ready, init:init, destroy:destroy, reinit: reinit}
+    return {pti: pti, iw: iw, ready: ready, init: init, destroy: destroy, reinit: reinit}
 })

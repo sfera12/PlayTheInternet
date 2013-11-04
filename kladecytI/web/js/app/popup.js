@@ -108,11 +108,9 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             playerWidget.data.listenObject = pti
         }
         require(["iframe-observer"], function (observer) {
-            observer.ready(function () {
-                window.observer = observer
-                window.pti = observer.pti
-                window.playerReady()
-            })
+            window.observer = observer
+            window.pti = observer.pti
+            window.playerReady()
         })
     })
     $('#tabs a[href="#player"]').click(function () {

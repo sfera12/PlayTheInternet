@@ -1,5 +1,8 @@
 define(["playlist", "iframe-observer"], function(a, observer) {
     $(document).ready(function () {
+        observer.init()
+        window.observer = observer
+        window.pti = observer.pti
         window.windowId = 'backgroundPageId'
         window.playlist = new Playlist("#ulSecond",
             {
@@ -8,6 +11,4 @@ define(["playlist", "iframe-observer"], function(a, observer) {
                 fillVideoElement:false
             });
     })
-    window.observer = observer
-    window.pti = observer.pti
 })
