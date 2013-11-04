@@ -36,7 +36,6 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                             if (playerState.state == 2) {
                                 self.temp.seekToOnce = _.once(function () {
                                     scWidget.pause()
-                                    self.temp.isPausedDebounceObject = { start:playerState.start * 1000, state:playerState.state }
                                     self.temp.seekToOnce = _.once(function () {
                                         //elegant solution
                                         scWidget.seekTo(playerState.start * 1000)
@@ -84,16 +83,11 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                             })
                         })
                     });
-                    self.temp.isPausedDebounce = _.debounce(function () {
-                        self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.state && self.playerState(self.temp.isPausedDebounceObject.state)
-                        self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start) && console.log(self.temp.isPausedDebounceObject.start)
-                    }, 1100)
                     self.temp.playProgressThrottle = _.throttle(function (position) {
 //                console.log(position)
                         self.currentTime(position)
 
                         scWidget.isPaused(function (paused) {
-                            self.temp.isPausedDebounce()
                             paused ? self.playerState(2) : self.playerState(1);
                         })
                         //TODO 2013-09-06 maybe move getSoundIndex and duration to .FINISH event

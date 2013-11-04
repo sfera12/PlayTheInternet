@@ -90,8 +90,8 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.pti.blockPlayback(false)
             var selectedVideoIndex = playlist.getSelectedVideoIndex();
-            var currentPtiState = pti.get(['currentTime', 'playerState'])
-            var selectedVideoPlayerState = {start: currentPtiState[0], state: currentPtiState[1]};
+            var currentPtiState = pti.get(['currentTime', 'playerState', 'soundIndex'])
+            var selectedVideoPlayerState = {start: currentPtiState[0], state: currentPtiState[1], index: currentPtiState[2]};
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.playlist.playVideo({index: selectedVideoIndex}, selectedVideoPlayerState)
         }, true);
@@ -100,8 +100,8 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             backgroundWindow.playlist.playerType(false)
             backgroundWindow.pti.blockPlayback(true)
             var backgroundSelectedVideoIndex = backgroundWindow.playlist.getSelectedVideoIndex();
-            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState'])
-            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1]};
+            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState', 'soundIndex'])
+            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1], index: backgroundCurrentPtiState[2]};
             //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
             playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)

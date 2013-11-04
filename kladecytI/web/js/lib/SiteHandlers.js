@@ -82,7 +82,7 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.errorTemplate = PTITemplates.prototype.YoutubeErrorTemplate
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
-    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/)([^?\s&\'\'<>\/\\.,#]{11})/
+    YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/|ytimg.com\u00252Fvi\u00252F)([^?\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 11
     YoutubeHandler.prototype.queue = new Array()
     YoutubeHandler.prototype.queueConcurrent = 0
@@ -153,7 +153,7 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.rawTemplate = PTITemplates.prototype.SoundCloudRawTemplate
     SoundCloudHandler.prototype.prefix = "s"
 //    %3F
-    SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^\s,?"=&#<]+)/
+    SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^.][^\s,?"=&#<]+)/
     SoundCloudHandler.prototype.regexGroup = 5
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();

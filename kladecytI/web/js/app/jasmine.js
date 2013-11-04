@@ -35,6 +35,9 @@ define(["sitehandlers", "playlist", "cparse"], function (a, b, c) {
                         it("[link: http://www.youtube.com/attribution_link?u=%2Fwatch%3Fv%3DGbIIBFxrqek%26feature%3Dshare&a=VWFTk5fDhcpcpLcX68GPOg] [regex: watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))]", function () {
                             expect(youtube[6]).toEqual({type:"y", id:"GbIIBFxrqek"});
                         });
+                        it("[link: http%3A%2F%2Fi1.ytimg.com%2Fvi%2FaOJnqPqqWxo%2Fmaxresdefault.jpg%3Ffeature%3Dog&amp;jq=100] [regex: ytimg.com\u0025Fvi\u0025F]", function () {
+                            expect(youtube[7]).toEqual({type:"y", id:"aOJnqPqqWxo"});
+                        });
                     });
                     describe("soundcloud", function () {
                         it("https://soundcloud.com/user-name/sets/000000", function () {
@@ -51,6 +54,15 @@ define(["sitehandlers", "playlist", "cparse"], function (a, b, c) {
                         });
                         it("soundcloud.com/karina-zukova/hero-finished-output-stereo", function () {
                             expect(soundcloud[4]).not.toEqual({type:"s", id:"karina-zukova/hero-finished-output-stereo"});
+                        });
+                        it("soundcloud.com/dubstep/runaway-by-aether-amber-noel%3Ffb_action_ids%3D548456968562412%26fb_action_types%3Dog.likes%26fb_source%3Dother_multiline%26action_object_map%3D%255B456761251109443%255D%26action_type_map%3D%255B%2522og.likes%2522%255D%26action_ref_map%3D%255B%255D%26fb_collection_id%3D10151187543611799%26ref%3Dprofile", function () {
+                            expect(soundcloud[6]).toEqual({type:"s", id:"dubstep/runaway-by-aether-amber-noel"});
+                        });
+                        it("https%3A%2F%2Fsoundcloud.com%2Fthehouseofdisco%2Fjason-malan-back-to-the-sand%3Futm_source%3Dsoundcloud%26utm_campaign%3Dshare%26utm_medium%3Dfacebook&amp;h=4AQHkHPJT&amp;s=1", function () {
+                            expect(soundcloud[7]).toEqual({type:"s", id:"thehouseofdisco/jason-malan-back-to-the-sand"});
+                        });
+                        it('[link :https://soundcloud.com/.../on-the-block-prod-by-boi-ape] [regex: ([^.][^\s,?"=&#<]+)]', function () {
+                            expect(soundcloud[8]).not.toEqual({type:"s", id:".../on-the-block-prod-by-boi-ape"});
                         });
                     });
                     describe("vimeo", function () {

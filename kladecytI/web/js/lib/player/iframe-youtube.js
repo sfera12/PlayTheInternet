@@ -22,7 +22,6 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                     console.log('no error')
                 }
                 self.temp.playProgressInterval = setInterval(function () {
-                    _.isFunction(self.temp.debouncePlayProgress) && self.temp.debouncePlayProgress()
                     self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
                 }, 750)
                 _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
@@ -52,11 +51,6 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
         },
         onLoadVideo:function (videoId, playerState) {
             var self = this.scope
-            self.temp.debouncePlayProgress = _.debounce(function () {
-                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.state && self.playerState(self.temp.isPausedDebounceObject.state)
-                self.temp.isPausedDebounceObject && self.temp.isPausedDebounceObject.start && self.currentTime(self.temp.isPausedDebounceObject.start)
-                self.temp.debouncePlayProgress = null
-            }, 1100)
             self.showPlayer()
             if (pti.blockPlayback()) {
                 youtube.stopVideo()
@@ -68,7 +62,6 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                             clearInterval(self.temp.playProgressInterval) //for cursor in playerWidget
                             youtube.pauseVideo()
                             self.currentTime(playerState.start)
-                            self.temp.isPausedDebounceObject = { start:playerState.start, state:playerState.state}
                             //TODO 2013-09-11 create function for duplicate seekToOnce definition
                             self.temp.seekToOnce = _.once(function () {
                                 youtube.seekTo(playerState.start)
