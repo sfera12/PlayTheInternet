@@ -22,15 +22,18 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                 var url = playerUrl + id
 //        console.log(url)
                 clearTimeout(self.temp.errorTimeout)
-                self.temp.errorTimeout = setTimeout(function () {
-                    console.log("ERROR TIMEOUT")
-                }, 5000)
                 scWidget.load(url, {callback:function () {
-                    clearTimeout(self.temp.errorTimeout)
+                    self.temp.afterClearErrorTimeout = _.after(2, function() {
+                        clearTimeout(self.temp.errorTimeout)
+                    })
                     if (self.temp.dontPlay && pti.blockPlayback()) {
                         self.stopVideo()
                         console.log('blocked sc playback in load callback')
                     } else {
+                        self.temp.errorTimeout = setTimeout(function () {
+                            self.error('error')
+                            console.log("ERROR TIMEOUT")
+                        }, 5000)
                         self.temp.seekToOnce = null
                         if (playerState) {
                             if (playerState.state == 2) {
@@ -99,9 +102,11 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                         })
                         if (self.temp.dontPlay || pti.blockPlayback()) {
                             self.stopVideo()
+                            clearTimeout(self.temp.errorTimeout)
                             console.log('blocked sc playback in play_progress')
                         } else {
                             if (position > 0) {
+                                self.temp.afterClearErrorTimeout()
 //                        console.log(position)
                                 _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
                             }

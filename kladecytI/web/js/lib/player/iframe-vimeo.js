@@ -9,6 +9,7 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
         },
         onStopVideo:function () {
             $('#vimeoContainer').empty()
+            clearTimeout(self.temp.playTimeout)
         },
         onLoadVideo:function (videoId, playerState) {
             pti.v.showPlayer()
@@ -21,12 +22,12 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
 //        console.log(playProgress)
                 self.currentTime(playProgress.seconds)
                 vimeo.api('paused', function(status) {
-                    console.log(status)
+//                    console.log(status)
                     if(status != true) {
-                        console.log(1)
+//                        console.log(1)
                         self.playerState(1)
                     } else {
-                        console.log(2)
+//                        console.log(2)
                         self.playerState(2)
                     }
                 })
@@ -37,6 +38,7 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
             self.temp.playTimeout = setTimeout(function () {
                 clearInterval(self.temp.playInterval)
                 console.log("PLAY TIMEOUT ERROR")
+                self.error('PLAY TIMEOUT ERROR')
             }, 5000)
             vimeo.addEvent('ready', function (id) {
                 clearInterval(self.temp.playInterval)

@@ -29,6 +29,9 @@ define(["pti", "iframe-wrapper", "youtube-api", "soundcloud", "vimeo"], function
     pti.s.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
     }
+    pti.s.options.onError = function (error) {
+        iw.postMessage(this.type, this.operation, error)
+    }
     pti.s.options.onCurrentTime = function (time) {
         iw.postMessage(this.type, this.operation, time)
     }
@@ -44,6 +47,9 @@ define(["pti", "iframe-wrapper", "youtube-api", "soundcloud", "vimeo"], function
 
     pti.v.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
+    }
+    pti.v.options.onError = function (error) {
+        iw.postMessage(this.type, this.operation, error)
     }
     pti.v.options.onCurrentTime = function (time) {
         iw.postMessage(this.type, this.operation, time)

@@ -89,6 +89,9 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
             },
             onPlayerReady:function (playerState) {
                 afterPlayerReady()
+            },
+            onError:function (error) {
+                SiteHandlerManager.prototype.stateChange('ERROR')
             }
         })
         new pti.Player('v', {
@@ -103,6 +106,9 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
                 if (state == 0) {
                     SiteHandlerManager.prototype.stateChange('NEXT')
                 }
+            },
+            onError:function (error) {
+                SiteHandlerManager.prototype.stateChange('ERROR')
             }
         })
         initIframeWrapper()
