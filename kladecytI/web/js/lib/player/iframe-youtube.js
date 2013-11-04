@@ -87,6 +87,10 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
         },
         onSeekTo:function (seekTo) {
             youtube.seekTo(seekTo)
+        },
+        onClearTimeout:function () {
+            var self = this.scope
+            clearTimeout(self.temp.errorTimeout)
         }
     }, 'youtubeContainer')
 

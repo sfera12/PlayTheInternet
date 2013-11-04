@@ -8,6 +8,7 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
         onError:function (error) {
         },
         onStopVideo:function () {
+            var self = this.scope
             $('#vimeoContainer').empty()
             clearTimeout(self.temp.playTimeout)
         },
