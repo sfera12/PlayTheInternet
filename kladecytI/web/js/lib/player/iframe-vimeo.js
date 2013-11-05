@@ -40,7 +40,7 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
                 clearInterval(self.temp.playInterval)
                 console.log("PLAY TIMEOUT ERROR")
                 self.error('PLAY TIMEOUT ERROR')
-            }, 5000)
+            }, 15000)
             vimeo.addEvent('ready', function (id) {
                 clearInterval(self.temp.playInterval)
                 vimeo.addEvent('play', function () {

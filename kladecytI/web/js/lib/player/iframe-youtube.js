@@ -44,7 +44,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                 self.temp.errorTimeout = null
                 _.isFunction(callback) && callback.call(scope, error)
                 console.log('ERROR NEXT')
-            }, 5000)
+            }, 15000)
         },
         onStopVideo:function () {
             youtube.stopVideo()

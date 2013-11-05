@@ -33,7 +33,7 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                         self.temp.errorTimeout = setTimeout(function () {
                             self.error('error')
                             console.log("ERROR TIMEOUT")
-                        }, 5000)
+                        }, 15000)
                         self.temp.seekToOnce = null
                         if (playerState) {
                             if (playerState.state == 2) {
