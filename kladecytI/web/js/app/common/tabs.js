@@ -6,8 +6,6 @@ define(['jquery', 'jquery-ui'], function ($) {
             if (newTab.text() == "Options") {
                 require(["app/common/hash-qr"], function (redraw) {
                     redraw()
-                    $('#buildHashInput').val('http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
-                    $('#longLinkA').attr('href', 'http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
                 })
             }
             //        console.log(newTab.text())
