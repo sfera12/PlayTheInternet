@@ -6,7 +6,7 @@ define(["pti", "iframe-wrapper", "youtube-api", "soundcloud", "vimeo"], function
     }
 
 
-    var iw = new IframeWrapper(parent, ["chrome-extension://hnelbfkfkaieecemgnpkpnopdpmffkii"])
+    var iw = new IframeWrapper(parent, [window.location.href.replace(/.*\?origin=(.*)/, '$1')])
     iw.listenAllEvents(pti.players) // loadVideo, stopVideo, pti-blockPlayback
 
     pti.yt.options.onAfterCurrentTime = function (time, playerState) {
