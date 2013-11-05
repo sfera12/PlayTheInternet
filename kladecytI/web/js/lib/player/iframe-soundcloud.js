@@ -9,6 +9,7 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
             },
             onStopVideo:function () {
                 this.scope.temp.dontPlay = true
+                this.scope.clearTimeout()
                 scWidget.pause()
             },
             onLoadVideo:function (videoId, playerState) {

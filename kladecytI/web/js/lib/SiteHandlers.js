@@ -24,7 +24,7 @@ function SiteHandlerManager() {
             var value = linkContext.videoFeed
         } else {
             var value = $.jStorage.get(linkContext.videoFeed.id)
-            $.jStorage.setTTL(linkContext.videoFeed.id, 86400000)
+//            $.jStorage.setTTL(linkContext.videoFeed.id, 86400000)
             //console.log(JSON.stringify(value) + 'FROM CACHE')
         }
 //      console.log(value)

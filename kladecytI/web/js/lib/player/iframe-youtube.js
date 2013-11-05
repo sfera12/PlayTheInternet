@@ -47,6 +47,8 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
             }, 15000)
         },
         onStopVideo:function () {
+            var self = this.scope
+            self.clearTimeout()
             youtube.stopVideo()
         },
         onLoadVideo:function (videoId, playerState) {
