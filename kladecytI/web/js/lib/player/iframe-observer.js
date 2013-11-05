@@ -1,6 +1,7 @@
 define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, $, _) {
     var iframeContainer = $('#players')
     var reinitInterval = 5 * 60000
+    var initTimeout = 30000
     var playerIframe
     var playerIframeHosts
     var afterPlayerReady
@@ -37,12 +38,12 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
         var initFailTimeout = setTimeout(function () {
             console.log('failed to init players in observer, retrying')
             initAndListen(thistype, thisoperation, type, videoId, playerState)
-        }, reinitInterval + 1000)
+        }, initTimeout + 1000)
         ready(function () {
             clearTimeout(initFailTimeout)
             iw.postMessage(thistype, thisoperation, type, videoId, playerState)
         })
-    }, reinitInterval)
+    }, initTimeout, {trailing: false})
     var lazyLoadVideo = function (thistype, thisoperation, type, videoId, playerState) {
         var now = new Date().getTime()
         if (now - lastReady >= reinitInterval) {

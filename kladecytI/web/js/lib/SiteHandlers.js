@@ -7,7 +7,7 @@ function SiteHandlerManager() {
     SiteHandlerManager.prototype.errorTimeout
 
     SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
-        $.jStorage.set(videoFeed.id, videoFeed)
+        $.jStorage.set(videoFeed.id, videoFeed, {TTL: 86400000})
     }
 
     SiteHandlerManager.prototype.getHandler = function (type) {
@@ -24,6 +24,7 @@ function SiteHandlerManager() {
             var value = linkContext.videoFeed
         } else {
             var value = $.jStorage.get(linkContext.videoFeed.id)
+            $.jStorage.setTTL(linkContext.videoFeed.id, 86400000)
             //console.log(JSON.stringify(value) + 'FROM CACHE')
         }
 //      console.log(value)
