@@ -7,9 +7,9 @@ define(["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], functi
             SiteHandlerManager.prototype.stateChange('NEXT')
         }
     }
-    pti.y.options.onAfterError = function (error) {
-        SiteHandlerManager.prototype.stateChange('ERROR')
-    }
+//    pti.y.options.onAfterError = function (error) {
+//        SiteHandlerManager.prototype.stateChange('ERROR')
+//    }
 
     pti.s.options.onAfterPlayerReady = function () {
         console.log('play first loaded sc')

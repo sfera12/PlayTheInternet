@@ -40,6 +40,7 @@ define(["jquery", "underscore"], function ($, _) {
         this.jPlayerWidget.on('click', '.prev', function () {
         })
         this.jPlayerWidget.on('click', '.next', function () {
+            playlist.playVideo({videoDiv: playlist.lookupNextSong()})
         })
         this.jPlayerWidget.on('click', '.progressBarContainer', function (evt) {
             var jElement = $(this)

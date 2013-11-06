@@ -64,6 +64,7 @@ function SiteHandlerManager() {
             //todo workaround start
             if (videoFeed.template == "completeTemplate" || linkContext.fromCache) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
+                videoElement.div.data('videoFeed', videoFeed)
                 //todo workaroung end
             }
             if (!linkContext.fromCache && linkContext.videoFeed.template == "completeTemplate") {
