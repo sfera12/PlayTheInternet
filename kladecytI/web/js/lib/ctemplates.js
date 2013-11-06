@@ -37,7 +37,7 @@ return __p;
 PTITemplates.prototype.SoundCloudRawTemplate = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div><div class="image-div"><img src="http://photos4.meetupstatic.com/photos/sponsor/9/5/4/4/iab120x90_458212.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b>'+
+__p+='<div><div class="image-div"><img src="/css/resources/sc.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b>'+
 ((__t=( id ))==null?'':__t)+
 '</b></span></div>';
 }
