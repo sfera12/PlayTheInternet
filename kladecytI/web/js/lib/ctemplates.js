@@ -53,7 +53,7 @@ return __p;
 PTITemplates.prototype.VimeoRawTemplate = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div><div class="image-div"><img src="/css/resources/vimeo.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b>'+
+__p+='<div><div class="image-div"><img src="/css/resources/vimeo.jpg"><div class="pti-logo"></div></div><span class="videoText"><b>'+
 ((__t=( id ))==null?'':__t)+
 '</b></span></div>';
 }
