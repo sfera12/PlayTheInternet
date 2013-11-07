@@ -15,9 +15,6 @@
         }
     ],
     "permissions":[
-        "webRequest",
-        "webRequestBlocking",
-        "notifications",
         "storage",
         "http://*/*", "https://*/*"
     ],
