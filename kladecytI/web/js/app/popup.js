@@ -104,7 +104,11 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
             var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1], index: backgroundCurrentPtiState[2]};
             //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
             playlist.playerType(true)
-            playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)
+            if(backgroundSelectedVideoIndex >= 0) {
+                playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)
+            } else {
+                playlist.playVideo({videoDiv: playlist.lookupNextSong()})
+            }
             playerWidget.data.listenObject = pti
         }
         require(["iframe-observer"], function (observer) {
