@@ -1,6 +1,6 @@
 {
     "name":"PlayTheInternet",
-    "version":"0.54",
+    "version":"0.55",
     "description":"Plays the internet!",
     "icons":{
         "128":"favicon.ico"
@@ -26,8 +26,7 @@
         "default_icon":"favicon.ico",
         "default_popup":"pley.html"
     },
-//    "options_page":"options.html",
 
     "manifest_version":2,
-    "content_security_policy":"default-src 'self'; script-src https://vimeo.com/; img-src https:// http://; frame-src http://playtheinternet.appspot.com/; connect-src http://gdata.youtube.com/"
+    "content_security_policy":"default-src 'self'; script-src https://vimeo.com/; img-src https:// http://; frame-src http://playtheinternet.appspot.com/; connect-src http://gdata.youtube.com/ https://www.googleapis.com/"
 }
