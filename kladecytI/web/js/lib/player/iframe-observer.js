@@ -1,6 +1,6 @@
 define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, $, _) {
     var iframeContainer = $('#players')
-    var reinitInterval = 5 * 60000
+    var reinitInterval = 120 * 60000
     var initTimeout = 30000
     var playerIframe
     var playerIframeHosts
