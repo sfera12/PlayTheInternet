@@ -1,7 +1,7 @@
 {
     "name":"PlayTheInternet",
-    "version":"0.56",
-    "description":"Plays the internet!",
+    "version":"0.57",
+    "description":"Play music/videos from your favorite sites all in one playlist! Supports: YouTube, SoundCloud, Vimeo",
     "icons":{
         "128":"favicon.ico"
     },
