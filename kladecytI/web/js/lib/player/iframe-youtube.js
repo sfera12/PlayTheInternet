@@ -22,6 +22,10 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                     console.log('no error')
                 }
                 self.temp.playProgressInterval = setInterval(function () {
+                    if(pti.blockPlayback()) {
+                        console.log('block YT Payback in playProgress')
+                        self.stopVideo()
+                    }
                     self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
                 }, 750)
                 _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()

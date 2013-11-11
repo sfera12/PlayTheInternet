@@ -32,22 +32,24 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
     }
 
     var lastReady = 0
-    var initAndListen = _.throttle(function (thistype, thisoperation, type, videoId, playerState) {
+    var initAndListen = _.throttle(function () {
         reinit()
         clearTimeout(initFailTimeout)
         var initFailTimeout = setTimeout(function () {
             console.log('failed to init players in observer, retrying')
-            initAndListen(thistype, thisoperation, type, videoId, playerState)
+            initAndListen()
         }, initTimeout + 1000)
         ready(function () {
             clearTimeout(initFailTimeout)
-            iw.postMessage(thistype, thisoperation, type, videoId, playerState)
+            pti.blockPlayback(pti.blockPlayback()) //resend current status to iframe-observable
+            var loadVideo = pti.loadVideo()
+            iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
         })
     }, initTimeout, {trailing: false})
     var lazyLoadVideo = function (thistype, thisoperation, type, videoId, playerState) {
         var now = new Date().getTime()
         if (now - lastReady >= reinitInterval) {
-            initAndListen(thistype, thisoperation, type, videoId, playerState)
+            initAndListen()
         } else {
             iw.postMessage(thistype, thisoperation, type, videoId, playerState)
         }
@@ -58,7 +60,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
             iw.postMessage(this.type, this.operation, blockPlayback)
         },
         onLoadVideo: function (type, videoId, playerState) {
-            lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
+            (!_.isUndefined(type) || !_.isUndefined(videoId)) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
         },
         onPlayVideo: function () {
             iw.postMessage(this.type, this.operation)

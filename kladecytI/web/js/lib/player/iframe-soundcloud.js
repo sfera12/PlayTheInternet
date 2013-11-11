@@ -27,7 +27,7 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
                     self.temp.afterClearErrorTimeout = _.after(2, function() {
                         clearTimeout(self.temp.errorTimeout)
                     })
-                    if (self.temp.dontPlay && pti.blockPlayback()) {
+                    if (self.temp.dontPlay || pti.blockPlayback()) {
                         self.stopVideo()
                         console.log('blocked sc playback in load callback')
                     } else {
