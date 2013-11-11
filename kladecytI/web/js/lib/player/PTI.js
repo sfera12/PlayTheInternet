@@ -7,10 +7,10 @@ define(['underscore', 'jquery'], function (_, $) {
         this.pti = this && (this.players['pti'] = this)
         this.name = 'pti'
         this.loadVideo = function (type, videoId, playerState) {
-            var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', type, videoId, playerState)
-            !_.isUndefined(output[0]) && (this.data.currentPlayer = output[0])
-            !_.isUndefined(output[1]) && (this.data.videoId = output[1])
-            (!_.isUndefined(output[0]) || !_.isUndefined(output[1])) && (this.data.playerState = output[2])
+            var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', type, videoId, playerState);
+            !_.isUndefined(output[0]) && (this.data.currentPlayer = output[0]);
+            !_.isUndefined(output[1]) && (this.data.videoId = output[1]);
+            (!_.isUndefined(output[0]) || !_.isUndefined(output[1])) && (this.data.playerState = output[2]);
             return [this.data.currentPlayer, this.data.videoId, this.data.playerState]
         }.bind(this)
         this.playVideo = function () {

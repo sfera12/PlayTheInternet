@@ -7,9 +7,11 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
     var afterPlayerReady
 
     function appendIframe() {
-        iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://playtheinternet.appspot.com/iframe-player.html?origin=' + window.location.href +  '"></iframe>')
+//        var host = "localhost:8888"
+        var host = "playtheinternet.appspot.com"
+        iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://' + host + '/iframe-player.html?origin=' + window.location.href +  '"></iframe>')
         playerIframe = iframeContainer.find('iframe')[0].contentWindow
-        playerIframeHosts = ["http://playtheinternet.appspot.com"]
+        playerIframeHosts = ["http://" + host]
 
         var observerReady = false
         var readyCallbacks = []
