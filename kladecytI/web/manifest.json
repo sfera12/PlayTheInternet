@@ -1,6 +1,6 @@
 {
     "name":"PlayTheInternet",
-    "version":"0.59",
+    "version":"0.60",
     "description":"Play music/videos from your favorite sites all in one playlist! Supports: YouTube, SoundCloud, Vimeo",
     "icons":{
         "128":"favicon.ico"
@@ -25,5 +25,5 @@
     },
 
     "manifest_version":2,
-    "content_security_policy":"default-src 'self'; script-src https://vimeo.com/; img-src https:// http://; frame-src http://playtheinternet.appspot.com/ http://localhost:8888/ ; connect-src http://gdata.youtube.com/ https://www.googleapis.com/"
+    "content_security_policy":"default-src 'self'; script-src https://vimeo.com/; img-src https:// http://; frame-src http://playtheinternet.appspot.com/ http://*.playtheinter.net/ http://localhost:8888/ ; connect-src http://gdata.youtube.com/ https://www.googleapis.com/"
 }

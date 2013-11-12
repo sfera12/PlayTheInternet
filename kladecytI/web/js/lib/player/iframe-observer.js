@@ -8,7 +8,8 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
 
     function appendIframe() {
 //        var host = "localhost:8888"
-        var host = "playtheinternet.appspot.com"
+//        var host = "playtheinternet.appspot.com"
+        var host = "web.playtheinter.net"
         iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://' + host + '/iframe-player.html?origin=' + window.location.href +  '"></iframe>')
         playerIframe = iframeContainer.find('iframe')[0].contentWindow
         playerIframeHosts = ["http://" + host]
