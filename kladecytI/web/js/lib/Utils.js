@@ -166,11 +166,12 @@ function Playlist(appendToElementExpression, options) {
 //                    console.log(targetParent)
 //                    console.log(this.first_rows)
                     if (this.first_rows.length > 1) {
+                        var self = this
                         $.each(this.first_rows, function (i, item) {
                             var trs = $(item.tr)
                             var logItem = trs.removeAttr('style').insertBefore(ui.item);
 //                            console.log(logItem)
-                            trs.removeClass('selected')
+                            targetParent != self && trs.removeClass('selected')
                         });
                         $('.cloned').remove();
                     }
