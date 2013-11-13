@@ -41,3 +41,24 @@ http://noisey.vice.com/blog/meet-the-two-scottish-rappers-who-conned-the-world
 
 //TODO exclude soundcloud
 https://soundcloud.com/.../on-the-block-prod-by-boi-ape …
+
+//TODO play button status highlight
+    <div class="button play" style="
+    /* background-color: black; */
+"><div style="
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    background-color: black;
+    position: relative;
+    z-index: -1;
+              "></div><div style="
+    /* display: none; */
+    width: 39px;
+    height: 39px;
+    background-color: white;
+    position: absolute;
+    z-index: -2;
+    top: 0px;
+"></div></div>
+
