@@ -75,6 +75,9 @@ define(["sitehandlers", "playlist", "cparse"], function (a, b, c) {
                         it("[link: http://player.vimeo.com/video/58994852?title=0&byline=0&portrait=0] [regex: (video\/)?]", function () {
                             expect(vimeo[1]).toEqual({type:"v", id:"58994852"});
                         });
+                        it('[http://www.vimeo.com/moogaloop.swf?clip_id=79179138&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color="] [regex: ((video\/)|(moogaloop.swf\?clip_id=))?]', function () {
+                            expect(vimeo[2]).toEqual({type:"v", id:"79179138"});
+                        });
                     });
 
                     function simplifyParse(func) {

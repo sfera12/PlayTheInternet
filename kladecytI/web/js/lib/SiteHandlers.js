@@ -166,8 +166,8 @@ function VimeoHandler() {
     VimeoHandler.prototype.rawTemplate = PTITemplates.prototype.VimeoRawTemplate
     VimeoHandler.prototype.completeTemplate = PTITemplates.prototype.VimeoCompleteTemplate
     VimeoHandler.prototype.prefix = 'v'
-    VimeoHandler.prototype.regex = /vimeo.com\\?\/(video\/)?(\d+)/
-    VimeoHandler.prototype.regexGroup = 2
+    VimeoHandler.prototype.regex = /vimeo.com\\?\/((video\/)|(moogaloop.swf\?.*clip_id=))?(\d+)/
+    VimeoHandler.prototype.regexGroup = 4
     VimeoHandler.prototype.loadVideoFeed = function (linkContext) {
         $.ajax({
             url:'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
