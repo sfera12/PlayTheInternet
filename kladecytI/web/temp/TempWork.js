@@ -62,3 +62,6 @@ https://soundcloud.com/.../on-the-block-prod-by-boi-ape …
     top: 0px;
 "></div></div>
 
+//TODO download logs
+C:\java\jdks\appengine-java-sdk-1.7.3\bin>appcfg.cmd --num_days=2  request_logs "C:\java\svn\kladecytI\out\artifacts\kladecyt_war_exploded" asdf.txt
+
