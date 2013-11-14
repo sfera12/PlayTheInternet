@@ -154,6 +154,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
     })
 
     function destroy() {
+        iframeContainer.find('iframe').attr('src', null)
         iframeContainer.empty()
     }
 
