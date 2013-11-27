@@ -20,6 +20,9 @@ function playTheInternetParseTemp(htmlText) {
     var local = /thisisregex/;
     var youtubeLinks = htmlText.match(youtube);
     var result = new Array();
+    if(youtubeLinks == null) {
+        return '';
+    }
     for (var i = 0; i < youtubeLinks.length; i++) {
         youtubeLinks[i].replace(local,
             "matchfunction"

@@ -1,5 +1,5 @@
 define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
-    var headerClick = function (ui) {
+    window.headerClick = function (ui) {
         var options = _.values(this)[0]
         ui.parent().find('.selected').each(function (index, item) {
             var classes = $(item).attr('class').split(' ')
@@ -12,13 +12,66 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         })
         chrome.storage.local.set(this)
     }
-    var prepareOptions = function(options, defaults) {
+    window.prepareOptions = function(options, defaults) {
         var values = _.values(options)[0]
         values = values ? values : {}
 		defaults = defaults ? defaults : { size: undefined, split: undefined }
         options = _.defaults(values, defaults)
         return options
     }
+
+    window.prepareTooltipOptions = function(options) {
+        if(_.keys(options).length) {
+            return options
+        } else {
+            return undefined
+        }
+    }
+
+    window.tooltipClick = function() {
+        var property = new Object();
+        property[this.id] = this.checked
+        tooltipCallbacks[this.id](this.checked)
+        chrome.storage.local.set(property)
+    }
+
+    window.tooltipsInit = function() {
+        var tooltips = ['playTooltipCheckbox', 'playlistTooltipCheckbox']
+        for(var i = 0; i < tooltips.length; i++) {
+            tooltipInit(tooltips[i])
+        }
+    }
+    window.tooltipCallbacks = {
+        'playTooltipCheckbox': function(toggle) {
+            if(toggle) {
+                $('#playerWidgetContainer').find('.play>div').addClass('temp-tooltip-active')
+            } else {
+                $('#playerWidgetContainer').find('.play>div').removeClass('temp-tooltip-active')
+            }
+        },
+        'playlistTooltipCheckbox': function(toggle) {
+            if(toggle) {
+                $('#ulSecond').addClass('temp-playlist-drop-here')
+            } else {
+                $('#ulSecond').removeClass('temp-playlist-drop-here')
+            }
+        }
+    }
+    window.tooltipInit = function(tooltip) {
+        var $tooltip = $('#' + tooltip);
+        $tooltip.click(tooltipClick)
+        chrome.storage.local.get(tooltip, function(options) {
+            var preparedOptions = prepareTooltipOptions(options)
+            if(!_.isUndefined(preparedOptions)) {
+                var toggle = _.values(preparedOptions)[0];
+                $tooltip.attr('checked', toggle)
+                tooltipCallbacks[tooltip](toggle)
+            } else {
+                $tooltip.attr('checked', true)
+            }
+        })
+    }
+    tooltipsInit()
 
     window.windowId = GUID()
     chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
@@ -69,16 +122,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         $("#tabs").tabs("option", "active", 3);
     })
 
-    chrome.storage.local.get(['parseHeaderOptions'], function (options) {
-        options = prepareOptions(options, { size: 'list', split: 'one'})
-        window.parsedPlaylist = new Playlist('#parsedPlaylist', {
-                elementSize: options.size,
-                elementSplit: options.split,
-                headerClick: headerClick.bind({parseHeaderOptions: {}})
-            }
-        );
-        require(["app/popup/parse-content"])
-    })
+    require(["app/popup/parse-content"])
 
     $(document).ready(function () {
         //hack to make scrollbar disappear

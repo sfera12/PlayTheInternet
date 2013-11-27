@@ -1,7 +1,8 @@
 define(['underscore', 'app/common/tabs'], function (_) {
     function buildQR() {
         if (!_.isUndefined(playlist)) {
-            var location = 'http://playtheinternet.appspot.com/play.html' + playlist.buildHash()
+            var untrimmed = playlist.buildHash().substr(0, 2006)
+            var location = 'http://playtheinter.net/play.html' + untrimmed.substr(0, untrimmed.lastIndexOf(','))
             $.ajax({
                 url: 'https://www.googleapis.com/urlshortener/v1/url',
                 type: 'post',
@@ -25,8 +26,8 @@ define(['underscore', 'app/common/tabs'], function (_) {
     function redrawHashAndQRCode() {
         if (typeof playlist != "undefined") {
             window.location.hash = playlist.jPlaylist.sortable('toArray')
-            $('#buildHashInput').val('http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
-            $('#longLinkA').attr('href', 'http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
+            $('#buildHashInput').val('http://playtheinter.net/play.html' + playlist.buildHash())
+            $('#longLinkA').attr('href', 'http://playtheinter.net/play.html' + playlist.buildHash())
         }
         if ($("#tabs").tabs("option", "active") == 2) {
             require(['qrcode'], function () {

@@ -6,8 +6,21 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting == "hello")
             sendResponse({farewell:"goodbye"});
         if (request.operation == "parsedPlaylist") {
-            parsedPlaylist.playlistEmpty();
-            parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data))
+            if(request.data == ''){
+                $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
+            } else {
+                chrome.storage.local.get(['parseHeaderOptions'], function (options) {
+                    options = prepareOptions(options, { size: 'list', split: 'one'})
+                    window.parsedPlaylist = new Playlist('#parsedPlaylist', {
+                            elementSize: options.size,
+                            elementSplit: options.split,
+                            headerClick: headerClick.bind({parseHeaderOptions: {}})
+                        }
+                    );
+                    parsedPlaylist.playlistEmpty();
+                    parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data))
+                })
+            }
         } else if(request.operation == "parsePlayTheInternetParseFunctionMissing") {
             $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing(request))
         }

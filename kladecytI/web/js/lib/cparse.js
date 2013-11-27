@@ -19,6 +19,9 @@ function playTheInternetParse(htmlText) {
     var local = /((youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/|ytimg.com\u00252Fvi\u00252F)([^?\s&\'\'<>\/\\.,#]{11}))|(((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^.][^\s,?"=&#<]+))|(vimeo.com\\?\/((video\/)|(moogaloop.swf\?.*clip_id=))?(\d+))/;
     var youtubeLinks = htmlText.match(youtube);
     var result = new Array();
+    if (youtubeLinks == null) {
+        return "";
+    }
     for (var i = 0; i < youtubeLinks.length; i++) {
         youtubeLinks[i].replace(local, function(match) {if(match.match(local)[12] != undefined) { result.push({type: 'y', id:  match.replace(local, '$12')})};if(match.match(local)[18] != undefined) { result.push({type: 's', id:  match.replace(local, '$18')})};if(match.match(local)[23] != undefined) { result.push({type: 'v', id:  match.replace(local, '$23')})}});
     }

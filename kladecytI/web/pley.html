@@ -33,7 +33,7 @@
 <div id="playerWidgetContainer" class="temp-player-widget">
     <div class="playerWidget">
         <div class="next button"></div>
-        <div class="play button"></div>
+        <div class="play button"><div class="temp-panel-heading temp-tooltip-active temp-play-tooltip"><b>Click on track's thumbnail(icon) in playlist to start playing.</b><br>This tooltip can be disabled in Options tab.</div></div>
         <!--<div class="prev button"></div>-->
         <a class="progressBarContainer">
             <div class="progressBar"></div>
@@ -77,6 +77,19 @@
                         <div class="temp-alignQRCode" id="qrcode"></div>
                     </div>
                 </div>
+                <div class="temp-panel temp-options-share-this-link">
+                    <div class="temp-panel-heading">Tooltips</div>
+                    <div class="temp-options-tooltip">
+                        <div>
+                            <label><input id="playTooltipCheckbox" class="max-width" type="checkbox"/>Play</label>
+                        </div>
+                    </div>
+                    <div class="temp-options-tooltip">
+                        <div>
+                            <label><input id="playlistTooltipCheckbox" class="max-width" type="checkbox"/>Playlist</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="parsedDiv" class="temp-popup-nav-content">
                 <div id="parsedPlaylist" class="playlistFrame"></div>
@@ -91,7 +104,7 @@
     <div id="secondView">
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
         <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
-        <div id="ulSecond" class="playlistFrame"></div>
+        <div id="ulSecond" class="playlistFrame temp-playlist-drop-here"></div>
         <!--</div>-->
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
     </div>
