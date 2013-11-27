@@ -20,14 +20,6 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         return options
     }
 
-    window.prepareTooltipOptions = function(options) {
-        if(_.keys(options).length) {
-            return options
-        } else {
-            return undefined
-        }
-    }
-
     window.tooltipClick = function() {
         var property = new Object();
         property[this.id] = this.checked
@@ -58,10 +50,9 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
         }
     }
     window.tooltipInit = function(tooltip) {
-        var $tooltip = $('#' + tooltip);
-        $tooltip.click(tooltipClick)
+        var $tooltip = $('#' + tooltip).click(tooltipClick);
         chrome.storage.local.get(tooltip, function(options) {
-            var preparedOptions = prepareTooltipOptions(options)
+            var preparedOptions = _.keys(options).length ? options : undefined
             if(!_.isUndefined(preparedOptions)) {
                 var toggle = _.values(preparedOptions)[0];
                 $tooltip.attr('checked', toggle)
