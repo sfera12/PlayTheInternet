@@ -35,18 +35,10 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
     }
     window.tooltipCallbacks = {
         'playTooltipCheckbox': function(toggle) {
-            if(toggle) {
-                $('#playerWidgetContainer').find('.play>div').addClass('temp-tooltip-active')
-            } else {
-                $('#playerWidgetContainer').find('.play>div').removeClass('temp-tooltip-active')
-            }
+            $('#playerWidgetContainer').find('.play>div').toggleClass('temp-tooltip-active', toggle)
         },
         'playlistTooltipCheckbox': function(toggle) {
-            if(toggle) {
-                $('#ulSecond').addClass('temp-playlist-drop-here')
-            } else {
-                $('#ulSecond').removeClass('temp-playlist-drop-here')
-            }
+            $('#ulSecond').toggleClass('temp-playlist-drop-here', toggle)
         }
     }
     window.tooltipInit = function(tooltip) {
