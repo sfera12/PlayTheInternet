@@ -26,7 +26,7 @@
     "commands":{
         "play": {
             "suggested_key": {
-                "default": "Alt+P"
+                "default": "Alt+D"
             },
             "description": "Resume play"
         },
@@ -38,13 +38,13 @@
         },
         "next": {
             "suggested_key": {
-                "default": "Alt+N"
+                "default": "Alt+F"
             },
             "description": "Next Track"
         },
         "_execute_browser_action": {
             "suggested_key": {
-                "default": "Alt+Shift+P"
+                "default": "Alt+E"
             }
         }
     },
