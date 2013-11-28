@@ -38,4 +38,4 @@
 .temp-panel-heading { color: white; background-color: #007fff; border-color: #007fff; height: 35px; margin-bottom: 12px; line-height: 30px; padding-left: 15px; }
 .temp-playlist-drop-here { background: url('/css/resources/playlist.png') no-repeat 50% 50%; }
 .button>.temp-play-tooltip { display: none; }
-.button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 40px; left: -137px; width: 200px; height: 80px; font-size: 11px; line-height: inherit; }
+.button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 40px; left: -137px; width: 200px; height: 80px; font-size: 11px; line-height: inherit; z-index: 999}

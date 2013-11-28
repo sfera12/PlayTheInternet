@@ -21,6 +21,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                     clearTimeout(self.temp.errorTimeout) & (self.temp.errorTimeout = null)
                     console.log('no error')
                 }
+                clearInterval(self.temp.playProgressInterval)
                 self.temp.playProgressInterval = setInterval(function () {
                     if(pti.blockPlayback()) {
                         console.log('block YT Payback in playProgress')
