@@ -40,3 +40,8 @@
 .button>.temp-play-tooltip { display: none; }
 .button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 40px; left: -137px; width: 200px; height: 80px; font-size: 11px; line-height: inherit; z-index: 999}
 .temp-webkit-grabbing * { cursor: -webkit-grabbing!important; }
+#ulSecond .playlist.pti-view-big>*:hover .image-div:after { content: ''; position: absolute; left: 0px; background-color: black; opacity: 0.7; float: left; width: 0px; height: 0px; border-top: 45px solid transparent; border-bottom: 45px solid transparent; border-left: 120px solid #007FFF; }
+#ulSecond .playlist.pti-view-medium>*:hover .image-div:after { content: ''; position: absolute; left: 0px; background-color: black; opacity: 0.7; float: left; width: 0px; height: 0px; border-top: 22.5px solid transparent; border-bottom: 22.5px solid transparent; border-left: 60px solid #007FFF; }
+#ulSecond .playlist.pti-view-list>*:hover:not(.selected) .image-div:after { content: ''; position: absolute; left: 15px; top: 0px; float: left; width: 0px; height: 0px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 30px solid #007FFF; background: #D4FFF7; }
+#ulSecond .playlist.pti-view-list>*.selected:hover .image-div:after { content: ''; position: absolute; left: 15px; top: 0px; float: left; width: 0px; height: 0px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 30px solid #D4FFF7; background: #007FFF; }
+#ulSecond .playlist.pti-view-list>*:hover .image-div .duration-caption { display: none; }
