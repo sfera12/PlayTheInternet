@@ -10,6 +10,6 @@ define(["playlist", "iframe-observer"], function(a, observer) {
                 redraw:true,
                 fillVideoElement:false
             });
-        require(["app/background/commands"])
+        require(["app/background/commands", "app/background/contextMenus"])
     })
 })
