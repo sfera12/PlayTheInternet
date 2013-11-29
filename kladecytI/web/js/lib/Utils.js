@@ -39,6 +39,12 @@ function VideoFeed(item, parent) {
     }
 }
 
+$('body').mouseup(function() {
+    $('body').removeClass('temp-webkit-grabbing')
+})
+$('body').on('mousedown', '.pti-element-song', function() {
+    $('body').addClass('temp-webkit-grabbing')
+})
 
 function Playlist(appendToElementExpression, options) {
     var me = this

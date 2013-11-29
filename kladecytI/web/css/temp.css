@@ -39,3 +39,4 @@
 .temp-playlist-drop-here { background: url('/css/resources/playlist.png') no-repeat 50% 50%; }
 .button>.temp-play-tooltip { display: none; }
 .button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 40px; left: -137px; width: 200px; height: 80px; font-size: 11px; line-height: inherit; z-index: 999}
+.temp-webkit-grabbing * { cursor: -webkit-grabbing!important; }
