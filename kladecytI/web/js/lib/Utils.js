@@ -40,10 +40,14 @@ function VideoFeed(item, parent) {
 }
 
 $('body').mouseup(function() {
-    $('body').removeClass('temp-webkit-grabbing')
+    $('body').removeClass('temp-webkit-grabbing temp-crosshair')
 })
-$('body').on('mousedown', '.pti-element-song', function() {
+$('body').on('mousedown', '.pti-element-song .image-div', function(event) {
     $('body').addClass('temp-webkit-grabbing')
+    event.stopPropagation()
+})
+$('body').on('mousedown', '.pti-element-song *:not(.image-div)', function(event) {
+    $('body').addClass('temp-crosshair')
 })
 
 function Playlist(appendToElementExpression, options) {
