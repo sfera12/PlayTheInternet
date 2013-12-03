@@ -32,8 +32,8 @@ chrome.runtime.onMessage.addListener(
 //                                            console.log(selected)
                                             selected = selected.join(',')
                                             playlist.addSongsToPlaylist(playlist.parseSongIds(selected), true)
-                                            $this.remove()
-                                            uiselected && uiselected.remove()
+                                            $this.hide(400, function(){ $this.remove(); });
+                                            uiselected && uiselected.hide(400, function(){ uiselected.remove(); });
                                         }
                                     })
                                 }
