@@ -36,7 +36,17 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
                 dontPlay: true,
                 elementSize: options.size,
                 elementSplit: options.split,
-                headerClick: headerClick.bind({playlistHeaderOptions: {}})
+                headerClick: headerClick.bind({playlistHeaderOptions: {}}),
+                execute: [
+                    function () {
+                        var self = this
+                        this.jPlaylist.on('click', '.pti-element-song', function (event) {
+                            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+                                Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
+                            }
+                        })
+                    }
+                ]
             }
         );
     })

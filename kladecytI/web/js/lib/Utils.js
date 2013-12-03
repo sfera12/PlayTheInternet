@@ -42,11 +42,11 @@ function VideoFeed(item, parent) {
 $('body').mouseup(function() {
     $('body').removeClass('temp-webkit-grabbing temp-crosshair')
 })
-$('body').on('mousedown', '.pti-element-song .image-div', function(event) {
+$('body').on('mousedown', '.pti-element-song .image-div, .pti-element-song .image-div *', function(event) {
     $('body').addClass('temp-webkit-grabbing')
     event.stopPropagation()
 })
-$('body').on('mousedown', '.pti-element-song *:not(.image-div)', function(event) {
+$('body').on('mousedown', '.pti-element-song *:not(.image-div):not(.pti-logo)', function(event) {
     $('body').addClass('temp-crosshair')
 })
 
@@ -541,11 +541,11 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
 
-    this.jPlaylist.on('click', '.pti-element-song', function (event) {
-        if($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-            Playlist.prototype.playVideo.call(self, {videoDiv:$(this)})
-        }
-    })
+    if(options.execute && options.execute.length) {
+        options.execute.forEach(function(item) {
+            _.isFunction(item) && item.call(self)
+        })
+    }
 
     Playlist.prototype.setSlimScroll = function (element, height) {
         $(element).slimScroll({

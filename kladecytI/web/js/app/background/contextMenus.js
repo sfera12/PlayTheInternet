@@ -10,13 +10,14 @@ define(function() {
             var ids = playTheInternetParse(concat);
             console.log(ids)
             if (ids.length > 0) {
+                var links = playlist.parseSongIds(ids);
                 chrome.notifications.create('', {
                     type: "basic",
-                    title: "Found!",
-                    message: "Adding tracks to PlayTheInternet. Won't add duplicates!",
+                    title: "Found " + links.length + " tracks!",
+                    message: "Adding tracks to PlayTheInternet. Remember that duplicate tracks won't be added!",
                     iconUrl: "favicon.ico"
                 }, function() {console.log()})
-                playlist.addSongsToPlaylist(playlist.parseSongIds(ids), true)
+                playlist.addSongsToPlaylist(links, true)
             } else {
                 chrome.notifications.create('', {
                     type: "basic",
@@ -26,5 +27,34 @@ define(function() {
                 }, function() {console.log()})            }
         })
     }
-    chrome.contextMenus.create({"title": 'Add to PlayTheInternet', "contexts":['link'], "onclick": genericOnClick});
+    function parsePage() {
+        console.log(chrome.tabs)
+        chrome.tabs.executeScript(null, {file: "/js/app/background/parsePage.js"}, function(parse) {
+            _.isUndefined(parse) && (console.log('nothing found because chrome tabs'))
+        })
+    }
+
+    chrome.runtime.onMessage.addListener(
+        function (request, sender, sendResponse) {
+//                    console.log(sender.tab ?
+//                        "from a content script:" + sender.tab.url :
+//                        "from the extension");
+            if (request.greeting == "hello")
+                sendResponse({farewell:"goodbye"});
+            if (request.operation == "parsePage") {
+                if(request.data == ''){
+//                    $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
+                    console.log('nothing found')
+                } else {
+                    playlist.addSongsToPlaylist(playlist.parseSongIds(request.data), true)
+                }
+            } else if(request.operation == "parsePageParsePlayTheInternetParseFunctionMissing") {
+                alert('context menu playtheinternet parse function missing')
+//                $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing(request))
+            }
+        }
+    );
+
+    chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": genericOnClick});
+    chrome.contextMenus.create({"title": 'Add everything from this page', "contexts":['page'], "onclick": parsePage});
 })

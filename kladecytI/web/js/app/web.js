@@ -30,7 +30,17 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
                 debounceRecalculatePlaylistCallback:_.once(function () {
                     console.log('playFirstLoaded debounce')
                     playFirstLoaded()
-                })
+                }),
+                execute: [
+                    function () {
+                        var self = this
+                        this.jPlaylist.on('click', '.pti-element-song', function (event) {
+                            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+                                Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
+                            }
+                        })
+                    }
+                ]
             });
         var playlist = window.playlist
         playlist.addSongsToPlaylist(playlist.parseSongIds(window.location.hash), true)

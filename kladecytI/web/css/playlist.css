@@ -10,7 +10,7 @@
 
 .playlistFrame .header { height: 30px; }
 .playlistFrame .header .header-button { background-color: #f1f1f1; color: #007FFF; margin-left: 1px; float: left; width: 30px; height: 100%; line-height: 30px; text-align: center; cursor: default; }
-.playlistFrame .header .header-button:hover { background-color: #D4FFF7; }
+.playlistFrame .header .header-button:hover { background-color: #D4FFF7; cursor: pointer; }
 .playlistFrame .header .header-button.selected { background-color: #007FFF; color: white; }
 
 /* playlist playlist */
@@ -28,6 +28,7 @@
 .playlistFrame .playlist>*:hover>* { background-color: #D4FFF7; color: #007FFF }
 .playlistFrame .playlist>*.selected>div, .playlistFrame .playlist>*.selected:hover>div { background-color: #007FFF; }
 .playlistFrame .playlist>*.ui-selected>div { background-color: orange!important; }
+.playlistFrame .playlist>*.ui-selected:hover>div { background-color: darkorange!important; }
 .playlistFrame .playlist>*.ui-selected.selected>div { background-color: orangered!important; }
 
 .playlistFrame .playlist.pti-view-big>.pti-element-song { height: 91px; }
@@ -48,14 +49,14 @@
 .playlistFrame .playlist>* .image-div { float: left; cursor: -webkit-grab; }
 
 .playlistFrame .playlist.pti-view-big>* .image-div, .playlistFrame .playlist.pti-view-medium>* .image-div  { position: relative; }
-.playlistFrame .playlist.pti-view-big>* .image-div { width: 123px; height: 90px; }
-.playlistFrame .playlist.pti-view-medium>* .image-div { width: 63px; height: 45px; }
+.playlistFrame .playlist.pti-view-big>* .image-div { width: 120px; height: 90px; margin-right: 3px; }
+.playlistFrame .playlist.pti-view-medium>* .image-div { width: 60px; height: 45px; margin-right: 3px; }
 
 .playlistFrame .playlist.pti-view-big>* .image-div img, .playlistFrame .playlist.pti-view-big>* .image-div img, .playlistFrame .playlist.pti-view-medium>* .image-div img, .playlistFrame .playlist.pti-view-medium>* .image-div img { float: left; }
 .playlistFrame .playlist.pti-view-big>* .image-div img, .playlistFrame .playlist.pti-view-big>* .image-div img { height: 90px; }
 .playlistFrame .playlist.pti-view-medium>* .image-div img, .playlistFrame .playlist.pti-view-medium>* .image-div img { height: 45px; }
 
-.playlistFrame .playlist.pti-view-list>* .image-div { width: 42px; height: 20px; }
+.playlistFrame .playlist.pti-view-list>* .image-div { width: 40px; height: 20px; margin-right: 2px; }
 .playlistFrame .playlist.pti-view-list>* .image-div img { display: none;}
 .playlistFrame .playlist.pti-view-list>* .image-div .duration-caption { height: 20px;}
 .playlistFrame .playlist.pti-view-list>* .image-div .pti-logo { display: none;}

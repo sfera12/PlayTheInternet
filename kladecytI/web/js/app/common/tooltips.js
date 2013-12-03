@@ -7,7 +7,7 @@ define(function () {
     }
 
     window.tooltipsInit = function () {
-        var tooltips = ['playTooltipCheckbox', 'playlistTooltipCheckbox']
+        var tooltips = ['playTooltipCheckbox']
         for (var i = 0; i < tooltips.length; i++) {
             tooltipInit(tooltips[i])
         }
@@ -15,9 +15,6 @@ define(function () {
     window.tooltipCallbacks = {
         'playTooltipCheckbox': function (toggle) {
             $('#playerWidgetContainer').find('.play>div').toggleClass('temp-tooltip-active', toggle)
-        },
-        'playlistTooltipCheckbox': function (toggle) {
-            $('#ulSecond').toggleClass('temp-playlist-drop-here', toggle)
         }
     }
     window.tooltipInit = function (tooltip) {
