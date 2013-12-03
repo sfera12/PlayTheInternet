@@ -20,14 +20,15 @@ chrome.runtime.onMessage.addListener(
                                     var self = this
                                     this.jPlaylist.on('click', '.pti-element-song', function (event) {
                                         if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-                                            var selected = new Array()
-                                            var uiselected
-                                            selected.push(this.id)
+                                            var selected = new Array(), $this = $(this), uiselected
 //                                            console.log(selected)
-                                            var $this = $(this)
-                                            $this.hasClass('ui-selected') && ( uiselected = self.jPlaylist.find('.ui-selected').each(function() {
-                                                selected.push($(this).attr('id'))
-                                            }))
+                                            if($this.hasClass('ui-selected')) {
+                                                uiselected = self.jPlaylist.find('.ui-selected').each(function () {
+                                                    selected.push($(this).attr('id'))
+                                                })
+                                            } else {
+                                                selected.push(this.id)
+                                            }
 //                                            console.log(selected)
                                             selected = selected.join(',')
                                             playlist.addSongsToPlaylist(playlist.parseSongIds(selected), true)
