@@ -58,7 +58,11 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
                     dontPlay: true,
                     elementSize: options.size,
                     elementSplit: options.split,
-                    headerClick: headerClick.bind({textAreaParseHeaderOptions: {}})
+                    headerClick: headerClick.bind({textAreaParseHeaderOptions: {}}),
+                    execute: [
+                        Playlist.prototype.addAction,
+                        Playlist.prototype.addActionClass
+                    ]
                 }
             );
         })

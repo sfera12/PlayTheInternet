@@ -16,27 +16,8 @@ chrome.runtime.onMessage.addListener(
                             elementSplit: options.split,
                             headerClick: headerClick.bind({parseHeaderOptions: {}}),
                             execute: [
-                                function () {
-                                    var self = this
-                                    this.jPlaylist.on('click', '.pti-element-song', function (event) {
-                                        if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-                                            var selected = new Array(), $this = $(this), uiselected
-//                                            console.log(selected)
-                                            if($this.hasClass('ui-selected')) {
-                                                uiselected = self.jPlaylist.find('.ui-selected').each(function () {
-                                                    selected.push($(this).attr('id'))
-                                                })
-                                            } else {
-                                                selected.push(this.id)
-                                            }
-//                                            console.log(selected)
-                                            selected = selected.join(',')
-                                            playlist.addSongsToPlaylist(playlist.parseSongIds(selected), true)
-                                            $this.hide(400, function(){ $this.remove(); });
-                                            uiselected && uiselected.hide(400, function(){ uiselected.remove(); });
-                                        }
-                                    })
-                                }
+                                Playlist.prototype.addAction,
+                                Playlist.prototype.addActionClass
                             ]
                         }
                     );
