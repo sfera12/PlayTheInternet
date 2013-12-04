@@ -1,7 +1,7 @@
 define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
     require(["app/common/tooltips"])
 
-    require(["app/common/popup/playlists"])
+    require(["app/popup/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     require(['player-widget'], function (PlayerWidget) {
