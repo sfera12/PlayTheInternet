@@ -565,32 +565,42 @@ function Playlist(appendToElementExpression, options) {
 }
 
 Playlist.prototype.addAction = function () {
+    Playlist.prototype.setActionBackground.call(this)
+    this.jContainer.addClass('pti-action-add')
+    this.jContainer.addClass('pti-action-play')
     var self = this
     this.jPlaylist.on('click', '.pti-element-song', function (event) {
         if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-            var selected = new Array(), $this = $(this), uiselected
-//            console.log(selected)
+            var selected = '', $this = $(this), uiselected
             if ($this.hasClass('ui-selected')) {
                 uiselected = self.jPlaylist.find('.ui-selected').each(function () {
-                    selected.push($(this).attr('id'))
+                    selected += $(this).attr('id') + ','
                 })
             } else {
-                selected.push(this.id)
+                selected = this.id
             }
 //            console.log(selected)
-            selected = selected.join(',')
             playlist.addSongsToPlaylist(playlist.parseSongIds(selected), true)
-            $this.hide(400, function () {
-                $this.remove();
-            });
-            uiselected && uiselected.hide(400, function () {
-                uiselected.remove();
-            });
+            var remove = function() {
+                $(this).remove();
+            }
+            $this.hide(400, remove);
+            uiselected && uiselected.hide(400, remove);
         }
     })
 }
-Playlist.prototype.addActionClass = function () {
-    this.jContainer.addClass('pti-add-action')
+Playlist.prototype.playAction = function () {
+    this.jContainer.addClass('pti-action-play')
+    Playlist.prototype.setActionBackground.call(this)
+    var self = this
+    this.jPlaylist.on('click', '.pti-element-song', function (event) {
+        if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+            Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
+        }
+    })
+}
+Playlist.prototype.setActionBackground = function() {
+    this.jContainer.addClass('pti-action-background')
 }
 
 function GUID() {

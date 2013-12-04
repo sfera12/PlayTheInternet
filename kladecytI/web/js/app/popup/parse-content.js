@@ -16,8 +16,7 @@ chrome.runtime.onMessage.addListener(
                             elementSplit: options.split,
                             headerClick: headerClick.bind({parseHeaderOptions: {}}),
                             execute: [
-                                Playlist.prototype.addAction,
-                                Playlist.prototype.addActionClass
+                                Playlist.prototype.addAction
                             ]
                         }
                     );

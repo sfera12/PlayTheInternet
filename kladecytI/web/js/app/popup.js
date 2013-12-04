@@ -38,14 +38,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
                 elementSplit: options.split,
                 headerClick: headerClick.bind({playlistHeaderOptions: {}}),
                 execute: [
-                    function () {
-                        var self = this
-                        this.jPlaylist.on('click', '.pti-element-song', function (event) {
-                            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-                                Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
-                            }
-                        })
-                    }
+                    Playlist.prototype.playAction
                 ]
             }
         );
@@ -60,8 +53,7 @@ define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerW
                     elementSplit: options.split,
                     headerClick: headerClick.bind({textAreaParseHeaderOptions: {}}),
                     execute: [
-                        Playlist.prototype.addAction,
-                        Playlist.prototype.addActionClass
+                        Playlist.prototype.addAction
                     ]
                 }
             );
