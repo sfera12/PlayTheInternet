@@ -30,6 +30,7 @@ function playTheInternetParse(htmlText) {
     result.forEach(function (item) {
         hash += item.type + "=" + item.id + ",";
     });
+    hash = hash.slice(0, -1);
     return hash;
 }
 

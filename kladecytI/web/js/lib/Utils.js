@@ -55,8 +55,8 @@ function Playlist(appendToElementExpression, options) {
     Playlist.prototype.groupHeaderTemplate = PTITemplates.prototype.PlaylistGroupHeaderTemplate
     this.options = _.isUndefined(options) ? {} : options
     this.options && _.isUndefined(this.options.fillVideoElement) && (this.options.fillVideoElement = true)
-    _.isUndefined(this.options.elementSize) && (_.isUndefined(this.options.elementSize = "big"))
-    _.isUndefined(this.options.elementSplit) && (_.isUndefined(this.options.elementSplit = "two"))
+    _.isUndefined(this.options.elementSize) && (this.options.elementSize = "big")
+    _.isUndefined(this.options.elementSplit) && (this.options.elementSplit = "two")
     this.containerElementExpression = appendToElementExpression
     this.jContainer = $(this.containerElementExpression)
     this.jHeader = $('<div class="header"/>').appendTo(this.jContainer)
