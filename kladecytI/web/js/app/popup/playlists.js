@@ -1,4 +1,4 @@
-define(["app/chrome/extension"], function(extension) {
+define(["app/chrome/extension", "app/common/hash-qr", "playlist"], function(extension, redrawHashAndQRCode) {
     chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         window.playlist = new Playlist("#ulSecond", {

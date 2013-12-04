@@ -1,4 +1,4 @@
-define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
+define(["player-widget"], function (PlayerWidget) {
     require(["app/common/tooltips"])
 
     require(["app/popup/playlists"])
