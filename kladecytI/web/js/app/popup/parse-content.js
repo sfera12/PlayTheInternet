@@ -1,4 +1,4 @@
-define(["playlist"], function(a) {
+define(["playlist", "app/chrome/extension"], function(a, extension) {
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
 //                    console.log(sender.tab ?
@@ -11,11 +11,11 @@ define(["playlist"], function(a) {
                     $('#parsedDiv').html(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
                 } else {
                     chrome.storage.local.get(['parseHeaderOptions'], function (options) {
-                        options = prepareOptions(options, { size: 'list', split: 'one'})
+                        options = extension.prepareOptions(options, { size: 'list', split: 'one'})
                         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                                 elementSize: options.size,
                                 elementSplit: options.split,
-                                headerClick: headerClick.bind({parseHeaderOptions: {}}),
+                                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
                                 execute: [
                                     Playlist.prototype.addAction
                                 ]
