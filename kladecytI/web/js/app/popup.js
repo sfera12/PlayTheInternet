@@ -1,78 +1,14 @@
 define(["playlist", "player-widget", "app/common/hash-qr"], function (a, PlayerWidget, redrawHashAndQRCode) {
-    window.headerClick = function (ui) {
-        var options = _.values(this)[0]
-        ui.parent().find('.selected').each(function (index, item) {
-            var classes = $(item).attr('class').split(' ')
-            var size = classes[0].replace(/set-\w+-/, '')
-            if (classes[2].match(/size/)) {
-                options.size = size
-            } else if (classes[2].match(/split/)) {
-                options.split = size
-            }
-        })
-        chrome.storage.local.set(this)
-    }
-    window.prepareOptions = function(options, defaults) {
-        var values = _.values(options)[0]
-        values = values ? values : {}
-		defaults = defaults ? defaults : { size: undefined, split: undefined }
-        options = _.defaults(values, defaults)
-        return options
-    }
-
     require(["app/common/tooltips"])
 
-    window.windowId = GUID()
-    chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
-        options = prepareOptions(options, { size: 'list', split: 'one'})
-        window.playlist = new Playlist("#ulSecond", {
-                id: chrome.extension.getBackgroundPage().windowId,
-                redraw: true,
-                listenKeyChangeCallback: _.wrap(redrawHashAndQRCode, function() {
-                    if ($("#tabs").tabs("option", "active") == 2) {
-                        $('#buildHashInput').val('http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
-                    }
-                }),
-                dontPlay: true,
-                elementSize: options.size,
-                elementSplit: options.split,
-                headerClick: headerClick.bind({playlistHeaderOptions: {}}),
-                execute: [
-                    Playlist.prototype.playAction
-                ]
-            }
-        );
-    })
-
-    chrome.storage.local.get(['textAreaParseHeaderOptions'], function(options) {
-        options = prepareOptions(options, { size: 'list', split: 'one'})
-        var createPlaylist = _.once(function() {
-            window.textAreaParsePlaylist = new Playlist("#textAreaParsePlaylist", {
-                    dontPlay: true,
-                    elementSize: options.size,
-                    elementSplit: options.split,
-                    headerClick: headerClick.bind({textAreaParseHeaderOptions: {}}),
-                    execute: [
-                        Playlist.prototype.addAction
-                    ]
-                }
-            );
-        })
-        $('#tAreaParseButton').click(function () {
-            var tAreaText = $('#tArea').val()
-            createPlaylist()
-            textAreaParsePlaylist.playlistEmpty();
-            require(['cparse'], function() {
-                textAreaParsePlaylist.addSongsToPlaylist(textAreaParsePlaylist.parseSongIds(playTheInternetParse(tAreaText)), true)
-            })
-        })
-    })
+    require(["app/common/popup/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     require(['player-widget'], function (PlayerWidget) {
         window.playerWidget = new PlayerWidget('#playerWidgetContainer', true)
         playerWidget.data.listenObject = backgroundWindow.pti
     })
+
     require(["app/common/tabs"], function () {
         $("#tabs").tabs("option", "active", 3);
     })
