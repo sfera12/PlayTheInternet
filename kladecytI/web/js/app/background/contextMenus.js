@@ -1,5 +1,5 @@
 define(function() {
-    function parse(concat) {
+    function parseText(concat) {
         require(['cparse'], function () {
             var ids = playTheInternetParse(concat);
             console.log(ids)
@@ -35,23 +35,23 @@ define(function() {
         }
     }
 
-    function parseText(info, tab) {
+    function parseTextHandler(info, tab) {
         console.log("item " + info.menuItemId + " was clicked");
         var concat = info.linkUrl;
         console.log(JSON.stringify(info) + '\r\n' + JSON.stringify(tab));
-        parse(concat);
+        parseText(concat);
     }
 
-    function parsePage() {
+    function parsePageHandler() {
         console.log(chrome.tabs)
-        chrome.tabs.executeScript(null, {file: "/js/app/background/parsePage.js"}, function(executeSuccess) {
+        chrome.tabs.executeScript(null, {file: "/js/app/background/parsePageHandler.js"}, function(executeSuccess) {
             _.isUndefined(executeSuccess) && notify()
         })
     }
 
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
-            if (request.operation == "parsePage") {
+            if (request.operation == "parsePageHandler") {
                 console.log(request.data)
                 addToPlaylist(request.data)
             } else if(request.operation == "parsePageParsePlayTheInternetParseFunctionMissing") {
@@ -67,7 +67,7 @@ define(function() {
         }
     );
 
-    chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": parseText});
-    chrome.contextMenus.create({"title": 'Add selected text to PlayTheInternet', "contexts":['selection'], "onclick": parseText});
-    chrome.contextMenus.create({"title": 'Add everything from this page', "contexts":['page'], "onclick": parsePage});
+    chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": parseTextHandler});
+    chrome.contextMenus.create({"title": 'Add selected text to PlayTheInternet', "contexts":['selection'], "onclick": parseTextHandler});
+    chrome.contextMenus.create({"title": 'Add everything from this page', "contexts":['page'], "onclick": parsePageHandler});
 })
