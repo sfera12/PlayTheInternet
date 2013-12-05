@@ -17,7 +17,7 @@ define(function() {
         if (links.length) {
             chrome.notifications.create('', {
                 type: "basic",
-                title: "Found " + links.length + " tracks!",
+                title: "Found " + links.length + " track" + (links.length > 1 ? "s" : "") + "!",
                 message: "Adding tracks to PlayTheInternet. Remember that duplicate tracks won't be added!",
                 iconUrl: "favicon.ico"
             }, function () {
@@ -37,11 +37,6 @@ define(function() {
 
     function parseText(info, tab) {
         console.log("item " + info.menuItemId + " was clicked");
-//        var info = JSON.stringify(info);
-//        var tab = JSON.stringify(tab);
-//        console.log("info: " + info);
-//        console.log("tab: " + tab);
-//        var concat = info + ' ' + tab;
         var concat = info.linkUrl;
         console.log(JSON.stringify(info) + '\r\n' + JSON.stringify(tab));
         parse(concat);
@@ -56,11 +51,6 @@ define(function() {
 
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
-//                    console.log(sender.tab ?
-//                        "from a content script:" + sender.tab.url :
-//                        "from the extension");
-            if (request.greeting == "hello")
-                sendResponse({farewell:"goodbye"});
             if (request.operation == "parsePage") {
                 console.log(request.data)
                 addToPlaylist(request.data)
