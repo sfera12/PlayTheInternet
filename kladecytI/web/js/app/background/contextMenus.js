@@ -37,7 +37,7 @@ define(function() {
 
     function parseTextHandler(info, tab) {
         console.log("item " + info.menuItemId + " was clicked");
-        var concat = info.linkUrl;
+        var concat = info.linkUrl || info.selectionText;
         console.log(JSON.stringify(info) + '\r\n' + JSON.stringify(tab));
         parseText(concat);
     }
