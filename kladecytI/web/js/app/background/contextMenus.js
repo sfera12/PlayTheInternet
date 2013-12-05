@@ -14,7 +14,7 @@ define(function() {
     }
 
     function notify(links) {
-        if (links.length) {
+        if (links && links.length) {
             chrome.notifications.create('', {
                 type: "basic",
                 title: "Found " + links.length + " track" + (links.length > 1 ? "s" : "") + "!",
@@ -45,7 +45,7 @@ define(function() {
     function parsePage() {
         console.log(chrome.tabs)
         chrome.tabs.executeScript(null, {file: "/js/app/background/parsePage.js"}, function(executeSuccess) {
-            _.isUndefined(executeSuccess) && parse('')
+            _.isUndefined(executeSuccess) && notify()
         })
     }
 
