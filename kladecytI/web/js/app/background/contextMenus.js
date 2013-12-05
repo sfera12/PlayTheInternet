@@ -44,14 +44,14 @@ define(function() {
 
     function parsePageHandler() {
         console.log(chrome.tabs)
-        chrome.tabs.executeScript(null, {file: "/js/app/background/parsePageHandler.js"}, function(executeSuccess) {
+        chrome.tabs.executeScript(null, {file: "/js/app/background/parsePage.js"}, function(executeSuccess) {
             _.isUndefined(executeSuccess) && notify()
         })
     }
 
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
-            if (request.operation == "parsePageHandler") {
+            if (request.operation == "parsePage") {
                 console.log(request.data)
                 addToPlaylist(request.data)
             } else if(request.operation == "parsePageParsePlayTheInternetParseFunctionMissing") {
