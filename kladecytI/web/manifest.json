@@ -44,10 +44,11 @@
             },
             "description": "Next Track"
         },
-        "_execute_browser_action": {
+        "prev": {
             "suggested_key": {
-                "default": "Alt+E"
-            }
+                "default": "Alt+A"
+            },
+            "description": "Previous Track"
         }
     },
 

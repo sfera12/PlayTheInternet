@@ -35,13 +35,15 @@ define(function() {
         }
     }
 
-    function parseLink(info, tab) {
+    function parseText(info, tab) {
         console.log("item " + info.menuItemId + " was clicked");
-        var info = JSON.stringify(info);
-        var tab = JSON.stringify(tab);
-        console.log("info: " + info);
-        console.log("tab: " + tab);
-        var concat = info + ' ' + tab;
+//        var info = JSON.stringify(info);
+//        var tab = JSON.stringify(tab);
+//        console.log("info: " + info);
+//        console.log("tab: " + tab);
+//        var concat = info + ' ' + tab;
+        var concat = info.linkUrl;
+        console.log(JSON.stringify(info) + '\r\n' + JSON.stringify(tab));
         parse(concat);
     }
 
@@ -75,6 +77,7 @@ define(function() {
         }
     );
 
-    chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": parseLink});
+    chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": parseText});
+    chrome.contextMenus.create({"title": 'Add selected text to PlayTheInternet', "contexts":['selection'], "onclick": parseText});
     chrome.contextMenus.create({"title": 'Add everything from this page', "contexts":['page'], "onclick": parsePage});
 })

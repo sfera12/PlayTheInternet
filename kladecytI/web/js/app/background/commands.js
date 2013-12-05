@@ -10,6 +10,9 @@ define(function() {
         },
         "next": function() {
             playlist.playVideo({videoDiv: playlist.lookupNextSong()})
+        },
+        "prev": function() {
+            playlist.playVideo({videoDiv: playlist.lookupPrevSong()})
         }
     }
     chrome.commands.onCommand.addListener(function(command) {

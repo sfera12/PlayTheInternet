@@ -372,6 +372,12 @@ function Playlist(appendToElementExpression, options) {
         return this.playlist[index]
     }
 
+    Playlist.prototype.lookupPrevSong = function () {
+        var index = this.playlist.index(this.jPlaylist.find('div.selected'))
+        index = index <= 0 ? this.playlist.length - 1 : --index
+        return this.playlist[index]
+    }
+
     this.addCalendarSongsToPlaylist = function (groups) {
         var hideGroupContentsHandler = this.hideGroupContents.bind(this)
         groups.forEach(function (group) {
