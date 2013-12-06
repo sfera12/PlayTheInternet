@@ -11,6 +11,7 @@
 
 .playerWidget .button:hover {
     background-color: #D4FFF7!important;
+    cursor: pointer;
 }
 
 .playerWidget .button.play {
