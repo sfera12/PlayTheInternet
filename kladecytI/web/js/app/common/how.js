@@ -1,7 +1,8 @@
 define(["playlist"], function () {
     var version = localStorage.getItem('version')
     var currVersion = chrome.runtime.getManifest().version
-    if(version == "undefined" ||  !version || (currVersion - version) >= 0.01) {
+    var release = currVersion.replace(/(\d+\.\d{2}).*/, '$1')
+    if(version == "undefined" ||  !version || !version.match(release)) {
         $('#podHow').addClass('temp-how-extension-updates')
         var removeUpdateIcon = function() {
             localStorage.setItem('version', currVersion)
