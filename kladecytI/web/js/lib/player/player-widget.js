@@ -38,6 +38,7 @@ define(["jquery", "underscore"], function ($, _) {
             self.data.listenObject.playVideo()
         })
         this.jPlayerWidget.on('click', '.prev', function () {
+            playlist.playVideo({videoDiv: playlist.lookupPrevSong()})
         })
         this.jPlayerWidget.on('click', '.next', function () {
             playlist.playVideo({videoDiv: playlist.lookupNextSong()})

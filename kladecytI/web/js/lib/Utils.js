@@ -553,21 +553,20 @@ function Playlist(appendToElementExpression, options) {
         })
     }
 
-    Playlist.prototype.setSlimScroll = function (element, height) {
-        $(element).slimScroll({
-            height:height,
-            color:'rgb(0, 50, 255)',
-            railVisible:true,
-            railColor:'#000000',
-            disableFadeOut:true
-        });
-    }
-
     Playlist.prototype.setSlimScroll(this.jPlaylist, "100%")
 
     if (options && options.id) {
         this.setId(options.id, options.redraw)
     }
+}
+Playlist.prototype.setSlimScroll = function (element, height) {
+    $(element).slimScroll({
+        height:height,
+        color:'rgb(0, 50, 255)',
+        railVisible:true,
+        railColor:'#000000',
+        disableFadeOut:true
+    });
 }
 
 Playlist.prototype.addAction = function () {

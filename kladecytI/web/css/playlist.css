@@ -1,5 +1,5 @@
 /* slim scroll wrapper */
-.slimScrollDiv { margin-top: 1px; position: absolute!important; top: 30px;  bottom: 0px; width: 100%; height: auto!important;}
+.slimScrollDiv { margin-top: 1px; position: absolute!important; top: 31px;  bottom: 0px; width: 100%; height: auto!important;}
 
 
 /* playlist container */
@@ -8,7 +8,7 @@
 
 /* playlist header */
 
-.playlistFrame .header { height: 30px; }
+.playlistFrame .header { height: 31px; }
 .playlistFrame .header .header-button { background-color: #f1f1f1; color: #007FFF; margin-left: 1px; float: left; width: 30px; height: 100%; line-height: 30px; text-align: center; cursor: default; }
 .playlistFrame .header .header-button:hover { background-color: #D4FFF7; cursor: pointer; }
 .playlistFrame .header .header-button.selected { background-color: #007FFF; color: white; }

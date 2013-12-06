@@ -55,4 +55,6 @@ define(["player-widget"], function (PlayerWidget) {
     $('#tabs a[href="#player"]').click(function () {
         popupPlayerMain();
     })
+
+    require(["app/common/how"])
 })

@@ -21,7 +21,12 @@
     background-color: black!important;
 }
 .playerWidget .button.prev {
-    background: url('../favicon.ico') no-repeat 50% 50%;
+    background: url('./resources/next.ico') no-repeat 50% 50%;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 .playerWidget .button.next {
     background: url('./resources/next.ico') no-repeat 50% 50%;
@@ -38,7 +43,7 @@
     position: absolute;
     background: #D4FFF7;
     left: 0px;
-    right: 80px;
+    right: 120px;
     height: 39px;
     overflow: hidden;
 }
