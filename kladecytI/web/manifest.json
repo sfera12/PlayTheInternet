@@ -26,11 +26,11 @@
         "default_popup":"pley.html"
     },
     "commands":{
-        "play": {
+        "prev": {
             "suggested_key": {
-                "default": "Alt+D"
+                "default": "Alt+A"
             },
-            "description": "Resume play"
+            "description": "Previous Track"
         },
         "pause": {
             "suggested_key": {
@@ -38,17 +38,17 @@
             },
             "description": "Pause"
         },
+        "play": {
+            "suggested_key": {
+                "default": "Alt+D"
+            },
+            "description": "Resume play"
+        },
         "next": {
             "suggested_key": {
                 "default": "Alt+F"
             },
             "description": "Next Track"
-        },
-        "prev": {
-            "suggested_key": {
-                "default": "Alt+A"
-            },
-            "description": "Previous Track"
         }
     },
 
