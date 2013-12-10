@@ -441,8 +441,9 @@ function Playlist(appendToElementExpression, options) {
         return this.sortableArray
     }
     function setWindowTitle(videoFeed) {
-        var title = (!_.isUndefined(videoFeed) && !_.isUndefined(videoFeed.title)) ? videoFeed.title : videoFeed.id
-        typeof windowId != "undefined" && (document.title = windowId + ' - ' + title)
+        var title = typeof windowId != "undefined" ? windowId + ' - ': ''
+        title += (!_.isUndefined(videoFeed) && !_.isUndefined(videoFeed.title)) ? videoFeed.title : videoFeed.id
+        document.title =  title
     }
 
     Playlist.prototype.playVideo = function (video, playerState, dontCache) {
