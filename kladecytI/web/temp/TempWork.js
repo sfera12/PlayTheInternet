@@ -65,3 +65,7 @@ https://soundcloud.com/.../on-the-block-prod-by-boi-ape …
 //TODO download logs
 C:\java\jdks\appengine-java-sdk-1.7.3\bin>appcfg.cmd --num_days=2  request_logs "C:\java\svn\kladecytI\out\artifacts\kladecyt_war_exploded" asdf.txt
 
+//TODO flexible player
+var duration = 600
+$('#firstView').on('mouseenter', function() { $(this).animate({'width': '70%'}, duration); $('#secondView').animate({'width': '30%'}, duration)})
+$('#secondView').on('mouseenter', function() { $(this).animate({'width': '70%'}, duration);$('#firstView').animate({'width': '30%'}, duration)})
