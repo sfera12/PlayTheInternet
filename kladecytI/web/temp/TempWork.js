@@ -102,10 +102,16 @@ window.janimate = function() {
     var p = $p.get();
     $fv.unbind();
     $sv.unbind();
-
+    var $body = $('body');
     $fv.on('mouseenter', function () {
         console.log('j')
-        $fv.animate({'width': '70%'}, duration);
+        var pWidth = $p.width();
+        $p.width(pWidth).fadeOut(duration, function () {
+            $p.width($body.width() * 0.70)
+        })
+        $fv.animate({'width': '70%'}, duration, function () {
+            $p.width('100%').fadeIn()
+        });
         $sv.animate({'width': '30%'}, duration)
     })
     $sv.on('mouseenter', function () {
