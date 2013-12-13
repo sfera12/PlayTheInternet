@@ -66,6 +66,51 @@ https://soundcloud.com/.../on-the-block-prod-by-boi-ape …
 C:\java\jdks\appengine-java-sdk-1.7.3\bin>appcfg.cmd --num_days=2  request_logs "C:\java\svn\kladecytI\out\artifacts\kladecyt_war_exploded" asdf.txt
 
 //TODO flexible player
-var duration = 600
-$('#firstView').on('mouseenter', function() { $(this).animate({'width': '70%'}, duration); $('#secondView').animate({'width': '30%'}, duration)})
-$('#secondView').on('mouseenter', function() { $(this).animate({'width': '70%'}, duration);$('#firstView').animate({'width': '30%'}, duration)})
+http://www.greensock.com/gsap-js/
+window.duration = 600
+window.tween = function() {
+    var td = function() {
+        return duration / 1000;
+    }
+    var $fv = $('#firstView');
+    var fv = $fv.get()
+    var $sv = $('#secondView');
+    var sv = $sv.get();
+    var $p = $('#players');
+    var p = $p.get();
+    $fv.unbind();
+    $sv.unbind();
+
+    $fv.on('mouseenter', function () {
+        console.log('t')
+        TweenLite.to(fv, td(), {width: '70%'})
+        TweenLite.to(sv, td(), {width: '30%'})
+    })
+    $sv.on('mouseenter', function () {
+        console.log('t')
+        TweenLite.to(sv, td(), {width: '70%'})
+        TweenLite.to(fv, td(), {width: '30%'})
+    })
+}
+
+window.janimate = function() {
+    var $fv = $('#firstView');
+    var fv = $fv.get()
+    var $sv = $('#secondView');
+    var sv = $sv.get();
+    var $p = $('#players');
+    var p = $p.get();
+    $fv.unbind();
+    $sv.unbind();
+
+    $fv.on('mouseenter', function () {
+        console.log('j')
+        $fv.animate({'width': '70%'}, duration);
+        $sv.animate({'width': '30%'}, duration)
+    })
+    $sv.on('mouseenter', function () {
+        console.log('j')
+        $sv.animate({'width': '70%'}, duration);
+        $fv.animate({'width': '30%'}, duration)
+    })
+}
