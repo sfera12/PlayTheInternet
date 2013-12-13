@@ -105,12 +105,9 @@ window.janimate = function() {
     var $body = $('body');
     $fv.on('mouseenter', function () {
         console.log('j')
-        var pWidth = $p.width();
-        $p.width(pWidth).fadeOut(duration, function () {
-            $p.width($body.width() * 0.70)
-        })
+        $p.fadeOut(0)
         $fv.animate({'width': '70%'}, duration, function () {
-            $p.width('100%').fadeIn()
+            $p.fadeIn(duration)
         });
         $sv.animate({'width': '30%'}, duration)
     })
