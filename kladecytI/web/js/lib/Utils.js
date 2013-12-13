@@ -43,10 +43,11 @@ $('body').mouseup(function() {
     $('body').removeClass('temp-webkit-grabbing temp-crosshair')
 })
 $('body').on('mousedown', '.pti-element-song .image-div, .pti-element-song .image-div *', function(event) {
+    console.log(this)
     $('body').addClass('temp-webkit-grabbing')
     event.stopPropagation()
 })
-$('body').on('mousedown', '.pti-element-song *:not(.image-div):not(.pti-logo)', function(event) {
+$('body').on('mousedown', '.pti-element-song *:not(.image-div):not(.image-div *)', function(event) {
     $('body').addClass('temp-crosshair')
 })
 
