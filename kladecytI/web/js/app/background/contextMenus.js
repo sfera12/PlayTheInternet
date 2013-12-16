@@ -13,13 +13,21 @@ define(function() {
         notify(links)
     }
 
+    var notifications = new Object();
     function notify(links) {
         if (links && links.length) {
-            chrome.notifications.create('', {
+            var notificationId = GUID()
+            notifications[notificationId] = links
+            chrome.notifications.create(notificationId, {
                 type: "basic",
                 title: "Found " + links.length + " track" + (links.length > 1 ? "s" : "") + "!",
                 message: "Adding tracks to PlayTheInternet. Remember that duplicate tracks won't be added!",
-                iconUrl: "favicon.ico"
+                iconUrl: "favicon.ico",
+                buttons: [
+                    {   title: 'Press here to start playing!',
+                        iconUrl: "favicon.ico"
+                    }
+                ]
             }, function () {
                 console.log()
             })
@@ -70,4 +78,20 @@ define(function() {
     chrome.contextMenus.create({"title": 'Add link to PlayTheInternet', "contexts":['link'], "onclick": parseTextHandler});
     chrome.contextMenus.create({"title": 'Add selected text to PlayTheInternet', "contexts":['selection'], "onclick": parseTextHandler});
     chrome.contextMenus.create({"title": 'Add everything from this page', "contexts":['page'], "onclick": parsePageHandler});
+    chrome.notifications.onButtonClicked.addListener(function(notificationId) {
+        try{
+            var links = notifications[notificationId];
+    //        console.log(links)
+            playlist.playVideo(playlist.getVideoDivAndFeed({videoFeed: links[0]}))
+        } catch(e) {
+            chrome.notifications.create('', {
+                type: "basic",
+                title: "Unable to find track to play!",
+                message: "Track is absent in playlist. Might be sick absence or was removed from playlist.",
+                iconUrl: "/css/resources/nothing.png"
+            }, function () {
+                console.log()
+            })
+        }
+    })
 })

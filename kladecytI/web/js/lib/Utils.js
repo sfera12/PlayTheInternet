@@ -492,15 +492,24 @@ function Playlist(appendToElementExpression, options) {
         console.log(video)
         var videoDiv
         var videoFeed
+        var songs = this.jPlaylist.find('div.pti-element-song');
         if(video && video.index >= 0) {
-            videoDiv = this.jPlaylist.find('div.pti-element-song')[video.index]
+            videoDiv = songs[video.index]
             videoFeed = $(videoDiv).data('videoFeed')
             return {videoFeed:videoFeed, videoDiv:videoDiv, index:video.index}
         }
         if(video && video.videoDiv) {
-            var index = this.jPlaylist.find('div.pti-element-song').index(video.videoDiv)
+            var index = songs.index(video.videoDiv)
             videoFeed = $(video.videoDiv).data('videoFeed')
             return {videoFeed:videoFeed, videoDiv:video.videoDiv, index:index}
+        }
+        if(video && video.videoFeed) {
+            for(var index=0; index<songs.length; index++) {
+                var vf = $(songs[index]).data('videoFeed')
+                if(vf.type == video.videoFeed.type && vf.id == video.videoFeed.id) {
+                    return {videoFeed:vf, videoDiv:songs[index], index:index}
+                }
+            }
         }
         if (!videoFeed) {
             throw "videoFeed or video is empty in getVideoDivAndFeed"
