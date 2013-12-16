@@ -37,15 +37,15 @@
                 <li><a href="#tAreaDiv">Text Area<div id="podTa" style="position: fixed; z-index: -1; left: 65px; width: 87px;"></div></a></li>
                 <li><a href="#optionsDiv">Options<div id="podOptions" style="position: fixed; z-index: -1; left: 152px; width: 77px;"></div></a></li>
                 <li><a href="#recycleBinDiv">Bin<div id="podBin" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
-                <li><a href="#parsedDiv">Parsed<div id="podParsed" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
-                <li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>
+                <!--<li><a href="#parsedDiv">Parsed<div id="podParsed" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>-->
+                <!--<li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>-->
             </ul>
-            <div id="tAreaDiv" class="temp-popup-nav-content">
+            <div id="tAreaDiv" class="temp-popup-nav-content temp-display-none">
                 <textArea id="tArea" class="taArea"></textArea>
                 <br>
                 <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
             </div>
-            <div id="optionsDiv" class="temp-popup-nav-content">
+            <div id="optionsDiv" class="temp-popup-nav-content temp-display-none">
                 <fieldset>
                     <legend>Share this link</legend>
                     <input id="buildHash" type="button" value="Build link"/>
@@ -63,13 +63,13 @@
                     <div class="temp-alignQRCode" id="qrcode"></div>
                 </fieldset>
             </div>
-            <div id="recycleBinDiv" class="temp-popup-nav-content">
+            <div id="recycleBinDiv" class="temp-popup-nav-content temp-display-none">
                 <div id="ulFirst" class=" playlistFrame"></div>
             </div>
-            <div id="parsedDiv" class="temp-popup-nav-content">
+            <div id="parsedDiv" class="temp-popup-nav-content temp-display-none">
                 <div id="parsedPlaylist" class=" playlistFrame"></div>
             </div>
-            <div id="calendarDiv" class="temp-popup-nav-content">
+            <div id="calendarDiv" class="temp-popup-nav-content temp-display-none">
                 <div class="input-daterange">
                     <input class="input-small datepicker" name="start" id="calendarStart" data-date-format="dd-mm-yyyy"/>
                     <span class="add-on">to</span>

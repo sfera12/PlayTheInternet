@@ -38,12 +38,12 @@
 .temp-panel-heading { color: white; background-color: #007fff; border-color: #007fff; height: 35px; margin-bottom: 12px; line-height: 30px; padding-left: 15px; }
 .button>.temp-play-tooltip { display: none; }
 .button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 40px; left: -137px; width: 200px; height: 100px; font-size: 11px; line-height: inherit; z-index: 999}
-.temp-webkit-grabbing * { cursor: -webkit-grabbing!important; }
+.temp-webkit-grabbing * { cursor: move!important; cursor: -webkit-grabbing!important; cursor: -moz-grabbing!important; }
 .temp-crosshair * { cursor: crosshair!important; }
 
 
-.pti-action-background .playlist.pti-view-big>*:hover .image-div:before { content: ''; position: absolute; background-color: black; opacity: 0.7; width: 120px; height: 90px; }
-.pti-action-background .playlist.pti-view-medium>*:hover .image-div:before { content: ''; position: absolute; background-color: black; opacity: 0.7; width: 60px; height: 45px; }
+.pti-action-background .playlist.pti-view-big>*:hover .image-div:before { content: ''; position: absolute; left: 0px; background-color: black; opacity: 0.7; width: 120px; height: 90px; }
+.pti-action-background .playlist.pti-view-medium>*:hover .image-div:before { content: ''; position: absolute; left: 0px; background-color: black; opacity: 0.7; width: 60px; height: 45px; }
 
 .pti-action-add .playlist.pti-view-big>*:hover:not(.selected) .image-div>.pti-logo:after { content: ''; position: absolute; left: 15px; opacity: 0.7; border-top: 45px solid transparent; border-bottom: 45px solid transparent; border-left: 60px solid black; }
 .pti-action-add .playlist.pti-view-big>*.selected:hover .image-div>.pti-logo:after { content: ''; position: absolute; left: 15px; opacity: 0.7; border-top: 45px solid transparent; border-bottom: 45px solid transparent; border-left: 60px solid black;  }

@@ -32,14 +32,7 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
                     playFirstLoaded()
                 }),
                 execute: [
-                    function () {
-                        var self = this
-                        this.jPlaylist.on('click', '.pti-element-song', function (event) {
-                            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
-                                Playlist.prototype.playVideo.call(self, {videoDiv: $(this)})
-                            }
-                        })
-                    }
+                    Playlist.prototype.playAction
                 ]
             });
         var playlist = window.playlist
@@ -49,7 +42,12 @@ define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "pl
 //        console.log(message)
             $.jStorage.publish('windowIds', windowId)
         })
-        window.ulFirst = new Playlist('#ulFirst', {dontPlay:true})
+        window.ulFirst = new Playlist('#ulFirst', {
+            dontPlay:true,
+            execute: [
+                Playlist.prototype.addAction
+            ]
+        })
         $('#tAreaParseButton').click(function () {
             var tAreaText = $('#tArea').val()
             playlist.addSongsToPlaylist(playlist.parseSongIds(playTheInternetParse(tAreaText)), true)

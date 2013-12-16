@@ -59,7 +59,7 @@ requirejs.config({
 });
 
 // Load the main app module to start the app
-if (!chrome.extension) {
+if (typeof chrome == "undefined" || !chrome.extension) {
     var href = window.location.href;
     if(href.match('play.html')) {
         requirejs(["app/web"])

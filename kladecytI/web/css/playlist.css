@@ -46,7 +46,7 @@
                     */
 
 /* image-div */
-.playlistFrame .playlist>* .image-div { float: left; cursor: -webkit-grab; }
+.playlistFrame .playlist>* .image-div { float: left; cursor: move; cursor: -webkit-grab; cursor: -moz-grab; }
 
 .playlistFrame .playlist.pti-view-big>* .image-div, .playlistFrame .playlist.pti-view-medium>* .image-div  { position: relative; }
 .playlistFrame .playlist.pti-view-big>* .image-div { width: 120px; height: 90px; margin-right: 3px; }
