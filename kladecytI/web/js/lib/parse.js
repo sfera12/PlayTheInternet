@@ -14,7 +14,8 @@ function playTheInternetParseTemp(htmlText) {
         return newarr;
     };
     if (htmlText == null) {
-        htmlText = document.documentElement.innerHTML;
+        htmlText = window.location.href + ' ';
+        htmlText += document.documentElement.innerHTML;
     }
     var youtube = /thisisregex/g;
     var local = /thisisregex/;

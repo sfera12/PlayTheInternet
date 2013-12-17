@@ -1,8 +1,13 @@
 define(['underscore', 'app/common/tabs'], function (_) {
     function buildQR() {
-        if (!_.isUndefined(playlist)) {
-            var untrimmed = playlist.buildHash().substr(0, 2006)
-            var location = 'http://playtheinter.net/play.html' + untrimmed.substr(0, untrimmed.lastIndexOf(','))
+        if (typeof playlist != "undefined") {
+            var playlistHash = playlist.buildHash(), location = 'http://playtheinter.net/play.html'
+            if(playlistHash.length > 2006) {
+                var untrimmed = playlistHash.substr(0, 2006)
+                location += untrimmed.substr(0, untrimmed.lastIndexOf(','))
+            } else {
+                location += playlistHash
+            }
             $.ajax({
                 url: 'https://www.googleapis.com/urlshortener/v1/url',
                 type: 'post',

@@ -41,9 +41,12 @@
                 <!--<li><a href="#calendarDiv">Calendar<div id="podCalendar" style="position: fixed; z-index: -1; left: 229px; width: 46px;"></div></a></li>-->
             </ul>
             <div id="tAreaDiv" class="temp-popup-nav-content temp-display-none">
-                <textArea id="tArea" class="taArea"></textArea>
+                <textArea id="tArea" class="taArea" placeholder="Paste any text that contains links, for example Skype conversation, etc"></textArea>
                 <br>
-                <input id="tAreaParseButton" type="button" value="Parse text and add to playlist"/>
+                <input id="tAreaParseButton" class="temp-parse-button btn btn-primary" type="button" value="Parse"/>
+                <div class="temp-textarea-parse-playlist-wrapper">
+                    <div id="textAreaParsePlaylist" class="playlistFrame"></div>
+                </div>
             </div>
             <div id="optionsDiv" class="temp-popup-nav-content temp-display-none">
                 <fieldset>
@@ -103,7 +106,7 @@
     <div id="secondView">
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
         <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
-        <div id="ulSecond" class=" playlistFrame"></div>
+        <div id="ulSecond" class="playlistFrame"></div>
         <!--</div>-->
         <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
     </div>

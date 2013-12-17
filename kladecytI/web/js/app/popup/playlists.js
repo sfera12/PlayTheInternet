@@ -4,11 +4,7 @@ define(["app/chrome/extension", "app/common/hash-qr", "playlist"], function(exte
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
                 redraw: true,
-                listenKeyChangeCallback: _.wrap(redrawHashAndQRCode, function() {
-                    if ($("#tabs").tabs("option", "active") == 2) {
-                        $('#buildHashInput').val('http://playtheinternet.appspot.com/play.html' + playlist.buildHash())
-                    }
-                }),
+                listenKeyChangeCallback: redrawHashAndQRCode,
                 dontPlay: true,
                 elementSize: options.size,
                 elementSplit: options.split,
