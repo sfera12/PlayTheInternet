@@ -20,14 +20,9 @@ define(function () {
     window.tooltipInit = function (tooltip) {
         var $tooltip = $('#' + tooltip).click(tooltipClick);
         chrome.storage.local.get(tooltip, function (options) {
-            var preparedOptions = _.keys(options).length ? options : undefined
-            if (!_.isUndefined(preparedOptions)) {
-                var toggle = _.values(preparedOptions)[0];
-                $tooltip.attr('checked', toggle)
-                tooltipCallbacks[tooltip](toggle)
-            } else {
-                $tooltip.attr('checked', true)
-            }
+            var toggle = _.keys(options).length ? _.values(options)[0] : true
+            $tooltip.attr('checked', toggle)
+            tooltipCallbacks[tooltip](toggle)
         })
     }
     tooltipsInit()
