@@ -47,7 +47,7 @@ $('body').on('mousedown', '.pti-element-song .image-div, .pti-element-song .imag
     $('body').addClass('temp-webkit-grabbing')
     event.stopPropagation()
 })
-$('body').on('mousedown', '.pti-element-song *:not(.image-div):not(.image-div *)', function(event) {
+$('body').on('mousedown', '.playlist, .pti-element-song *:not(.image-div):not(.image-div *)', function(event) {
     $('body').addClass('temp-crosshair')
 })
 
