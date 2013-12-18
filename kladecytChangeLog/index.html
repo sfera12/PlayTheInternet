@@ -50,9 +50,9 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 function messageLinesToNodes(msg) {
     var msgLines = msg.split('\n')
-    var globalLine = _.find(msgLines, function(item) { return item.match('/g')})
+    var globalLine = _.find(msgLines, function(item) { return item.match('/g ')})
     var globalNodes = lineToNodes(globalLine)
-    var localLines = _.filter(msgLines, function(item) { return item.match('/l')})
+    var localLines = _.filter(msgLines, function(item) { return item.match('/l ')})
     var localNodesList = localLines.map(function(item) {
         return lineToNodes(item)
     })

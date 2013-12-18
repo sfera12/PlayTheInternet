@@ -1,2 +1,2 @@
-cd C:\java\server\nginx-1.4.4
+cd %NGINX%
 nginx.exe -c C:\java\svn\kladecytChangeLog\files\nginx.conf
