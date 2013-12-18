@@ -48,16 +48,6 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-//d3.json({name:'test', children: {
-//            name:'children'
-//}}, function(error, flare) {
-//  flare.x0 = 0;
-//  flare.y0 = 0;
-//  update(root = flare);
-//});
-
-//var msg = '/g 0.63\n/l tooltip play "core updated"\nasdf asdf\n/l playlist css'
 function messageLinesToNodes(msg) {
     var msgLines = msg.split('\n')
     var globalLine = _.find(msgLines, function(item) { return item.match('/g')})
@@ -93,15 +83,10 @@ function convertToD3(obj, childrens) {
     }
 }
 
+var gobj = { name: 'PlayTheInternet', children: []}
 
-//var messageNodes = messageLinesToNodes(msg)
-//messageNodes.forEach(function(lineNodes) {
-//    convertToD3(lineNodes, gobj.children)
-//})
-//convertToD3(split1.slice(0), gobj)
-
+//Start
 d3.text('/files/log.xml', function(eerror, log) {
-    var gobj = { name: 'PlayTheInternet', children: []}
 //    console.log(log)
 //    console.log(Object.keys(log))
     var x2js = new X2JS();
@@ -113,10 +98,21 @@ d3.text('/files/log.xml', function(eerror, log) {
         messageNodes.forEach(function(lineNodes) {
             convertToD3(lineNodes, gobj.children)
         })
-        console.log(gobj)
+        //console.log(gobj)
     })
     update(root = gobj)
 })
+//End
+
+//TEST START
+//var msg = '/g 0.63\n/l tooltip play "core updated"\nasdf asdf\n/l playlist css'
+//var messageNodes = messageLinesToNodes(msg)
+//messageNodes.forEach(function(lineNodes) {
+//    convertToD3(lineNodes, gobj.children)
+//})
+//update(root = gobj)
+//TEST END
+
 
 
 function update(source) {
