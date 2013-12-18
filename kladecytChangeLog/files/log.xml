@@ -1,0 +1,4308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+<logentry
+   revision="491">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-17T13:38:20.829624Z</date>
+<msg>0.63 
+//done playlist crosshair, grab 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="490">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-17T12:02:19.989536Z</date>
+<msg>0.63 
+//done play tooltip
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="489">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-17T10:11:05.222363Z</date>
+<msg>0.63 
+//done parse href too in playTheInternetParse
+//done recalc hash misbehaving
+//done tooltips now adds class, instead of being default
+//done web textArea
+
+//done css grab,grabbing,:before background for moz, opera
+//done fixed chrome variable check
+//done player-widget realigned buttons
+//done removed Parsed,Calendar from play.html
+//done added action buttons to web in playlists
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="488">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-16T15:06:41.908926Z</date>
+<msg>0.63 
+//done contextMenu - press to play
+
+//done css grab,grabbing,:before background for moz, opera
+//done fixed chrome variable check
+//done player-widget realigned buttons
+//done removed Parsed,Calendar from play.html
+//done added action buttons to web in playlists
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="487">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-16T13:34:16.746546Z</date>
+<msg>0.63 web
+
+//done css grab,grabbing,:before background for moz, opera
+//done fixed chrome variable check
+//done player-widget realigned buttons
+//done removed Parsed,Calendar from play.html
+//done added action buttons to web in playlists
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="486">
+<author>qyuz555@gmail.com</author>
+<date>2013-12-13T19:48:51.531147Z</date>
+<msg>//TODO flexible player</msg>
+</logentry>
+<logentry
+   revision="485">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-13T13:36:01.974030Z</date>
+<msg>//temp added gsap and jquery animate in tempwork for flexible player 
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="484">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-13T11:47:07.379483Z</date>
+<msg>0.63
+//done fixed cursors and grabbing logic
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="483">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-13T09:21:07.336065Z</date>
+<msg>//temp added gsap and jquery animate in tempwork for flexible player 
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="482">
+<author>qyuz555@gmail.com</author>
+<date>2013-12-12T21:37:47.067687Z</date>
+<msg>//TODO flexible player</msg>
+</logentry>
+<logentry
+   revision="481">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-11T09:44:54.218053Z</date>
+<msg>0.63
+//done updated description
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="480">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-11T09:42:21.955574Z</date>
+<msg>0.63
+//done updated description
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="478">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-10T08:35:14.432455Z</date>
+<msg>0.63
+//done document.title 
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="477">
+<author>qyuz555@gmail.com</author>
+<date>2013-12-09T22:26:50.654850Z</date>
+<msg>0.63
+//done how tab with updates highlight
+</msg>
+</logentry>
+<logentry
+   revision="476">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-09T13:20:51.144766Z</date>
+<msg>0.63
+//done nothing found while parsing page
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="475">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-09T09:46:55.212476Z</date>
+<msg>0.63
+//done how tab with updates highlight
+//done commands
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="474">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-09T09:28:41.055813Z</date>
+<msg>0.63
+//done added nothing found while parsing page
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="473">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-06T14:37:17.134345Z</date>
+<msg>0.63
+//added how tab with updates highlight
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="472">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-06T14:32:51.932558Z</date>
+<msg>0.63
+//added how tab with updates highlight
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="471">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-06T11:01:26.728559Z</date>
+<msg>0.63
+//done prev button in playerwidget
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="470">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-06T10:46:42.229954Z</date>
+<msg>0.63
+//added how tab with updates highlight
+//added prev button in playerwidget
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="469">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:55:51.748642Z</date>
+<msg>0.63
+//added contextMenu
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="468">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:50:41.337964Z</date>
+<msg>0.63
+//codecleanup contextMenu
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="467">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:35:09.166104Z</date>
+<msg>0.63
+//codecleanup contextMenu
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="466">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:32:16.298751Z</date>
+<msg>0.63
+//codecleanup contextMenu
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="465">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:27:29.513787Z</date>
+<msg>0.63
+//codecleanup contextMenu
+
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="464">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-05T08:09:57.624500Z</date>
+<msg>0.63
+//done added contextMenu selection and using info.linkUrl in link
+//done commands prev
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="463">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T12:48:26.320986Z</date>
+<msg>0.63
+//done code cleanup in app/popup</msg>
+</logentry>
+<logentry
+   revision="462">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T11:53:17.481452Z</date>
+<msg>0.63
+//done code cleanup in Playlist
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="461">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T11:27:22.697933Z</date>
+<msg>0.63
+//done code cleanup in app/popup
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="460">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T11:10:28.578752Z</date>
+<msg>0.63
+//done code cleanup in app/popup
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="459">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T11:09:07.845012Z</date>
+<msg>0.63
+//done code cleanup in app/popup
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="458">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T10:36:22.309407Z</date>
+<msg>0.63
+//done parsePage, parseLink
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="457">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-04T09:46:05.631376Z</date>
+<msg>0.63
+//done added one-click actions for both parsed and playlist songs, also css
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="456">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-03T15:14:57.600507Z</date>
+<msg>0.63
+//done added one-click actions for both parsed and playlist songs, also css
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="455">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-03T14:03:04.137377Z</date>
+<msg>0.63
+//done added one-click actions for both parsed and playlist songs, also css
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="454">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-03T13:19:25.432218Z</date>
+<msg>0.63
+//done added one-click actions for both parsed and playlist songs, also css
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="453">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-03T12:31:55.874439Z</date>
+<msg>0.63
+//working add everything context menu
+//done darkorange when hover on ui-selected, added hand-pointer to header buttons, replaced image-div width with margin
+//done added one-click actions for both parsed and playlist songs, also css
+//done removed playlist tooltip
+//done added nothing found while parsing page
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="452">
+<author>Qyuz555@gmail.com</author>
+<date>2013-12-02T09:53:44.543195Z</date>
+<msg>0.63
+//done added nothing found while parsing page
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="451">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-30T00:41:42.101759Z</date>
+<msg>0.63 
+//done added play-arrow on hover
+//done added cursors: grabbing, crosshair</msg>
+</logentry>
+<logentry
+   revision="450">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-29T17:07:10.498819Z</date>
+<msg>0.63
+//done added play-arrow on hover
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="449">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-29T17:04:23.383770Z</date>
+<msg>0.63
+//done added play-arrow on hover
+
+//TODO one click add from ParsedPlaylist
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="448">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-29T16:14:06.574671Z</date>
+<msg>0.63
+//done added cursors and grabbing logic
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="447">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-29T15:30:51.395092Z</date>
+<msg>0.63
+//done added contextMenu with notifications
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="446">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-28T14:52:29.446031Z</date>
+<msg>0.63
+//done added commands
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="445">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-28T12:47:39.224374Z</date>
+<msg>0.63
+//done added playlist tooltip picture
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="444">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-28T11:00:14.251118Z</date>
+<msg>0.63
+//done fixed duplicate PlayProgressInterval in iframe. Sometimes YT Player would dispatch started twice(occurs after changing track a few times or/and(not sure which one) switching to popup Player)
+//done added commands
+//done moved tooltips to separate file, fixed css z-index
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="443">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-27T11:16:07.642837Z</date>
+<msg>0.63
+//done added tooltips
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="442">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-27T11:06:32.158998Z</date>
+<msg>0.63
+//done added tooltips
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="441">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-27T10:24:11.883172Z</date>
+<msg>0.63
+//done added tooltips
+//done fixed google url minifier
+//done added nothing found while parsing page
+
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="438">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-15T08:45:31.858367Z</date>
+<msg>web
+//done moved index.html to i.html
+//done redone index.html
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="437">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-15T08:38:27.803354Z</date>
+<msg>web
+//done moved index.html to i.html
+//done redone index.html
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="436">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-14T11:13:42.208025Z</date>
+<msg>//download logs
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="435">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-14T09:38:45.570826Z</date>
+<msg>0.62
+//done fixed iframe memory leak
+//todo play status highlight
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="434">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-14T09:26:30.808044Z</date>
+<msg>0.62
+//done fixed regex for vimeo
+//todo play status highlight
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="433">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-13T12:10:02.143465Z</date>
+<msg>0.62
+//todo play status highlight
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="432">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-12T15:17:34.572949Z</date>
+<msg>0.61
+//done fixed multi select drag&amp;drop selected element</msg>
+</logentry>
+<logentry
+   revision="431">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-12T09:29:26.268356Z</date>
+<msg>0.60
+//done handle blockplayback in all players
+//done added *.playtheinter.net to manifest
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="430">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-11T22:53:55.075769Z</date>
+<msg>0.59</msg>
+</logentry>
+<logentry
+   revision="429">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-11T22:17:16.719470Z</date>
+<msg>0.59
+
+//done fixed missing semicolon Uncaught Type Error: String is not a function
+//done added different environment hosts to observer
+//done added frame-src localhost to manifest</msg>
+</logentry>
+<logentry
+   revision="428">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-11T09:37:26.824668Z</date>
+<msg>0.58
+//done handle blockplayback in all players
+//done get lazily videoId in lazyLoadVideo
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="427">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-08T10:26:10.119055Z</date>
+<msg>0.57
+//done changed description in manifest
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="426">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-07T11:56:47.880258Z</date>
+<msg>0.56
+//done reinitInterval 120 minutes
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="425">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-07T11:54:11.907999Z</date>
+<msg>0.56
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="424">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-07T11:53:46.713316Z</date>
+<msg>0.56
+//done grab the first song from playlist in popup player if nothing was selected
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="423">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-07T09:23:43.186100Z</date>
+<msg>0.55
+//done stricten manifest
+//done css changes in playlist
+//done css changes in player-widget
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="422">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-07T09:08:30.905467Z</date>
+<msg>0.55
+//done stricten manifest
+//done changed text in Text tab for Parse TextArea
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="421">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-06T14:23:06.338507Z</date>
+<msg>0.54
+//done added vimeo jpeg
+//done separated background.html from pley.html
+//done removed inline css from html
+//done stricten manifest
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="420">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-06T13:49:20.430121Z</date>
+<msg>//done next button now works in player-widget
+//done fixed onAfterError in pti-web
+//done fixed window.setTitle issue in pti-web
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="419">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-06T10:18:39.167594Z</date>
+<msg>//done added vimeo jpeg
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="418">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-06T09:38:56.775115Z</date>
+<msg>//done lazy image loading in videofeed
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="417">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T15:11:06.482348Z</date>
+<msg>//done reddit</msg>
+</logentry>
+<logentry
+   revision="416">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T14:33:40.824991Z</date>
+<msg>//done removed TTL from get
+//done clear errorTimeout in stopVideo method in players</msg>
+</logentry>
+<logentry
+   revision="415">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T12:08:53.472780Z</date>
+<msg>//done options tab style
+//done shortlink in options tab
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="414">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T09:55:04.619153Z</date>
+<msg>//done observer sends href in GET origin property to observable
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="413">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T08:04:54.327457Z</date>
+<msg>//done errorTimeout in players set to 15s
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="412">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-05T06:24:49.242114Z</date>
+<msg>//done lazyLoadVideo in iframe-observer
+//done TTL=24hr in SiteHandler VideoFeed</msg>
+</logentry>
+<logentry
+   revision="411">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T16:08:44.187146Z</date>
+<msg>//done progressbar tooltip
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="410">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T15:38:21.162549Z</date>
+<msg>//done PlayTimeout in Players
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="409">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T15:25:54.220959Z</date>
+<msg>//done lazyLoadVideo in iframe-observer
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="408">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T14:16:52.125299Z</date>
+<msg>//done PlayTimeout in Players
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="407">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T14:14:27.134036Z</date>
+<msg>//done fixed yt,sc regex
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="406">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-04T11:21:32.602314Z</date>
+<msg>//done fixed yt,sc regex
+//done removed duplicates from sc
+//done removed pti debounce second, state(buggy)
+//done updated jasmine
+//done fixed sc background/popup/background transition with resume
+//inProgress options tab style
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="405">
+<author>qyuz555@gmail.com</author>
+<date>2013-11-03T09:45:52.928745Z</date>
+<msg>//todo exclude from soundcloud</msg>
+</logentry>
+<logentry
+   revision="404">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-02T20:59:56.641098Z</date>
+<msg>//done youtube pti pause status miscall</msg>
+</logentry>
+<logentry
+   revision="403">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-02T20:36:39.280946Z</date>
+<msg>//inProgress youtube pti pause status miscall</msg>
+</logentry>
+<logentry
+   revision="402">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-02T16:00:17.487406Z</date>
+<msg>//inProgress youtube pti pause status miscall</msg>
+</logentry>
+<logentry
+   revision="401">
+<author>qyuz555@gmail.com</author>
+<date>2013-11-01T14:29:30.246484Z</date>
+<msg>//done using iframe from playtheinternet appspot not localhost
+//done default size: list and split: one in popup playlists</msg>
+</logentry>
+<logentry
+   revision="400">
+<author>Qyuz555@gmail.com</author>
+<date>2013-11-01T11:39:22.687222Z</date>
+<msg>//inProgress options tab style
+//done store playlist options in chrome.storage
+//done get element text from error response in youtube(Bad Request v=%1111111%) to solve screwed video-element content
+//done progressbar tooltip
+//done TextArea Playlist
+//done added playerState to playProgressThrottle in vimeo
+//done removed Bin tab from popup
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="399">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-31T10:11:58.963296Z</date>
+<msg>//done added hover color to player-widget play next buttons
+
+//TODO get element text from error response in youtube(Bad Request v=%1111111%) to solve screwed video-element content
+//TODO TextArea Playlist
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="398">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-31T09:34:09.834414Z</date>
+<msg>//done removed br and added space for medium playlist style(code cleanup)
+
+//TODO get element text from error response in youtube(Bad Request v=%1111111%) to solve screwed video-element content
+//TODO TextArea Playlist
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="397">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-31T09:07:26.826873Z</date>
+<msg>//done removed br and added space for medium playlist style
+
+//TODO get element text from error response in youtube(Bad Request v=%1111111%) to solve screwed video-element content
+//TODO TextArea Playlist
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="396">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-31T09:01:09.043724Z</date>
+<msg>//done big/medium/list/one/two styles/actions for playlist header
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="394">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-30T14:00:41.263220Z</date>
+<msg>//done added next icon in player-widget
+//done added view-medium style in playlist.css
+//inProgress big/medium/list/one/two icons for playlist header
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="392">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-29T13:22:46.225502Z</date>
+<msg>//done remove duplicate selected issue
+//done playerwidget progressBar disappeared in web version
+//done videoText absolute and cropped in playlist.css
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="391">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-28T16:21:23.594361Z</date>
+<msg>//done remove duplicate selected issue
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="390">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-25T13:39:47.051769Z</date>
+<msg>//inProgress remove duplicate selected issue
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="389">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-25T10:32:50.910799Z</date>
+<msg>//done not fillingVideoElements in background playlist
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="388">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-25T10:17:59.114214Z</date>
+<msg>//done YoutubeHandler ajax kanban flow                                                                      
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="387">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-25T10:12:30.105101Z</date>
+<msg>//done YoutubeHandler ajax kanban flow
+//done parse error in popup
+ 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="386">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-24T14:57:38.225019Z</date>
+<msg>//done removed prev button from playerwidget
+//done show error in parsed tab when PlayTheInternetParse wasn't injected
+//done playlist is now filling all left space in parse.html
+//done not fillingVideoElements in background playlist
+//done polling for youtube.getPlayerState() every 750ms in iframe-youtube
+ //done check if &lt;a&gt; was clicked on playlist click
+ 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="385">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-23T14:59:18.743283Z</date>
+<msg>//done error links are clickable and color:white when active in playlist
+//done play/next/prev buttons are floated right in player widget
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="384">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-23T14:20:37.305047Z</date>
+<msg>//done can start same song through jStorage
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="383">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-23T14:07:32.792342Z</date>
+<msg>//done scrolling works in jquery sortable
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="382">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-23T14:05:34.643996Z</date>
+<msg>//done added null processing in soundcloud.getCurrentSoundIndex response
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="381">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-23T07:51:36.915093Z</date>
+<msg>Switch from IDEA 11 to 12 Configuration Files
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="380">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-18T16:48:04.001425Z</date>
+<msg>//done playerwidget template is precreated in popup
+//done parsed tab is active in popup and all other tabs contents display none
+//done youtube is 100% by default in iframe-player.html
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="379">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-18T15:23:13.528143Z</date>
+<msg>//done introduced reinit method for iframe-observer 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="378">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-18T13:01:18.442313Z</date>
+<msg>//done using compiled templates
+//done using compiled parse
+//done added simple compiled and generated equality check in jasmine 
+//done introduced init and destroy methods for iframe-observer 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="374">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-17T11:05:08.244606Z</date>
+<msg>//done added claypool.rhino for webapps
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="373">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-17T10:55:52.581579Z</date>
+<msg>//done added claypool.rhino for webapps
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="372">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-17T10:53:32.663995Z</date>
+<msg>//done loading parse with shim, added compiled parsejs, added jasmine libs
+ 
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="371">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-15T09:33:46.401000Z</date>
+<msg>//done fixed youtube and vimeo regex for facebook
+//done can drag song to last element without overlapping the last element(pti-make-last-droppable-work) 
+ 
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="370">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T18:07:33.693790Z</date>
+<msg>//TODO vimeo</msg>
+</logentry>
+<logentry
+   revision="369">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T13:23:16.935875Z</date>
+<msg>//done escape jquery selector
+ 
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="368">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T12:54:14.848192Z</date>
+<msg>//soundcloud secret token
+ 
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="367">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T12:12:06.020812Z</date>
+<msg>//done line-height in pti-view-list to center text and cut overflowing characters
+//done height in popup to make scrollbars disappear
+//done nav-content in both web and extension now fills the content without overflowing
+ //done base module introduced with css function
+ //done iframe-observer now runs only function passed in arguments if ready event was fired before(jquery.ready behaviour)
+ 
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="366">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T10:06:13.574212Z</date>
+<msg>//done code cleanup - html, js, css files in their folders. removed eval from parse.js. removed inline js from html. 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="365">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T10:03:55.028024Z</date>
+<msg>//done code cleanup - html, js, css files in their folders. removed eval from parse.js. removed inline js from html. 
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="364">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T09:52:48.364716Z</date>
+<msg>//inProgress code cleanup - remove unnecessary files
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="363">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T09:38:02.970282Z</date>
+<msg>//inProgress code cleanup - remove unsued files
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="362">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-14T08:54:18.914983Z</date>
+<msg>//inProgress code cleanup - remove unnecessary files
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="361">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-10T13:22:06.286511Z</date>
+<msg>//done added youtube video which is not available in latvia
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="360">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-10T13:17:50.619328Z</date>
+<msg>//done introduced ready for iframe-observer
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="359">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-10T11:31:16.857106Z</date>
+<msg>//done fixed iframe-player initialization in iframe-popup application  
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="358">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-10T11:10:26.255462Z</date>
+<msg>//inProgress separate js files using require
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="355">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-07T11:41:20.529545Z</date>
+<msg>//inProgress get rid of global variables
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="354">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-07T10:09:12.582740Z</date>
+<msg>//done background is require app
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="353">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-07T10:01:17.522106Z</date>
+<msg>//done background is require app
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="352">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-04T10:30:41.044080Z</date>
+<msg>//done youtube parse - going to collect all links for all regexp cases
+//done make extension popup work with requirejs
+//done make js'es as AMD modules
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="351">
+<author>Qyuz555@gmail.com</author>
+<date>2013-10-03T11:19:56.688079Z</date>
+<msg>//inProgress make extension popup work with requirejs
+
+//TODO youtube parse
+//TODO make IframeWrapper as AMD module
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="350">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-21T12:27:45.859651Z</date>
+<msg>//inProgress make extension popup work with requirejs
+
+//TODO make IframeWrapper as AMD module
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+//TODO video switch and resuming fails when switched from main popup player to background player( https://www.youtube.com/watch?v=yxMcuzOgVrU )</msg>
+</logentry>
+<logentry
+   revision="349">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-21T12:17:34.992744Z</date>
+<msg>//inProgress make extension popup work with requirejs
+
+//TODO make IframeWrapper as AMD module
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="347">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-18T13:58:49.540199Z</date>
+<msg>//done returned code to display-grid.js for back compatibility extension background page
+
+//inProgress make extension popup work with requirejs
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="344">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-17T17:02:56.020901Z</date>
+<msg>//done web works using requirejs
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="340">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-16T16:04:39.442192Z</date>
+<msg>//done fixed selecting and dragging element outside of playlist boundaries   
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="339">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-16T15:58:39.782596Z</date>
+<msg>//done urlshortener
+//done iframe player size issue
+//done moved code from displaygrid to webpage.js
+
+//inProgress fix missing body overflow issue and make playlist stay inside of the body
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="334">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-14T14:34:08.606169Z</date>
+<msg>//inProgress fix missing body overflow issue and make playlist stay inside of the body 
+//TODO url shortener
+//TODO remove temporary while working on PTI pieces 
+//TODO fix parse.html playlist style width &amp; overflow issue 
+//TODO separate markups for each extension page 
+//TODO optimize script loading for extension 
+//TODO create loading bar 
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1 
+//TODO syndicate issue 
+//TODO strange vimeo player, check for seekTo and other methods 
+//TODO bootstrap.js conflicts with jQuery tooltip 
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)</msg>
+</logentry>
+<logentry
+   revision="333">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-14T14:14:19.553652Z</date>
+<msg>//inProgress fix missing body overflow issue and make playlist stay inside of the body 
+//TODO url shortener
+//TODO remove temporary while working on PTI pieces 
+//TODO fix parse.html playlist style width &amp; overflow issue 
+//TODO separate markups for each extension page 
+//TODO optimize script loading for extension 
+//TODO create loading bar 
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1 
+//TODO syndicate issue 
+//TODO strange vimeo player, check for seekTo and other methods 
+//TODO bootstrap.js conflicts with jQuery tooltip 
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)</msg>
+</logentry>
+<logentry
+   revision="332">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-13T15:44:31.842473Z</date>
+<msg>//inProgress fix missing body overflow issue and make playlist stay inside of the body
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="331">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-13T15:20:06.933746Z</date>
+<msg>//done use PlayerWidget in web
+
+//TODO fix missing body overflow issue and make playlist stay inside of the body
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="330">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-13T14:05:18.248939Z</date>
+<msg>//done use PTI in web version
+
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO implement pti errorTimeout, pti playTimeout(loadingTimeout)
+</msg>
+</logentry>
+<logentry
+   revision="324">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-11T17:03:52.631628Z</date>
+<msg>//fix youtube onBeforePlayerState(checking for 0 results in false) 
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+</msg>
+</logentry>
+<logentry
+   revision="323">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-11T16:45:57.397751Z</date>
+<msg>//done playerState.state == 2 
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+</msg>
+</logentry>
+<logentry
+   revision="322">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-10T15:33:13.301480Z</date>
+<msg>//inProgress playerState.state == 2
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+</msg>
+</logentry>
+<logentry
+   revision="321">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-10T15:32:45.911602Z</date>
+<msg>//inProgress playerState.state == 2
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+</msg>
+</logentry>
+<logentry
+   revision="320">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-09T16:13:24.283509Z</date>
+<msg>//done if exception at content script parse then css layout is screwed
+
+//inProgress playerState.state == 2
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+</msg>
+</logentry>
+<logentry
+   revision="319">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-06T11:09:04.783898Z</date>
+<msg>//fix soundcloud seekTo * 1000
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO if exception at content script parse then css layout is screwed
+</msg>
+</logentry>
+<logentry
+   revision="318">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-06T10:55:09.488353Z</date>
+<msg>//done create PlayerHandler with widget
+//done save playerState in Player, not in Playlist
+//redone/added loadVideo,playVideo,pauseVideo,seekTo(pti)
+//added playVideo,pauseVideo,seekTo,duration(players)
+
+//TODO remove temporary while working on PTI pieces
+//TODO use PTI in web version
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO if exception at content script parse then css layout is screwed
+</msg>
+</logentry>
+<logentry
+   revision="317">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-04T11:30:48.018381Z</date>
+<msg>//done added soundIndex for soundCloud
+//done added .loadVideo and .get to PTI
+//done get rid of webRequest
+
+//inProgress create PlayerHandler with widget
+//inProgress save playerState in Player, not in Playlist
+
+//TODO use PTI in web version
+//TODO remove temporary while working on PTI pieces
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+//TODO bootstrap.js conflicts with jQuery tooltip
+//TODO if exception at content script parse then css layout is screwed
+</msg>
+</logentry>
+<logentry
+   revision="316">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-04T08:34:24.533385Z</date>
+<msg>//done youtube error callback 
+//done moved onBlockPlayback to iframe-player.js 
+
+//TODO use PTI in web version
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="315">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-03T10:07:31.597114Z</date>
+<msg>//done fix parse.html playlist draw
+
+//TODO use PTI in web version
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="314">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-03T09:22:17.026097Z</date>
+<msg>//done make popup/background playing to work
+
+//TODO fix parse.html playlist draw
+//TODO use PTI in web version
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="313">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-03T09:00:26.333554Z</date>
+<msg>//done moving all players to iframe:
+//done clearTimeout, showPlayer in PTI
+  
+//TODO make popup/background playing to work
+//TODO use PTI in web version
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="312">
+<author>Qyuz555@gmail.com</author>
+<date>2013-09-02T10:12:25.319793Z</date>
+<msg>//done iframe extension wrapper
+
+//inProgress moving all players to iframe
+
+//TODO clearTimeout, showPlayer in PTI
+//TODO use PTI in web version
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="311">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-30T12:17:32.675091Z</date>
+<msg>//inProgress iframe extension wrapper:
+  introduced and completed runLifeCycle
+  
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="310">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-29T13:12:38.639787Z</date>
+<msg>//inProgress iframe extension wrapper:
+  added and implemented beforeCore
+  added and implemented listenAll
+  moved SoundCloudInitialize to webpage
+  polished a bit iframe-player html and css
+  
+//inProgress create PlayerHandler with widget
+//TODO get rid of webRequest
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="309">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-28T15:20:04.304970Z</date>
+<msg>indentation</msg>
+</logentry>
+<logentry
+   revision="308">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-28T15:18:01.742734Z</date>
+<msg>//inProgress iframe extension wrapper
+
+//inProgress create PlayerHandler with widget
+//TODO remove temporary while working on PTI pieces
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods
+
+</msg>
+</logentry>
+<logentry
+   revision="307">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-26T09:18:54.965843Z</date>
+<msg>//INTRODUCED iframe extension wrapper
+
+//inProgress create PlayerHandler with widget
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="306">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-22T14:53:19.564677Z</date>
+<msg>//inProgress create PlayerHandler with widget
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="305">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-22T10:26:28.335341Z</date>
+<msg>//DONE refactor localStorage message interchange
+//DONE fix can't load playlist from jStorage(not talking to self) in parse.html playlist after made changes in same playlist
+//DONE get rid of custom call - is reloading playlist in all tabs
+//DONE add selected video to localStorage playlist
+//DONE allow select and play video from parse.html
+
+//TODO save playerState in Player, not in Playlist
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="304">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-21T06:59:51.313910Z</date>
+<msg>//introduced native messaging</msg>
+</logentry>
+<logentry
+   revision="303">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-20T17:07:37.173626Z</date>
+<msg>//inProgress refactor localStorage message interchange
+//inProgress fix can't load playlist from jStorage(not talking to self) in parse.html playlist after made changes in same playlist
+//inProgress get rid of custom call - is reloading playlist in all tabs
+//inProgress add selected video to localStorage playlist
+//inProgress allow select and play video from parse.html
+
+//TODO fix parse.html playlist style width &amp; overflow issue
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="302">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-13T10:09:01.190408Z</date>
+<msg>//done SiteHandler blockPlay switch
+ 
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="301">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-12T15:09:25.558183Z</date>
+<msg>//DONE introduced stop to PlayingHandler
+ 
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="300">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-12T12:49:49.635289Z</date>
+<msg>//DONE fix iframe playback problems 
+ 
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="299">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-09T13:50:20.841841Z</date>
+<msg>//DONE fix vimeo and sc playback problems
+//DONE finish playerState(start, state) for remaining players
+ 
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="298">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-09T10:49:07.932512Z</date>
+<msg>//done introduce headers and make body height fill remaining size
+
+//inProgress fix vimeo and sc playback problems
+//inProgress finish playerState(start, state) for remaining players
+
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="297">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-09T09:57:48.718545Z</date>
+<msg>//done forgotten minified libraries
+
+//inProgress fix vimeo and sc playback problems
+//inProgress finish playerState(start, state) for remaining players
+
+//TODO introduce headers and make body height fill remaining size
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+//TODO strange vimeo player, check for seekTo and other methods</msg>
+</logentry>
+<logentry
+   revision="296">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-08T15:00:35.114975Z</date>
+<msg>//TODO strange vimeo player</msg>
+</logentry>
+<logentry
+   revision="295">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-08T13:59:30.083707Z</date>
+<msg>//done using css to set html body height width for extension
+//done dont retry getting video information if video was deleted from playlist
+//introduced webRequest to extension
+//done minified js libraries, css
+
+//inProgress fix vimeo and sc playback problems
+//inProgress finish playerState(start, state) for remaining players
+
+
+//TODO refactor localStorage message interchange
+//TODO add selected video to localStorage playlist
+//TODO allow select and play video from parse.html
+//TODO create PlayerHandler with widget
+//TODO separate markups for each extension page
+//TODO optimize script loading for extension
+//TODO create loading bar
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO syndicate issue
+</msg>
+</logentry>
+<logentry
+   revision="294">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-07T12:36:44.558540Z</date>
+<msg>//done open video in popup only when Player tab is selected, use localStorage to persist current Video
+
+//TODO syndicate issue
+//TODO refactor localStorage message interchange
+//TODO https://www.youtube.com/embed/?listType=playlist&amp;amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;amp;showinfo=1
+//TODO finish playerState(start, state) for remaining players
+//TODO separate markups for each extension page
+//TODO fix vimeo and sc playback problems
+</msg>
+</logentry>
+<logentry
+   revision="293">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-06T13:49:16.152720Z</date>
+<msg>//done style playlist with list view, one row smaller thumbnail view
+//done issue with parse.html playlist video margin: 1px
+
+//TODO syndicate issue
+//TODO open video in popup only when Player tab is selected, use localStorage to persist current Video
+//TODO refactor localStorage message interchange
+</msg>
+</logentry>
+<logentry
+   revision="292">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-05T13:55:08.487175Z</date>
+<msg>//added setSlimScroll to parsedPlaylist
+
+//TODO syndicate issue
+//TODO open video in popup only when Player tab is selected, use localStorage to persist current Video
+//TODO refactor localStorage message interchange
+//TODO style playlist with list view, one row smaller thumbnail view
+//TODO issue with parse.html playlist video margin: 1px</msg>
+</logentry>
+<logentry
+   revision="291">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-05T13:46:15.885318Z</date>
+<msg>//fixed get rid of error when nothing parsed from page, nothing in background playlist and popup is opened
+//fixed css issue with error message
+//added wrapper to get rid of setSlimScroll and use native scrollbar instead
+//refactored css
+//got rid of unnecessary logging
+
+//TODO syndicate issue
+//TODO open video in popup only when Player tab is selected, use localStorage to persist current Video
+//TODO refactor localStorage message interchange
+//TODO style playlist with list view, one row smaller thumbnail view</msg>
+</logentry>
+<logentry
+   revision="290">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-02T14:03:06.450968Z</date>
+<msg>//fixed onceLoaded can now play preselected video(added getCurrentVideo to Playlist)
+//added alert if playTheInternetParse() is not available upon pagePage.js 
+//moved from sendMessage to localStorage because of onunload issue
+
+//TODO syndicate issue
+//TODO open video in popup only when Player tab is selected, use localStorage to persist current Video
+//TODO get rid of error when nothing parsed from page, nothing in background playlist and popup is opened
+//TODO refactor localStorage message interchange
+//TODO fix css issue with error message
+//TODO get rid of setSlimScroll and use native scrollbar instead
+//TODO style playlist with list view, one row smaller thumbnail view</msg>
+</logentry>
+<logentry
+   revision="289">
+<author>Qyuz555@gmail.com</author>
+<date>2013-08-01T12:32:17.503940Z</date>
+<msg>//introduced parsePage
+//stumbled upon youtube syndicate denied issue and etc</msg>
+</logentry>
+<logentry
+   revision="288">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-31T13:41:56.800580Z</date>
+<msg>//introduced background page</msg>
+</logentry>
+<logentry
+   revision="287">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-30T13:28:24.358731Z</date>
+<msg>//gotRid of external dependencies
+//introduced chrome extension</msg>
+</logentry>
+<logentry
+   revision="286">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-29T14:04:10.155849Z</date>
+<msg>//introduced not talking to self
+//introduced dontInvokeListener
+//removed unique function from Array prototype</msg>
+</logentry>
+<logentry
+   revision="285">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-26T11:34:16.144069Z</date>
+<msg>//fixed lookupNextSong</msg>
+</logentry>
+<logentry
+   revision="284">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-26T10:54:05.005325Z</date>
+<msg>//moved player initialization to SiteHandlers
+//caching playlist, playlist jquery wrapper, sortableArray
+ //introduced selectDifferences for parse.html</msg>
+</logentry>
+<logentry
+   revision="283">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-25T11:27:13.124027Z</date>
+<msg>//gotRid of intercom</msg>
+</logentry>
+<logentry
+   revision="282">
+<author>Qyuz555@gmail.com</author>
+<date>2013-07-25T11:20:03.900125Z</date>
+<msg>//done introduced select differences to parse.html</msg>
+</logentry>
+<logentry
+   revision="281">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-28T16:13:19.342241Z</date>
+<msg>//fixed now playlist loads before soundcloud player
+//fixed wrapped qrcode drawing in try to avoid overflow
+//todo match soundcloud till %3F to cut encoded parameters</msg>
+</logentry>
+<logentry
+   revision="280">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-27T13:04:40.614660Z</date>
+<msg>//updated soundcloud regex
+//fixed replacing %2F to / chars in URL matching to remove duplicates
+//added jasmine tests for duplicate checking and matching urls with %2F characters</msg>
+</logentry>
+<logentry
+   revision="279">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-27T12:34:41.026679Z</date>
+<msg>//done qrcode</msg>
+</logentry>
+<logentry
+   revision="278">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-26T12:52:08.823215Z</date>
+<msg>//inProgress select and filter videos matching the criteria</msg>
+</logentry>
+<logentry
+   revision="277">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-26T10:33:27.117746Z</date>
+<msg>//inProgress select and filter videos matching the criteria</msg>
+</logentry>
+<logentry
+   revision="276">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-25T16:39:33.197199Z</date>
+<msg>//inProgress select and filter videos matching the criteria</msg>
+</logentry>
+<logentry
+   revision="275">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-22T15:24:32.554356Z</date>
+<msg>//fixed youtube js api eventHandler now working
+//inProgress select videos matching the criteria</msg>
+</logentry>
+<logentry
+   revision="274">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-21T14:22:07.587173Z</date>
+<msg>//added link to display-grid to index main page
+//rigged line codes to let exception be still thrown and not break things</msg>
+</logentry>
+<logentry
+   revision="273">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-21T14:13:02.552397Z</date>
+<msg>//fixed pti-logo appears only in clickable playlist videos</msg>
+</logentry>
+<logentry
+   revision="272">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-21T14:05:56.256146Z</date>
+<msg>//done calendar input range</msg>
+</logentry>
+<logentry
+   revision="270">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-19T12:36:13.838041Z</date>
+<msg>//done start end parameters for /calendarSorted
+//inProgress datepicker</msg>
+</logentry>
+<logentry
+   revision="269">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-18T13:09:29.397747Z</date>
+<msg>//done remove double backward slash for soundcloud id uniqueness in parsePlayTheInternet</msg>
+</logentry>
+<logentry
+   revision="268">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-18T12:32:19.876808Z</date>
+<msg>//done playtheinternet logo on video elements</msg>
+</logentry>
+<logentry
+   revision="267">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-18T12:15:31.926413Z</date>
+<msg>//fixed collapsing contents in group in calendar
+//done selectable selection helper border
+//removed div.sort area from template, drag picture instead</msg>
+</logentry>
+<logentry
+   revision="266">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-17T14:24:31.893162Z</date>
+<msg>//done added cancel image-div to cancel, to make videos clickable</msg>
+</logentry>
+<logentry
+   revision="265">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-16T13:38:01.638664Z</date>
+<msg>//done made blockSort collaborate with multi-selection</msg>
+</logentry>
+<logentry
+   revision="264">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-16T10:46:31.063237Z</date>
+<msg>cosmetic changes</msg>
+</logentry>
+<logentry
+   revision="263">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-14T10:50:42.283087Z</date>
+<msg>//inProgress sortable &amp; selectable
+</msg>
+</logentry>
+<logentry
+   revision="262">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-13T15:59:49.627513Z</date>
+<msg>//fixed performance issue with hidden elements in grouped calendar playlist
+</msg>
+</logentry>
+<logentry
+   revision="261">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-13T15:29:45.631494Z</date>
+<msg>//done hide group contents in calendar playlist
+</msg>
+</logentry>
+<logentry
+   revision="260">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-13T14:56:56.793900Z</date>
+<msg>//done made one level grouping generic
+//done groupByUrl
+
+</msg>
+</logentry>
+<logentry
+   revision="259">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-13T14:34:58.608938Z</date>
+<msg>//done hide group contents in calendar playlist
+//broken is youtube
+</msg>
+</logentry>
+<logentry
+   revision="258">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-12T13:34:11.034502Z</date>
+<msg>//fixed helper not visible upon sorting
+</msg>
+</logentry>
+<logentry
+   revision="257">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-12T09:31:34.976958Z</date>
+<msg>//done restrict sorting in calendar type playlist
+//done added youtube.googleapis.com/v/ to YoutubeHandler and jasmine
+</msg>
+</logentry>
+<logentry
+   revision="256">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-11T17:59:20.231316Z</date>
+<msg>//inProgress calendar playlist</msg>
+</logentry>
+<logentry
+   revision="255">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-10T12:59:33.754059Z</date>
+<msg>//done remaped links to calendarDays</msg>
+</logentry>
+<logentry
+   revision="254">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-09T10:50:42.939723Z</date>
+<msg>//inProgress started calendar datepicker</msg>
+</logentry>
+<logentry
+   revision="253">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-08T11:32:51.739478Z</date>
+<msg>//fixed calendarPlaylist doesn't use localStorage anymore
+//fixed playlist styles in parse.html
+//fixed styles in playlist.css
+//done changed template behavior
+//fixed scope issues in playlist and issues
+//fixed dont rely on .filled anymore to check if element is playable
+//removed unnecessary stuff
+</msg>
+</logentry>
+<logentry
+   revision="252">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-04T14:48:46.189845Z</date>
+<msg>//fixed soundCloud playing on background when loaded another site handlers video 
+//inProgress changing template behaviour</msg>
+</logentry>
+<logentry
+   revision="251">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-03T16:09:02.688292Z</date>
+<msg>//inProgress calendar introduction</msg>
+</logentry>
+<logentry
+   revision="250">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-03T12:25:19.838042Z</date>
+<msg>//fixed content-type to json/utf-8
+//added _.uniq _.flatten calendarSorted to Temp.js</msg>
+</logentry>
+<logentry
+   revision="249">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-01T11:41:18.754507Z</date>
+<msg>//inProgress calendar introduction</msg>
+</logentry>
+<logentry
+   revision="248">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-01T11:35:12.540812Z</date>
+<msg>//inProgress calendar introduction</msg>
+</logentry>
+<logentry
+   revision="247">
+<author>Qyuz555@gmail.com</author>
+<date>2013-06-01T08:15:07.937834Z</date>
+<msg>//inProgress playlist shared interaction between browser tabs
+//done moved to rawgithub</msg>
+</logentry>
+<logentry
+   revision="246">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-28T16:08:11.718956Z</date>
+<msg>//inProgress playlist shared interaction between browser tabs</msg>
+</logentry>
+<logentry
+   revision="245">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-27T14:02:35.951386Z</date>
+<msg>//inProgress playlist shared interaction between browser tabs</msg>
+</logentry>
+<logentry
+   revision="244">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-26T10:09:57.808366Z</date>
+<msg>//inProgress playlist shared interaction between browser tabs</msg>
+</logentry>
+<logentry
+   revision="243">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-25T09:27:42.679816Z</date>
+<msg>//inProgress playlist shared interaction between browser tabs</msg>
+</logentry>
+<logentry
+   revision="242">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-25T08:30:55.126673Z</date>
+<msg>//fixed youtube regex</msg>
+</logentry>
+<logentry
+   revision="241">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-24T16:08:28.891144Z</date>
+<msg>//done-partial switched to jStorage
+//started playlist shared interaction between browser tabs</msg>
+</logentry>
+<logentry
+   revision="240">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-22T20:38:57.282764Z</date>
+<msg>//done-partial using iframe for youtube videos
+//done-partial decoupled playlist from youtubeplayer and planning to get rid of youtubeplayer class
+</msg>
+</logentry>
+<logentry
+   revision="239">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-21T15:31:30.961635Z</date>
+<msg>youtubePlayground</msg>
+</logentry>
+<logentry
+   revision="238">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-21T15:30:34.920006Z</date>
+<msg>//todo switch to iframe youtube player</msg>
+</logentry>
+<logentry
+   revision="237">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-21T14:52:17.082078Z</date>
+<msg>//fixed duplicate videos when using initPlayer function</msg>
+</logentry>
+<logentry
+   revision="236">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-20T11:40:38.946021Z</date>
+<msg>//fixed lookupNextVideo to not skipping empty videos
+//done draw error message for youtube</msg>
+</logentry>
+<logentry
+   revision="235">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-19T10:37:11.197407Z</date>
+<msg>//done use siteHandlerManager to draw videoElements
+//done-partial vimeo's videoFeeds are cached in localStorage
+</msg>
+</logentry>
+<logentry
+   revision="234">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-18T18:41:14.313874Z</date>
+<msg>//done-partial vimeo's videoFeeds are cached in localStorage
+//done-partial use siteHandlerManager to draw videoElements</msg>
+</logentry>
+<logentry
+   revision="233">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-18T13:36:49.224590Z</date>
+<msg>//done vimeo tests added
+//done-partial vimeo's videoFeeds are cached in localStorage</msg>
+</logentry>
+<logentry
+   revision="232">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-18T10:42:03.091229Z</date>
+<msg>//done VideoFeed now wraps vimeo type 
+//done showing vimeo video thumbnail and name in playlist</msg>
+</logentry>
+<logentry
+   revision="231">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-17T17:45:11.883702Z</date>
+<msg>//done introduced errorTimeout on siteHandler to resolve issue with switching to next video after stateChange("ERROR") has been dispatched and user manually clicked another video
+ //done vimeo has been finished
+ //done vimeo and soundcloud players now use errorTimeout and errorInterval to check if player haven't started playing or didn't load properly  
+</msg>
+</logentry>
+<logentry
+   revision="230">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-16T18:16:12.030191Z</date>
+<msg>//done-partial vimeoSiteHandler and player, regex</msg>
+</logentry>
+<logentry
+   revision="229">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-15T17:26:17.367922Z</date>
+<msg>//done sound cloud error handler
+//done-partial vimeoSiteHandler and player</msg>
+</logentry>
+<logentry
+   revision="228">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-14T20:25:49.716888Z</date>
+<msg>//done rewrote to exclude duplication on playInternetParse() function
+//done added test for duplication for playTheInternetParse()</msg>
+</logentry>
+<logentry
+   revision="227">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-12T07:09:37.540236Z</date>
+<msg>wrote tests for playTheInternetParse()</msg>
+</logentry>
+<logentry
+   revision="226">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-08T15:02:50.375552Z</date>
+<msg>//done finished SoundCloud clickHandler 
+//done show only active player and stop/hide unactive player 
+//done-partial changed videoIds function in parse.html
+//done-partial finish soundCloud sound markup template 
+//done-partial-todo changeState error on soundcloud
+
+</msg>
+</logentry>
+<logentry
+   revision="225">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-06T17:14:02.815855Z</date>
+<msg>//done change parseSongIds function to tokenize and return VideoItems
+//done added soundClound widget
+//done-partial added SoundCloud clickHandler
+//done-partial show only active player and stop unactive player
+//done-partial finish soundCloud sound markup template
+//todo changeState on track change</msg>
+</logentry>
+<logentry
+   revision="224">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-02T17:29:51.116606Z</date>
+<msg>//done ytplayer height change on window resize
+//done doesn't .select song which doesn't have data('VideoFeed')</msg>
+</logentry>
+<logentry
+   revision="223">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-01T16:31:16.275685Z</date>
+<msg>//done strip margin-top from first 2 elements and reduce height to 90px</msg>
+</logentry>
+<logentry
+   revision="222">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-01T16:07:44.263665Z</date>
+<msg>//done changing videos in video player using clickHandler on playlist</msg>
+</logentry>
+<logentry
+   revision="221">
+<author>Qyuz555@gmail.com</author>
+<date>2013-05-01T15:50:58.721601Z</date>
+<msg>//done added bookmarklet for 192.168.1.99:8888 in index.html 
+//done-partial-todo introduced localStorage, youtube and videoFeeds are loaded concurrently
+//todo-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="220">
+<author>Qyuz555@gmail.com</author>
+<date>2013-04-26T06:43:00.818134Z</date>
+<msg>//done-partial-todo introduced localStorage, youtube and videoFeeds are loaded concurrently 
+//todo-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="219">
+<author>Qyuz555@gmail.com</author>
+<date>2013-04-26T06:41:32.069427Z</date>
+<msg>//done-partial-todo introduced localStorage, youtube and videoFeeds are loaded concurrently 
+//todo-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="218">
+<author>Qyuz555@gmail.com</author>
+<date>2013-04-25T20:21:06.115339Z</date>
+<msg>//done-partial-todo introduced localStorage, youtube and videoFeeds are loaded concurrently
+//todo-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="217">
+<author>Qyuz555@gmail.com</author>
+<date>2013-04-21T19:27:21.823323Z</date>
+<msg>//done-partial-todo introduced localStorage, youtube and videoFeeds are loaded concurrently
+//todo-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="216">
+<author>Qyuz555@gmail.com</author>
+<date>2013-04-20T10:01:21.069993Z</date>
+<msg>//done-partiallt introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="211">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-30T10:31:59.607811Z</date>
+<msg>//done wrapped videoElement in childDiv to make margin between elements work with width: 50%
+//todo introduce dispatchEvent style for changing videos in video player</msg>
+</logentry>
+<logentry
+   revision="210">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-27T11:32:09.201200Z</date>
+<msg>//done make open in new window from parse.html work
+//todo test generic siteHandlers</msg>
+</logentry>
+<logentry
+   revision="209">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-27T09:18:39.320657Z</date>
+<msg>//done aligned slimScrollBar color</msg>
+</logentry>
+<logentry
+   revision="208">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-27T08:42:16.512533Z</date>
+<msg>//done make add songs(intercom) from parse.html work
+//todo test generic siteHandlers</msg>
+</logentry>
+<logentry
+   revision="207">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-27T00:08:36.022242Z</date>
+<msg>//done introduced generic regex in sitehandlers
+//todo test generic regex in sitehandlers</msg>
+</logentry>
+<logentry
+   revision="206">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-17T09:21:07.934000Z</date>
+<msg>//done introduced sitehandlers
+//todo introduce generic regex in sitehandlers</msg>
+</logentry>
+<logentry
+   revision="205">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-15T20:58:48.649485Z</date>
+<msg>//done switched to bootstrap, got rid off background-image in playlist css
+//todo introduce site hadlers</msg>
+</logentry>
+<logentry
+   revision="204">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-13T15:15:26.543766Z</date>
+<msg>//done twitched soundcloud regex</msg>
+</logentry>
+<logentry
+   revision="203">
+<author>Qyuz555@gmail.com</author>
+<date>2013-03-13T14:25:19.402842Z</date>
+<msg>//done added soundcloud to playTheInternetParse function</msg>
+</logentry>
+<logentry
+   revision="202">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-28T19:04:56.979475Z</date>
+<msg>//done setTimeout 2000 in ytplayer error handler</msg>
+</logentry>
+<logentry
+   revision="201">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-26T15:56:13.066804Z</date>
+<msg>//done add success response indicator for adding songs to playlist
+//todo make youtubeplayer load asynchronously</msg>
+</logentry>
+<logentry
+   revision="200">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-26T06:48:40.254235Z</date>
+<msg>resize yte onYoutubePlayerReady handler after setting hook on window.resize</msg>
+</logentry>
+<logentry
+   revision="199">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-26T06:36:26.446227Z</date>
+<msg>//done parse.html slimscroll done
+//todo add success response indicator for adding songs to playlist</msg>
+</logentry>
+<logentry
+   revision="198">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-26T00:17:09.111423Z</date>
+<msg>//almost-done parse html now sends intercom playlist to parent window
+//todo slimscroll</msg>
+</logentry>
+<logentry
+   revision="197">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-25T18:37:47.923310Z</date>
+<msg>//almost-done parse html now sends intercom playlist to parent window
+//todo slimscroll</msg>
+</logentry>
+<logentry
+   revision="196">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-25T14:33:38.824414Z</date>
+<msg>//almost-done parse html show as playlist</msg>
+</logentry>
+<logentry
+   revision="195">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-24T06:34:40.532466Z</date>
+<msg>videoElement shows error</msg>
+</logentry>
+<logentry
+   revision="194">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-23T18:01:32.759056Z</date>
+<msg>\\done dragAndDrop fixed(connectedSortable, slimScroll overflow, jqueryui bug), videoElement shows error
+\\todo recycle bin</msg>
+</logentry>
+<logentry
+   revision="193">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-22T15:34:22.286672Z</date>
+<msg>//init iframe cross-domain message communication
+//todo switch to iframe from window.location.hash</msg>
+</logentry>
+<logentry
+   revision="192">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-22T09:02:08.323108Z</date>
+<msg>//done intercom handlers issue solved</msg>
+</logentry>
+<logentry
+   revision="191">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-22T08:26:52.681731Z</date>
+<msg>//done rename window</msg>
+</logentry>
+<logentry
+   revision="190">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-22T07:58:15.855771Z</date>
+<msg>//done share this link in options</msg>
+</logentry>
+<logentry
+   revision="189">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-22T07:46:34.482259Z</date>
+<msg>//done parse windows each 2 seconds</msg>
+</logentry>
+<logentry
+   revision="188">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-21T20:42:31.018455Z</date>
+<msg>\\todo window.location hash concationation is hashing?</msg>
+</logentry>
+<logentry
+   revision="187">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-21T08:00:16.440589Z</date>
+<msg>//done initPlayer through intercom</msg>
+</logentry>
+<logentry
+   revision="186">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-21T05:34:58.373214Z</date>
+<msg>\\done emit windowId is done twice and duplicate playlists doesn't show up. document.title = windowId. resizeApp function introduced on window.resize</msg>
+</logentry>
+<logentry
+   revision="185">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-19T06:33:28.953574Z</date>
+<msg>\\done if nothing in window.hash then load text tab and load player after initial text parse</msg>
+</logentry>
+<logentry
+   revision="184">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-16T19:00:19.190155Z</date>
+<msg>\\done updated jquery+ui library, added text area and jquery ui tabs
+\\todo load youtube player without initial video</msg>
+</logentry>
+<logentry
+   revision="183">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-15T18:04:01.506366Z</date>
+<msg>\\done moved bookmarklet to separate js file
+\\todo add textarea to add links to playlist</msg>
+</logentry>
+<logentry
+   revision="182">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-09T11:36:18.614769Z</date>
+<msg>\\done retry load video if too_many_recent_calls responseText
+\\todo load youtube player when page loads</msg>
+</logentry>
+<logentry
+   revision="181">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-05T11:50:44.572901Z</date>
+<msg>//todo for youtube links regex</msg>
+</logentry>
+<logentry
+   revision="180">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-04T22:40:16.468417Z</date>
+<msg>escaped \\todo in html</msg>
+</logentry>
+<logentry
+   revision="179">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-04T22:19:17.648422Z</date>
+<msg>added escaped \ character in regex</msg>
+</logentry>
+<logentry
+   revision="178">
+<author>Qyuz555@gmail.com</author>
+<date>2013-02-04T21:45:04.114384Z</date>
+<msg>changed .getHTML function in bookmarklet. window closes in 3 secs after successfully adding songs to window</msg>
+</logentry>
+<logentry
+   revision="177">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-30T09:17:45.368902Z</date>
+<msg>parse.html populates list of opened windows, sends playlist and receives a status response</msg>
+</logentry>
+<logentry
+   revision="176">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-29T12:03:50.305140Z</date>
+<msg>removed Channels, poll, and introduced Intercom.
+
+//todo show result(success, fail) after adding songs</msg>
+</logentry>
+<logentry
+   revision="175">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-28T14:32:37.105254Z</date>
+<msg>DONE
+create new channel
+lookup for existing channel to send message
+reuse disconnected channels
+reuse created but not connected channels(issue date)
+remove expired channels(creation date)
+
+TODO
+//6 todo do not reuse channels that will live less than 5 minutes</msg>
+</logentry>
+<logentry
+   revision="174">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-25T10:13:36.693612Z</date>
+<msg>railColor is now grey</msg>
+</logentry>
+<logentry
+   revision="173">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-24T13:03:29.878993Z</date>
+<msg>inserted caret return</msg>
+</logentry>
+<logentry
+   revision="172">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-24T12:54:33.549521Z</date>
+<msg>playlist width increased through changing width of dPlists container from 99% to 99.2%</msg>
+</logentry>
+<logentry
+   revision="171">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-24T12:23:03.050136Z</date>
+<msg>slimScroll introduced with resizable on window resize</msg>
+</logentry>
+<logentry
+   revision="170">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-24T11:32:25.773236Z</date>
+<msg>moved close button between picture and text in video element</msg>
+</logentry>
+<logentry
+   revision="169">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-24T08:38:38.238071Z</date>
+<msg>close button introduced which hides videoFeed, now playlist recalculates when Video is dragged</msg>
+</logentry>
+<logentry
+   revision="168">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-23T14:25:58.371274Z</date>
+<msg>ytplayer resize on container(#firstView) resize</msg>
+</logentry>
+<logentry
+   revision="167">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-23T14:17:26.315316Z</date>
+<msg>ytplayer resize on container(#firstView) resize</msg>
+</logentry>
+<logentry
+   revision="166">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-23T10:12:39.027272Z</date>
+<msg>regex for youtube now is shorter</msg>
+</logentry>
+<logentry
+   revision="165">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-23T09:03:12.548952Z</date>
+<msg>added regex for youtube embed old style</msg>
+</logentry>
+<logentry
+   revision="164">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-23T08:36:15.461755Z</date>
+<msg>ytplayer resize on window resize</msg>
+</logentry>
+<logentry
+   revision="163">
+<author>Qyuz555@gmail.com</author>
+<date>2013-01-22T15:14:07.917705Z</date>
+<msg>fixed regex - trims id to 11 chars, now matches embeded and excludes ids with . character</msg>
+</logentry>
+<logentry
+   revision="162">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-26T06:51:17.704145Z</date>
+<msg>ChannelPool.put() with assign windowClientId, connectionExpires</msg>
+</logentry>
+<logentry
+   revision="161">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-25T14:57:34.661983Z</date>
+<msg>persistPool removeTimeout in deserialize removed</msg>
+</logentry>
+<logentry
+   revision="160">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-25T14:43:09.520567Z</date>
+<msg>channels persisted: conntected, disconntected, connectionExpires, persistPool, safeTimeout, window.close</msg>
+</logentry>
+<logentry
+   revision="159">
+<author>qyuz555@gmail.com</author>
+<date>2012-12-22T10:27:46.835390Z</date>
+<msg>print exception + poll + channe/send/clientId</msg>
+</logentry>
+<logentry
+   revision="158">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-20T10:56:57.599220Z</date>
+<msg>vector icon with blank background</msg>
+</logentry>
+<logentry
+   revision="157">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-09T06:05:28.396003Z</date>
+<msg>channel maxTokenDuration</msg>
+</logentry>
+<logentry
+   revision="156">
+<author>Qyuz555@gmail.com</author>
+<date>2012-12-08T15:54:51.825639Z</date>
+<msg>channel reuse</msg>
+</logentry>
+<logentry
+   revision="155">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-30T12:10:48.051479Z</date>
+<msg>channel introduced</msg>
+</logentry>
+<logentry
+   revision="154">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-29T08:13:41.370090Z</date>
+<msg>playlist object addSongsToPlaylist unique introduced</msg>
+</logentry>
+<logentry
+   revision="153">
+<author>qyuz555@gmail.com</author>
+<date>2012-11-28T16:32:05.911389Z</date>
+<msg>reverted jquery</msg>
+</logentry>
+<logentry
+   revision="152">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T14:07:30.579929Z</date>
+<msg>playlist object cosmetic changes to appendTo parameters</msg>
+</logentry>
+<logentry
+   revision="151">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T12:05:10.708960Z</date>
+<msg>switched to playlist object</msg>
+</logentry>
+<logentry
+   revision="150">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T12:04:46.273185Z</date>
+<msg>updated jquery</msg>
+</logentry>
+<logentry
+   revision="149">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T12:03:13.717751Z</date>
+<msg>switched to playlist object</msg>
+</logentry>
+<logentry
+   revision="148">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T10:06:12.797900Z</date>
+<msg>updated jquery</msg>
+</logentry>
+<logentry
+   revision="147">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-28T07:51:12.852037Z</date>
+<msg>mozzilla opera works</msg>
+</logentry>
+<logentry
+   revision="146">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-27T14:13:02.912545Z</date>
+<msg>try block at new VideoFeed</msg>
+</logentry>
+<logentry
+   revision="145">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-27T12:36:03.628371Z</date>
+<msg>youtube view remove gauth</msg>
+</logentry>
+<logentry
+   revision="144">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-27T12:35:28.085421Z</date>
+<msg>youtube view document.width</msg>
+</logentry>
+<logentry
+   revision="143">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-27T12:21:09.265161Z</date>
+<msg>youtube view commented initial ajax</msg>
+</logentry>
+<logentry
+   revision="142">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-27T12:15:56.687108Z</date>
+<msg>youtube view</msg>
+</logentry>
+<logentry
+   revision="141">
+<author>qyuz555@gmail.com</author>
+<date>2012-11-24T07:46:31.265794Z</date>
+<msg>unversioned out</msg>
+</logentry>
+<logentry
+   revision="140">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-24T07:44:33.985434Z</date>
+<msg>bookmarklet domain substitution</msg>
+</logentry>
+<logentry
+   revision="139">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-23T14:22:50.428050Z</date>
+<msg>document.title</msg>
+</logentry>
+<logentry
+   revision="138">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-23T09:44:16.537672Z</date>
+<msg>icon</msg>
+</logentry>
+<logentry
+   revision="137">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-22T20:09:27.005050Z</date>
+<msg>SORTABLE DISTANCE 25 and ICO</msg>
+</logentry>
+<logentry
+   revision="136">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-22T20:09:04.013151Z</date>
+<msg>SORTABLE DISTANCE 25 and ICO</msg>
+</logentry>
+<logentry
+   revision="135">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-22T19:26:19.987132Z</date>
+<msg>SELECTED WORKS</msg>
+</logentry>
+<logentry
+   revision="134">
+<author>qyuz555@gmail.com</author>
+<date>2012-11-22T19:06:02.431135Z</date>
+<msg>UI SELECTED</msg>
+</logentry>
+<logentry
+   revision="133">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-21T15:27:38.827049Z</date>
+<msg>icon</msg>
+</logentry>
+<logentry
+   revision="132">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-20T14:23:28.807707Z</date>
+<msg>window.location.hash and Channel API started</msg>
+</logentry>
+<logentry
+   revision="131">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-16T10:37:46.950615Z</date>
+<msg>window.location.hash started</msg>
+</logentry>
+<logentry
+   revision="130">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-15T12:41:15.513011Z</date>
+<msg>removed commentet lines</msg>
+</logentry>
+<logentry
+   revision="129">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-15T12:31:24.758375Z</date>
+<msg>youtube player removed playList, currSong from arguments</msg>
+</logentry>
+<logentry
+   revision="128">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-15T12:12:30.954391Z</date>
+<msg>youtube player removed playList, currSong from parameters</msg>
+</logentry>
+<logentry
+   revision="127">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-15T11:55:36.804352Z</date>
+<msg>youtube player moved to Utils</msg>
+</logentry>
+<logentry
+   revision="126">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-14T09:36:52.206837Z</date>
+<msg>youtube player loaded and looped</msg>
+</logentry>
+<logentry
+   revision="125">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-13T15:35:49.658879Z</date>
+<msg>youtube player loaded</msg>
+</logentry>
+<logentry
+   revision="124">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-13T10:37:40.855037Z</date>
+<msg>create Playlist from TextArea
+created type fork in VideoFeed, iterate over textArea and populate playlist</msg>
+</logentry>
+<logentry
+   revision="123">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-13T08:52:00.910033Z</date>
+<msg>create Playlist from TextArea</msg>
+</logentry>
+<logentry
+   revision="121">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-13T05:43:39.776035Z</date>
+<msg>durationCaption has been drawn</msg>
+</logentry>
+<logentry
+   revision="120">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-12T15:03:07.184006Z</date>
+<msg>Forgot to refactor durationCaption from VideoFeed in VideoElement fillDiv()</msg>
+</logentry>
+<logentry
+   revision="119">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-12T14:21:53.988497Z</date>
+<msg>VideoElement createDiv and fillDiv</msg>
+</logentry>
+<logentry
+   revision="115">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-09T14:25:12.295345Z</date>
+<msg>removed unnecessary attributes from VideoElement</msg>
+</logentry>
+<logentry
+   revision="114">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-09T13:24:35.621874Z</date>
+<msg>moved VideoFeed, VideoElement to Utils</msg>
+</logentry>
+<logentry
+   revision="113">
+<author>Qyuz555@gmail.com</author>
+<date>2012-11-09T12:12:35.343574Z</date>
+<msg>kladecyt for Idea</msg>
+</logentry>
+</log>

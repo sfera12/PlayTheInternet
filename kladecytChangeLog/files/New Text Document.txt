@@ -1,0 +1,1 @@
+"C:\Program Files\SlikSvn\bin\svn.exe" log http://kladecinfo.googlecode.com/svn/trunk/kladecytI --xml > C:\java\svn\kladecytChangeLog\files\log.xml
