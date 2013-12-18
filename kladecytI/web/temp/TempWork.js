@@ -6,7 +6,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     {urls: ["<all_urls>"]},
     ["requestHeaders"]);
 
-//TODO strange vimeo player, check for seekTo and other methods
+//TODO strange vimeo player, check for seekTo and other methods 
 http://vimeo.com/67160485#
 
 _.flatten(_.reduce(sortedData, function (memo, item) {
