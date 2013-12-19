@@ -14,10 +14,11 @@ define(["app/chrome/extension", "app/common/hash-qr", "playlist"], function(exte
                 ]
             }
         );
-        var index = playlist.jPlaylist.find('.selected').index()
+        var selected = playlist.jPlaylist.find('.selected');
+        var index = selected.index()
         var songsCount = playlist.jPlaylist.find('.pti-element-song').length
         var scrollHeight = playlist.jPlaylist.prop('scrollHeight')
-        var scrollTo = scrollHeight / songsCount * index - playlist.jPlaylist.height() / 2
+        var scrollTo = scrollHeight / songsCount * index - playlist.jPlaylist.height() / 2 - selected.height() / 2
         playlist.jPlaylist.slimscroll({scrollTo: scrollTo + 'px'})
     })
 
