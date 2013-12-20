@@ -10,7 +10,7 @@
 }
 
 .playerWidget .button:hover {
-    background-color: #D4FFF7!important;
+    background-color: aliceblue!important;
     cursor: pointer;
 }
 
@@ -42,11 +42,16 @@
 
 .playerWidget .progressBarContainer {
     position: absolute;
-    background: #D4FFF7;
+    background: #efeff5;
     left: 0px;
     right: 120px;
     height: 39px;
     overflow: hidden;
+}
+
+.playerWidget .progressBarContainer:hover {
+    background: aliceblue;
+    cursor: pointer;
 }
 
 .playerWidget .progressBar {

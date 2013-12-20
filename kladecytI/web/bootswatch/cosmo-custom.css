@@ -7,6 +7,7 @@
     margin-bottom: 0px;
     margin-top: 0px;
     color: #007fff;
+    background-color: #efeff5;
 }
 .nav-pills > li > a:focus {
     background-color: #FFFFFF;
@@ -22,6 +23,6 @@
 }
 
 .nav-pills > li > a:hover, .nav-pills > li > a:hover > div  {
-    background-color: #d4fff7;
+    background-color: aliceblue;
     color: #007fff;
 }
