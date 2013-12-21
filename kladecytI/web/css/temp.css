@@ -79,6 +79,8 @@
 .temp-how-item { float: left; width: 100%; text-align: center; color: black; }
 .temp-how-item>*:nth-child(1) { width: 100% }
 .temp-panel-heading-how { cursor: pointer; margin-bottom: 0px; height: auto; }
+.temp-panel-heading-how:hover { background-color: aliceblue; color: #077fff; }
+.temp-panel-heading-how.selected { background-color: #efeff5; color: #077fff; }
 
 a[href="#howDiv"] { position: relative; }
 .temp-how-extension-updates { position: absolute; top: -1px; right: -6px; -webkit-transform: rotate(45deg); z-index: 10000000000000000; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid orangered; background: none!important; }
