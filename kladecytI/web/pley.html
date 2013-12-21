@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/temp.css">
     <link rel="stylesheet" href="css/player-widget.css">
     <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/checkbox.css">
 </head>
 <body>
 <!--<script type="text/javascript">-->
@@ -61,7 +62,7 @@
             <div id="optionsDiv" class="temp-popup-nav-content temp-display-none">
                 <div class="temp-panel temp-options-share-this-link">
                     <div class="temp-panel-heading">Share this link</div>
-                    <div class="temp-options-url-line">
+                    <div class="temp-options-url-line temp-options-long-line">
                         <div>Long</div>
                         <input id="buildHashInput" class="max-width" type="text"/>
                         <a id="longLinkA" href="" target="_blank">Open</a>
@@ -81,9 +82,10 @@
                 <div class="temp-panel temp-options-share-this-link">
                     <div class="temp-panel-heading">Tooltips</div>
                     <div class="temp-options-tooltip">
-                        <div>
-                            <label><input id="playTooltipCheckbox" class="max-width" type="checkbox"/>Play</label>
-                        </div>
+                        <label class="squaredTwo">
+                            <input id="playTooltipCheckbox" class="max-width" type="checkbox"/>
+                            <label for="playTooltipCheckbox"></label>
+                        Play</label>
                     </div>
                 </div>
             </div>
