@@ -37,7 +37,7 @@
 .playlistFrame .playlist.pti-view-medium>.pti-element-song { height: 46px; }
 .playlistFrame .playlist.pti-view-medium>*>* { height: 45px; }
 
-.playlistFrame .playlist.pti-view-list>.pti-element-song { height: 21px; line-height: 21px; }
+.playlistFrame .playlist.pti-view-list>.pti-element-song { height: 21px; line-height: 20px; }
 .playlistFrame .playlist.pti-view-list>*>* { height: 20px; }
 
 
