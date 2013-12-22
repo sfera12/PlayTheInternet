@@ -82,10 +82,18 @@ function Playlist(appendToElementExpression, options) {
             var sizeClass = classes[0].replace(/set/, 'pti')
             var groupClass = '.' + classes[2]
             me.jHeader.find(groupClass).not(this).removeClass('selected')
+            var before = { scrollTop: me.jPlaylist.scrollTop(), scrollHeight: me.jPlaylist.prop('scrollHeight'), height: me.jPlaylist.height() }
             me.jPlaylist.attr('class', function (i, c) {
                 return (c.replace(groupToReplace[groupClass], sizeClass))
             })
+            var after = { scrollTop: me.jPlaylist.scrollTop(), scrollHeight: me.jPlaylist.prop('scrollHeight'), height: me.jPlaylist.height() }
+            moveScrollBar(before, after)
             _.isFunction(me.options.headerClick) && me.options.headerClick($selected)
+        }
+        var moveScrollBar = function(before, after) {
+            var beforeScrollTop = before.scrollTop / (before.scrollHeight - before.height)
+            var afterScrollTop = (after.scrollHeight - after.height) * beforeScrollTop
+            me.jPlaylist.slimscroll({scrollTo:  afterScrollTop + 'px' })
         }
         var bigView = $('<div class="set-view-big header-button size-button">L</div>').appendTo(this.jHeader).click(setSizeActive)
         var mediumView = $('<div class="set-view-medium header-button size-button">M</div>').appendTo(this.jHeader).click(setSizeActive)

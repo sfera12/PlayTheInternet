@@ -10,7 +10,7 @@
 
 .playlistFrame .header { height: 31px; }
 .playlistFrame .header .header-button { background-color: #efeff5; color: #007FFF; margin-left: 1px; float: left; width: 30px; height: 100%; line-height: 30px; text-align: center; cursor: default; }
-.playlistFrame .header .header-button:hover { background-color: aliceblue; cursor: pointer; }
+.playlistFrame .header .header-button:hover { background-color: royalblue; color: white; cursor: pointer; }
 .playlistFrame .header .header-button.selected { background-color: #007FFF; color: white; }
 
 /* playlist playlist */

@@ -79,7 +79,7 @@
 .temp-how-item { float: left; width: 100%; text-align: center; color: black; }
 .temp-how-item>*:nth-child(1) { width: 100% }
 .temp-panel-heading-how { cursor: pointer; margin-bottom: 0px; height: auto; }
-.temp-panel-heading-how:hover { background-color: aliceblue; color: #077fff; }
+.temp-panel-heading-how:hover { background-color: royalblue; color: white; }
 .temp-panel-heading-how.selected { background-color: #efeff5; color: #077fff; }
 
 a[href="#howDiv"] { position: relative; }

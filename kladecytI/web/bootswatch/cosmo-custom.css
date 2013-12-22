@@ -23,6 +23,6 @@
 }
 
 .nav-pills > li > a:hover, .nav-pills > li > a:hover > div  {
-    background-color: aliceblue;
-    color: #007fff;
+    background-color: royalblue;
+    color: white;
 }
