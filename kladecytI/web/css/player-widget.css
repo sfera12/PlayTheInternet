@@ -38,7 +38,7 @@
     position: absolute;
     top: 0px;
     margin-top: 7px;
-    margin-left: 12px;
+    margin-left: 11px;
     border-top: 10px solid aliceblue;
     border-bottom: 10px solid aliceblue;
     border-left: 2px solid aliceblue;
@@ -49,7 +49,7 @@
     position: absolute;
     top: 0px;
     margin-top: 7px;
-    margin-left: 18px;
+    margin-left: 19px;
     border-top: 10px solid aliceblue;
     border-bottom: 10px solid aliceblue;
     border-left: 2px solid aliceblue;
@@ -123,9 +123,11 @@
     color: aliceblue;
     overflow: hidden;
     z-index: 1;
+    left: 1px;
 }
 .playerWidget .progressBar .progressBarBackgroundCurrentTime {
     color: #077fff;
+    left: 1px;
 }
 
 
