@@ -1,51 +1,102 @@
 .playerWidget {
     position: absolute;
     width: 100%;
-    height: 39px;
+    height: 34px;
     margin-bottom: 1px;
+    background-color: #077fff;
 }
 
+/* BUTTONS START */
+.playerWidget .button {
+    margin-left: 1px;
+    float: right;
+    width: 34px;
+    height: 34px;
+}
+
+.playerWidget .button:hover {
+    background-color: royalblue;
+    cursor: pointer;
+}
 .playerWidget .button.mouseDown, .playerWidget .button.mouseDown:hover {
     background-color: gray!important;
 }
 
-.playerWidget .button:hover {
-    background-color: aliceblue!important;
-    cursor: pointer;
+
+.playerWidget .button.play:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    margin: 3px;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 28px solid aliceblue;
 }
 
-.playerWidget .button.play {
-    background: url('../favicon.ico') no-repeat 50% 50%;
+.playerWidget .button.pause:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    margin-top: 7px;
+    margin-left: 12px;
+    border-top: 10px solid aliceblue;
+    border-bottom: 10px solid aliceblue;
+    border-left: 2px solid aliceblue;
+    border-right: 2px solid aliceblue;
 }
-.playerWidget .button.pause, .playerWidget .button.pause:hover {
-    background: url('../favicon.ico') no-repeat 50% 50%;
-    background-color: black!important;
+.playerWidget .button.pause:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    margin-top: 7px;
+    margin-left: 18px;
+    border-top: 10px solid aliceblue;
+    border-bottom: 10px solid aliceblue;
+    border-left: 2px solid aliceblue;
+    border-right: 2px solid aliceblue;
 }
+
+.playerWidget .button.next:before, .playerWidget .button.prev:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    margin-top: 7px;
+    margin-left: 5px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 20px solid aliceblue;
+}
+.playerWidget .button.next:after, .playerWidget .button.prev:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    margin-top: 7px;
+    margin-left: 25px;
+    border-top: 10px solid aliceblue;
+    border-bottom: 10px solid aliceblue;
+    border-left: 2px solid aliceblue;
+    border-right: 2px solid aliceblue;
+}
+
 .playerWidget .button.prev {
-    background: url('./resources/next.ico') no-repeat 50% 50%;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
 }
-.playerWidget .button.next {
-    background: url('./resources/next.ico') no-repeat 50% 50%;
-}
+/* BUTTONS END */
 
-.playerWidget .button {
-    float: right;
-    background-size: 39px!important;
-    width: 39px;
-    height: 39px;
-}
 
+/* PROGRESS BAR START */
 .playerWidget .progressBarContainer {
     position: absolute;
     background: #efeff5;
-    left: 0px;
-    right: 120px;
-    height: 39px;
+    left: 1px;
+    top: 1px;
+    right: 105px;
+    padding-right: 2px;
+    height: 22px;
     overflow: hidden;
 }
 
@@ -53,10 +104,64 @@
     background: aliceblue;
     cursor: pointer;
 }
+.playerWidget .progressBarContainer:hover .progressBar {
+    background: royalblue;
+    cursor: pointer;
+}
 
 .playerWidget .progressBar {
     position: relative;
     background: #007FFF;
     width: 0%;
-    height: 39px;
+    height: 20px;
+    left: 1px;
+    top: 1px;
 }
+
+.playerWidget .progressBar .progressBarCurrentTime {
+    position: absolute;
+    color: aliceblue;
+    overflow: hidden;
+    z-index: 1;
+}
+.playerWidget .progressBar .progressBarBackgroundCurrentTime {
+    color: #077fff;
+}
+
+
+.playerWidget .progressBar .progressBarTrackLength {
+    position: absolute;
+    color: aliceblue;
+    top: 0px;
+    right: 1px;
+    z-index: 1;
+    overflow: hidden;
+}
+.playerWidget .progressBarContainer .progressBarBackgroundTrackLength {
+    position: relative;
+    float: right;
+    height: 100%;
+    top: -20px;
+    color: #077fff;
+    line-height: 22px;
+}
+
+.playerWidget .progressBarContainer:hover .progressBarBackgroundTrackLength, .playerWidget .progressBarContainer:hover .progressBarBackgroundCurrentTime {
+    color: royalblue;
+}
+
+
+.playerWidget .progressBar .progressBarCurrentTime, .playerWidget .progressBar .progressBarBackgroundCurrentTime, .playerWidget .progressBarTrackLength, .playerWidget .progressBarBackgroundTrackLength, .playerWidget .progressBarCursorTime {
+    pointer-events: none;
+}
+
+
+.playerWidget .progressBarCursorTime {
+    position: absolute;
+    color: aliceblue;
+    background-color: royalblue;
+    z-index: 999;
+    top: 23px;
+    border: 1px solid #077fff;
+}
+/* PROGRESSBAR END */

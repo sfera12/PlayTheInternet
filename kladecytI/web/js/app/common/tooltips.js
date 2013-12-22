@@ -14,7 +14,7 @@ define(function () {
     }
     window.tooltipCallbacks = {
         'playTooltipCheckbox': function (toggle) {
-            $('#playerWidgetContainer').find('.play>div').toggleClass('temp-tooltip-active', toggle)
+            $('#playerWidgetContainer').find('.play>div, .pause>div').toggleClass('temp-tooltip-active', toggle)
         }
     }
     window.tooltipInit = function (tooltip) {
