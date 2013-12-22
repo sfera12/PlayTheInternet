@@ -77,7 +77,7 @@ define(["jquery", "underscore"], function ($, _) {
         })
 
         var mouseMoveOut = function(evt, ui) {
-            if($(evt.toElement).attr('class').match(/progressBar/)) return;
+            if(evt.relatedTarget && $(evt.relatedTarget).attr('class').match(/progressBar/)) return;
             self.jProgressBarCursorTime.hide('slow')
         }
 
