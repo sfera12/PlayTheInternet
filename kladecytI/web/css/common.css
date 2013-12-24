@@ -9,4 +9,4 @@ body { height: 100%; }
 #firstView, #secondView { float: left; width: 50%; height: 100%; }
 #iframeView { float: left; width: 100%; height: 100%; }
 .leftFull { float: left; width: 100%; height: 100% }
-.tabs-player-container { position: absolute; width: 100%; top: 30px; bottom: 0px; }
+.tabs-player-container { position: absolute; width: 100%; top: 31px; bottom: 0px; }
