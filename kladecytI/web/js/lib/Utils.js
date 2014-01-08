@@ -641,27 +641,21 @@ function GUID() {
 
 
 function convert(duration) {
-    var tbl = [
-        [ 7 * 24 * 60 * 60, 'week' ],
-        [ 24 * 60 * 60, 'day' ],
-        [ 60 * 60, 'hour' ],
-        [ 60, 'minute' ],
-        [ 1, 'second' ]
-    ];
-    var t = parseInt(duration);
-    var r = '';
-    var out = [];
-    for (var i = 0; i < tbl.length; i++) {
-        var d = tbl[i];
-        if (t > d[0]) {
-            var u = Math.floor(t / d[0]);
-            t -= u * d[0];
-            u < 10 ? out.push('0' + u) : out.push(u)
-        } else if (i >= 3) {
-            out.push('00')
-        }
+    var t = parseInt(duration)
+    if(t) {
+        var seconds = function(s) { return s % 60 }
+        var minutes = function(s) { return (s / 60) % 60}
+        var hours = function(s) { return s / (60 * 60)}
+        var m = function(i) { return Math.floor(i) }
+        var f = function(s) { return ("0" + s).slice(-2) }
+        var sec = m(seconds(t))
+        var min = m(minutes(t))
+        var hours = m(hours(t))
+        var fHours = (f(hours) + ":")
+        return fHours != "00:" ? fHours : "" + f(min) + ":" + f(sec)
+    } else {
+        return ""
     }
-    return out.join(":")
 }
 
 function formatDate(dateObj) {

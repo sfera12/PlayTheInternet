@@ -16,7 +16,7 @@ define(["pti", "jquery", "underscore"], function (pti, $, _) {
                 console.log('block YT Payback in onPlayerState')
                 self.stopVideo()
             } else if (state == 1) {
-                self.duration(youtube.getDuration())
+                self.duration(Math.ceil(youtube.getDuration()))
                 if (self.temp.errorTimeout) {
                     clearTimeout(self.temp.errorTimeout) & (self.temp.errorTimeout = null)
                     console.log('no error')
