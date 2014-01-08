@@ -117,3 +117,11 @@ window.janimate = function() {
         $fv.animate({'width': '30%'}, duration)
     })
 }
+
+var back = $.jStorage.get('backgroundPageId')
+var backSel = $.jStorage.get('backgroundPageId_selected')
+$.jStorage.flush()
+$.jStorage.set("backgroundPageId", back)
+$.jStorage.set("backgroundPageId_selected", backSel)
+
+var mB = JSON.stringify(localStorage).length / 1048576

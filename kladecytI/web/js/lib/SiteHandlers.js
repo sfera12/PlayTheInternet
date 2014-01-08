@@ -7,7 +7,31 @@ function SiteHandlerManager() {
     SiteHandlerManager.prototype.errorTimeout
 
     SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
-        $.jStorage.set(videoFeed.id, videoFeed, {TTL: 86400000})
+        localStorage[videoFeed.id] = JSON.stringify(videoFeed)
+    }
+
+    SiteHandlerManager.prototype.reservedKeys = [
+        "jStorage",
+        "jStorage_update",
+        "version"
+    ]
+
+    SiteHandlerManager.prototype.garbageCollector = function() {
+        var playlistIds = new Object()
+        function idsFromJStoragePlaylist(id) {
+            var ids = new Object()
+            var backgroundPageId = $.jStorage.get(id);
+            backgroundPageId && backgroundPageId.data && backgroundPageId.data.forEach(function (item) {
+                item && item.match(/^y=/) && (ids[item.replace(/^y=(.*)$/, "$1")] = '1')
+            })
+            return ids
+        }
+        _.extend(playlistIds, idsFromJStoragePlaylist("backgroundPageId"))
+        var reservedKeysObject = _.object(SiteHandlerManager.prototype.reservedKeys, _.range(1, SiteHandlerManager.prototype.reservedKeys.length + 1))
+        var dontRemoveKeys = _.extend(playlistIds, reservedKeysObject)
+        for(var key in localStorage) {
+            !dontRemoveKeys[key] && localStorage.removeItem(key)
+        }
     }
 
     SiteHandlerManager.prototype.getHandler = function (type) {
@@ -20,11 +44,12 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
+        var value
         if (linkContext.videoFeed && linkContext.videoFeed.template) {
-            var value = linkContext.videoFeed
+            value = linkContext.videoFeed
         } else {
-            var value = $.jStorage.get(linkContext.videoFeed.id)
-//            $.jStorage.setTTL(linkContext.videoFeed.id, 86400000)
+            var localStorageFeed = localStorage[linkContext.videoFeed.id]
+            localStorageFeed && (value = $.parseJSON(localStorageFeed))
             //console.log(JSON.stringify(value) + 'FROM CACHE')
         }
 //      console.log(value)
