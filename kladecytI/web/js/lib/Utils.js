@@ -95,11 +95,59 @@ function Playlist(appendToElementExpression, options) {
             var afterScrollTop = (after.scrollHeight - after.height) * beforeScrollTop
             me.jPlaylist.slimscroll({scrollTo:  afterScrollTop + 'px' })
         }
+
+
+        var createPlaylistCloseTimeout
+        var createPlaylistDialog = function() {
+            $addPlaylist.addClass('temp-display-none')
+            $yes.removeClass('temp-display-none')
+            $no.removeClass('temp-display-none')
+            $input.removeClass('temp-display-none')
+        }
+        var closeCreatePlaylistDialog = function() {
+            clearTimeout(createPlaylistCloseTimeout)
+            $addPlaylist.removeClass('temp-display-none')
+            $yes.addClass('temp-display-none')
+            $no.addClass('temp-display-none')
+            $input.addClass('temp-display-none')
+            $input.prop('disabled', false)
+            $input.val('')
+            $input.css('color', "")
+        }
+
+        var createPlaylistHandler = _.throttle(function() {
+            $input.prop('disabled', true)
+            createPlaylist()
+            $input.val('Playlist created')
+            $input.css('color', 'green')
+            createPlaylistCloseTimeout = setTimeout(function() {
+                closeCreatePlaylistDialog()
+            }, 2000)
+        }, 2000, { trailing: false })
+
+        var createPlaylist = function() {
+            var name = $input.val()
+            var id = GUID() + Date.now()
+            var selected = me.getPlaylistSelected()
+            var playlist = selected.length ? selected : me.getPlaylist()
+            $.jStorage.set(id, { id: id, name: name, type: 'local_playlist', data: playlist })
+        }
+
+        var inputHandler = function(event) {
+            if(event.keyCode == 13) {
+                createPlaylistHandler()
+            }
+        }
+
         var bigView = $('<div class="set-view-big header-button size-button">L</div>').appendTo(this.jHeader).click(setSizeActive)
         var mediumView = $('<div class="set-view-medium header-button size-button">M</div>').appendTo(this.jHeader).click(setSizeActive)
         var listView = $('<div class="set-view-list header-button size-button">S</div>').appendTo(this.jHeader).click(setSizeActive)
         var splitOne = $('<div class="set-split-one header-button split-button temp-playlist-header-margin-left">1</div>').appendTo(this.jHeader).click(setSizeActive)
         var splitTwo = $('<div class="set-split-two header-button split-button">2</div>').appendTo(this.jHeader).click(setSizeActive)
+        var $addPlaylist = $('<div class="header-button temp-playlist-header-margin-left">+</div>').appendTo(this.jHeader).click(createPlaylistDialog)
+        var $yes = $('<div class="header-button temp-create-playlist-yes temp-playlist-header-margin-left temp-display-none">&#x2713;</div>').appendTo(me.jHeader).click(createPlaylistHandler)
+        var $no = $('<div class="header-button temp-create-playlist-no temp-display-none">&#x2573;</div>').appendTo(me.jHeader).click(closeCreatePlaylistDialog)
+        var $input = $('<input type="text" class="temp-create-playlist-name temp-display-none" placeholder="Playlist name to create"/>').appendTo(me.jHeader).keypress(inputHandler)
         me.jHeader.find("[class*=set-view-" + me.options.elementSize + "]").addClass('selected')
         me.jPlaylist.addClass('pti-view-' + me.options.elementSize)
         me.jHeader.find("[class*=set-split-" + me.options.elementSplit + "]").addClass('selected')
@@ -564,6 +612,12 @@ function Playlist(appendToElementExpression, options) {
 
     Playlist.prototype.getPlaylist = function () {
         return this.sortableArray
+    }
+
+    Playlist.prototype.getPlaylistSelected = function() {
+        return (this.jPlaylist.find('div.pti-element-song.ui-selected').map(function(index, item) {
+            return $(item).attr('id')
+        })).get()
     }
 
     if(options.execute && options.execute.length) {
