@@ -99,17 +99,17 @@ function Playlist(appendToElementExpression, options) {
 
         var createPlaylistCloseTimeout
         var createPlaylistDialog = function() {
-            $addPlaylist.addClass('temp-display-none')
-            $yes.removeClass('temp-display-none')
-            $no.removeClass('temp-display-none')
-            $input.removeClass('temp-display-none')
+            $addPlaylist.addClass('temp-display-none-important')
+            $yes.removeClass('temp-display-none-important')
+            $no.removeClass('temp-display-none-important')
+            $input.removeClass('temp-display-none-important')
         }
         var closeCreatePlaylistDialog = function() {
             clearTimeout(createPlaylistCloseTimeout)
-            $addPlaylist.removeClass('temp-display-none')
-            $yes.addClass('temp-display-none')
-            $no.addClass('temp-display-none')
-            $input.addClass('temp-display-none')
+            $addPlaylist.removeClass('temp-display-none-important')
+            $yes.addClass('temp-display-none-important')
+            $no.addClass('temp-display-none-important')
+            $input.addClass('temp-display-none-important')
             $input.prop('disabled', false)
             $input.val('')
             $input.css('color', "")
@@ -145,9 +145,9 @@ function Playlist(appendToElementExpression, options) {
         var splitOne = $('<div class="set-split-one header-button split-button temp-playlist-header-margin-left">1</div>').appendTo(this.jHeader).click(setSizeActive)
         var splitTwo = $('<div class="set-split-two header-button split-button">2</div>').appendTo(this.jHeader).click(setSizeActive)
         var $addPlaylist = $('<div class="header-button temp-playlist-header-margin-left">+</div>').appendTo(this.jHeader).click(createPlaylistDialog)
-        var $yes = $('<div class="header-button temp-create-playlist-yes temp-playlist-header-margin-left temp-display-none">&#x2713;</div>').appendTo(me.jHeader).click(createPlaylistHandler)
-        var $no = $('<div class="header-button temp-create-playlist-no temp-display-none">&#x2573;</div>').appendTo(me.jHeader).click(closeCreatePlaylistDialog)
-        var $input = $('<input type="text" class="temp-create-playlist-name temp-display-none" placeholder="Playlist name to create"/>').appendTo(me.jHeader).keypress(inputHandler)
+        var $yes = $('<div class="header-button temp-create-playlist-yes temp-playlist-header-margin-left temp-display-none-important">&#x2713;</div>').appendTo(me.jHeader).click(createPlaylistHandler)
+        var $no = $('<div class="header-button temp-create-playlist-no temp-display-none-important">&#x2573;</div>').appendTo(me.jHeader).click(closeCreatePlaylistDialog)
+        var $input = $('<input type="text" class="temp-create-playlist-name temp-display-none-important" placeholder="Playlist name to create"/>').appendTo(me.jHeader).keypress(inputHandler)
         me.jHeader.find("[class*=set-view-" + me.options.elementSize + "]").addClass('selected')
         me.jPlaylist.addClass('pti-view-' + me.options.elementSize)
         me.jHeader.find("[class*=set-split-" + me.options.elementSplit + "]").addClass('selected')

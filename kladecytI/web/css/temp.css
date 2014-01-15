@@ -4,6 +4,7 @@
 .temp-openNewWindow { position:relative; left: 27px; padding-right: 27px;  }
 .temp-alignQRCode>canvas { display: block; margin: 0px auto; }
 .temp-display-none { display: none; }
+.temp-display-none-important { display: none!important; }
 .temp-width-zero-percent { width: 0%; position: relative; }
 .temp-width-hundred-percent { width: 100%; position: relative; }
 .temp-position-relative { position: relative }
@@ -86,3 +87,9 @@
 
 a[href="#howDiv"] { position: relative; }
 .temp-how-extension-updates { position: absolute; top: -1px; right: -6px; -webkit-transform: rotate(45deg); z-index: 10000000000000000; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid orangered; background: none!important; }
+
+.temp-create-playlist-yes { color: green!important; }
+.temp-create-playlist-yes:hover { color: aliceblue!important; }
+.temp-create-playlist-no { font-size: 11px; color: red!important; }
+.temp-create-playlist-no:hover { color: aliceblue!important; }
+.playlistFrame .header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }
