@@ -98,6 +98,17 @@ function SiteHandlerManager() {
         }
     }
 
+    SiteHandlerManager.prototype.getThumbnail = function(typeIdText) {
+        if(typeIdText) {
+            var typeId = Playlist.prototype.toTypeId(typeIdText)
+            var item = $.parseJSON(localStorage[typeId.id] ? localStorage[typeId.id] : "{}")
+            var thumbnail = item && item.thumbnail ? item.thumbnail : SiteHandlerManager.prototype.getHandler(typeId.type)['defaultThumbnail']
+            return thumbnail
+        } else {
+            return "favicon.ico"
+        }
+    }
+
     $.each(siteHandlers, function (index, item) {
         SiteHandlerManager.prototype.mapping[item.prefix] = item
     })
@@ -107,6 +118,7 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.rawTemplate = PTITemplates.prototype.YoutubeRawTemplate
     YoutubeHandler.prototype.completeTemplate = PTITemplates.prototype.YoutubeCompleteTemplate
     YoutubeHandler.prototype.errorTemplate = PTITemplates.prototype.YoutubeErrorTemplate
+    YoutubeHandler.prototype.defaultThumbnail = "http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
     YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/|ytimg.com\u00252Fvi\u00252F)([^?\s&\'\'<>\/\\.,#]{11})/
@@ -178,6 +190,7 @@ function YoutubeHandler() {
 
 function SoundCloudHandler() {
     SoundCloudHandler.prototype.rawTemplate = PTITemplates.prototype.SoundCloudRawTemplate
+    SoundCloudHandler.prototype.defaultThumbnail = "/css/resources/sc.jpeg"
     SoundCloudHandler.prototype.prefix = "s"
 //    %3F
     SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^.][^\s,?"=&#<]+)/
@@ -190,6 +203,7 @@ function SoundCloudHandler() {
 function VimeoHandler() {
     VimeoHandler.prototype.rawTemplate = PTITemplates.prototype.VimeoRawTemplate
     VimeoHandler.prototype.completeTemplate = PTITemplates.prototype.VimeoCompleteTemplate
+    VimeoHandler.prototype.defaultThumbnail = "/css/resources/vimeo.jpg"
     VimeoHandler.prototype.prefix = 'v'
     VimeoHandler.prototype.regex = /vimeo.com\\?\/((video\/)|(moogaloop.swf\?.*clip_id=))?(\d+)/
     VimeoHandler.prototype.regexGroup = 4

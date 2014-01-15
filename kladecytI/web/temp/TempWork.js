@@ -125,3 +125,24 @@ $.jStorage.set("backgroundPageId", back)
 $.jStorage.set("backgroundPageId_selected", backSel)
 
 var mB = JSON.stringify(localStorage).length / 1048576
+
+
+
+function strcmp(a, b) {
+    return a > b ? 1 : a < b ? -1 : 0;
+}
+function natcmp(a, b) {
+    var x = [], y = [];
+
+    a.replace(/(\d+)|(\D+)/g, function($0, $1, $2) { x.push([$1 || 0, $2]) })
+    b.replace(/(\d+)|(\D+)/g, function($0, $1, $2) { y.push([$1 || 0, $2]) })
+
+    while(x.length || y.length) {
+        var xx = x.shift();
+        var yy = y.shift();
+        var nn = (xx[0] - yy[0]) || strcmp(xx[1], yy[1]);
+        if(nn) return nn;
+    }
+    return 0;
+}
+new Array("one10", "one2").sort(natcmp)

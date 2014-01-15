@@ -128,9 +128,9 @@ function Playlist(appendToElementExpression, options) {
         var createPlaylist = function() {
             var name = $input.val()
             var id = GUID() + Date.now()
-            var selected = me.getPlaylistSelected()
-            var playlist = selected.length ? selected : me.getPlaylist()
-            $.jStorage.set(id, { id: id, name: name, type: 'local_playlist', data: playlist })
+            var selected = me.getPlaylistSelected(), playlist = selected.length ? selected : me.getPlaylist()
+            var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
+            $.jStorage.set(id, { id: id, name: name, type: 'local_playlist', thumbnail: thumbnail, data: playlist })
         }
 
         var inputHandler = function(event) {
@@ -611,7 +611,9 @@ function Playlist(appendToElementExpression, options) {
     }
 
     Playlist.prototype.getPlaylist = function () {
-        return this.sortableArray
+        return this.sortableArray.filter(function(typeId) {
+            return typeId.length
+        })
     }
 
     Playlist.prototype.getPlaylistSelected = function() {
@@ -679,6 +681,16 @@ Playlist.prototype.playAction = function () {
 }
 Playlist.prototype.setActionBackground = function() {
     this.jContainer.addClass('pti-action-background')
+}
+
+Playlist.prototype.toTypeId = function(typeIdText) {
+    var pattern = /([^=])=(.*)/
+    var typeIdObj = { type: typeIdText.replace(pattern, '$1'), id: typeIdText.replace(pattern, '$2') };
+    return typeIdObj
+}
+
+Playlist.prototype.fromTypeId = function(typeIdObj) {
+    return this.type && this.id ?this.type + "=" + this.id : ""
 }
 
 function GUID() {
