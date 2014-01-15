@@ -717,8 +717,8 @@ function convert(duration) {
         var sec = m(seconds(t))
         var min = m(minutes(t))
         var hours = m(hours(t))
-        var fHours = (f(hours) + ":")
-        return fHours != "00:" ? fHours : "" + f(min) + ":" + f(sec)
+        var fHours = (f(hours) + ":"), fHours = fHours != "00:" ? fHours : ""
+        return fHours + f(min) + ":" + f(sec)
     } else {
         return ""
     }
