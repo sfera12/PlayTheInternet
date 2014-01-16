@@ -127,10 +127,10 @@ function Playlist(appendToElementExpression, options) {
 
         var createPlaylist = function() {
             var name = $input.val()
-            var id = GUID() + Date.now()
+            var id = "lPlaylist" + GUID()
             var selected = me.getPlaylistSelected(), playlist = selected.length ? selected : me.getPlaylist()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
-            $.jStorage.set(id, { id: id, name: name, type: 'local_playlist', thumbnail: thumbnail, data: playlist })
+            $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: playlist })
         }
 
         var inputHandler = function(event) {
