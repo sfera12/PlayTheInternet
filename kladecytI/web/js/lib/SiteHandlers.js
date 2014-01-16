@@ -17,20 +17,20 @@ function SiteHandlerManager() {
     ]
 
     SiteHandlerManager.prototype.garbageCollector = function() {
-        var playlistIds = new Object()
+        var playlistIdsObject = new Object()
         function idsFromJStoragePlaylist(id) {
-            var ids = new Object()
-            var backgroundPageId = $.jStorage.get(id);
-            backgroundPageId && backgroundPageId.data && backgroundPageId.data.forEach(function (item) {
-                item && item.match(/^y=/) && (ids[item.replace(/^y=(.*)$/, "$1")] = '1')
+            var ids = new Object(), backgroundPageId = $.jStorage.get(id);
+            backgroundPageId && backgroundPageId.data && backgroundPageId.data.forEach(function (typeIdText) {
+                var typeIdObj
+                typeIdText && ((typeIdObj = SiteHandlerManager.prototype.toTypeId(typeIdText)) | (ids[typeIdObj.id] = '1'))
             })
             return ids
         }
-        _.extend(playlistIds, idsFromJStoragePlaylist("backgroundPageId"))
+        _.extend(playlistIdsObject, idsFromJStoragePlaylist("backgroundPageId"))
         var reservedKeysObject = _.object(SiteHandlerManager.prototype.reservedKeys, _.range(1, SiteHandlerManager.prototype.reservedKeys.length + 1))
-        var dontRemoveKeys = _.extend(playlistIds, reservedKeysObject)
+        var dontRemoveKeys = _.extend(playlistIdsObject, reservedKeysObject)
         for(var key in localStorage) {
-            !dontRemoveKeys[key] && localStorage.removeItem(key)
+            key in dontRemoveKeys || localStorage.removeItem(key)
         }
     }
 
@@ -100,13 +100,23 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.getThumbnail = function(typeIdText) {
         if(typeIdText) {
-            var typeId = Playlist.prototype.toTypeId(typeIdText)
+            var typeId = SiteHandlerManager.prototype.toTypeId(typeIdText)
             var item = $.parseJSON(localStorage[typeId.id] ? localStorage[typeId.id] : "{}")
             var thumbnail = item && item.thumbnail ? item.thumbnail : SiteHandlerManager.prototype.getHandler(typeId.type)['defaultThumbnail']
             return thumbnail
         } else {
             return "favicon.ico"
         }
+    }
+    
+    SiteHandlerManager.prototype.toTypeId = function(typeIdText) {
+        var pattern = /([^=])=(.*)/
+        var typeIdObj = { type: typeIdText.replace(pattern, '$1'), id: typeIdText.replace(pattern, '$2') };
+        return typeIdObj
+    }
+
+    SiteHandlerManager.prototype.fromTypeId = function(typeIdObj) {
+        return this.type && this.id ?this.type + "=" + this.id : ""
     }
 
     $.each(siteHandlers, function (index, item) {
