@@ -103,6 +103,7 @@ function Playlist(appendToElementExpression, options) {
             $yes.removeClass('temp-display-none-important')
             $no.removeClass('temp-display-none-important')
             $input.removeClass('temp-display-none-important')
+            $input.focus()
         }
         var closeCreatePlaylistDialog = function() {
             clearTimeout(createPlaylistCloseTimeout)
