@@ -146,3 +146,6 @@ function natcmp(a, b) {
     return 0;
 }
 new Array("one10", "one2").sort(natcmp)
+
+var a = "http://playtheinter.net/play.html#,y=uH1wfrOcvHg,y=H05cAeD9LDc,y=T-D1KVIuvjA,y=1%3Bdc_yt%3,y=m%2526sourc,y=e,y=1;k,y=ptgQd5wYs1c,y=hrlqzTEbKuI,y=QrHEaptBvTU,y=5Qz2OpWLbYY,s=madeon/ellie-goulding-madeon,y=m-Al7GAnH8Q,y=dPAIYLK3HtI,y=b32KBbrdUoI,y=f0P8xt-O99M,y=xGKOyvDLiBY,y=qJ_MGWio-vc,y=rzlT-vw60tM,y=nAKrR_C-PB0,y=4YjJI_xfsFg,y=fQ07AfaKHKk,y=I1h2-MvtR3Y,y=leGGbaBya0s,y=uVXSXr8to9k,y=DmgviOd3d9c,y=vGGmbUPR5Qc,y=__videoid__,y=z-UJoY5WP5s,y=fTfcKhQkcSA,s=</span>,y=KYZzu36Vpws,y=TulVILhfxFM,y=JbNnoFe6NRQ,y=CKSNJ7oo87A,s=earabuse/invisible-earabuse-remix,y=VVXWE-xlp1k,y=u3TLf2pOA0I,y=LpiS3YiNBKg,y=h9hj9nTV2P4,y=H85BYqa5JDQ,y=pnIFcVJBgJI,y=miZLob1Hi4I,y=AYTnIigaJ5Y,y=-a3Hx1Ytmbo,s=timelock/timelock-ace-ventura-inside-us,y=rEKeHo5fLNM,y=4L72SeKcdrE,y=aHjpOzsQ9YI,y=xysko4j_Ntk,y=5BgQE3C4NS0,y=GLY4Rpii7bM,y=GwWOSdXeRqY,y=PTJel6kLBQQ,y=Mng7IEa7xkA,y=iw-b_VdpCEU,y=kwQOMdDmc4w,y=6mgNLE4GHvk,v=83480879,y=D8l,R7t\\,IoTiM"
+a.replace(/(,)(?!\w=)/g, '\\$1').split(/[^\\],/).map(function(item) { return item.replace(/\\,/g, ',') })
