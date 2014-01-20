@@ -1,4 +1,4 @@
-define(["slimscroll"], function () {
+define(["jstorage", "slimscroll"], function () {
     _.mixin({
         default: function (input, def) {
             return _.isUndefined(input) ? def : input
