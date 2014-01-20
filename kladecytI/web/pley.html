@@ -2,6 +2,8 @@
 <head>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/playlist.css">
+    <link rel="stylesheet" href="css/ptilist.css">
+    <link rel="stylesheet" href="css/ptilist-element.css">
     <meta charset="utf-8">
     <title>Play The Internet</title>
     <LINK REL="SHORTCUT ICON" HREF="favicon.ico"/>
@@ -48,7 +50,8 @@
                 <li><a href="#player">Player<div id="podPlayer"></div></a></li>
                 <li><a href="#tAreaDiv">Text<div id="podTa"></div></a></li>
                 <li><a href="#optionsDiv">Options<div id="podOptions"></div></a></li>
-                <li class="active"><a href="#parsedDiv">Parsed<div id="podParsed"></div></a></li>
+                <li class="ui-state-active"><a href="#parsedDiv">Parsed<div id="podParsed"></div></a></li>
+                <li><a href="#firstPlaylistsDiv">Playlists<div id="podFirstPlaylistsDiv"></div></a></li>
                 <li><a href="#howDiv">?<div id="podHow"></div></a></li>
             </ul>
             <div id="tAreaDiv" class="temp-popup-nav-content temp-display-none">
@@ -92,6 +95,9 @@
             <div id="parsedDiv" class="temp-popup-nav-content">
                 <div id="parsedPlaylist" class="playlistFrame"></div>
             </div>
+            <div id="firstPlaylistsDiv" class="temp-popup-nav-content">
+                <div id="ulFirstPlaylists"></div>
+            </div>
             <div id="howDiv" class="temp-popup-nav-content temp-display-none">
                 <div id="howDivContainer">
                     <div class="temp-panel">
@@ -116,11 +122,22 @@
     </div>
 
     <div id="secondView">
-        <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
-        <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
-        <div id="ulSecond" class="playlistFrame"></div>
-        <!--</div>-->
-        <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
+        <div id="secondViewTabs" class="leftFull temp-position-relative">
+            <ul class="nav nav-pills temp-no-height">
+                <li class="ui-state-active"><a href="#secondPlayingDiv">Playing<div id="podPlayling"></div></a></li>
+                <li><a href="#secondPlaylistsDiv">Playlists<div id="podPlaylists"></div></a></li>
+            </ul>
+            <div id="secondPlayingDiv" class="temp-popup-nav-content">
+                <div id="ulSecond" class="playlistFrame"></div>
+            </div>
+            <div id="secondPlaylistsDiv" class="temp-popup-nav-content">
+                <div id="ulSecondPlaylists"></div>
+            </div>
+            <!--WRAPP IN THIS TO MAKE A SCROLLBAR START-->
+            <!--<div id="ulSecondWrapper" style="overflow-y: scroll; overflow-x: hidden; height: 100%">-->
+            <!--</div>-->
+            <!--WRAPP IN THIS TO MAKE A SCROLLBAR END-->
+        </div>
     </div>
 
 </div>

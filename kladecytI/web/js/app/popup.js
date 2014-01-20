@@ -2,6 +2,7 @@ define(["player-widget"], function (PlayerWidget) {
     require(["app/common/tooltips"])
 
     require(["app/popup/playlists"])
+    require(["app/common/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     require(['player-widget'], function (PlayerWidget) {

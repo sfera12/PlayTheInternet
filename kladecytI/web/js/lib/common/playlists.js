@@ -1,18 +1,61 @@
-define(["common/ptilist"], function(Ptilist) {
-    function Playlists(appendToElementExpression) {
-        var me = this
-        var ptilist = new Ptilist(appendToElementExpression, {
-            drawElement: PTITemplates.prototype.PlaylistsVideoElement,
-            elementSplit: "one"
-        })
+define(["common/ptilist"], function (Ptilist) {
+    Playlists.prototype = new Ptilist()
+    Playlists.prototype.constructor = Playlists
+    Playlists.prototype.parent = Ptilist.prototype
+    function Playlists(appendToElementExpression, options) {
+        _.isUndefined(appendToElementExpression) || this.init(appendToElementExpression, options)
+    }
 
-        ptilist.jContent.on('keypress', '.pti-name', function(event) {
-            if(event.keyCode == 13) {
+    Playlists.prototype.init = function (appendToElementExpression, options) {
+        var me = this
+        me.options = _.extend({}, options)
+        me.options.elementSplit = "one"
+        me.parent.init.call(this, appendToElementExpression, me.options)
+
+        me.jContent.on('keypress', '.pti-name', function (event) {
+            if (event.keyCode == 13) {
                 $(this).blur()
             }
         })
-        for(var i=0; i<4; i++) {ptilist.addElementsToList([{"name": "asdf", count: 100}])}
-//        this.addElementsToList = ptilist.addElementsToList
+    }
+
+    Playlists.prototype.drawPtiElement = function (playlistData) {
+        var ptiElement = $(PTITemplates.prototype.PlaylistsVideoElement(playlistData))
+        ptiElement.data('data', playlistData)
+        return ptiElement
+    }
+
+    Playlists.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
+        if (key.match(/^(playlists)|(lPlaylist.+)$/)) {
+            var storageObj = this.parent.redrawJContentGetCacheObject.call(this, "playlists", action, functionName, filterOwn ? key.match(/^playlists$/) : false)
+            if (!_.isUndefined(storageObj)) { //undefined means filtered by source === uid
+                var playlists = _.extend({}, storageObj)
+                playlists.data = filterJStorageBy(typeLocalPlaylist, sortLocalPlaylist)
+                return playlists
+            }
+        }
+    }
+
+    function filterJStorageBy(filter, sort) {
+        var storageObj = $.jStorage.storageObj(), jStorageKeys = Object.keys(storageObj.__proto__), resultArr = new Array(), resultKeys = new Array()
+        resultKeys = jStorageKeys.filter(filter)
+        resultKeys = sort(storageObj, resultKeys)
+        resultKeys.forEach(function (key) {
+            var item = storageObj[key];
+            item && resultArr.push(item)
+        })
+        return resultArr
+    }
+
+    function typeLocalPlaylist(key) {
+        return key.match(/^lPlaylist/)
+    }
+
+    function sortLocalPlaylist(storageObj, filteredKeys) {
+        var sortedPlaylistIds, playlistsOrder = storageObj.playlists ? Ptilist.prototype.stringToArray(storageObj.playlists.data) : [], newKeys = _.difference(filteredKeys, playlistsOrder)
+        newKeys.reverse()
+        sortedPlaylistIds = newKeys.concat(playlistsOrder)
+        return sortedPlaylistIds
     }
 
     return Playlists

@@ -1,0 +1,54 @@
+/* image-div */
+.pti-ptilist .pti-content .image-div { float: left; }
+.pti-ptilist .pti-content.pti-view-big>* .image-div, .pti-ptilist .pti-content.pti-view-medium>* .image-div  { position: relative; }
+.pti-ptilist .pti-content.pti-view-big>* .image-div { width: 120px; height: 90px; margin-right: 3px; }
+.pti-ptilist .pti-content.pti-view-medium>* .image-div { width: 60px; height: 45px; margin-right: 3px; }
+
+.pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img { float: left; }
+.pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-big>* .image-div img { height: 90px; }
+.pti-ptilist .pti-content.pti-view-medium>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img { height: 45px; }
+
+.pti-ptilist .pti-content.pti-view-list>* .image-div { width: 40px; height: 20px; margin-right: 2px; }
+.pti-ptilist .pti-content.pti-view-list>* .image-div img { display: none;}
+.pti-ptilist .pti-content.pti-view-list>* .image-div .duration-caption { height: 20px;}
+.pti-ptilist .pti-content.pti-view-list>* .image-div .pti-logo { display: none;}
+
+.pti-ptilist .pti-content.pti-view-big>* .duration-caption, .pti-ptilist .pti-content.pti-view-medium>* .duration-caption { position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; }
+.pti-ptilist .pti-content.pti-view-big>* .duration-caption { right: 5px; bottom: 3px; }
+.pti-ptilist .pti-content.pti-view-medium>* .duration-caption { right: 6px; bottom: 2px; font-size: 9px; }
+.pti-ptilist .pti-content.pti-view-list>* .duration-caption { color: #007FFF; text-align: right; }
+.pti-ptilist .pti-content.pti-view-list>*.ui-selected .duration-caption { color: white; }
+
+
+/* videoText error-text */
+.pti-ptilist .pti-content>* .videoText, .pti-ptilist .pti-content>*:hover .videoText { color: #007FFF; }
+.pti-ptilist .pti-content>* .error-text { position: relative; }
+.pti-ptilist .pti-content>* .videoText { position: absolute; word-break: break-all; font-family: Arial, Helvetica, sans-serif; }
+.pti-ptilist .pti-content>*.selected .videoText, .pti-ptilist .pti-content>*.selected:hover .videoText, .pti-ptilist .pti-content>*.ui-selected .videoText, .pti-ptilist .pti-content>*.selected .error-text>b>a:link, .pti-ptilist .pti-content>*.selected .error-text>b>a, .pti-ptilist .pti-content>*.ui-selected .error-text a, .pti-ptilist .pti-content>*.ui-selected .error-text a:hover, .pti-ptilist .pti-content>*.selected .duration-caption { color: white!important; }
+
+.pti-ptilist .pti-content.pti-view-big>* .videoText, .pti-ptilist .pti-content.pti-view-big>* .videoText, .pti-ptilist .pti-content.pti-view-medium>* .videoText, .pti-ptilist .pti-content.pti-view-medium>* .videoText { padding-top: 2px; }
+.pti-ptilist .pti-content.pti-view-big>* .error-text { line-height: 91px; }
+.pti-ptilist .pti-content.pti-view-medium>* .error-text { line-height: 41px; }
+
+.pti-ptilist .pti-content.pti-view-medium>* .videoText br, .pti-ptilist .pti-content.pti-view-list>* .videoText br { display: none;}
+.pti-ptilist .pti-content.pti-view-medium>* .videoText>:first-child:after, .pti-ptilist .pti-content.pti-view-list>* .videoText>:first-child:after { content: " " }
+
+.pti-ptilist .pti-content.pti-view-list>* .videoText { margin-left: 5px }
+.pti-ptilist .pti-content.pti-view-list>* .videoText, .pti-ptilist .pti-content.pti-view-list>* .videoText {  }
+.pti-ptilist .pti-content.pti-view-list>* .error-text {  }
+
+/* Playlists start */
+.pti-ptilist .pti-content .pti-playlists-content { line-height: 40px; font-size: 12px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info>* { margin-top: 11px; margin-bottom: 11px; height: 19px; line-height: normal; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info .pti-name { float: left; margin-left: 5px; padding: 0px 5px 0px 5px; color: inherit; border: transparent solid 1px; font-size: inherit; background-color: inherit; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info .pti-name:focus { border: rgb(170, 200, 255) solid 1px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info .pti-count { float: right; margin-right: 20px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons { clear: right; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>* { float: left; cursor: pointer; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>* { background-color: #007FFF; color: #efeff5; padding: 0px 10px 0px 10px; float: left; text-align: center; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-play-all { margin-left: 15px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist { float: right; margin-right: 15px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>*:hover { background-color: royalblue; color: white; cursor: pointer; }
+{ background-color: #007FFF; color: white; }
+/* Playlists End */
+

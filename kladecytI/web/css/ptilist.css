@@ -1,0 +1,63 @@
+/* pti-ptilist container */
+.pti-ptilist { position: relative; width: 100%; height: 100%; margin-top: 0px; }
+
+/* playlist header */
+.pti-ptilist .pti-header { height: 31px; }
+.pti-ptilist .pti-header .pti-header-button { background-color: #efeff5; color: #007FFF; margin-left: 1px; float: left; width: 30px; height: 100%; line-height: 30px; text-align: center; cursor: default; }
+.pti-ptilist .pti-header .pti-header-button:hover { background-color: royalblue; color: white; cursor: pointer; }
+.pti-ptilist .pti-header .pti-header-button.selected { background-color: #007FFF; color: white; }
+
+
+/* pti-ptilist content */
+.pti-content { cursor: crosshair; }
+.pti-ptilist.pti-no-header .slimScrollDiv { top: 0px; }
+.pti-ptilist:not(.pti-no-header) .slimScrollDiv { top: 32px; }
+.pti-ptilist .slimScrollDiv { position: absolute!important; bottom: 0px; width: 100%; height: auto!important;}
+.pti-ptilist .pti-content { height: 100%; }
+
+
+/* pti-ptilist content container */
+.pti-ptilist .pti-content.pti-split-one>.pti-element, .pti-ptilist .pti-content.pti-split-one>.pti-sortable-placeholder { width: 100%; }
+.pti-ptilist .pti-content.pti-split-two>.pti-element, .pti-ptilist .pti-content.pti-split-two>.pti-sortable-placeholder { width: 50%; }
+.pti-ptilist .pti-content>.pti-element { float: left; cursor: default; overflow: hidden; position: relative; font-size: 11px; cursor: crosshair; }
+/*.pti-ptilist .pti-content>:nth-child(1):not(.display-none), .pti-ptilist .pti-content>:nth-child(2):not(.display-none) { height: 90px!important; }*/
+/*.pti-ptilist .pti-content>:nth-child(1):not(.display-none)>:first-child , .pti-ptilist .pti-content>:nth-child(2):not(.display-none)>:first-child { margin: 0px!important; }*/
+.pti-ptilist .pti-content>.pti-element>* { margin: 0px 0.5px 0.5px 0.5px; background-color: #efeff5; color: #007FFF; }
+.pti-ptilist .pti-content>.pti-element:hover>* { background-color: aliceblue; color: #007FFF }
+.pti-ptilist .pti-content>.pti-element.selected>div, .pti-ptilist .pti-content>.pti-element.selected:hover>div { background-color: #007FFF; }
+.pti-ptilist .pti-content>.pti-element.ui-selected>div { background-color: orange!important; color: aliceblue; }
+.pti-ptilist .pti-content>.pti-element.ui-selected:hover>div { background-color: darkorange!important; color: aliceblue; }
+.pti-ptilist .pti-content>.pti-element.ui-selected.selected>div { background-color: orangered!important; }
+
+.pti-ptilist .pti-content.pti-view-big>.pti-element { height: 91px; }
+.pti-ptilist .pti-content.pti-view-big>.pti-element>* { height: 90px; }
+
+.pti-ptilist .pti-content.pti-view-medium>.pti-element { height: 46px; }
+.pti-ptilist .pti-content.pti-view-medium>.pti-element>* { height: 45px; }
+
+.pti-ptilist .pti-content.pti-view-list>.pti-element { height: 21px; line-height: 20px; }
+.pti-ptilist .pti-content.pti-view-list>.pti-element>* { height: 20px; }
+
+
+/* sortable, droppable, selectable, content type */
+.pti-ptilist .pti-content .pti-sortable-handler { cursor: move; cursor: -webkit-grab; cursor: -moz-grab; }
+.pti-ptilist .pti-content .pti-droppable-target { display:inline; clear: both; float: left; width: 100%;}
+
+
+.pti-ptilist .pti-content>.pti-sortable-placeholder { float:left; }
+
+.pti-ptilist .pti-content.pti-view-big>.pti-sortable-placeholder, .pti-ptilist .pti-content.pti-view-medium>.pti-sortable-placeholder { margin: 0px; padding: 0px; border: none;}
+.pti-ptilist .pti-content.pti-view-big>.pti-sortable-placeholder { height: 91px;}
+.pti-ptilist .pti-content.pti-view-medium>.pti-sortable-placeholder { height: 46px;}
+
+.pti-ptilist .pti-content.pti-view-list>.pti-sortable-placeholder { height: 21px;}
+
+
+.ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
+.ui-sortable-helper { pointer-events: none; }
+.pti-ptilist .pti-content:not(.calendar)>.pti-view-big .pti-logo { position: absolute; width: 25px; height: 25px; bottom: 5px; left: 5px; background-image: url('../favicon.ico'); background-size: 100%; background-repeat: no-repeat; }
+.pti-ptilist .pti-content:not(.calendar)>.pti-view-big.selected .pti-logo { background-image: none; }
+
+
+/* misc */
+.pti-ptilist .pti-content .display-none { width:0px!important; height: 0px!important; float: right!important;}

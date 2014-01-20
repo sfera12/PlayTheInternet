@@ -1,6 +1,6 @@
 define(['jquery', 'jquery-ui'], function ($) {
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
-    $('#tabs').tabs({
+    $('#tabs, #secondViewTabs').tabs({
         activate:function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {

@@ -1,76 +1,79 @@
 define(["slimscroll"], function () {
+    _.mixin({
+        default: function (input, def) {
+            return _.isUndefined(input) ? def : input
+        }
+    })
     $('#dummyInput').length || $('body').append('<input id="dummyInput" class="temp-absolute-off-scren"/>')
-    var focusout = function() {
+    var focusout = function () {
         $('#dummyInput').focus()
     }
-
-    $('body').mouseup(function() {
+    $('body').mouseup(function () {
         $('body').removeClass('temp-webkit-grabbing temp-crosshair')
     })
-    $('body').on('mousedown', '.pti-ptilist .pti-content .pti-element .pti-sortable-handler, .pti-ptilist .pti-content .pti-element .pti-clickable', function(event) {
+    $('body').on('mousedown', '.pti-ptilist .pti-content .pti-element .pti-sortable-handler, .pti-ptilist .pti-content .pti-element .pti-clickable', function (event) {
         console.log(this)
         $(this).hasClass('pti-sortable-handler') && ($('body').addClass('temp-webkit-grabbing') | focusout())
         event.stopPropagation()
     })
-//    $('body').on('mousedown', '.pti-ptilist .pti-content .pti-element .pti-clickable, .pti-ptilist .pti-content .pti-element .pti-clickable *', function(event) {
-//        console.log(this)
-//        event.stopPropagation()
-//    })
-    $('body').on('mousedown', '.pti-ptilist .pti-content', function(event) {
+    $('body').on('mousedown', '.pti-ptilist .pti-content', function (event) {
         console.log(this)
-//        $(this).hasClass('pti-clickable') ? event.stopPropagation() : $('body').addClass('temp-crosshair') | focusout() | console.log('a')
-         $('body').addClass('temp-crosshair');
+        $('body').addClass('temp-crosshair');
         event.stopPropagation();
         focusout();
-        console.log('a');
     })
 
     function Ptilist(appendToElementExpression, options) {
-        var me = this
+        _.isUndefined(appendToElementExpression) || this.init(appendToElementExpression, options)
+    }
 
-        //options
-        this.options = _.isUndefined(options) ? {} : options
-        _.isUndefined(this.options.elementSize) && (this.options.elementSize = "big")
-        _.isUndefined(this.options.elementSplit) && (this.options.elementSplit = "two")
-        _.isUndefined(this.options.slimScroll) && (this.options.slimScroll = true)
+    Ptilist.prototype.init = function (appendToElementExpression, options) {
+        var me = this
+        me.options = _.extend({}, options)
+        _.isUndefined(me.options.elementSize) && (me.options.elementSize = "big")
+        _.isUndefined(me.options.elementSplit) && (me.options.elementSplit = "two")
+        _.isUndefined(me.options.slimScroll) && (me.options.slimScroll = true)
+        _.isUndefined(me.options.blockSort) && (me.options.blockSort = false)
+        _.isUndefined(me.options.listenId) && (me.options.listenId = me.options.id)
 
         //draw
-        this.containerElementExpression = appendToElementExpression
-        this.jContainer = $(this.containerElementExpression)
-        this.jContainer.addClass("pti-ptilist")
-        this.jContent = $('<div class="pti-content"><div class="pti-make-last-droppable-work"/></div>').appendTo(this.jContainer)
-        this.jHeader = this.jContainer.addClass("pti-no-header")
+        me.containerElementExpression = appendToElementExpression
+        me.jContainer = $(me.containerElementExpression)
+        me.jContainer.addClass("pti-ptilist")
+        me.jContent = $('<div class="pti-content"><div class="pti-make-last-droppable-work"/></div>').appendTo(me.jContainer)
+        me.jHeader = me.jContainer.addClass("pti-no-header")
 
         //classes
         me.jContent.addClass('pti-view-' + me.options.elementSize)
         me.jContent.addClass('pti-split-' + me.options.elementSplit)
 
         //properties
-        this.uuid = GUID() + new Date().getTime()
+        me.uid = GUID() + Date.now()
 
         //sortable, selectable, slimScroll
-        this.first_rows = {}
-        this.blockSort = false;
-        if (this.options.slimScroll) {
+        me.first_rows = {}
+        var blockSort = false;
+        me.jContent.data('ptilist', this)
+        if (me.options.slimScroll) {
             var sortableSlimScroll = { scroll: false }
-            this.jContent.data('sortableSlimScroll', sortableSlimScroll)
-            Ptilist.prototype.setSlimScroll(this.jContent, "100%")
+            me.jContent.data('sortableSlimScroll', sortableSlimScroll)
+            me.setSlimScroll(me.jContent, "100%")
         }
 
-        this.jContent.selectable({
+        me.jContent.selectable({
             filter: 'div.pti-element',
 //            cancel: 'div.image-div, label.pti-droppable-target, div.pti-make-last-droppable-work, a'
             cancel: '.pti-sortable-handler, .pti-make-last-droppable-work, a, .pti-clickable'
         })
             .sortable({
-                connectWith: this.options.connectWith,
+                connectWith: me.options.connectWith,
                 scrollSensitivity: 50,
                 tolerance: 'pointer',
                 distance: 7,
                 handle: '.pti-sortable-handler',
                 placeholder: 'pti-sortable-placeholder',
 //            update:function (event, ui) {
-//                this.recalculatePlaylist()
+//                this.recalculateJContent()
 //            }.bind(this),
 //                cancel: '.pti-droppable-target, .pti-make-last-droppable-work',
                 cancel: '.pti-make-last-droppable-work',
@@ -87,37 +90,35 @@ define(["slimscroll"], function () {
 //        },
                 start: function (event, ui) {
                     $('.cloned').removeClass('cloned')
-                    if (options && options.type == 'calendar') {
-                        this.blockSort = true
-                    }
+                    me.options.blockSort && (blockSort = true)
 //                console.log('start')
 //                console.log(this)
-                    if (ui.item.hasClass('ui-selected') && this.jContent.find('.ui-selected').length > 1) {
-                        this.first_rows = this.jContent.find('.ui-selected').map(function (i, e) {
+                    if (ui.item.hasClass('ui-selected') && me.jContent.find('.ui-selected').length > 1) {
+                        me.first_rows = me.jContent.find('.ui-selected').map(function (i, e) {
                             var $tr = $(e);
                             return {
                                 tr: $tr.clone(true),
                                 id: $tr.attr('id')
                             };
                         }).get();
-                        this.jContent.find('.ui-selected').addClass('cloned');
+                        me.jContent.find('.ui-selected').addClass('cloned');
                     }
 //                ui.placeholder.html('<td class="pti-view-big">&nbsp;</td>');
                 }.bind(this),
                 stop: function (event, ui) {
 //                console.log('stop')
 //                console.log(this)
-                    if (this.blockSort) {
+                    if (me.options.blockSort) {
 //                    console.log('preventDefault')
                         event.preventDefault()
                     } else {
 //                    console.log('preventDefaultElse')
-                        var targetParent = ui.item.parent().data('playlist')
+                        var targetParent = ui.item.parent().data('ptilist')
 //                    console.log(targetParent)
 //                    console.log(this.first_rows)
-                        if (this.first_rows.length > 1) {
+                        if (me.first_rows.length > 1) {
                             var self = this
-                            $.each(this.first_rows, function (i, item) {
+                            $.each(me.first_rows, function (i, item) {
                                 var trs = $(item.tr)
                                 var logItem = trs.removeAttr('style').insertBefore(ui.item);
 //                            console.log(logItem)
@@ -127,23 +128,23 @@ define(["slimscroll"], function () {
                         }
                         $("#uber tr:even").removeClass("odd even").addClass("even");
                         $("#uber tr:odd").removeClass("odd even").addClass("odd");
-                        this.recalculatePlaylist()
-                        targetParent != this && targetParent.recalculatePlaylist()
+                        me.recalculateJContent()
+                        targetParent != this && targetParent.recalculateJContent()
                     }
-                    this.first_rows = {};
-                    this.blockSort = false
+                    me.first_rows = {};
+                    blockSort = false
                 }.bind(this),
                 remove: function (event, ui) {
 //                console.log('remove')
 //                console.log(this)
-                    this.blockSort = false
+                    blockSort = false
                 }.bind(this),
                 receive: function (event, ui) {
                     $(ui.item).removeClass('selected')
                 }
 //        ,receive: function(event, ui) {
 //            _.defer(function () {
-//                this.recalculatePlaylist()
+//                this.recalculateJContent()
 //            }.bind(this))
 //        }.bind(this)
             }).hover(function () {
@@ -152,39 +153,113 @@ define(["slimscroll"], function () {
                 me.options.slimScroll && (sortableSlimScroll.scroll = false)
             })
 
-        //methods
-        this.addElementsToList = function (elementsData, unique, loadVideoFeedCallback, dontCache) {
-            if (typeof loadVideoFeedCallback == "function") {
-                var afterLoadVideoFeed = _.after(elementsData.length, loadVideoFeedCallback)
-            }
+        this.options.listenId && this.redrawJContentFromCacheListenJStorage() || this.options.redraw && this.redrawJContentFromCacheManual()
+    }
 
-            elementsData.forEach(function (elementData) {
-//                var videoElement = new VideoElement(videoFeed, this.jContent)
-                console.log(elementData)
-                var ptiElement = $('<div class="pti-element"></div>')
-                var element = me.options.drawElement(elementData)
-//                console.log(element)
-                ptiElement.append(element)
-                me.jContent.append(ptiElement)
-                var linkContext = {
-                    element: element,
-                    elementData: elementData,
-                    retryCounter: 0,
-                    loadVideoFeedCallback: afterLoadVideoFeed
-                }
-//                siteHandlerManager.loadVideoFeed(linkContext)
-            }.bind(this))
+    Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate) {
+        var me = this
+
+        elementsData.forEach(function (elementData) {
+//            console.log(elementData)
+            var ptiElement = me.drawPtiElement(elementData)
+//                console.log(ptiElement)
+            me.jContent.append(ptiElement)
+        })
+
+        _.default(recalculcate, true) && this.recalculateJContentDebounce()
+    }
+
+    Ptilist.prototype.arrayToString = function (arr) {
+        return arr.map(function (item) {
+            return item.replace(/(,)/g, "\\$1")
+        }).join(",")
+    }
+
+    Ptilist.prototype.getIds = function () {
+        return this.jContent.sortable('toArray').filter(Boolean)
+    }
+
+    Ptilist.prototype.emptyContent = function () {
+        this.jContent.html('<div class="pti-make-last-droppable-work"/>')
+    }
+
+    Ptilist.prototype.recalculateJContent = function (cache) {
+        var me = this
+        _.defer(function () {
+            me.recalculateJContentImmediate(cache)
+        })
+    }
+
+    Ptilist.prototype.recalculateJContentBuildStorageObject = function () {
+        var storageObj = { id: this.options.id, source: this.uid, data: this.arrayToString(this.getIds()) }
+        return storageObj
+    }
+
+    Ptilist.prototype.recalculateJContentDebounce = _.debounce(function (cache) {
+        this.recalculateJContent(cache)
+    }, 50)
+
+    Ptilist.prototype.recalculateJContentImmediate = function (cache) {
+        cache = _.default(cache, true)
+
+        if (this.options.id) {
+            console.log('setting to storage')
+            var storageObj = this.recalculateJContentBuildStorageObject()
+            storageObj && $.jStorage.set(storageObj.id, storageObj)
         }
     }
 
+    Ptilist.prototype.redrawJContent = function (elementsData) {
+        if (elementsData.data) {
+            this.emptyContent()
+            this.addElementsToList(elementsData.data, undefined, false)
+        }
+    }
+
+    Ptilist.prototype.redrawJContentGeneric = function (key, action, functionName, filterOwn) {
+        var storagePlaylist = this.redrawJContentGetCacheObject(key, action, functionName, filterOwn)
+        storagePlaylist && this.redrawJContent(storagePlaylist)
+    }
+
+    Ptilist.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
+        console.log(key + ' has been ' + action)
+        var storageData = $.jStorage.get(key);
+        if (filterOwn && storageData && storageData.source == this.uid) {
+            console.log('not talking to self')
+            return undefined
+        } else {
+            return storageData
+        }
+    }
+
+    Ptilist.prototype.redrawJContentFromCacheListen = function (key, action) {
+        this.redrawJContentGeneric(key, action, 'manual redraw playlist from cache', true)
+    }
+
+    Ptilist.prototype.redrawJContentFromCacheListenJStorage = function () {
+        $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListen)
+        $.jStorage.listenKeyChange(this.options.listenId, this.redrawJContentFromCacheListen.bind(this))
+    }
+
+    Ptilist.prototype.redrawJContentFromCacheManual = function () {
+        this.redrawJContentGeneric(this.options.id, 'manual redraw from cache', 'manual redraw playlist from cache')
+    }
+
+
     Ptilist.prototype.setSlimScroll = function (element, height) {
         $(element).slimScroll({
-            height:height,
-            color:'rgb(0, 50, 255)',
-            railVisible:true,
-            railColor:'#000000',
-            disableFadeOut:true
+            height: height,
+            color: 'rgb(0, 50, 255)',
+            railVisible: true,
+            railColor: '#000000',
+            disableFadeOut: true
         });
+    }
+
+    Ptilist.prototype.stringToArray = function (string) {
+        return string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
+            return item.replace(/&thisiscomma;/g, ',')
+        })
     }
 
     function GUID() {
