@@ -1,5 +1,5 @@
 /* slim scroll wrapper */
-.slimScrollDiv { margin-top: 1px; position: absolute!important; top: 31px;  bottom: 0px; width: 100%; height: auto!important;}
+.playlistFrame .slimScrollDiv { margin-top: 1px; position: absolute!important; top: 31px;  bottom: 0px; width: 100%; height: auto!important;}
 
 
 /* playlist container */
@@ -63,7 +63,7 @@
 
 .playlistFrame .playlist.pti-view-big>* .duration-caption, .playlistFrame .playlist.pti-view-medium>* .duration-caption { position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; }
 .playlistFrame .playlist.pti-view-big>* .duration-caption { right: 5px; bottom: 3px; }
-.playlistFrame .playlist.pti-view-medium>* .duration-caption { right: 6px; bottom: 2px; font-size: 9px; }
+.playlistFrame .playlist.pti-view-medium>* .duration-caption { right: 0px; bottom: 0px; font-size: 9px; }
 .playlistFrame .playlist.pti-view-list>* .duration-caption { color: #007FFF; text-align: right; }
 .playlistFrame .playlist.pti-view-list>*.ui-selected .duration-caption { color: white; }
 

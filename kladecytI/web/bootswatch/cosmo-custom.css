@@ -13,8 +13,13 @@
     background-color: #FFFFFF;
 }
 
-.nav > .active > a, .nav > .active > a > div, .nav > .active > a:hover, .nav > .active > a:hover > div{
+.nav > .active > a, .nav > .active > a > div, .nav > .active > a:hover, .nav > .active > a:hover > div {
     outline:none;
+}
+
+.nav-pills > .ui-state-active > a, .nav-pills > .ui-state-active > a:hover, .nav-pills > .ui-state-active > a:focus {
+    color: #ffffff;
+    background-color: #007fff;
 }
 
 .nav-pills > .active > a > div, .nav-pills > .active > a:hover > div {
