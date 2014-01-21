@@ -22,7 +22,7 @@ function SiteHandlerManager() {
             var ids = new Object(), backgroundPageId = $.jStorage.get(id);
             backgroundPageId && backgroundPageId.data && backgroundPageId.data.forEach(function (typeIdText) {
                 var typeIdObj
-                typeIdText && ((typeIdObj = SiteHandlerManager.prototype.toTypeId(typeIdText)) | (ids[typeIdObj.id] = '1'))
+                typeIdText && ((typeIdObj = SiteHandlerManager.prototype.stringToTypeId(typeIdText)) | (ids[typeIdObj.id] = '1'))
             })
             return ids
         }
@@ -98,9 +98,34 @@ function SiteHandlerManager() {
         }
     }
 
+    SiteHandlerManager.prototype.drawPtiElement = function(typeIdText) {
+        var typeId = SiteHandlerManager.prototype.stringToTypeId(typeIdText)
+        var $ptiElement = $('<div class="pti-element"></div>').data('data', typeId).attr('id', typeId.type + "=" + typeId.id)
+        SiteHandlerManager.prototype.loadPtiElementData(typeId, $ptiElement)
+        return $ptiElement
+    }
+
+    SiteHandlerManager.prototype.loadPtiElementData = function(typeId, $ptiElement) {
+        var lStorageDataText = localStorage[typeId.id], lStorageObject
+        lStorageDataText && (lStorageObject = $.parseJSON(lStorageDataText))
+        if(lStorageObject) {
+            SiteHandlerManager.prototype.updatePtiElement(lStorageObject, $ptiElement, "completeTemplate", false)
+        } else {
+            var handler = SiteHandlerManager.prototype.getHandler(typeId.type)
+            SiteHandlerManager.prototype.updatePtiElement(typeId, $ptiElement, "rawTemplate")
+            handler.loadVideoData(typeId, $ptiElement)
+        }
+    }
+
+    SiteHandlerManager.prototype.updatePtiElement = function(videoData, $ptiElement, template, cache) {
+        var handler = SiteHandlerManager.prototype.getHandler(videoData.type)
+        $ptiElement.html(handler[template](videoData))
+        _.default(cache, true) && template === "completeTemplate" && localStorage.setItem(videoData.id, JSON.stringify(videoData))
+    }
+
     SiteHandlerManager.prototype.getThumbnail = function(typeIdText) {
         if(typeIdText) {
-            var typeId = SiteHandlerManager.prototype.toTypeId(typeIdText)
+            var typeId = SiteHandlerManager.prototype.stringToTypeId(typeIdText)
             var item = $.parseJSON(localStorage[typeId.id] ? localStorage[typeId.id] : "{}")
             var thumbnail = item && item.thumbnail ? item.thumbnail : SiteHandlerManager.prototype.getHandler(typeId.type)['defaultThumbnail']
             return thumbnail
@@ -109,14 +134,14 @@ function SiteHandlerManager() {
         }
     }
     
-    SiteHandlerManager.prototype.toTypeId = function(typeIdText) {
+    SiteHandlerManager.prototype.stringToTypeId = function(typeIdText) {
         var pattern = /([^=])=(.*)/
         var typeIdObj = { type: typeIdText.replace(pattern, '$1'), id: typeIdText.replace(pattern, '$2') };
         return typeIdObj
     }
 
-    SiteHandlerManager.prototype.fromTypeId = function(typeIdObj) {
-        return this.type && this.id ?this.type + "=" + this.id : ""
+    SiteHandlerManager.prototype.typeIdToString = function(typeIdObj) {
+        return this.type && this.id ? this.type + "=" + this.id : ""
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -128,11 +153,23 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.rawTemplate = PTITemplates.prototype.YoutubeRawTemplate
     YoutubeHandler.prototype.completeTemplate = PTITemplates.prototype.YoutubeCompleteTemplate
     YoutubeHandler.prototype.errorTemplate = PTITemplates.prototype.YoutubeErrorTemplate
+    YoutubeHandler.prototype.data = function(data) {
+        this.id = data.id
+        this.type = YoutubeHandler.prototype.prefix
+        this.duration = data.duration
+        this.durationCaption = convert(data.duration)
+        this.title = data.title
+        this.uploader = data.uploader
+        this.thumbnail = data.thumbnail.sqDefault
+    }
     YoutubeHandler.prototype.defaultThumbnail = "http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
     YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/|ytimg.com\u00252Fvi\u00252F)([^?\s&\'\'<>\/\\.,#]{11})/
     YoutubeHandler.prototype.regexGroup = 11
+    YoutubeHandler.prototype.loadVideoDataQueue = new Array()
+    YoutubeHandler.prototype.loadVideoDataQueueConcurrent = 0
+    YoutubeHandler.prototype.loadVideoDataQueueConcurrentMax = 25
     YoutubeHandler.prototype.queue = new Array()
     YoutubeHandler.prototype.queueConcurrent = 0
     YoutubeHandler.prototype.queueConcurrentMax = 25
@@ -183,15 +220,69 @@ function YoutubeHandler() {
             dataType: 'json'
         })
     }
+    YoutubeHandler.prototype.loadVideoDataQueueExecute = function(typeId, $ptiElement) {
+        YoutubeHandler.prototype.loadVideoDataQueueConcurrent++
+        $.ajax({
+            url: "http://gdata.youtube.com/feeds/api/videos/" + typeId.id + "?v=2&alt=jsonc",
+            success: function (data) {
+                YoutubeHandler.prototype.loadVideoDataQueueConcurrent--
+                try {
+                    var videoData = new YoutubeHandler.prototype.data(data.data)
+                    SiteHandlerManager.prototype.updatePtiElement(videoData, $ptiElement, "completeTemplate")
+                } finally {
+                    YoutubeHandler.prototype.loadVideoDataQueueNext()
+                }
+            },
+            error: function (data) {
+                try {
+                    YoutubeHandler.prototype.loadVideoDataQueueConcurrent--
+//                console.log(data.responseText)
+                    try {
+                        typeId.error = $.parseJSON(data.responseText).error.message
+                    } catch (e) {
+                        typeId.error = data.responseText.replace(/[\r\n]/g, '').replace(/.*((<code>)|(TITLE>))([\w\s]+)((<)|(<\/code>)).*/, "$4")
+                    }
+                    SiteHandlerManager.prototype.updatePtiElement(typeId, $ptiElement, "errorTemplate")
+                    if (data.responseText.match(/too_many_recent_calls/)) {
+                        setTimeout(function () {
+                            YoutubeHandler.prototype.loadVideoData(typeId, $ptiElement)
+                            console.log("retrying video")
+                            if ($ptiElement.parent().length > 0) {
+                            } else {
+                                console.log('playlist was emptied, wont continue loading info for this video')
+                            }
+                        }, 35000)
+                    } else {
+                        typeof linkContext != "undefined" && typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
+                    }
+                } finally {
+                    YoutubeHandler.prototype.loadVideoDataQueueNext()
+                }
+            },
+            dataType: 'json'
+        })
+    }
     YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
         YoutubeHandler.prototype.queue.push(linkContext)
         YoutubeHandler.prototype.queueNext()
+    }
+    YoutubeHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
+        YoutubeHandler.prototype.loadVideoDataQueue.push([typeId, $ptiElement])
+        YoutubeHandler.prototype.loadVideoDataQueueNext()
     }
     YoutubeHandler.prototype.queueNext = function() {
         if (YoutubeHandler.prototype.queue.length && YoutubeHandler.prototype.queueConcurrent < YoutubeHandler.prototype.queueConcurrentMax) {
             var current = YoutubeHandler.prototype.queue[0]
             YoutubeHandler.prototype.queue = YoutubeHandler.prototype.queue.splice(1)
             YoutubeHandler.prototype.queueExecute(current)
+        } else {
+//            console.log('QueueNext end: [QueueLength: ' + YoutubeHandler.prototype.queue.length + '] [QueueConcurrent: ' + YoutubeHandler.prototype.queueConcurrent + ']')
+        }
+    }
+    YoutubeHandler.prototype.loadVideoDataQueueNext = function() {
+        if (YoutubeHandler.prototype.loadVideoDataQueue.length && YoutubeHandler.prototype.loadVideoDataQueueConcurrent < YoutubeHandler.prototype.loadVideoDataQueueConcurrentMax) {
+            var current = YoutubeHandler.prototype.loadVideoDataQueue.shift()
+            YoutubeHandler.prototype.loadVideoDataQueueExecute(current[0], current[1])
         } else {
 //            console.log('QueueNext end: [QueueLength: ' + YoutubeHandler.prototype.queue.length + '] [QueueConcurrent: ' + YoutubeHandler.prototype.queueConcurrent + ']')
         }
@@ -208,11 +299,23 @@ function SoundCloudHandler() {
     SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
         typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
     }
+    SoundCloudHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
+
+    }
 }
 
 function VimeoHandler() {
     VimeoHandler.prototype.rawTemplate = PTITemplates.prototype.VimeoRawTemplate
     VimeoHandler.prototype.completeTemplate = PTITemplates.prototype.VimeoCompleteTemplate
+    VimeoHandler.prototype.data = function(data) {
+        this.id = data.id
+        this.type = VimeoHandler.prototype.prefix
+        this.duration = data.duration
+        this.durationCaption = convert(data.duration)
+        this.title = data.title
+        this.uploader = data.user_name
+        this.thumbnail = data.thumbnail_medium
+    }
     VimeoHandler.prototype.defaultThumbnail = "/css/resources/vimeo.jpg"
     VimeoHandler.prototype.prefix = 'v'
     VimeoHandler.prototype.regex = /vimeo.com\\?\/((video\/)|(moogaloop.swf\?.*clip_id=))?(\d+)/
@@ -229,6 +332,22 @@ function VimeoHandler() {
             },
             error:function (error) {
                 typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
+                console.log('error in vimeoHandler loadVideoFeed start')
+                console.log(error)
+                console.log('error in vimeoHandler loadVideoFeed end')
+            },
+            dataType:'jsonp',
+            timeout:10000
+        })
+    }
+    VimeoHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
+        $.ajax({
+            url:'https://vimeo.com/api/v2/video/' + typeId.id + '.json',
+            success:function (data) {
+                var videoData = new VimeoHandler.prototype.data(data[0])
+                SiteHandlerManager.prototype.updatePtiElement(videoData, $ptiElement, "completeTemplate")
+            },
+            error:function (error) {
                 console.log('error in vimeoHandler loadVideoFeed start')
                 console.log(error)
                 console.log('error in vimeoHandler loadVideoFeed end')

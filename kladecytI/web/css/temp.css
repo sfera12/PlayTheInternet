@@ -92,4 +92,5 @@ a[href="#howDiv"] { position: relative; }
 .temp-create-playlist-yes:hover { color: aliceblue!important; }
 .temp-create-playlist-no { font-size: 11px; color: red!important; }
 .temp-create-playlist-no:hover { color: aliceblue!important; }
-.playlistFrame .header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }
+.playlistFrame .header .temp-create-playlist-name, .pti-ptilist .pti-header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }
+.playlistFrame .header .temp-create-playlist-name, .pti-ptilist .pti-header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }

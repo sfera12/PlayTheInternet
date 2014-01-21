@@ -1,4 +1,4 @@
-define(["playlist", "app/chrome/extension"], function(a, extension) {
+define(["playlist", "app/chrome/extension", "common/playlist"], function(a, extension, Playlist) {
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
 //                    console.log(sender.tab ?
@@ -7,7 +7,7 @@ define(["playlist", "app/chrome/extension"], function(a, extension) {
             if (request.greeting == "hello")
                 sendResponse({farewell:"goodbye"});
             if (request.operation == "parsedPlaylist") {
-                request.data != '' ? parsedPlaylist.addSongsToPlaylist(parsedPlaylist.parseSongIds(request.data)) : $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
+                request.data != '' ? parsedPlaylist.addElementsToList(parsedPlaylist.stringToArray(request.data)) : $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
             } else if(request.operation == "parsePlayTheInternetParseFunctionMissing") {
                 $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing(request))
             }
@@ -17,14 +17,15 @@ define(["playlist", "app/chrome/extension"], function(a, extension) {
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                 elementSize: options.size,
-                elementSplit: options.split,
-                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
-                execute: [
-                    Playlist.prototype.addAction
-                ]
+                elementSplit: options.split
+//                ,
+//                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
+//                execute: [
+//                    Playlist.prototype.addAction
+//                ]
             }
         );
-        parsedPlaylist.playlistEmpty();
+        parsedPlaylist.emptyContent();
         chrome.tabs.executeScript(null, {file: "/js/app/popup/parsePage.js"}, function (parse) {
             _.isUndefined(parse) && $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound({href: window.location.href}))
         });

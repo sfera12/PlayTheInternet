@@ -40,8 +40,8 @@ define(["jstorage", "slimscroll"], function () {
         me.containerElementExpression = appendToElementExpression
         me.jContainer = $(me.containerElementExpression)
         me.jContainer.addClass("pti-ptilist")
+        me.jHeader = me.createHeader ? me.createHeader().appendTo(me.jContainer) : me.jContainer.addClass("pti-no-header")
         me.jContent = $('<div class="pti-content"><div class="pti-make-last-droppable-work"/></div>').appendTo(me.jContainer)
-        me.jHeader = me.jContainer.addClass("pti-no-header")
 
         //classes
         me.jContent.addClass('pti-view-' + me.options.elementSize)
@@ -179,6 +179,12 @@ define(["jstorage", "slimscroll"], function () {
         return this.jContent.sortable('toArray').filter(Boolean)
     }
 
+    Ptilist.prototype.getIdsSelected = function () {
+        return (this.jContent.find('.pti-element.ui-selected').map(function(index, item) {
+            return $(item).attr('id')
+        })).get()
+    }
+
     Ptilist.prototype.emptyContent = function () {
         this.jContent.html('<div class="pti-make-last-droppable-work"/>')
     }
@@ -223,17 +229,19 @@ define(["jstorage", "slimscroll"], function () {
 
     Ptilist.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
         console.log(key + ' has been ' + action)
-        var storageData = $.jStorage.get(key);
-        if (filterOwn && storageData && storageData.source == this.uid) {
+        var jStorageData = $.jStorage.get(key);
+        if (filterOwn && jStorageData && jStorageData.source == this.uid) {
             console.log('not talking to self')
             return undefined
         } else {
-            return storageData
+            var resultStorageData = null
+            jStorageData && ((resultStorageData = _.extend({}, jStorageData)) | (resultStorageData.data = this.stringToArray(jStorageData.data)))
+            return resultStorageData
         }
     }
 
     Ptilist.prototype.redrawJContentFromCacheListen = function (key, action) {
-        this.redrawJContentGeneric(key, action, 'manual redraw playlist from cache', true)
+        this.redrawJContentGeneric(key, action, 'listener redraw ptilist from cache', true)
     }
 
     Ptilist.prototype.redrawJContentFromCacheListenJStorage = function () {
@@ -242,9 +250,15 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.redrawJContentFromCacheManual = function () {
-        this.redrawJContentGeneric(this.options.id, 'manual redraw from cache', 'manual redraw playlist from cache')
+        this.redrawJContentGeneric(this.options.id, 'manual redraw from cache', 'manual redraw ptilist from cache')
     }
 
+    Ptilist.prototype.setId = function(id, listenId) {
+        _.isUndefined(listenId) ? this.options.listenId = id : this.options.listenId = listenId
+        this.options.id = id
+        this.redrawJContentFromCacheListenJStorage()
+        this.redrawJContentFromCacheManual()
+    }
 
     Ptilist.prototype.setSlimScroll = function (element, height) {
         $(element).slimScroll({

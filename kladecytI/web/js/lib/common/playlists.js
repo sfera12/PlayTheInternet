@@ -1,4 +1,4 @@
-define(["common/ptilist"], function (Ptilist) {
+define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
     Playlists.prototype = new Ptilist()
     Playlists.prototype.constructor = Playlists
     Playlists.prototype.parent = Ptilist.prototype
@@ -17,6 +17,11 @@ define(["common/ptilist"], function (Ptilist) {
                 $(this).blur()
             }
         })
+
+        me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
+            this.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
+        }, 50)
+        me.setId("playlists", "*")
     }
 
     Playlists.prototype.drawPtiElement = function (playlistData) {
@@ -41,7 +46,8 @@ define(["common/ptilist"], function (Ptilist) {
         resultKeys = jStorageKeys.filter(filter)
         resultKeys = sort(storageObj, resultKeys)
         resultKeys.forEach(function (key) {
-            var item = storageObj[key];
+            var item = _.extend({}, storageObj[key]);
+            item.data = Ptilist.prototype.stringToArray(item.data)
             item && resultArr.push(item)
         })
         return resultArr

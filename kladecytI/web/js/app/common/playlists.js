@@ -2,8 +2,8 @@ define(["common/playlists"], function() {
 
 //    $('#secondViewTabs a[href="#secondPlaylistsDiv"]').click(function () {
         require(["common/playlists"], function(Playlists) {
-            window.firstPlaylists = new Playlists("#ulFirstPlaylists", { id: "playlists", listenId: "*", redraw: true })
-            window.playlists = new Playlists("#ulSecondPlaylists", { id: "playlists", listenId: "*", redraw: true })
+            window.firstPlaylists = new Playlists("#ulFirstPlaylists")
+            window.playlists = new Playlists("#ulSecondPlaylists")
 
             //remove
             window.Playlists = Playlists
