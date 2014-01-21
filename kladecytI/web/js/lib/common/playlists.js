@@ -12,6 +12,13 @@ define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
         me.options.elementSplit = "one"
         me.parent.init.call(this, appendToElementExpression, me.options)
 
+        me.jPlaylist = $('<div></div>').appendTo(me.jContainer.parent())
+
+        me.jContent.on('click', '.pti-sortable-handler.image-div', function(event, ui) {
+            var playlistId = $(this).parents('.pti-element').attr('id')
+            me.playlistOpen(playlistId)
+        })
+
         me.jContent.on('keypress', '.pti-name', function (event) {
             if (event.keyCode == 13) {
                 $(this).blur()
@@ -39,6 +46,17 @@ define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
                 return playlists
             }
         }
+    }
+
+    Playlists.prototype.playlistClose = function() {
+        this.jContainer.removeClass('temp-display-none')
+    }
+
+    Playlists.prototype.playlistOpen = function(id) {
+        this.jPlaylist.empty()
+        this.playlist = new Playlist(this.jPlaylist, { id: id, redraw: true, connectWith: ".playlist"})
+        this.playlist.jContent.addClass('playlist')
+        this.jContainer.addClass('temp-display-none')
     }
 
     function filterJStorageBy(filter, sort) {
