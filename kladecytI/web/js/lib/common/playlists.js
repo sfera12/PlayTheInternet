@@ -35,7 +35,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
             me.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
         }, 50)
-        me.setId("playlists", "*")
+        me.setIdListen("playlists", "*")
     }
 
     Playlists.prototype.drawPtiElement = function (playlistData) {
@@ -61,7 +61,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
 
     Playlists.prototype.playlistOpen = function(id) {
         this.initPlaylist()
-        this.playlist.setId(id)
+        this.playlist.setIdListen(id)
         this.jContainer.addClass('temp-display-none')
     }
 
