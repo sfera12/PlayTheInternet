@@ -12,8 +12,14 @@ define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
         me.options.elementSplit = "one"
         me.parent.init.call(this, appendToElementExpression, me.options)
 
+        //playlist
         me.jPlaylist = $('<div></div>').appendTo(me.jContainer.parent())
+        me.initPlaylist = _.once(function() {
+            me.playlist = new Playlist(me.jPlaylist, { connectWith: "connected-playlist"})
+        })
+        //playlist
 
+        //click handlers
         me.jContent.on('click', '.pti-sortable-handler.image-div', function(event, ui) {
             var playlistId = $(this).parents('.pti-element').attr('id')
             me.playlistOpen(playlistId)
@@ -24,9 +30,10 @@ define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
                 $(this).blur()
             }
         })
+        //click handlers
 
         me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
-            this.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
+            me.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
         }, 50)
         me.setId("playlists", "*")
     }
@@ -53,9 +60,8 @@ define(["common/ptilist", "common/playlist"], function (Ptilist, Playlist) {
     }
 
     Playlists.prototype.playlistOpen = function(id) {
-        this.jPlaylist.empty()
-        this.playlist = new Playlist(this.jPlaylist, { id: id, redraw: true, connectWith: ".playlist"})
-        this.playlist.jContent.addClass('playlist')
+        this.initPlaylist()
+        this.playlist.setId(id)
         this.jContainer.addClass('temp-display-none')
     }
 

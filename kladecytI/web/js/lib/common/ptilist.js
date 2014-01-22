@@ -46,6 +46,7 @@ define(["jstorage", "slimscroll"], function () {
         //classes
         me.jContent.addClass('pti-view-' + me.options.elementSize)
         me.jContent.addClass('pti-split-' + me.options.elementSplit)
+        me.options.connectWith && me.jContent.addClass(me.options.connectWith)
 
         //properties
         me.uid = GUID() + Date.now()
@@ -66,7 +67,7 @@ define(["jstorage", "slimscroll"], function () {
             cancel: '.pti-sortable-handler, .pti-make-last-droppable-work, a, .pti-clickable'
         })
             .sortable({
-                connectWith: me.options.connectWith,
+                connectWith: "." + me.options.connectWith,
                 scrollSensitivity: 50,
                 tolerance: 'pointer',
                 distance: 7,
@@ -153,7 +154,7 @@ define(["jstorage", "slimscroll"], function () {
                 me.options.slimScroll && (sortableSlimScroll.scroll = false)
             })
 
-        this.options.listenId && this.redrawJContentFromCacheListenJStorage() || this.options.redraw && this.redrawJContentFromCacheManual()
+        this.options.listenId && (this.redrawJContentFromCacheListenJStorage() | this.options.redraw && this.redrawJContentFromCacheManual())
     }
 
     Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate) {
@@ -245,8 +246,9 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.redrawJContentFromCacheListenJStorage = function () {
-        $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListen)
-        $.jStorage.listenKeyChange(this.options.listenId, this.redrawJContentFromCacheListen.bind(this))
+        this.redrawJContentFromCacheListenLast && $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListenLast)
+        this.redrawJContentFromCacheListenLast = this.redrawJContentFromCacheListen.bind(this);
+        $.jStorage.listenKeyChange(this.options.listenId, this.redrawJContentFromCacheListenLast)
     }
 
     Ptilist.prototype.redrawJContentFromCacheManual = function () {
@@ -271,9 +273,10 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.stringToArray = function (string) {
-        return string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
+        var resultArray = string ? string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
             return item.replace(/&thisiscomma;/g, ',')
-        })
+        }) : []
+        return resultArray
     }
 
     function GUID() {

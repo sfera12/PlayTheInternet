@@ -17,7 +17,8 @@ define(["playlist", "app/chrome/extension", "common/playlist"], function(a, exte
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                 elementSize: options.size,
-                elementSplit: options.split
+                elementSplit: options.split,
+                connectWith: "connected-playlist"
 //                ,
 //                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
 //                execute: [
