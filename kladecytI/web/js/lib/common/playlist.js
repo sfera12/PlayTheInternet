@@ -1,4 +1,4 @@
-define(["common/ptilist", "siteHandlers"], function (Ptilist) {
+define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype = new Ptilist()
     Playlist.prototype.constructor = Playlist
     Playlist.prototype.parent = Ptilist.prototype
@@ -104,7 +104,7 @@ define(["common/ptilist", "siteHandlers"], function (Ptilist) {
     Playlist.prototype.recalculateJContentBuildStorageObject = function() {
         var superObject = this.parent.recalculateJContentBuildStorageObject.call(this)
         var storageObject = $.jStorage.get(this.options.id)
-        var recalculatedObject = _.extend(storageObject, superObject)
+        var recalculatedObject = _.extend(storageObject ? storageObject : {}, superObject)
         return recalculatedObject
     }
 

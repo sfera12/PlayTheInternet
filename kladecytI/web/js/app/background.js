@@ -1,4 +1,4 @@
-define(["playlist", "iframe-observer"], function(a, observer) {
+define(["pti-playlist", "iframe-observer"], function(Playlist, observer) {
     $(document).ready(function () {
         observer.init()
         window.observer = observer
@@ -8,7 +8,7 @@ define(["playlist", "iframe-observer"], function(a, observer) {
             {
                 id:windowId,
                 redraw:true,
-                fillVideoElement:false
+//                fillVideoElement:false
             });
         require(["app/background/commands", "app/background/contextMenus"])
     })
