@@ -74,7 +74,7 @@ define(["common/ptilist"], function (Ptilist) {
             var id = "lPlaylist" + GUID()
             var selected = me.getIdsSelected(), playlist = selected.length ? selected : me.getIds()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
-            $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: me.arrayToString(playlist) })
+            $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: _.arrayToString(playlist) })
         }
 
         var inputHandler = function(event) {

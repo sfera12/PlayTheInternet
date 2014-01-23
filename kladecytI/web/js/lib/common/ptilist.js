@@ -1,9 +1,4 @@
 define(["jstorage", "slimscroll"], function () {
-    _.mixin({
-        default: function (input, def) {
-            return _.isUndefined(input) ? def : input
-        }
-    })
     $('#dummyInput').length || $('body').append('<input id="dummyInput" class="temp-absolute-off-scren"/>')
     var focusout = function () {
         $('#dummyInput').focus()
@@ -170,12 +165,6 @@ define(["jstorage", "slimscroll"], function () {
         _.default(recalculcate, true) && this.recalculateJContentDebounce()
     }
 
-    Ptilist.prototype.arrayToString = function (arr) {
-        return arr.map(function (item) {
-            return item.replace(/(,)/g, "\\$1")
-        }).join(",")
-    }
-
     Ptilist.prototype.getIds = function () {
         return this.jContent.sortable('toArray').filter(Boolean)
     }
@@ -198,7 +187,7 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.recalculateJContentBuildStorageObject = function () {
-        var storageObj = { id: this.options.id, source: this.uid, data: this.arrayToString(this.getIds()) }
+        var storageObj = { id: this.options.id, source: this.uid, data: _.arrayToString(this.getIds()) }
         return storageObj
     }
 
@@ -255,7 +244,7 @@ define(["jstorage", "slimscroll"], function () {
             return undefined
         } else {
             var resultStorageData = null
-            jStorageData && ((resultStorageData = _.extend({}, jStorageData)) | (resultStorageData.data = this.stringToArray(jStorageData.data)))
+            jStorageData && ((resultStorageData = _.extend({}, jStorageData)) | (resultStorageData.data = _.stringToArray(jStorageData.data)))
             return resultStorageData
         }
     }
@@ -278,13 +267,6 @@ define(["jstorage", "slimscroll"], function () {
             railColor: '#000000',
             disableFadeOut: true
         });
-    }
-
-    Ptilist.prototype.stringToArray = function (string) {
-        var resultArray = string ? string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
-            return item.replace(/&thisiscomma;/g, ',')
-        }) : []
-        return resultArray
     }
 
     function GUID() {

@@ -1,4 +1,4 @@
-define(["jquery", "underscore"], function ($, _) {
+define(["jquery", "underscore"], function (a, b) {
     function PlayerWidget(elementExpression, dontCreateContent) {
         var self = this
         var temp = new Object()
@@ -35,7 +35,7 @@ define(["jquery", "underscore"], function ($, _) {
             var containerBarEpsilon = progressBarContainerWidth - progressBarWidth
             var jTrackLengthWidth = this.jBackgroundTrackLength.width() - containerBarEpsilon
             this.jTrackLength.css('width', jTrackLengthWidth + 'px')
-            var convertedTime = convert(currentTime);
+            var convertedTime = _.formatDuration(currentTime);
             this.jCurrentTime.text(convertedTime)
             this.jBackgroundCurrentTime.text(convertedTime)
         }
@@ -85,7 +85,7 @@ define(["jquery", "underscore"], function ($, _) {
                 self.jProgressBarCursorTime.show('fast')
                 var progress = evt.pageX / jElement.width() * 100
                 var seconds = self.trackLength * ( progress / 100)
-                self.jProgressBarCursorTime.text(convert(seconds))
+                self.jProgressBarCursorTime.text(_.formatDuration(seconds))
                 self.jProgressBarCursorTime.css('left', evt.pageX + 15 + 'px')
             }, 50
         , {trailing: false}
@@ -103,7 +103,7 @@ define(["jquery", "underscore"], function ($, _) {
             var duration = props[1]
             var playerState = props[2]
 //        console.log(currentTime)
-            self.trackLength != duration && self.jBackgroundTrackLength.text(convert(duration)) | self.jTrackLength.text(convert(duration))
+            self.trackLength != duration && self.jBackgroundTrackLength.text(_.formatDuration(duration)) | self.jTrackLength.text(_.formatDuration(duration))
             self.trackLength = duration
             self.progressBar(currentTime, self.trackLength)
             if (playerState == 1) {

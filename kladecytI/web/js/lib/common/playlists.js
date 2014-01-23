@@ -71,7 +71,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         resultKeys = sort(storageObj, resultKeys)
         resultKeys.forEach(function (key) {
             var item = _.extend({}, storageObj[key]);
-            item.data = Ptilist.prototype.stringToArray(item.data)
+            item.data = _.stringToArray(item.data)
             item && resultArr.push(item)
         })
         return resultArr
@@ -82,7 +82,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
     }
 
     function sortLocalPlaylist(storageObj, filteredKeys) {
-        var sortedPlaylistIds, playlistsOrder = storageObj.playlists ? Ptilist.prototype.stringToArray(storageObj.playlists.data) : [], newKeys = _.difference(filteredKeys, playlistsOrder)
+        var sortedPlaylistIds, playlistsOrder = storageObj.playlists ? _.stringToArray(storageObj.playlists.data) : [], newKeys = _.difference(filteredKeys, playlistsOrder)
         newKeys.reverse()
         sortedPlaylistIds = newKeys.concat(playlistsOrder)
         return sortedPlaylistIds

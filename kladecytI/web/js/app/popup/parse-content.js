@@ -7,7 +7,7 @@ define(["playlist", "app/chrome/extension", "pti-playlist"], function(a, extensi
             if (request.greeting == "hello")
                 sendResponse({farewell:"goodbye"});
             if (request.operation == "parsedPlaylist") {
-                request.data != '' ? parsedPlaylist.addElementsToList(parsedPlaylist.stringToArray(request.data)) : $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
+                request.data != '' ? parsedPlaylist.addElementsToList(_.stringToArray(request.data)) : $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound(request))
             } else if(request.operation == "parsePlayTheInternetParseFunctionMissing") {
                 $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseFunctionMissing(request))
             }

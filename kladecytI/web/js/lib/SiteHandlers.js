@@ -17,19 +17,30 @@ function SiteHandlerManager() {
     ]
 
     SiteHandlerManager.prototype.garbageCollector = function() {
-        var playlistIdsObject = new Object()
+        var videoIdsFromPlaylists = new Object()
+
         function idsFromJStoragePlaylist(id) {
-            var ids = new Object(), backgroundPageId = $.jStorage.get(id);
-            backgroundPageId && backgroundPageId.data && backgroundPageId.data.forEach(function (typeIdText) {
+            var ids = new Object(), playlistObj = $.jStorage.get(id);
+            playlistObj && playlistObj.data && _.stringToArray(playlistObj.data).forEach(function (typeIdText) {
                 var typeIdObj
-                typeIdText && ((typeIdObj = SiteHandlerManager.prototype.stringToTypeId(typeIdText)) | (ids[typeIdObj.id] = '1'))
+                typeIdText && ((typeIdObj = _.stringToTypeId(typeIdText)) | (ids[typeIdObj.id] = '1'))
             })
             return ids
         }
-        _.extend(playlistIdsObject, idsFromJStoragePlaylist("backgroundPageId"))
+
+        var storageObj = $.jStorage.storageObj(), jStorageKeys = Object.keys(storageObj.__proto__)
+        var playlistIds = jStorageKeys.filter(function typeLocalPlaylist(key) {
+            return key.match(/^lPlaylist/)
+        })
+
+        _.extend(videoIdsFromPlaylists, idsFromJStoragePlaylist("backgroundPageId"))
+        playlistIds.forEach(function(playlistId) {
+            _.extend(videoIdsFromPlaylists, idsFromJStoragePlaylist(playlistId))
+        })
+
         var reservedKeysObject = _.object(SiteHandlerManager.prototype.reservedKeys, _.range(1, SiteHandlerManager.prototype.reservedKeys.length + 1))
-        var dontRemoveKeys = _.extend(playlistIdsObject, reservedKeysObject)
-        for(var key in localStorage) {
+        var dontRemoveKeys = _.extend(videoIdsFromPlaylists, reservedKeysObject)
+        for (var key in localStorage) {
             key in dontRemoveKeys || localStorage.removeItem(key)
         }
     }
@@ -99,7 +110,7 @@ function SiteHandlerManager() {
     }
 
     SiteHandlerManager.prototype.drawPtiElement = function(typeIdText, fillVideoElement) {
-        var typeId = SiteHandlerManager.prototype.stringToTypeId(typeIdText)
+        var typeId = _.stringToTypeId(typeIdText)
         var $ptiElement = $('<div class="pti-element"></div>').data('data', typeId).attr('id', typeId.type + "=" + typeId.id)
         SiteHandlerManager.prototype.loadPtiElementData(typeId, $ptiElement, fillVideoElement)
         return $ptiElement
@@ -129,23 +140,13 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.getThumbnail = function(typeIdText) {
         if(typeIdText) {
-            var typeId = SiteHandlerManager.prototype.stringToTypeId(typeIdText)
+            var typeId = _.stringToTypeId(typeIdText)
             var item = $.parseJSON(localStorage[typeId.id] ? localStorage[typeId.id] : "{}")
             var thumbnail = item && item.thumbnail ? item.thumbnail : SiteHandlerManager.prototype.getHandler(typeId.type)['defaultThumbnail']
             return thumbnail
         } else {
             return "favicon.ico"
         }
-    }
-    
-    SiteHandlerManager.prototype.stringToTypeId = function(typeIdText) {
-        var pattern = /([^=])=(.*)/
-        var typeIdObj = { type: typeIdText.replace(pattern, '$1'), id: typeIdText.replace(pattern, '$2') };
-        return typeIdObj
-    }
-
-    SiteHandlerManager.prototype.typeIdToString = function(typeIdObj) {
-        return this.type && this.id ? this.type + "=" + this.id : ""
     }
 
     $.each(siteHandlers, function (index, item) {
@@ -161,7 +162,7 @@ function YoutubeHandler() {
         this.id = data.id
         this.type = YoutubeHandler.prototype.prefix
         this.duration = data.duration
-        this.durationCaption = convert(data.duration)
+        this.durationCaption = _.formatDuration(data.duration)
         this.title = data.title
         this.uploader = data.uploader
         this.thumbnail = data.thumbnail.sqDefault
@@ -315,7 +316,7 @@ function VimeoHandler() {
         this.id = data.id
         this.type = VimeoHandler.prototype.prefix
         this.duration = data.duration
-        this.durationCaption = convert(data.duration)
+        this.durationCaption = _.formatDuration(data.duration)
         this.title = data.title
         this.uploader = data.user_name
         this.thumbnail = data.thumbnail_medium

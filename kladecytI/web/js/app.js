@@ -4,7 +4,8 @@ requirejs.config({
         "app":"../app",
         "jquery":"common/jquery-2.0.3.min",
         "jquery-ui":"common/jquery-ui-1.10.3.custom.min",
-        "underscore":"common/underscore-min",
+        "underscore-core":"common/underscore-min",
+        "underscore":"common/underscore-mixin",
         "jstorage":"common/jstorage.min",
         "sitehandlers":"SiteHandlers",
         "playlist":"Utils",
@@ -32,12 +33,6 @@ requirejs.config({
         "jasmine-runner":"jasmine/spec_runner"
     },
     "shim":{
-        "underscore": {
-            exports: "_"
-        },
-        "jquery": {
-            exports: "$"
-        },
         "jquery-ui":["jquery"],
         "jstorage":["jquery"],
         "sitehandlers":["jquery", "underscore", "jstorage", "ctemplates"],
