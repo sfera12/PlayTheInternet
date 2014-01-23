@@ -9,6 +9,7 @@ define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype.init = function (appendToElementExpression, options) {
         var me = this
         me.options = _.extend({}, options)
+        me.options.fillVideoElement = _.default(me.options.fillVideoElement, true)
         me.parent.init.call(this, appendToElementExpression, me.options)
     }
 
@@ -99,7 +100,9 @@ define(["common/ptilist"], function (Ptilist) {
         return $header
     }
 
-    Playlist.prototype.drawPtiElement = SiteHandlerManager.prototype.drawPtiElement
+    Playlist.prototype.drawPtiElement = function(typeIdText) {
+        return SiteHandlerManager.prototype.drawPtiElement(typeIdText, this.options.fillVideoElement)
+    }
 
     Playlist.prototype.recalculateJContentBuildStorageObject = function() {
         var superObject = this.parent.recalculateJContentBuildStorageObject.call(this)

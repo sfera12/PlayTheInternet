@@ -98,14 +98,18 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.drawPtiElement = function(typeIdText) {
+    SiteHandlerManager.prototype.drawPtiElement = function(typeIdText, fillVideoElement) {
         var typeId = SiteHandlerManager.prototype.stringToTypeId(typeIdText)
         var $ptiElement = $('<div class="pti-element"></div>').data('data', typeId).attr('id', typeId.type + "=" + typeId.id)
-        SiteHandlerManager.prototype.loadPtiElementData(typeId, $ptiElement)
+        SiteHandlerManager.prototype.loadPtiElementData(typeId, $ptiElement, fillVideoElement)
         return $ptiElement
     }
 
-    SiteHandlerManager.prototype.loadPtiElementData = function(typeId, $ptiElement) {
+    SiteHandlerManager.prototype.loadPtiElementData = function(typeId, $ptiElement, fillVideoElement) {
+        if(!fillVideoElement) {
+            SiteHandlerManager.prototype.updatePtiElement(typeId, $ptiElement, "rawTemplate")
+            return
+        }
         var lStorageDataText = localStorage[typeId.id], lStorageObject
         lStorageDataText && (lStorageObject = $.parseJSON(lStorageDataText))
         if(lStorageObject) {
