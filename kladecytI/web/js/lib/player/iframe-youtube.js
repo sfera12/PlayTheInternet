@@ -1,4 +1,4 @@
-define(["pti", "jquery", "underscore"], function (pti, $, _) {
+define(["pti", "jquery", "underscore"], function (pti, b, c) {
     new pti.Player("y", {
         onBeforePlayerReady:function () {
             return [1]

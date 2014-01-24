@@ -1,4 +1,4 @@
-define(['underscore', 'app/common/tabs'], function (_) {
+define(['underscore', 'app/common/tabs'], function (a) {
     function buildQR() {
         if (typeof playlist != "undefined") {
             var playlistHash = playlist.buildHash(), location = 'http://playtheinter.net/play.html'

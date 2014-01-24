@@ -1,4 +1,4 @@
-define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function (pti, scapi, $, _) {
+define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function (pti, scapi, c, d) {
         new pti.Player("s", {
             playerTemplate:PTITemplates.prototype.SoundCloudPlayerTemplate,
             onPlayerReady:function (playerapiid) {

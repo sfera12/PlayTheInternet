@@ -1,4 +1,4 @@
-define(["underscore"], function (_) {
+define(["underscore"], function (a) {
     function IframeWrapper(iframe, origins) {
         this.iframe = iframe
         this.origins = origins
