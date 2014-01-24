@@ -165,8 +165,16 @@ define(["jstorage", "slimscroll"], function () {
         _.default(recalculcate, true) && this.recalculateJContentDebounce()
     }
 
+    Ptilist.prototype.getElements = function () {
+        return this.jContent.find('.pti-element')
+    }
+
     Ptilist.prototype.getIds = function () {
         return this.jContent.sortable('toArray').filter(Boolean)
+    }
+
+    Ptilist.prototype.getIdsCount = function () {
+        return this.jContent.children().length - 1
     }
 
     Ptilist.prototype.getIdsSelected = function () {

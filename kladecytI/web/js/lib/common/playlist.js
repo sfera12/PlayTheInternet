@@ -10,9 +10,41 @@ define(["common/ptilist"], function (Ptilist) {
         var me = this
         me.options = _.extend({}, options)
         me.options.fillVideoElement = _.default(me.options.fillVideoElement, true)
+        me.options.playerType = _.default(me.options.playerType, true)
         me.parent.init.call(this, appendToElementExpression, me.options)
+
+        if(options.execute && options.execute.length) {
+            options.execute.forEach(function(item) {
+                _.isFunction(item) && item.call(me)
+            })
+        }
     }
 
+    Playlist.prototype.addAction = function () {
+        Playlist.prototype.setActionBackground.call(this)
+        this.jContainer.addClass('pti-action-add')
+        this.jContainer.addClass('pti-action-play')
+        var me = this
+        this.jContent.on('click', '.pti-element', function (event) {
+            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+                var selected = '', $this = $(this), uiselected
+                if ($this.hasClass('ui-selected')) {
+                    uiselected = me.jContent.find('.ui-selected').each(function () {
+                        selected += $(this).attr('id') + ','
+                    })
+                } else {
+                    selected = this.id
+                }
+//            console.log(selected)
+                playlist.addElementsToList(playlist.parseSongIds(selected), true)
+                var remove = function() {
+                    $(this).remove();
+                }
+                $this.hide(400, remove);
+                uiselected && uiselected.hide(400, remove);
+            }
+        })
+    }
 
     Playlist.prototype.createHeader = function () {
         var me = this
@@ -104,11 +136,105 @@ define(["common/ptilist"], function (Ptilist) {
         return SiteHandlerManager.prototype.drawPtiElement(typeIdText, this.options.fillVideoElement)
     }
 
+    Playlist.prototype.getSelectedVideoIndex = function() {
+        return this.jContent.find('.pti-element').index(this.jContent.find('.selected'))
+    }
+
+    Playlist.prototype.getVideoDivAndFeed = function (video) {
+        console.log(video)
+        var videoDiv
+        var videoData
+        var songs = this.jContent.find('.pti-element');
+        if(video && video.index >= 0) {
+            videoDiv = songs[video.index]
+            videoData = $(videoDiv).data('data')
+            return {videoData:videoData, videoDiv:videoDiv, index:video.index}
+        }
+        if(video && video.videoDiv) {
+            var index = songs.index(video.videoDiv)
+            videoData = $(video.videoDiv).data('data')
+            return {videoData:videoData, videoDiv:video.videoDiv, index:index}
+        }
+        if(video && video.videoData) {
+            for(var index=0; index<songs.length; index++) {
+                var vf = $(songs[index]).data('data')
+                if(vf.type == video.videoData.type && vf.id == video.videoData.id) {
+                    return {videoData:vf, videoDiv:songs[index], index:index}
+                }
+            }
+        }
+        if (!videoData) {
+            throw "videoData or video is empty in getVideoDivAndFeed"
+        }
+    }
+
+    Playlist.prototype.lookupNextSong = function () {
+        var index = this.getSelectedVideoIndex()
+        index = index >= this.getIdsCount() - 1 ? 0 : ++index
+        return this.getElements()[index]
+    }
+
+    Playlist.prototype.lookupPrevSong = function () {
+        var index = this.getSelectedVideoIndex()
+        index = index <= 0 ? this.getIdsCount() - 1 : --index
+        return this.getElements()[index]
+    }
+
+    Playlist.prototype.playAction = function () {
+        this.jContainer.addClass('pti-action-play')
+        Playlist.prototype.setActionBackground.call(this)
+        var me = this
+        this.jContent.on('click', '.pti-element', function (event) {
+            if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
+                me.playVideo({videoDiv: $(this)})
+            }
+        })
+    }
+
+    Playlist.prototype.playerType = function (boolean) {
+        if (typeof boolean == "undefined") {
+            return this.options.playerType
+        }
+        return (this.options.playerType = boolean)
+    }
+
+    Playlist.prototype.playNextVideo = function () {
+        this.playVideo({videoDiv:this.lookupNextSong()})
+    }
+
+    Playlist.prototype.playVideo = function(video, playerState, dontCache) {
+        console.log(video)
+        var videoObject = this.getVideoDivAndFeed(video)
+        this.selectVideo(videoObject, dontCache)
+        if (this.playerType()) {
+            SiteHandlerManager.prototype.playVideoFeed(videoObject.videoData, playerState)
+        } else {
+            console.log('not a player type')
+        }
+    }
+
     Playlist.prototype.recalculateJContentBuildStorageObject = function() {
         var superObject = this.parent.recalculateJContentBuildStorageObject.call(this)
         var storageObject = $.jStorage.get(this.options.id)
         var recalculatedObject = _.extend(storageObject ? storageObject : {}, superObject)
         return recalculatedObject
+    }
+
+    Playlist.prototype.selectVideo = function (video, setStorage) {
+        this.jContent.find('.pti-element').removeClass("selected")
+        var videoObject = this.getVideoDivAndFeed(video)
+        var videoData = videoObject.videoData
+        var videoDiv = videoObject.videoDiv
+        $(videoDiv).addClass("selected")
+        if (this.options.id && _.default(setStorage, true)) {
+            console.log('setting currVideoData to storage')
+            $.jStorage.set("selected_" + this.options.id, { source:this.uid, index:this.getSelectedVideoIndex(), date: new Date().getTime()})
+        }
+//        setWindowTitle(this.currVideoData);
+    }
+
+    Playlist.prototype.setActionBackground = function() {
+        this.jContainer.addClass('pti-action-background')
     }
 
     return Playlist

@@ -5,14 +5,14 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
                 id: chrome.extension.getBackgroundPage().windowId,
                 redraw: true,
 //                listenKeyChangeCallback: redrawHashAndQRCode,
-//                dontPlay: true,
+//                playerType: false,
                 elementSize: options.size,
                 elementSplit: options.split,
-                connectWith: "connected-playlist"
+                connectWith: "connected-playlist",
 //                headerClick: extension.headerClick.bind({playlistHeaderOptions: {}}),
-//                execute: [
-//                    Playlist.prototype.playAction
-//                ]
+                execute: [
+                    Playlist.prototype.playAction
+                ]
             }
         );
         var selected = playlist.jContent.find('.selected');
@@ -27,7 +27,7 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         var createPlaylist = _.once(function() {
             window.textAreaParsePlaylist = new Playlist("#textAreaParsePlaylist", {
-//                    dontPlay: true,
+                    playerType: false,
                     elementSize: options.size,
                     elementSplit: options.split,
                     connectWith: "connected-playlist"
