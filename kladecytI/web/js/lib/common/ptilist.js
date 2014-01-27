@@ -124,8 +124,8 @@ define(["jstorage", "slimscroll"], function () {
                         }
                         $("#uber tr:even").removeClass("odd even").addClass("even");
                         $("#uber tr:odd").removeClass("odd even").addClass("odd");
-                        me.recalculateJContent()
-                        targetParent != this && targetParent.recalculateJContent()
+                        targetParent.options.id != me.options.id && me.recalculateJContent()
+                        targetParent.recalculateJContent()
                     }
                     me.first_rows = {};
                     blockSort = false
@@ -235,7 +235,6 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.redrawJContentFromCacheListenJStorage = function () {
-        this.redrawJContentFromCacheListenLast && $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListenLast)
         this.redrawJContentFromCacheListenLast = this.redrawJContentFromCacheListen.bind(this);
         $.jStorage.listenKeyChange(this.options.listenId, this.redrawJContentFromCacheListenLast)
     }
@@ -263,6 +262,7 @@ define(["jstorage", "slimscroll"], function () {
     }
 
     Ptilist.prototype.setIdListen = function(id, listenId) {
+        this.redrawJContentFromCacheListenLast && $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListenLast)
         this.setId(id, listenId)
         this.options.listenId && this.redrawJContentFromCacheAttachListenersRedraw()
     }

@@ -225,7 +225,8 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.recalculateJContentImmediate = function(cache) {
         this.parent.recalculateJContentImmediate.call(this, cache)
-        $.jStorage.set('selected_' + this.id, { source: this.uid, index: this.getSelectedVideoIndex(), date: Date.now() })
+        var index = this.getSelectedVideoIndex()
+        index >= 0 && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: index, date: Date.now() })
     }
 
     Playlist.prototype.redrawJContent = function(elementsData) {
@@ -255,13 +256,13 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.setIdListen = function(id, listenId) {
         this.parent.setIdListen.call(this, id, listenId)
-        this.options.id && this.setPlaySelectedVideoListen()
+        this.setPlaySelectedVideoListen(id)
     }
 
-    Playlist.prototype.setPlaySelectedVideoListen = function() {
-        this.listenPlaySelectedVideoLast && $.jStorage.stopListening("selected_" + this.options.id, this.listenPlaySelectedVideoLast)
+    Playlist.prototype.setPlaySelectedVideoListen = function(id) {
+        this.listenPlaySelectedVideoLast && $.jStorage.stopListening("selected_" + id, this.listenPlaySelectedVideoLast)
         this.listenPlaySelectedVideoLast = this.listenPlaySelectedVideo.bind(this)
-        $.jStorage.listenKeyChange("selected_" + this.options.id, this.listenPlaySelectedVideoLast)
+        this.options.id && $.jStorage.listenKeyChange("selected_" + this.options.id, this.listenPlaySelectedVideoLast)
     }
 
     return Playlist
