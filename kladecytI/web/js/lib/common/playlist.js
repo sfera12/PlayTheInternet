@@ -231,7 +231,8 @@ define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype.redrawJContent = function(elementsData) {
         if(elementsData.data) {
             this.parent.redrawJContent.call(this, elementsData)
-            this.selectVideo({index: $.jStorage.get('selected_' + this.options.id).index}, false)
+            var selectedVideo = $.jStorage.get('selected_' + this.options.id);
+            selectedVideo && this.selectVideo({index: selectedVideo.index}, false)
         }
     }
 
