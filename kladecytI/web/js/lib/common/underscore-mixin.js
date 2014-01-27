@@ -22,7 +22,7 @@ define(["underscore-core"], function() {
                 var fHours = (f(hours) + ":"), fHours = fHours != "00:" ? fHours : ""
                 return fHours + f(min) + ":" + f(sec)
             } else {
-                return ""
+                return "00:00"
             }
         },
         stringToArray: function (string) {
