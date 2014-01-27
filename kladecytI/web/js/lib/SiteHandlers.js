@@ -111,7 +111,7 @@ function SiteHandlerManager() {
 
     SiteHandlerManager.prototype.drawPtiElement = function(typeIdText, fillVideoElement) {
         var typeId = _.stringToTypeId(typeIdText)
-        var $ptiElement = $('<div class="pti-element"></div>').data('data', typeId).attr('id', typeId.type + "=" + typeId.id)
+        var $ptiElement = $('<div class="pti-element"></div>').data('data', typeId).attr('id', _.typeIdToString(typeId))
         SiteHandlerManager.prototype.loadPtiElementData(typeId, $ptiElement, fillVideoElement)
         return $ptiElement
     }

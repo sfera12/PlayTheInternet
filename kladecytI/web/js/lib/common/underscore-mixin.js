@@ -37,7 +37,7 @@ define(["underscore-core"], function() {
             return typeIdObj
         },
         typeIdToString: function(typeIdObj) {
-            return this.type && this.id ? this.type + "=" + this.id : ""
+            return typeIdObj.type && typeIdObj.id ? typeIdObj.type + "=" + typeIdObj.id : ""
         }
     })
 })

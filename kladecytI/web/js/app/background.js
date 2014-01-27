@@ -7,7 +7,8 @@ define(["pti-playlist", "iframe-observer"], function(Playlist, observer) {
         window.playlist = new Playlist("#ulSecond",
             {
                 id:windowId,
-                fillVideoElement:false
+                fillVideoElement:false,
+                playerType: true
             });
         require(["app/background/commands", "app/background/contextMenus"])
     })

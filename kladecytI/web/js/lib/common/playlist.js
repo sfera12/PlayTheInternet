@@ -10,7 +10,7 @@ define(["common/ptilist"], function (Ptilist) {
         var me = this
         me.options = _.extend({}, options)
         me.options.fillVideoElement = _.default(me.options.fillVideoElement, true)
-        me.options.playerType = _.default(me.options.playerType, true)
+        me.options.playerType = _.default(me.options.playerType, false)
         me.parent.init.call(this, appendToElementExpression, me.options)
 
         if(options.execute && options.execute.length) {
@@ -125,9 +125,7 @@ define(["common/ptilist"], function (Ptilist) {
         var $no = $('<div class="pti-header-button temp-create-playlist-no temp-display-none-important">&#x2573;</div>').appendTo($header).click(closeCreatePlaylistDialog)
         var $input = $('<input type="text" class="temp-create-playlist-name temp-display-none-important" placeholder="Playlist name to create"/>').appendTo($header).keypress(inputHandler)
         $header.find("[class*=set-view-" + me.options.elementSize + "]").addClass('selected')
-//        me.jContent.addClass('pti-view-' + me.options.elementSize)
         $header.find("[class*=set-split-" + me.options.elementSplit + "]").addClass('selected')
-//        me.jContent.addClass('pti-split-' + me.options.elementSplit)
 
         return $header
     }
@@ -168,6 +166,11 @@ define(["common/ptilist"], function (Ptilist) {
         }
     }
 
+    Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
+        var storageData = Ptilist.prototype.redrawJContentGetCacheObject(key, action, 'listen play selected video', true)
+        storageData && storageData.play && storageData.index >= 0 && this.playVideo({ index: storageData.index }, storageData.playerState, false)
+    }
+
     Playlist.prototype.lookupNextSong = function () {
         var index = this.getSelectedVideoIndex()
         index = index >= this.getIdsCount() - 1 ? 0 : ++index
@@ -202,10 +205,10 @@ define(["common/ptilist"], function (Ptilist) {
         this.playVideo({videoDiv:this.lookupNextSong()})
     }
 
-    Playlist.prototype.playVideo = function(video, playerState, dontCache) {
+    Playlist.prototype.playVideo = function(video, playerState, setStorage) {
         console.log(video)
         var videoObject = this.getVideoDivAndFeed(video)
-        this.selectVideo(videoObject, dontCache)
+        this.selectVideo(videoObject, setStorage)
         if (this.playerType()) {
             SiteHandlerManager.prototype.playVideoFeed(videoObject.videoData, playerState)
         } else {
@@ -216,8 +219,20 @@ define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype.recalculateJContentBuildStorageObject = function() {
         var superObject = this.parent.recalculateJContentBuildStorageObject.call(this)
         var storageObject = $.jStorage.get(this.options.id)
-        var recalculatedObject = _.extend(storageObject ? storageObject : {}, superObject)
+        var recalculatedObject = _.extend(storageObject ? storageObject : { name: new Date() }, superObject)
         return recalculatedObject
+    }
+
+    Playlist.prototype.recalculateJContentImmediate = function(cache) {
+        this.parent.recalculateJContentImmediate.call(this, cache)
+        $.jStorage.set('selected_' + this.id, { source: this.uid, index: this.getSelectedVideoIndex(), date: Date.now() })
+    }
+
+    Playlist.prototype.redrawJContent = function(elementsData) {
+        if(elementsData.data) {
+            this.parent.redrawJContent.call(this, elementsData)
+            this.selectVideo({index: $.jStorage.get('selected_' + this.options.id).index}, false)
+        }
     }
 
     Playlist.prototype.selectVideo = function (video, setStorage) {
@@ -228,13 +243,24 @@ define(["common/ptilist"], function (Ptilist) {
         $(videoDiv).addClass("selected")
         if (this.options.id && _.default(setStorage, true)) {
             console.log('setting currVideoData to storage')
-            $.jStorage.set("selected_" + this.options.id, { source:this.uid, index:this.getSelectedVideoIndex(), date: new Date().getTime()})
+            $.jStorage.set("selected_" + this.options.id, { source:this.uid, index:this.getSelectedVideoIndex(), play: true, date: Date.now() })
         }
 //        setWindowTitle(this.currVideoData);
     }
 
     Playlist.prototype.setActionBackground = function() {
         this.jContainer.addClass('pti-action-background')
+    }
+
+    Playlist.prototype.setIdListen = function(id, listenId) {
+        this.parent.setIdListen.call(this, id, listenId)
+        this.options.id && this.setPlaySelectedVideoListen()
+    }
+
+    Playlist.prototype.setPlaySelectedVideoListen = function() {
+        this.listenPlaySelectedVideoLast && $.jStorage.stopListening("selected_" + this.options.id, this.listenPlaySelectedVideoLast)
+        this.listenPlaySelectedVideoLast = this.listenPlaySelectedVideo.bind(this)
+        $.jStorage.listenKeyChange("selected_" + this.options.id, this.listenPlaySelectedVideoLast)
     }
 
     return Playlist
