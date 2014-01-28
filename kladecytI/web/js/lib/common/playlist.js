@@ -230,11 +230,25 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.redrawJContent = function(elementsData) {
+        var me = this
         if(elementsData.data) {
-            this.parent.redrawJContent.call(this, elementsData)
-            var selectedVideo = $.jStorage.get('selected_' + this.options.id);
-            selectedVideo && this.selectVideo({index: selectedVideo.index}, false)
+            var deferred = this.parent.redrawJContent.call(this, elementsData)
+            deferred.then(function() {
+                var selectedVideo = $.jStorage.get('selected_' + me.options.id);
+                selectedVideo && me.selectVideo({index: selectedVideo.index}, false)
+                deferred.resolve()
+            })
+            return deferred
         }
+    }
+
+    Playlist.prototype.scrollToSelected = function() {
+        var selected = this.jContent.find('.selected');
+        var index = selected.index()
+        var songsCount = this.jContent.find('.pti-element').length
+        var scrollHeight = this.jContent.prop('scrollHeight')
+        var scrollTo = scrollHeight / songsCount * index - this.jContent.height() / 2 - selected.height() / 2
+        this.jContent.slimscroll({scrollTo: scrollTo + 'px'})
     }
 
     Playlist.prototype.selectVideo = function (video, setStorage) {

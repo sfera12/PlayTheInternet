@@ -155,14 +155,38 @@ define(["jstorage", "slimscroll"], function () {
     Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate) {
         var me = this
 
-        elementsData.forEach(function (elementData) {
-//            console.log(elementData)
-            var ptiElement = me.drawPtiElement(elementData)
-//                console.log(ptiElement)
-            me.jContent.append(ptiElement)
+        var slices = new Array(), deferred = new $.Deferred()
+        while(elementsData.length) {
+            slices.push(elementsData.splice(0,100))
+        }
+        deferred.resolve()
+        slices.forEach(function(slice) {
+            var thenDeferred = new $.Deferred()
+            deferred.then(function() {
+                _.defer(function() {
+                    slice.forEach(function(elementData) {
+                        var ptiElement = me.drawPtiElement(elementData)
+        ////                console.log(ptiElement)
+                        me.jContent.append(ptiElement)
+                    })
+                    thenDeferred.resolve()
+                })
+                return thenDeferred
+            })
+            deferred = thenDeferred
         })
 
-        _.default(recalculcate, true) && this.recalculateJContentDebounce()
+        if(_.default(recalculcate, true)) {
+            var recalcDeferred = new $.Deferred()
+            deferred.then(function() {
+                me.recalculateJContentDebounce()
+                recalcDeferred.resolve()
+                return recalcDeferred
+            })
+            deferred = recalcDeferred
+        }
+
+        return deferred
     }
 
     Ptilist.prototype.getElements = function () {
@@ -216,7 +240,7 @@ define(["jstorage", "slimscroll"], function () {
     Ptilist.prototype.redrawJContent = function (elementsData) {
         if (elementsData.data) {
             this.emptyContent()
-            this.addElementsToList(elementsData.data, undefined, false)
+            return this.addElementsToList(elementsData.data, undefined, false)
         }
     }
 

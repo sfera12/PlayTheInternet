@@ -3,7 +3,6 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
-                redraw: true,
 //                listenKeyChangeCallback: redrawHashAndQRCode,
 //                playerType: false,
                 elementSize: options.size,
@@ -15,12 +14,6 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
                 ]
             }
         );
-        var selected = playlist.jContent.find('.selected');
-        var index = selected.index()
-        var songsCount = playlist.jContent.find('.pti-element').length
-        var scrollHeight = playlist.jContent.prop('scrollHeight')
-        var scrollTo = scrollHeight / songsCount * index - playlist.jContent.height() / 2 - selected.height() / 2
-        playlist.jContent.slimscroll({scrollTo: scrollTo + 'px'})
     })
 
     chrome.storage.local.get(['textAreaParseHeaderOptions'], function(options) {
