@@ -1,4 +1,4 @@
-define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
+define(["common/ptilist", "pti-playlist", "app/chrome/extension"], function (Ptilist, Playlist, extension) {
     Playlists.prototype = new Ptilist()
     Playlists.prototype.constructor = Playlists
     Playlists.prototype.parent = Ptilist.prototype
@@ -15,7 +15,13 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         //playlist
         me.jPlaylist = $('<div></div>').appendTo(me.jContainer.parent())
         me.initPlaylist = _.once(function() {
-            me.playlist = new Playlist(me.jPlaylist, { connectWith: "connected-playlist"})
+            me.playlist = new Playlist(me.jPlaylist,
+                {
+                    connectWith: "connected-playlist",
+                    elementSize: me.options.playlistElementSize,
+                    elementSplit: me.options.playlistElementSplit,
+                    headerClick: me.options.playlistHeaderClick
+                })
         })
         //playlist
 

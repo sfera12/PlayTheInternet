@@ -18,9 +18,8 @@ define(["playlist", "app/chrome/extension", "pti-playlist"], function(a, extensi
         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                 elementSize: options.size,
                 elementSplit: options.split,
-                connectWith: "connected-playlist"
-//                ,
-//                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
+                connectWith: "connected-playlist",
+                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
 //                execute: [
 //                    Playlist.prototype.addAction
 //                ]

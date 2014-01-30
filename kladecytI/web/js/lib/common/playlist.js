@@ -46,6 +46,10 @@ define(["common/ptilist"], function (Ptilist) {
         })
     }
 
+    Playlist.prototype.buildHash= function() {
+        return '#' + this.getIds()
+    }
+
     Playlist.prototype.createHeader = function () {
         var me = this
         var $header = $('<div class="pti-header"/>')
@@ -227,6 +231,7 @@ define(["common/ptilist"], function (Ptilist) {
         this.parent.recalculateJContentImmediate.call(this, cache)
         var index = this.getSelectedVideoIndex()
         index >= 0 && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: index, date: Date.now() })
+        _.isFunction(this.options.recalculateJContentImmediateCallback) && this.options.recalculateJContentImmediateCallback()
     }
 
     Playlist.prototype.redrawJContent = function(storageObject, scrollTo) {

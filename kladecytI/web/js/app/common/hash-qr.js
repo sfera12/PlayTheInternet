@@ -30,7 +30,7 @@ define(['underscore', 'app/common/tabs'], function (a) {
 
     function redrawHashAndQRCode() {
         if (typeof playlist != "undefined") {
-            window.location.hash = playlist.jPlaylist.sortable('toArray')
+            window.location.hash = playlist.getIds()
             $('#buildHashInput').val('http://playtheinter.net/play.html' + playlist.buildHash())
             $('#longLinkA').attr('href', 'http://playtheinter.net/play.html' + playlist.buildHash())
         }

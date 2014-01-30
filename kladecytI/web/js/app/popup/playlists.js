@@ -5,12 +5,11 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
                 scrollTo: index,
-//                listenKeyChangeCallback: redrawHashAndQRCode,
-//                playerType: false,
+                recalculateJContentImmediateCallback: redrawHashAndQRCode,
                 elementSize: options.size,
                 elementSplit: options.split,
                 connectWith: "connected-playlist",
-//                headerClick: extension.headerClick.bind({playlistHeaderOptions: {}}),
+                headerClick: extension.headerClick.bind({playlistHeaderOptions: {}}),
                 execute: [
                     Playlist.prototype.playAction
                 ]
@@ -25,8 +24,8 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
                     playerType: false,
                     elementSize: options.size,
                     elementSplit: options.split,
-                    connectWith: "connected-playlist"
-//                    headerClick: extension.headerClick.bind({textAreaParseHeaderOptions: {}}),
+                    connectWith: "connected-playlist",
+                    headerClick: extension.headerClick.bind({textAreaParseHeaderOptions: {}}),
 //                    execute: [
 //                        Playlist.prototype.addAction
 //                    ]
