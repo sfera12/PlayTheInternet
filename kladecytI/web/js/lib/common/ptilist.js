@@ -149,25 +149,37 @@ define(["jstorage", "slimscroll"], function () {
                 me.options.slimScroll && (sortableSlimScroll.scroll = false)
             })
 
-        this.setIdListen(this.options.id, this.options.listenId)
+        this.setIdListen(this.options.id, this.options.listenId, this.options.scrollTo)
     }
 
-    Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate) {
-        var me = this
-
-        var slices = new Array(), deferred = new $.Deferred()
-        while(elementsData.length) {
-            slices.push(elementsData.splice(0,100))
+    Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate, scrollTo) {
+        var me = this, dataPtiElements = new Array(), slices = new Array(), sliceCap = 33, deferred = new $.Deferred()
+        elementsData.forEach(function(elementData) {
+            dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement(elementData)).appendTo(me.jContent) })
+        })
+        while(dataPtiElements.length) {
+            slices.push(dataPtiElements.splice(0, sliceCap))
         }
+
+        if(scrollTo) {
+            var startSlice = parseInt(scrollTo / sliceCap), offset = 1, reorderSlices = new Array()
+            reorderSlices.push(slices[startSlice])
+            while(slices[startSlice - offset] || slices[startSlice + offset]) {
+                slices[startSlice - offset] && reorderSlices.push(slices[startSlice - offset])
+                slices[startSlice + offset] && reorderSlices.push(slices[startSlice + offset])
+                offset++
+            }
+            slices = reorderSlices
+            this.scrollTo(scrollTo)
+        }
+
         deferred.resolve()
         slices.forEach(function(slice) {
             var thenDeferred = new $.Deferred()
             deferred.then(function() {
                 _.defer(function() {
-                    slice.forEach(function(elementData) {
-                        var ptiElement = me.drawPtiElement(elementData)
-        ////                console.log(ptiElement)
-                        me.jContent.append(ptiElement)
+                    slice.forEach(function(dataPtiElement) {
+                        me.drawPtiElement(dataPtiElement.data, dataPtiElement.$ptiElement)
                     })
                     thenDeferred.resolve()
                 })
@@ -237,21 +249,20 @@ define(["jstorage", "slimscroll"], function () {
         }
     }
 
-    Ptilist.prototype.redrawJContent = function (elementsData) {
+    Ptilist.prototype.redrawJContent = function (elementsData, scrollTo) {
         if (elementsData.data) {
             this.emptyContent()
-            return this.addElementsToList(elementsData.data, undefined, false)
+            return this.addElementsToList(elementsData.data, undefined, false, scrollTo)
         }
     }
 
-    Ptilist.prototype.redrawJContentGeneric = function (key, action, functionName, filterOwn) {
+    Ptilist.prototype.redrawJContentGeneric = function (key, action, functionName, filterOwn, scrollTo) {
         var storagePlaylist = this.redrawJContentGetCacheObject(key, action, functionName, filterOwn)
-        storagePlaylist && this.redrawJContent(storagePlaylist)
+        storagePlaylist && this.redrawJContent(storagePlaylist, scrollTo)
     }
 
     Ptilist.prototype.redrawJContentFromCacheAttachListenersRedraw = function() {
         this.redrawJContentFromCacheListenJStorage()
-        this.redrawJContentFromCacheManual()
     }
 
     Ptilist.prototype.redrawJContentFromCacheListen = function (key, action) {
@@ -263,8 +274,8 @@ define(["jstorage", "slimscroll"], function () {
         $.jStorage.listenKeyChange(this.options.listenId, this.redrawJContentFromCacheListenLast)
     }
 
-    Ptilist.prototype.redrawJContentFromCacheManual = function () {
-        this.redrawJContentGeneric(this.options.id, 'manual redraw from cache', 'manual redraw ptilist from cache')
+    Ptilist.prototype.redrawJContentFromCacheManual = function (scrollTo) {
+        this.redrawJContentGeneric(this.options.id, 'manual redraw from cache', 'manual redraw ptilist from cache', false, scrollTo)
     }
 
     Ptilist.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
@@ -280,15 +291,21 @@ define(["jstorage", "slimscroll"], function () {
         }
     }
 
+    Ptilist.prototype.scrollTo = function(index) {
+        var elementHeight = this.jContent.prop('scrollHeight') / this.getIdsCount()
+        var scrollTo = elementHeight * index - this.jContent.height() / 2 + elementHeight / 2
+        this.jContent.slimscroll({ scrollTo: scrollTo + 'px' })
+    }
+
     Ptilist.prototype.setId = function(id, listenId) {
         this.options.listenId = _.default(listenId, id)
         this.options.id = id
     }
 
-    Ptilist.prototype.setIdListen = function(id, listenId) {
+    Ptilist.prototype.setIdListen = function(id, listenId, scrollTo) {
         this.redrawJContentFromCacheListenLast && $.jStorage.stopListening(this.options.listenId, this.redrawJContentFromCacheListenLast)
         this.setId(id, listenId)
-        this.options.listenId && this.redrawJContentFromCacheAttachListenersRedraw()
+        this.options.listenId && (this.redrawJContentFromCacheAttachListenersRedraw() | this.redrawJContentFromCacheManual(scrollTo))
     }
 
     Ptilist.prototype.setSlimScroll = function (element, height) {

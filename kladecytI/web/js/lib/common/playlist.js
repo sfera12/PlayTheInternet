@@ -130,8 +130,8 @@ define(["common/ptilist"], function (Ptilist) {
         return $header
     }
 
-    Playlist.prototype.drawPtiElement = function(typeIdText) {
-        return SiteHandlerManager.prototype.drawPtiElement(typeIdText, this.options.fillVideoElement)
+    Playlist.prototype.drawPtiElement = function(typeIdText, $ptiElement) {
+        return SiteHandlerManager.prototype.drawPtiElement(typeIdText, $ptiElement, this.options.fillVideoElement)
     }
 
     Playlist.prototype.getSelectedVideoIndex = function() {
@@ -229,16 +229,11 @@ define(["common/ptilist"], function (Ptilist) {
         index >= 0 && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: index, date: Date.now() })
     }
 
-    Playlist.prototype.redrawJContent = function(elementsData) {
-        var me = this
+    Playlist.prototype.redrawJContent = function(elementsData, scrollTo) {
         if(elementsData.data) {
-            var deferred = this.parent.redrawJContent.call(this, elementsData)
-            deferred.then(function() {
-                var selectedVideo = $.jStorage.get('selected_' + me.options.id);
-                selectedVideo && me.selectVideo({index: selectedVideo.index}, false)
-                deferred.resolve()
-            })
-            return deferred
+            this.parent.redrawJContent.call(this, elementsData, scrollTo)
+            var selectedVideo = $.jStorage.get('selected_' + this.options.id)
+            selectedVideo && this.selectVideo({index: selectedVideo.index}, false)
         }
     }
 
@@ -268,8 +263,8 @@ define(["common/ptilist"], function (Ptilist) {
         this.jContainer.addClass('pti-action-background')
     }
 
-    Playlist.prototype.setIdListen = function(id, listenId) {
-        this.parent.setIdListen.call(this, id, listenId)
+    Playlist.prototype.setIdListen = function(id, listenId, scrollTo) {
+        this.parent.setIdListen.call(this, id, listenId, scrollTo)
         this.setPlaySelectedVideoListen(id)
     }
 

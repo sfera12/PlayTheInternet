@@ -1,8 +1,10 @@
 define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(extension, redrawHashAndQRCode, Playlist) {
     chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
         options = extension.prepareOptions(options, { size: 'list', split: 'one'})
+        var selected = $.jStorage.get("selected_backgroundPageId"), index = selected && selected.index >= 0 && selected.index
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
+                scrollTo: index,
 //                listenKeyChangeCallback: redrawHashAndQRCode,
 //                playerType: false,
                 elementSize: options.size,

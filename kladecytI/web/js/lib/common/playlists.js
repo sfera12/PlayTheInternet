@@ -38,10 +38,9 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         me.setIdListen("playlists", "*")
     }
 
-    Playlists.prototype.drawPtiElement = function (playlistData) {
-        var ptiElement = $(PTITemplates.prototype.PlaylistsVideoElement(playlistData))
-        ptiElement.data('data', playlistData)
-        return ptiElement
+    Playlists.prototype.drawPtiElement = function (playlistData, $ptiElement) {
+        $ptiElement.append(PTITemplates.prototype.PlaylistsVideoElement(playlistData))
+        return $ptiElement
     }
 
     Playlists.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
