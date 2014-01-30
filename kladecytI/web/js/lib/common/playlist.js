@@ -233,7 +233,7 @@ define(["common/ptilist"], function (Ptilist) {
         if(storageObject.data) {
             this.parent.redrawJContent.call(this, storageObject, scrollTo)
             var selectedVideo = $.jStorage.get('selected_' + this.options.id)
-            selectedVideo && this.selectVideo({index: selectedVideo.index}, false)
+            selectedVideo && selectedVideo.index >= 0 && this.selectVideo({index: selectedVideo.index}, false)
         }
     }
 
