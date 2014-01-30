@@ -229,9 +229,9 @@ define(["common/ptilist"], function (Ptilist) {
         index >= 0 && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: index, date: Date.now() })
     }
 
-    Playlist.prototype.redrawJContent = function(elementsData, scrollTo) {
-        if(elementsData.data) {
-            this.parent.redrawJContent.call(this, elementsData, scrollTo)
+    Playlist.prototype.redrawJContent = function(storageObject, scrollTo) {
+        if(storageObject.data) {
+            this.parent.redrawJContent.call(this, storageObject, scrollTo)
             var selectedVideo = $.jStorage.get('selected_' + this.options.id)
             selectedVideo && this.selectVideo({index: selectedVideo.index}, false)
         }
