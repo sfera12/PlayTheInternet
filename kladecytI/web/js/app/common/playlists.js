@@ -1,5 +1,5 @@
 define(function () {
-    var Playlists, firstPlaylists, playlists, firstPlaylistsDefinition, secondPlaylistsDefinition, playlistsDefinitionsObject, playlistsHandler
+    var Playlists, firstPlaylistsDefinition, secondPlaylistsDefinition, playlistsDefinitionsObject, playlistsHandler
     var init = _.once(function(Playlists, extension) {
         firstPlaylistsDefinition = {
             init: _.once(function () {

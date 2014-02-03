@@ -1,6 +1,7 @@
 define(['jquery', 'jquery-ui'], function ($) {
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
-    $('#tabs, #secondViewTabs').tabs({
+    window.tabs = { first: {}, second: {} }
+    $('#tabs').tabs({
         activate:function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {
@@ -22,5 +23,18 @@ define(['jquery', 'jquery-ui'], function ($) {
             newTab.addClass('active')
             $(ui.oldTab).removeClass('active')
         }
+    })
+
+    $('#secondViewTabs').tabs({
+    })
+    var secondPlaylist = null
+    tabs.second.getPlaylist = function() {
+        return secondPlaylist ? secondPlaylist : playlist
+    }
+    $('#secondViewTabs').on('click', '[href="#secondPlayingDiv"]', function() {
+        secondPlaylist = window.playlist
+    })
+    $('#ulSecondPlaylists').on('click', '.image-div', function() {
+        secondPlaylist = playlists.playlist
     })
 })
