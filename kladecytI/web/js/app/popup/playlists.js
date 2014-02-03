@@ -1,6 +1,5 @@
-define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(extension, redrawHashAndQRCode, Playlist) {
+define(["app/common/hash-qr", "pti-playlist"], function(redrawHashAndQRCode, Playlist) {
     chrome.storage.local.get(['playlistHeaderOptions'], function (options) {
-        options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         var selected = $.jStorage.get("selected_backgroundPageId"), index = selected && selected.index >= 0 && selected.index
         window.playlist = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
@@ -9,7 +8,7 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
                 elementSize: options.size,
                 elementSplit: options.split,
                 connectWith: "connected-playlist",
-                headerClick: extension.headerClick.bind({playlistHeaderOptions: {}}),
+                headerConfigKey: "lConfigPlaylistHeader",
                 execute: [
                     Playlist.prototype.playAction
                 ]
@@ -18,14 +17,13 @@ define(["app/chrome/extension", "app/common/hash-qr", "pti-playlist"], function(
     })
 
     chrome.storage.local.get(['textAreaParseHeaderOptions'], function(options) {
-        options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         var createPlaylist = _.once(function() {
             window.textAreaParsePlaylist = new Playlist("#textAreaParsePlaylist", {
                     playerType: false,
                     elementSize: options.size,
                     elementSplit: options.split,
                     connectWith: "connected-playlist",
-                    headerClick: extension.headerClick.bind({textAreaParseHeaderOptions: {}}),
+                    headerConfigKey: "lConfigTextAreaParsePlaylistHeader",
 //                    execute: [
 //                        Playlist.prototype.addAction
 //                    ]

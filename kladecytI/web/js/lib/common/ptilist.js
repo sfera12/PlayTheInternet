@@ -154,6 +154,9 @@ define(["jstorage", "slimscroll"], function () {
 
     Ptilist.prototype.addElementsToList = function (elementsData, unique, recalculcate, scrollTo) {
         var me = this, dataPtiElements = new Array(), slices = new Array(), sliceCap = 33, deferred = new $.Deferred()
+
+        unique && ( elementsData = this.unique(this.getIds(), elementsData) )
+
         elementsData.forEach(function(elementData) {
             dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement(elementData)).appendTo(me.jContent) })
         })
@@ -312,6 +315,14 @@ define(["jstorage", "slimscroll"], function () {
             railColor: '#000000',
             disableFadeOut: true
         });
+    }
+
+    Ptilist.prototype.unique = function(current, input) {
+        var currIds = current
+        var newIds = input.map(function(item) {
+            return item && typeof item.id !== "undefined" ? item.id : item
+        }).filter(Boolean)
+        return _.difference(newIds, currIds)
     }
 
     function GUID() {

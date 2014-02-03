@@ -1,4 +1,4 @@
-define(["playlist", "app/chrome/extension", "pti-playlist"], function(a, extension, Playlist) {
+define(["playlist", "pti-playlist"], function(a, Playlist) {
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
 //                    console.log(sender.tab ?
@@ -14,12 +14,11 @@ define(["playlist", "app/chrome/extension", "pti-playlist"], function(a, extensi
         }
     );
     chrome.storage.local.get(['parseHeaderOptions'], function (options) {
-        options = extension.prepareOptions(options, { size: 'list', split: 'one'})
         window.parsedPlaylist = new Playlist('#parsedPlaylist', {
                 elementSize: options.size,
                 elementSplit: options.split,
                 connectWith: "connected-playlist",
-                headerClick: extension.headerClick.bind({parseHeaderOptions: {}}),
+                headerConfigKey: "lConfigParsedPlaylistHeader",
 //                execute: [
 //                    Playlist.prototype.addAction
 //                ]

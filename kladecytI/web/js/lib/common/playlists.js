@@ -1,4 +1,4 @@
-define(["common/ptilist", "pti-playlist", "app/chrome/extension"], function (Ptilist, Playlist, extension) {
+define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
     Playlists.prototype = new Ptilist()
     Playlists.prototype.constructor = Playlists
     Playlists.prototype.parent = Ptilist.prototype
@@ -20,7 +20,7 @@ define(["common/ptilist", "pti-playlist", "app/chrome/extension"], function (Pti
                     connectWith: "connected-playlist",
                     elementSize: me.options.playlistElementSize,
                     elementSplit: me.options.playlistElementSplit,
-                    headerClick: me.options.playlistHeaderClick
+                    headerConfigKey: me.options.playlistHeaderConfigKey
                 })
         })
         //playlist

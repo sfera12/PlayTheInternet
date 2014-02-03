@@ -54,6 +54,11 @@ define(["common/ptilist"], function (Ptilist) {
         var me = this
         var $header = $('<div class="pti-header"/>')
         var groupToReplace = { '.size-button': /pti-view-[^\s]+/, '.split-button': /pti-split-[^\s]+/ }
+        if(me.options.headerConfigKey) {
+            var conf = $.jStorage.get(me.options.headerConfigKey)
+            conf && conf.size && ( me.options.elementSize = conf.size )
+            conf && conf.split && ( me.options.elementSplit = conf.split )
+        }
         var setSizeActive = function(selected) {
             var $selected = $(this);
             $selected.addClass('selected')
@@ -67,12 +72,25 @@ define(["common/ptilist"], function (Ptilist) {
             })
             var after = { scrollTop: me.jContent.scrollTop(), scrollHeight: me.jContent.prop('scrollHeight'), height: me.jContent.height() }
             moveScrollBar(before, after)
-            _.isFunction(me.options.headerClick) && me.options.headerClick($selected)
+            me.options.headerConfigKey && headerClick($selected)
         }
         var moveScrollBar = function(before, after) {
             var beforeScrollTop = before.scrollTop / (before.scrollHeight - before.height)
             var afterScrollTop = (after.scrollHeight - after.height) * beforeScrollTop
             me.jContent.slimscroll({scrollTo:  afterScrollTop + 'px' })
+        }
+        var headerClick = function(ui) {
+            var options = { size: undefined, split: undefined }
+            ui.parent().find('.selected').each(function (index, item) {
+                var classes = $(item).attr('class').split(' ')
+                var size = classes[0].replace(/set-\w+-/, '')
+                if (classes[2].match(/size/)) {
+                    options.size = size
+                } else if (classes[2].match(/split/)) {
+                    options.split = size
+                }
+            })
+            $.jStorage.set(me.options.headerConfigKey, options)
         }
 
 

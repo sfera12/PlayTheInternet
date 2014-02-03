@@ -155,3 +155,5 @@ http://0to255.com/E6E6FA
 background-color: #e6e6fa;
 background-color: #cacaf4;
 background-color: #9f9fec;
+
+PTITemplates.prototype.PlaylistCopyAction = _.template('<svg><polygon points="0,0 45,45 0,90"/></svg>')
