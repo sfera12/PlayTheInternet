@@ -19,9 +19,12 @@ define(["playlist", "pti-playlist"], function(a, Playlist) {
                 elementSplit: options.split,
                 connectWith: "connected-playlist",
                 headerConfigKey: "lConfigParsedPlaylistHeader",
-//                execute: [
-//                    Playlist.prototype.addAction
-//                ]
+                execute: [
+                    Playlist.prototype.addAction,
+                    function() {
+                        this.tabsGetPlaylist = tabs.second.getPlaylist
+                    }
+                ]
             }
         );
         parsedPlaylist.emptyContent();

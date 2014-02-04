@@ -25,13 +25,13 @@ define(['jquery', 'jquery-ui'], function ($) {
         }
     })
     tabs.first.getPlaylist = function() {
-        return tabs.first.playlist
+        return tabs.first.playlist ? tabs.first.playlist : parsedPlaylist
     }
     $('#tabs').on('click', 'ul>li>a', function() {
-        tabs.first.playlist = null
+        tabs.first.playlist = window.playlist
     })
     $('#firstView').on('click', '[href="#tAreaDiv"]', function() {
-        tabs.first.playlist = typeof textParsePlaylist !== "undefined" && textParsePlaylist
+        tabs.first.playlist = typeof textParsePlaylist !== "undefined" ? textParsePlaylist : window.playlist
     })
     $('#firstView').on('click', '#tAreaParseButton', function() {
         tabs.first.playlist = textParsePlaylist
@@ -47,7 +47,7 @@ define(['jquery', 'jquery-ui'], function ($) {
     })
     var secondPlaylist = null
     tabs.second.getPlaylist = function() {
-        return secondPlaylist ? secondPlaylist : playlist
+        return secondPlaylist ? secondPlaylist : window.playlist
     }
     $('#secondViewTabs').on('click', 'ul>li>a', function() {
         secondPlaylist = window.playlist

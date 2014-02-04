@@ -20,7 +20,11 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                     connectWith: "connected-playlist",
                     elementSize: me.options.playlistElementSize,
                     elementSplit: me.options.playlistElementSplit,
-                    headerConfigKey: me.options.playlistHeaderConfigKey
+                    headerConfigKey: me.options.playlistHeaderConfigKey,
+                    execute: [
+                        Playlist.prototype.addAction,
+                        me.options.playlistTabsGetPlaylist
+                    ]
                 })
         })
         //playlist

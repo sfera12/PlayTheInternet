@@ -166,7 +166,7 @@ define(["jstorage", "slimscroll"], function () {
 
         if(scrollTo) {
             var startSlice = parseInt(scrollTo / sliceCap), offset = 1, reorderSlices = new Array()
-            reorderSlices.push(slices[startSlice])
+            slices[startSlice] && reorderSlices.push(slices[startSlice])
             while(slices[startSlice - offset] || slices[startSlice + offset]) {
                 slices[startSlice - offset] && reorderSlices.push(slices[startSlice - offset])
                 slices[startSlice + offset] && reorderSlices.push(slices[startSlice + offset])
@@ -206,6 +206,10 @@ define(["jstorage", "slimscroll"], function () {
 
     Ptilist.prototype.getElements = function () {
         return this.jContent.find('.pti-element')
+    }
+
+    Ptilist.prototype.getElementsSelected = function () {
+        return this.jContent.find('.pti-element.ui-selected')
     }
 
     Ptilist.prototype.getIds = function () {

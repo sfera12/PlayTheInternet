@@ -17,17 +17,20 @@ define(["app/common/hash-qr", "pti-playlist"], function (redrawHashAndQRCode, Pl
             playerType: false,
             connectWith: "connected-playlist",
             headerConfigKey: "lConfigTextAreaParsePlaylistHeader",
-//                    execute: [
-//                        Playlist.prototype.addAction
-//                    ]
+                    execute: [
+                        Playlist.prototype.addAction,
+                        function() {
+                            this.tabsGetPlaylist = tabs.second.getPlaylist
+                        }
+                    ]
         })
     })
     $('#tAreaParseButton').click(function () {
         var tAreaText = $('#tArea').val()
         createPlaylist()
-        textParsePlaylist.playlistEmpty();
+        textParsePlaylist.emptyContent();
         require(['cparse'], function () {
-                textParsePlaylist.addSongsToPlaylist(textParsePlaylist.parseSongIds(playTheInternetParse(tAreaText)), true)
+                textParsePlaylist.addElementsToList(_.stringToArray(playTheInternetParse(tAreaText)), true)
         })
     })
 })

@@ -4,7 +4,10 @@ define(function () {
         firstPlaylistsDefinition = {
             init: _.once(function () {
                 firstPlaylists = new Playlists("#ulFirstPlaylists", {
-                    playlistHeaderConfigKey: "lConfigFirstPlaylistsPlaylistHeader"
+                    playlistHeaderConfigKey: "lConfigFirstPlaylistsPlaylistHeader",
+                    playlistTabsGetPlaylist: function () {
+                        this.tabsGetPlaylist = tabs.second.getPlaylist
+                    }
                 })
             }),
             getPlaylists: function () {
@@ -14,7 +17,10 @@ define(function () {
         secondPlaylistsDefinition = {
             init: _.once(function () {
                 playlists = new Playlists("#ulSecondPlaylists", {
-                    playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader"
+                    playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
+                    playlistTabsGetPlaylist: function () {
+                        this.tabsGetPlaylist = tabs.first.getPlaylist
+                    }
                 })
             }),
             getPlaylists: function () {

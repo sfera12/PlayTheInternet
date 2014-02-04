@@ -29,14 +29,13 @@ define(["common/ptilist"], function (Ptilist) {
             if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
                 var selected = '', $this = $(this), uiselected
                 if ($this.hasClass('ui-selected')) {
-                    uiselected = me.jContent.find('.ui-selected').each(function () {
-                        selected += $(this).attr('id') + ','
-                    })
+                    selected = me.getIdsSelected()
+                    uiselected = me.getElementsSelected()
                 } else {
-                    selected = this.id
+                    selected = [this.id]
                 }
 //            console.log(selected)
-                playlist.addElementsToList(playlist.parseSongIds(selected), true)
+                me.tabsGetPlaylist().addElementsToList(selected, true)
                 var remove = function() {
                     $(this).remove();
                 }
@@ -154,6 +153,22 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.drawPtiElement = function(typeIdText, $ptiElement) {
         return SiteHandlerManager.prototype.drawPtiElement(typeIdText, $ptiElement, this.options.fillVideoElement)
+    }
+
+    Playlist.prototype.DAO = function(key) {
+        var sObj = $.jStorage.get(key)
+        var storageObj = sObj ? sObj : { id: key }
+        return dao = {
+            key: key,
+            storageObj: storageObj,
+            update: function (obj) {
+                _.extend(this.storageObj, obj)
+                return this
+            },
+            set: function () {
+                $.jStorage.set(this.key, this.storageObj)
+            }
+        }
     }
 
     Playlist.prototype.getSelectedVideoIndex = function() {
