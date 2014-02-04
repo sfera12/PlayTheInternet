@@ -13,7 +13,7 @@ define(["app/common/hash-qr", "pti-playlist"], function (redrawHashAndQRCode, Pl
     );
 
     var createPlaylist = _.once(function () {
-        window.textAreaParsePlaylist = new Playlist("#textAreaParsePlaylist", {
+        window.textParsePlaylist = new Playlist("#textAreaParsePlaylist", {
             playerType: false,
             connectWith: "connected-playlist",
             headerConfigKey: "lConfigTextAreaParsePlaylistHeader",
@@ -25,9 +25,9 @@ define(["app/common/hash-qr", "pti-playlist"], function (redrawHashAndQRCode, Pl
     $('#tAreaParseButton').click(function () {
         var tAreaText = $('#tArea').val()
         createPlaylist()
-        textAreaParsePlaylist.playlistEmpty();
+        textParsePlaylist.playlistEmpty();
         require(['cparse'], function () {
-                textAreaParsePlaylist.addSongsToPlaylist(textAreaParsePlaylist.parseSongIds(playTheInternetParse(tAreaText)), true)
+                textParsePlaylist.addSongsToPlaylist(textParsePlaylist.parseSongIds(playTheInternetParse(tAreaText)), true)
         })
     })
 })

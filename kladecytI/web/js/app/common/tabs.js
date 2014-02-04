@@ -24,6 +24,24 @@ define(['jquery', 'jquery-ui'], function ($) {
             $(ui.oldTab).removeClass('active')
         }
     })
+    tabs.first.getPlaylist = function() {
+        return tabs.first.playlist
+    }
+    $('#tabs').on('click', 'ul>li>a', function() {
+        tabs.first.playlist = null
+    })
+    $('#firstView').on('click', '[href="#tAreaDiv"]', function() {
+        tabs.first.playlist = typeof textParsePlaylist !== "undefined" && textParsePlaylist
+    })
+    $('#firstView').on('click', '#tAreaParseButton', function() {
+        tabs.first.playlist = textParsePlaylist
+    })
+    $('#firstView').on('click', '[href="#parsedDiv"]', function() {
+        tabs.first.playlist = parsedPlaylist
+    })
+    $('#ulFirstPlaylists').on('click', '.image-div', function() {
+        tabs.first.playlist = firstPlaylists.playlist
+    })
 
     $('#secondViewTabs').tabs({
     })
@@ -31,7 +49,7 @@ define(['jquery', 'jquery-ui'], function ($) {
     tabs.second.getPlaylist = function() {
         return secondPlaylist ? secondPlaylist : playlist
     }
-    $('#secondViewTabs').on('click', '[href="#secondPlayingDiv"]', function() {
+    $('#secondViewTabs').on('click', 'ul>li>a', function() {
         secondPlaylist = window.playlist
     })
     $('#ulSecondPlaylists').on('click', '.image-div', function() {
