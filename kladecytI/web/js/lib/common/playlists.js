@@ -45,8 +45,8 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
 
         me.jContent.on('click', '.pti-remove-playlist-dialog', function(event, ui) {
             var $button = $(this);
-            $button.hide()
-            $button.siblings().show()
+            $button.addClass('temp-display-none-important')
+            $button.siblings().removeClass('temp-display-none-important')
         })
         me.jContent.on('click', '.pti-remove-playlist-yes', function(event, ui) {
             var $button = $(this);
@@ -55,8 +55,8 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         })
         me.jContent.on('click', '.pti-remove-playlist-no', function(event, ui) {
             var $button = $(this), $parent = $button.parent();
-            $parent.children().not('.pti-remove-playlist-dialog').hide()
-            $parent.children('.pti-remove-playlist-dialog').show()
+            $parent.children().not('.pti-remove-playlist-dialog').addClass('temp-display-none-important')
+            $parent.children('.pti-remove-playlist-dialog').removeClass('temp-display-none-important')
         })
 
         me.jContent.on('keypress', '.pti-name', function (event) {

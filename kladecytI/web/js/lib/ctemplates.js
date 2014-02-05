@@ -130,7 +130,7 @@ __p+='<div> <div class="pti-sortable-handler image-div"><img src="'+
 ((__t=( name ))==null?'':__t)+
 '"/> <div class="pti-count">'+
 ((__t=( data.length ))==null?'':__t)+
-'</div> </div> <div class="pti-playlists-buttons"> <div class="pti-play-all pti-clickable">Play All</div> <div class="pti-add-all pti-clickable">Add All</div> <div class="pti-remove-playlist"> <div class="pti-remove-playlist-dialog pti-clickable">Remove Playlist</div> <div class="pti-remove-playlist-yes pti-clickable">Yes</div> <div class="pti-remove-playlist-no pti-clickable">No</div> </div> </div> </div> </div>';
+'</div> </div> <div class="pti-playlists-buttons"> <div class="pti-play-all pti-clickable">Play All</div> <div class="pti-add-all pti-clickable">Add All</div> <div class="pti-remove-playlist"> <div class="pti-remove-playlist-dialog pti-clickable">Remove Playlist</div> <div class="pti-remove-playlist-yes pti-clickable temp-display-none-important">Yes</div> <div class="pti-remove-playlist-no pti-clickable temp-display-none-important">No</div> </div> </div> </div> </div>';
 }
 return __p;
 }

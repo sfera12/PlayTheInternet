@@ -52,6 +52,6 @@
 
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist { float: right; width: 107px; padding: 0px; margin-right: 15px; }
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>*:hover { background-color: royalblue; color: white; cursor: pointer; }
-.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-yes, .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-no { display: none; float: left; width: 50%; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-yes, .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-no { float: left; width: 50%; }
 /* Playlists End */
 
