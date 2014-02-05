@@ -53,6 +53,38 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         return $ptiElement
     }
 
+    Playlists.prototype.redrawJContent = function(storageObject) {
+        this.parent.redrawJContent.call(this, storageObject)
+        var me = this
+        console.log(me.getElements())
+        me.getElements().droppable({
+            accept: ".pti-element-video",
+            drop: function(event, ui) {
+                var ids = '', playlistId = this.id, uiselected
+                var ptilist = ui.draggable.parent().data('ptilist'), playlistDao = Playlist.prototype.DAO(playlistId)
+                if(ui.draggable.hasClass('ui-selected')) {
+                    ids = ptilist.getIdsSelected()
+                    uiselected = ptilist.getElementsSelected()
+                } else {
+                    ids = [ui.draggable[0].id]
+                }
+                playlistDao.addVideos(ids).set()
+
+
+                var remove = function() {
+                    $(this).remove();
+                }
+                ui.draggable.remove()
+                uiselected && uiselected.hide(400, remove);
+                ptilist.recalculateJContent()
+                console.log('songId, playlistId: ', ids, playlistId)
+                console.log(event)
+                console.log(ui)
+                console.log(this)
+            }
+        })
+    }
+
     Playlists.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
         if (key.match(/^(playlists)|(lPlaylist.+)$/)) {
             var storageObj = this.parent.redrawJContentGetCacheObject.call(this, "playlists", action, functionName, filterOwn ? key.match(/^playlists$/) : false)

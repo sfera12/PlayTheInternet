@@ -1,6 +1,6 @@
 function PTITemplates() {
 }
-PTITemplates.prototype.ptiElement = _.template('<div id="<%= typeof id !== "undefined" ? id : obj %>" class="pti-element"></div>')
+PTITemplates.prototype.ptiElement = _.template('<div id="<%= id %>" class="<%= elementClass %>"></div>')
 
 PTITemplates.prototype.YoutubeRawTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
 PTITemplates.prototype.YoutubeCompleteTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')

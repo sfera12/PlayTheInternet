@@ -9,6 +9,7 @@ define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype.init = function (appendToElementExpression, options) {
         var me = this
         me.options = _.extend({}, options)
+        me.options.ptiElementClass = "pti-element-video " + _.default(me.options.ptiElementClass, "")
         me.options.fillVideoElement = _.default(me.options.fillVideoElement, true)
         me.options.playerType = _.default(me.options.playerType, false)
         me.parent.init.call(this, appendToElementExpression, me.options)
@@ -156,17 +157,23 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.DAO = function(key) {
-        var sObj = $.jStorage.get(key)
-        var storageObj = sObj ? sObj : { id: key }
+        var storageObj = _.extend({ id: key, data: [] }, $.jStorage.get(key))
+        storageObj && (storageObj.data = storageObj.data ? _.stringToArray(storageObj.data) : [])
         return dao = {
             key: key,
             storageObj: storageObj,
+            addVideos: function(videosArr) {
+                this.storageObj.data = this.storageObj.data.concat(videosArr)
+                return this
+            },
             update: function (obj) {
                 _.extend(this.storageObj, obj)
                 return this
             },
             set: function () {
+                this.storageObj.data = _.arrayToString(this.storageObj.data)
                 $.jStorage.set(this.key, this.storageObj)
+                return this
             }
         }
     }

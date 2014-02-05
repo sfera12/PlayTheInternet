@@ -25,6 +25,7 @@ define(["jstorage", "slimscroll"], function () {
     Ptilist.prototype.init = function (appendToElementExpression, options) {
         var me = this
         me.options = _.extend({}, options)
+        me.options.ptiElementClass = "pti-element " + _.default(me.options.ptiElementClass, "")
         me.options.elementSize = _.default(me.options.elementSize, "big")
         me.options.elementSplit = _.default(me.options.elementSplit, "two")
         me.options.slimScroll = _.default(me.options.slimScroll, true)
@@ -158,7 +159,7 @@ define(["jstorage", "slimscroll"], function () {
         unique && ( elementsData = this.unique(this.getIds(), elementsData) )
 
         elementsData.forEach(function(elementData) {
-            dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement(elementData)).appendTo(me.jContent) })
+            dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement({id: typeof elementData.id !== "undefined" ? elementData.id : elementData, elementClass: me.options.ptiElementClass})).appendTo(me.jContent) })
         })
         while(dataPtiElements.length) {
             slices.push(dataPtiElements.splice(0, sliceCap))
