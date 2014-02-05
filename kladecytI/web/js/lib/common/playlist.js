@@ -166,6 +166,10 @@ define(["common/ptilist"], function (Ptilist) {
                 this.storageObj.data = this.storageObj.data.concat(videosArr)
                 return this
             },
+            delete: function() {
+                $.jStorage.deleteKey(this.key)
+                return this
+            },
             update: function (obj) {
                 _.extend(this.storageObj, obj)
                 return this

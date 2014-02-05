@@ -15,7 +15,7 @@
 
 .pti-ptilist .pti-content.pti-view-big>* .duration-caption, .pti-ptilist .pti-content.pti-view-medium>* .duration-caption { position: absolute; width: auto; height: auto; background: #000000; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; }
 .pti-ptilist .pti-content.pti-view-big>* .duration-caption { right: 5px; bottom: 3px; }
-.pti-ptilist .pti-content.pti-view-medium>* .duration-caption { right: 6px; bottom: 2px; font-size: 9px; }
+.pti-ptilist .pti-content.pti-view-medium>* .duration-caption { right: 0px; bottom: 0px; font-size: 9px; }
 .pti-ptilist .pti-content.pti-view-list>* .duration-caption { color: #007FFF; text-align: right; }
 .pti-ptilist .pti-content.pti-view-list>*.ui-selected .duration-caption { color: white; }
 
@@ -46,9 +46,12 @@
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons { clear: right; }
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>* { float: left; cursor: pointer; }
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>* { background-color: #007FFF; color: #efeff5; padding: 0px 10px 0px 10px; float: left; text-align: center; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>*:hover:not(.pti-remove-playlist) { background-color: royalblue; color: white; cursor: pointer; }
+
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-play-all { margin-left: 15px; }
-.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist { float: right; margin-right: 15px; }
-.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>*:hover { background-color: royalblue; color: white; cursor: pointer; }
-{ background-color: #007FFF; color: white; }
+
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist { float: right; width: 107px; padding: 0px; margin-right: 15px; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>*:hover { background-color: royalblue; color: white; cursor: pointer; }
+.pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-yes, .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-buttons>.pti-remove-playlist>.pti-remove-playlist-no { display: none; float: left; width: 50%; }
 /* Playlists End */
 

@@ -35,6 +35,30 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
             me.playlistOpen(playlistId)
         })
 
+        me.jContent.on('click', '.pti-play-all, .pti-add-all', function(event, ui) {
+            var $button = $(this)
+            var playlistId = $button.parents('.pti-element').attr('id')
+            var dao = playlist.DAO(playlistId)
+            $button.hasClass('pti-play-all') && playlist.emptyContent()
+            playlist.addElementsToList(dao.storageObj.data)
+        })
+
+        me.jContent.on('click', '.pti-remove-playlist-dialog', function(event, ui) {
+            var $button = $(this);
+            $button.hide()
+            $button.siblings().show()
+        })
+        me.jContent.on('click', '.pti-remove-playlist-yes', function(event, ui) {
+            var $button = $(this);
+            var playlistId = $button.parents('.pti-element').attr('id')
+            playlist.DAO(playlistId).delete()
+        })
+        me.jContent.on('click', '.pti-remove-playlist-no', function(event, ui) {
+            var $button = $(this), $parent = $button.parent();
+            $parent.children().not('.pti-remove-playlist-dialog').hide()
+            $parent.children('.pti-remove-playlist-dialog').show()
+        })
+
         me.jContent.on('keypress', '.pti-name', function (event) {
             if (event.keyCode == 13) {
                 $(this).blur()
@@ -111,9 +135,11 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         resultKeys = jStorageKeys.filter(filter)
         resultKeys = sort(storageObj, resultKeys)
         resultKeys.forEach(function (key) {
-            var item = _.extend({}, storageObj[key]);
-            item.data = _.stringToArray(item.data)
-            item && resultArr.push(item)
+            if(storageObj[key]) {
+                var item = _.extend({}, storageObj[key]);
+                item.data = _.stringToArray(item.data)
+                resultArr.push(item)
+            }
         })
         return resultArr
     }
