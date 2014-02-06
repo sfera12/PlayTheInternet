@@ -150,6 +150,10 @@ define(["jstorage", "slimscroll"], function () {
                 me.options.slimScroll && (sortableSlimScroll.scroll = false)
             })
 
+        this.recalculateJContentDebounce = _.debounce(function (cache) {
+            this.recalculateJContent(cache)
+        }, 50)
+
         this.setIdListen(this.options.id, this.options.listenId, this.options.scrollTo)
     }
 
@@ -242,10 +246,6 @@ define(["jstorage", "slimscroll"], function () {
         var storageObj = { id: this.options.id, source: this.uid, data: _.arrayToString(this.getIds()) }
         return storageObj
     }
-
-    Ptilist.prototype.recalculateJContentDebounce = _.debounce(function (cache) {
-        this.recalculateJContent(cache)
-    }, 50)
 
     Ptilist.prototype.recalculateJContentImmediate = function (cache) {
         cache = _.default(cache, true)

@@ -41,6 +41,8 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
             var dao = playlist.DAO(playlistId)
             $button.hasClass('pti-play-all') && playlist.emptyContent()
             playlist.addElementsToList(dao.storageObj.data)
+            var videoData = _.stringToTypeId(dao.storageObj.data[0])
+            $button.hasClass('pti-play-all') && (playerWidget.loadVideo(videoData.type, videoData.id) | playlist.selectVideo( { index: 0}, false  ))
         })
 
         me.jContent.on('click', '.pti-remove-playlist-dialog', function(event, ui) {
@@ -57,6 +59,19 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
             var $button = $(this), $parent = $button.parent();
             $parent.children().not('.pti-remove-playlist-dialog').addClass('temp-display-none-important')
             $parent.children('.pti-remove-playlist-dialog').removeClass('temp-display-none-important')
+        })
+
+        var oldName
+        me.jContent.on('focusin', '.pti-name', function() {
+            oldName = $(this).val()
+        })
+        me.jContent.on('focusout', '.pti-name', function() {
+            var newName = $(this).val()
+            if (oldName !== newName) {
+                var playlistId = $(this).parents('.pti-element').attr('id')
+                var dao = playlist.DAO(playlistId).update({ name: newName }).set()
+            }
+
         })
 
         me.jContent.on('keypress', '.pti-name', function (event) {

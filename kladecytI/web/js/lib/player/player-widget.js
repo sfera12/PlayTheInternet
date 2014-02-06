@@ -115,5 +115,10 @@ define(["jquery", "underscore"], function (a, b) {
             }
         }.bind(this), 100)
     }
+
+    PlayerWidget.prototype.loadVideo = function(type, id, playerState) {
+        this.data.listenObject.loadVideo(type, id, playerState)
+    }
+
     return PlayerWidget
 })
