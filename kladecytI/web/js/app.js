@@ -59,7 +59,7 @@ function upgradeRun(module) {
     require(['jstorage'], function() {
         var currVersion = $.jStorage.get('manifest_version') || 'all'
         var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)\..*/, '^$1')
-        var upgradeFrom = !currVersion || currVersion == manifestVersion ? 'run' : currVersion
+        var upgradeFrom = currVersion == manifestVersion ? 'run' : currVersion
 
         var deferred = $.Deferred()
         deferred.resolve()
