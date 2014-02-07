@@ -42,6 +42,12 @@ define(['pti-abstract', 'underscore', 'jquery'], function (PTI, b, c) {
                 player.seekTo(seekTo)
                 return
             }
+        },
+        onVolume:function (volume) {
+            var scope = this.scope
+            for(player in scope.players) {
+                player !== "pti" && scope.players[player].volume(volume)
+            }
         }
     })
     return pti

@@ -97,6 +97,9 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
         },
         onSeekTo:function (seekTo) {
             vimeo.api('seekTo', seekTo)
+        },
+        onVolume:function(volume) {
+            typeof vimeo !== "undefined" && vimeo.api('setVolume', volume / 100)
         }
     }, 'vimeoContainer')
 })

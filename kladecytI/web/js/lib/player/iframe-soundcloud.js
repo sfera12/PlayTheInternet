@@ -136,6 +136,9 @@ define(["pti", "soundcloud-api", "jquery", "underscore", "ctemplates"], function
             },
             onBeforeDuration:function (inputs) {
                 return inputs ? [inputs / 1000] : []
+            },
+            onVolume:function (volume) {
+                scWidget.setVolume(volume)
             }
         }, 'soundCloudContainer')
         pti.s.initializePlayer()

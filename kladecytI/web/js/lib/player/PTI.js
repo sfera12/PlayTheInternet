@@ -57,6 +57,11 @@ define(['underscore', 'jquery'], function (a, b) {
                 }
             }
         }.bind(this)
+        this.volume = function(volume) {
+            var output = PTI.prototype.composeAndRunLifeCycle(this, 'volume', volume)
+            !_.isUndefined(output[0]) && (this.data.volume = output[0])
+            return this.data.volume
+        }.bind(this)
         this.Player = function (name, options, playerContainer) {
             if (name) {
                 name == "y" && self && (self.yt = this) && (self.y = this) && (self.players['y'] = this)
@@ -142,6 +147,11 @@ define(['underscore', 'jquery'], function (a, b) {
                     var output = PTI.prototype.composeAndRunLifeCycle(this, 'duration', duration)
                     !_.isUndefined(output[0]) && (this.data.duration = output[0])
                     return this.data.duration
+                }.bind(this)
+                this.volume = function (volume) {
+                    var output = PTI.prototype.composeAndRunLifeCycle(this, 'volume', volume)
+                    !_.isUndefined(output[0]) && (this.data.volume = output[0])
+                    return this.data.volume
                 }.bind(this)
             } else {
                 throw "can't create player without name"

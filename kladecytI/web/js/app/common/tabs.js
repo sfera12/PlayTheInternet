@@ -1,6 +1,10 @@
 define(['jquery', 'jquery-ui'], function ($) {
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
     window.tabs = { first: {}, second: {} }
+    $('#LOUD').click(function() {
+        chrome.extension.getBackgroundPage().pti.volume(100)
+        pti.volume(100)
+    })
     $('#tabs').tabs({
         activate:function (event, ui) {
             var newTab = $(ui.newTab);

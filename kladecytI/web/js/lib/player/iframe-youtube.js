@@ -99,6 +99,9 @@ define(["pti", "jquery", "underscore"], function (pti, b, c) {
             var self = this.scope
             clearTimeout(self.temp.errorTimeout)
             clearInterval(self.temp.playProgressInterval)
+        },
+        onVolume:function(volume) {
+            youtube.setVolume(volume)
         }
     }, 'youtubeContainer')
 
