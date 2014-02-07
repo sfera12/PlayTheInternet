@@ -55,11 +55,46 @@ requirejs.config({
     }
 });
 
+function upgradeRun(module) {
+    require(['jstorage'], function() {
+        var currVersion = $.jStorage.get('manifest_version') || 'all'
+        var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)\..*/, '^$1')
+        var upgradeFrom = !currVersion || currVersion == manifestVersion ? 'run' : currVersion
+
+        var deferred = $.Deferred()
+        deferred.resolve()
+
+        switch(upgradeFrom) {
+            case 'all':
+            case '0.632': {
+                var newDeferred = $.Deferred()
+                deferred.then(function() {
+                    console.log('initializing upgrade from 0.632')
+                    require(['app/migrate/0632'], function() {
+                        console.log('done upgrading from 0.632')
+                        newDeferred.resolve()
+                    })
+                    return newDeferred
+                })
+                deferred = newDeferred
+            }
+            case 'run': {
+                deferred.then(function() {
+                    console.log('ran')
+                    $.jStorage.set('manifest_version', manifestVersion)
+                    requirejs([module])
+                })
+            }
+        }
+
+    })
+}
+
 // Load the main app module to start the app
 if (typeof chrome == "undefined" || !chrome.extension) {
     var href = window.location.href;
     if(href.match('play.html')) {
-        requirejs(["app/web"])
+        upgradeRun("app/web")
     } else if(href.match('iframe-player')) {
         requirejs(["app/iframe-player"])
     } else if(href.match('parse')) {
@@ -72,7 +107,7 @@ if (typeof chrome == "undefined" || !chrome.extension) {
         requirejs(["app/index"]);
     }
 } else if (chrome.extension.getBackgroundPage() == window) {
-    requirejs(["app/background"])
+    upgradeRun("app/background")
 } else {
-    requirejs(["app/popup"])
+    upgradeRun("app/popup")
 }
