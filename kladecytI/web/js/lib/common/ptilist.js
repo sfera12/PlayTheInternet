@@ -209,6 +209,10 @@ define(["slimscroll"], function () {
         return deferred
     }
 
+    Ptilist.prototype.getPtiElement = function(item) {
+        return $(item).parents('.pti-element')
+    }
+
     Ptilist.prototype.getElements = function () {
         return this.jContent.find('.pti-element')
     }

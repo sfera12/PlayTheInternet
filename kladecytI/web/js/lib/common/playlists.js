@@ -31,13 +31,12 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
 
         //click handlers
         me.jContent.on('click', '.pti-sortable-handler.image-div', function(event, ui) {
-            var playlistId = $(this).parents('.pti-element').attr('id')
+            var playlistId = me.getPtiElement(this).attr('id')
             me.playlistOpen(playlistId)
         })
 
         me.jContent.on('click', '.pti-play-all, .pti-add-all', function(event, ui) {
-            var $button = $(this)
-            var playlistId = $button.parents('.pti-element').attr('id')
+            var $button = $(this), playlistId = me.getPtiElement(this).attr('id')
             var dao = playlist.DAO(playlistId)
             $button.hasClass('pti-play-all') && playlist.emptyContent()
             playlist.addElementsToList(dao.storageObj.data)
@@ -51,8 +50,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
             $button.siblings().removeClass('temp-display-none-important')
         })
         me.jContent.on('click', '.pti-remove-playlist-yes', function(event, ui) {
-            var $button = $(this);
-            var playlistId = $button.parents('.pti-element').attr('id')
+            var playlistId = me.getPtiElement(this).attr('id')
             playlist.DAO(playlistId).delete()
         })
         me.jContent.on('click', '.pti-remove-playlist-no', function(event, ui) {
@@ -68,7 +66,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         me.jContent.on('focusout', '.pti-name', function() {
             var newName = $(this).val()
             if (oldName !== newName) {
-                var playlistId = $(this).parents('.pti-element').attr('id')
+                var playlistId = me.getPtiElement(this).attr('id')
                 var dao = playlist.DAO(playlistId).update({ name: newName, source: me.uid }).set()
             }
 
