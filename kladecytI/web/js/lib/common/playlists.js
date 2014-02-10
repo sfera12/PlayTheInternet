@@ -69,7 +69,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
             var newName = $(this).val()
             if (oldName !== newName) {
                 var playlistId = $(this).parents('.pti-element').attr('id')
-                var dao = playlist.DAO(playlistId).update({ name: newName }).set()
+                var dao = playlist.DAO(playlistId).update({ name: newName, source: me.uid }).set()
             }
 
         })
@@ -81,9 +81,9 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         })
         //click handlers
 
-        me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
-            me.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
-        }, 50)
+//        me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
+//            me.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
+//        }, 50)
         me.setIdListen("playlists", "*")
     }
 
@@ -107,7 +107,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                 } else {
                     ids = [ui.draggable[0].id]
                 }
-                playlistDao.addVideos(ids).set()
+                playlistDao.addVideos(ids).update({ source: "" }).set()
 
 
                 var remove = function() {
@@ -115,21 +115,20 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                 }
                 ui.draggable.remove()
                 uiselected && uiselected.hide(400, remove);
-                ptilist.recalculateJContent()
                 console.log('songId, playlistId: ', ids, playlistId)
                 console.log(event)
                 console.log(ui)
                 console.log(this)
-            }
+            },
+            hoverClass: "drop-hover"
         })
     }
 
     Playlists.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
         if (key.match(/^(playlists)|(lPlaylist.+)$/)) {
-            var storageObj = this.parent.redrawJContentGetCacheObject.call(this, "playlists", action, functionName, filterOwn ? key.match(/^playlists$/) : false)
+            var storageObj = this.parent.redrawJContentGetCacheObject.call(this, key, action, functionName, filterOwn)
             if (!_.isUndefined(storageObj)) { //undefined means filtered by source === uid
-                var playlists = _.extend({}, storageObj)
-                playlists.data = filterJStorageBy(typeLocalPlaylist, sortLocalPlaylist)
+                var playlists = { data: filterJStorageBy(typeLocalPlaylist, sortLocalPlaylist) }
                 return playlists
             }
         }

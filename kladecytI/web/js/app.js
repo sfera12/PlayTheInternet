@@ -57,36 +57,29 @@ requirejs.config({
 
 function upgradeRun(module) {
     require(['jstorage'], function() {
-        var currVersion = $.jStorage.get('manifest_version') || 'all'
-        var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)\..*/, '^$1')
-        var upgradeFrom = currVersion == manifestVersion ? 'run' : currVersion
+        var currVersion = parseFloat($.jStorage.get('manifest_version') || 0)
 
         var deferred = $.Deferred()
         deferred.resolve()
 
-        switch(upgradeFrom) {
-            case 'all':
-            case '0.632': {
-                var newDeferred = $.Deferred()
-                deferred.then(function() {
-                    console.log('initializing upgrade from 0.632')
-                    require(['app/migrate/0632'], function() {
-                        console.log('done upgrading from 0.632')
-                        newDeferred.resolve()
-                    })
-                    return newDeferred
+        if(currVersion < 0.632) {
+            var newDeferred = $.Deferred()
+            deferred.then(function() {
+                console.log('initializing upgrade from 0.632')
+                require(['app/migrate/0632'], function() {
+                    console.log('done upgrading from 0.632')
+                    newDeferred.resolve()
                 })
-                deferred = newDeferred
-            }
-            case 'run': {
-                deferred.then(function() {
-                    console.log('ran')
-                    $.jStorage.set('manifest_version', manifestVersion)
-                    requirejs([module])
-                })
-            }
+                return newDeferred
+            })
+            deferred = newDeferred
         }
-
+        deferred.then(function() {
+            console.log('ran')
+            var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)(\..*)?/, '$1')
+            $.jStorage.set('manifest_version', manifestVersion)
+            requirejs([module])
+        })
     })
 }
 

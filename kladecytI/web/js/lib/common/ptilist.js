@@ -1,4 +1,4 @@
-define(["jstorage", "slimscroll"], function () {
+define(["slimscroll"], function () {
     $('#dummyInput').length || $('body').append('<input id="dummyInput" class="temp-absolute-off-scren"/>')
     var focusout = function () {
         $('#dummyInput').focus()
@@ -125,8 +125,8 @@ define(["jstorage", "slimscroll"], function () {
                         }
                         $("#uber tr:even").removeClass("odd even").addClass("even");
                         $("#uber tr:odd").removeClass("odd even").addClass("odd");
-                        targetParent.options.id != me.options.id && me.recalculateJContent()
-                        targetParent.recalculateJContent()
+                        (!targetParent || targetParent.options.id != me.options.id) && me.recalculateJContent()
+                        targetParent && targetParent.recalculateJContent && targetParent.recalculateJContent()
                     }
                     me.first_rows = {};
                     blockSort = false

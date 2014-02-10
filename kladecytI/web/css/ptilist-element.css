@@ -39,6 +39,9 @@
 
 /* Playlists start */
 .pti-ptilist .pti-content .pti-playlists-content { line-height: 40px; font-size: 12px; }
+
+.pti-ptilist .pti-content .pti-element.drop-hover>div { background-color: #cacaf4; }
+
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info>* { margin-top: 11px; margin-bottom: 11px; height: 19px; line-height: normal; }
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info .pti-name { float: left; margin-left: 5px; padding: 0px 5px 0px 5px; color: inherit; border: transparent solid 1px; font-size: inherit; background-color: inherit; }
 .pti-ptilist .pti-content .pti-playlists-content .pti-playlists-info .pti-name:focus { border: rgb(170, 200, 255) solid 1px; }

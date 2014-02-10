@@ -177,6 +177,7 @@ define(["common/ptilist"], function (Ptilist) {
             set: function () {
                 this.storageObj.data = _.arrayToString(this.storageObj.data)
                 $.jStorage.set(this.key, this.storageObj)
+                console.log('set', this.storageObj)
                 return this
             }
         }
