@@ -93,15 +93,15 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
     Playlists.prototype.redrawJContent = function(storageObject) {
         this.parent.redrawJContent.call(this, storageObject)
         var me = this
-        console.log(me.getElements())
-        me.getElements().droppable({
+        console.log(me.getPtiElements())
+        me.getPtiElements().droppable({
             accept: ".pti-element-video",
             drop: function(event, ui) {
                 var ids = '', playlistId = this.id, uiselected
                 var ptilist = ui.draggable.parent().data('ptilist'), playlistDao = Playlist.prototype.DAO(playlistId)
                 if(ui.draggable.hasClass('ui-selected')) {
-                    ids = ptilist.getIdsSelected()
-                    uiselected = ptilist.getElementsSelected()
+                    ids = ptilist.getIdsUiSelected()
+                    uiselected = ptilist.getPtiElementsUiSelected()
                 } else {
                     ids = [ui.draggable[0].id]
                 }

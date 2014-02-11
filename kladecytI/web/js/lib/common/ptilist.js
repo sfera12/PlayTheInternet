@@ -213,11 +213,11 @@ define(["slimscroll"], function () {
         return $(item).parents('.pti-element')
     }
 
-    Ptilist.prototype.getElements = function () {
+    Ptilist.prototype.getPtiElements = function () {
         return this.jContent.find('.pti-element')
     }
 
-    Ptilist.prototype.getElementsSelected = function () {
+    Ptilist.prototype.getPtiElementsUiSelected = function () {
         return this.jContent.find('.pti-element.ui-selected')
     }
 
@@ -229,7 +229,7 @@ define(["slimscroll"], function () {
         return this.jContent.children().length - 1
     }
 
-    Ptilist.prototype.getIdsSelected = function () {
+    Ptilist.prototype.getIdsUiSelected = function () {
         return (this.jContent.find('.pti-element.ui-selected').map(function(index, item) {
             return $(item).attr('id')
         })).get()

@@ -30,8 +30,8 @@ define(["common/ptilist"], function (Ptilist) {
             if ($(event.target).prop('tagName').match(/^[aA]$/) == null) {
                 var selected = '', $this = $(this), uiselected
                 if ($this.hasClass('ui-selected')) {
-                    selected = me.getIdsSelected()
-                    uiselected = me.getElementsSelected()
+                    selected = me.getIdsUiSelected()
+                    uiselected = me.getPtiElementsUiSelected()
                 } else {
                     selected = [this.id]
                 }
@@ -126,7 +126,7 @@ define(["common/ptilist"], function (Ptilist) {
         var createPlaylist = function() {
             var name = $input.val()
             var id = "lPlaylist" + GUID()
-            var selected = me.getIdsSelected(), playlist = selected.length ? selected : me.getIds()
+            var selected = me.getIdsUiSelected(), playlist = selected.length ? selected : me.getIds()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
             $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: _.arrayToString(playlist) })
         }
@@ -223,13 +223,13 @@ define(["common/ptilist"], function (Ptilist) {
     Playlist.prototype.lookupNextSong = function () {
         var index = this.getSelectedVideoIndex()
         index = index >= this.getIdsCount() - 1 ? 0 : ++index
-        return this.getElements()[index]
+        return this.getPtiElements()[index]
     }
 
     Playlist.prototype.lookupPrevSong = function () {
         var index = this.getSelectedVideoIndex()
         index = index <= 0 ? this.getIdsCount() - 1 : --index
-        return this.getElements()[index]
+        return this.getPtiElements()[index]
     }
 
     Playlist.prototype.playAction = function () {
