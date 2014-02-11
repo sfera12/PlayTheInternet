@@ -39,6 +39,7 @@ define(["common/ptilist"], function (Ptilist) {
                 me.tabsGetPlaylist().addElementsToList(selected, true)
                 var remove = function() {
                     $(this).remove();
+                    me.recalculateJContentImmediate()
                 }
                 $this.hide(400, remove);
                 uiselected && uiselected.hide(400, remove);
