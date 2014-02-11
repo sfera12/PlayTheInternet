@@ -13,23 +13,19 @@ define(["playlist", "pti-playlist"], function(a, Playlist) {
             }
         }
     );
-    chrome.storage.local.get(['parseHeaderOptions'], function (options) {
-        window.parsedPlaylist = new Playlist('#parsedPlaylist', {
-                elementSize: options.size,
-                elementSplit: options.split,
-                connectWith: "connected-playlist",
-                headerConfigKey: "lConfigParsedPlaylistHeader",
-                execute: [
-                    Playlist.prototype.addAction,
-                    function() {
-                        this.tabsGetPlaylist = tabs.second.getPlaylist
-                    }
-                ]
-            }
-        );
-        parsedPlaylist.emptyContent();
-        chrome.tabs.executeScript(null, {file: "/js/app/popup/parsePage.js"}, function (parse) {
-            _.isUndefined(parse) && $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound({href: window.location.href}))
-        });
-    })
+    window.parsedPlaylist = new Playlist('#parsedPlaylist', {
+            connectWith: "connected-playlist",
+            headerConfigKey: "lConfigParsedPlaylistHeader",
+            execute: [
+                Playlist.prototype.addAction,
+                function() {
+                    this.tabsGetPlaylist = tabs.second.getPlaylist
+                }
+            ]
+        }
+    );
+    parsedPlaylist.emptyContent();
+    chrome.tabs.executeScript(null, {file: "/js/app/popup/parsePage.js"}, function (parse) {
+        _.isUndefined(parse) && $('#parsedDiv').append(PTITemplates.prototype.ParsePlayTheInternetParseNothingFound({href: window.location.href}))
+    });
 })

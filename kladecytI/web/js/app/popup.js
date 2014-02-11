@@ -2,7 +2,6 @@ define(["player-widget"], function (PlayerWidget) {
     require(["app/common/tooltips"])
 
     require(["app/popup/playlists"])
-    require(["app/common/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     require(['player-widget'], function (PlayerWidget) {
@@ -13,8 +12,9 @@ define(["player-widget"], function (PlayerWidget) {
     require(["app/common/tabs"], function () {
         $("#tabs").tabs("option", "active", 3);
     })
-
-    require(["app/popup/parse-content"])
+    require(["app/popup/parse-content"], function() {
+        tabs.first.playlist = parsedPlaylist
+    })
 
     $(document).ready(function () {
         //hack to make scrollbar disappear
