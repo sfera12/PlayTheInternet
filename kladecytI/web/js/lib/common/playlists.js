@@ -12,6 +12,9 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         me.options.elementSplit = "one"
         me.parent.init.call(this, appendToElementExpression, me.options)
 
+        //jContainer
+        me.jContainer.addClass("pti-action-background")
+
         //playlist
         me.jPlaylist = $('<div></div>').appendTo(me.jContainer.parent())
         me.initPlaylist = _.once(function() {

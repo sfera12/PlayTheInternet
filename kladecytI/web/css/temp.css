@@ -95,3 +95,8 @@ a[href="#howDiv"] { position: relative; }
 .temp-create-playlist-no:hover { color: aliceblue!important; }
 .playlistFrame .header .temp-create-playlist-name, .pti-ptilist .pti-header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }
 .playlistFrame .header .temp-create-playlist-name, .pti-ptilist .pti-header .temp-create-playlist-name { margin-left: 1px; width: 150px; color: #007FFF; }
+
+.pti-element .pti-logo>svg { position: absolute; width: 80%; height: 80%; top: 9px; left: 13px; opacity: 0.7; display: none; }
+.pti-element:hover .pti-logo>svg { display: block; }
+.pti-element .pti-logo>svg>path { fill: aliceblue; }
+.pti-element.ui-selected .pti-logo>svg>path { fill: orange; }
