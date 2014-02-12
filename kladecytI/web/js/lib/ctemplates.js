@@ -13,7 +13,7 @@ return __p;
 PTITemplates.prototype.YoutubeRawTemplate = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div><div class="image-div pti-sortable-handler"><img src="http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b>'+
+__p+='<div><div class="image-div pti-sortable-handler"><img src="/css/resources/youtube.jpg"><div class="pti-logo"></div><div class="pti-logo"></div></div><span class="videoText"><b>'+
 ((__t=( id ))==null?'':__t)+
 '</b></span></div>';
 }
@@ -37,7 +37,7 @@ return __p;
 PTITemplates.prototype.YoutubeErrorTemplate = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div><div class="image-div pti-sortable-handler"><img src="http://s.ytimg.com/yts/img/meh7-vflGevej7.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v='+
+__p+='<div><div class="image-div pti-sortable-handler"><img src="/css/resources/youtube-error.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v='+
 ((__t=(id))==null?'':__t)+
 '" target="_blank">'+
 ((__t=(error))==null?'':__t)+
