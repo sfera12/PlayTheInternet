@@ -82,7 +82,7 @@ define(function() {
         try{
             var links = notifications[notificationId];
     //        console.log(links)
-            playlist.playVideo(playlist.getVideoDivAndFeed({videoFeed: links[0]}))
+            playlist.playVideo(playlist.getVideoDivAndData({videoData: _.stringToTypeId(links[0])}))
         } catch(e) {
             chrome.notifications.create('', {
                 type: "basic",

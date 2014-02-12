@@ -188,7 +188,7 @@ define(["common/ptilist"], function (Ptilist) {
         return this.jContent.find('.pti-element').index(this.jContent.find('.selected'))
     }
 
-    Playlist.prototype.getVideoDivAndFeed = function (video) {
+    Playlist.prototype.getVideoDivAndData = function (video) {
         console.log(video)
         var videoDiv
         var videoData
@@ -212,7 +212,7 @@ define(["common/ptilist"], function (Ptilist) {
             }
         }
         if (!videoData) {
-            throw "videoData or video is empty in getVideoDivAndFeed"
+            throw "videoData or video is empty in getVideoDivAndData"
         }
     }
 
@@ -257,7 +257,7 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.playVideo = function(video, playerState, setStorage) {
         console.log(video)
-        var videoObject = this.getVideoDivAndFeed(video)
+        var videoObject = this.getVideoDivAndData(video)
         this.selectVideo(videoObject, setStorage)
         if (this.playerType()) {
             SiteHandlerManager.prototype.playVideoFeed(videoObject.videoData, playerState)
@@ -299,7 +299,7 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.selectVideo = function (video, setStorage) {
         this.jContent.find('.pti-element').removeClass("selected")
-        var videoObject = this.getVideoDivAndFeed(video)
+        var videoObject = this.getVideoDivAndData(video)
         var videoData = videoObject.videoData
         var videoDiv = videoObject.videoDiv
         $(videoDiv).addClass("selected")
