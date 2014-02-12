@@ -25,6 +25,17 @@ define(["underscore-core"], function() {
                 return "00:00"
             }
         },
+        guid: function () {
+            var S4 = function () {
+                return Math.floor(
+                    Math.random() * 0x10000 /* 65536 */
+                ).toString(16);
+            };
+            var now = Date.now().toString(), preNow = now.substring(0, now.length - 7)
+            return (
+                preNow + S4() + S4() + _.uniqueId()
+                );
+        },
         stringToArray: function (string) {
             var resultArray = string ? string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
                 return item.replace(/&thisiscomma;/g, ',')

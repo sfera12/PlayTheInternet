@@ -45,7 +45,7 @@ define(["slimscroll"], function () {
         me.options.connectWith && me.jContent.addClass(me.options.connectWith)
 
         //properties
-        me.uid = GUID() + Date.now()
+        me.uid = _.guid()
 
         //sortable, selectable, slimScroll
         me.first_rows = {}
@@ -332,18 +332,6 @@ define(["slimscroll"], function () {
             return item && typeof item.id !== "undefined" ? item.id : item
         }).filter(Boolean)
         return _.difference(newIds, currIds)
-    }
-
-    function GUID() {
-        var S4 = function () {
-            return Math.floor(
-                Math.random() * 0x10000 /* 65536 */
-            ).toString(16);
-        };
-
-        return (
-            S4() + S4()
-            );
     }
 
     return Ptilist

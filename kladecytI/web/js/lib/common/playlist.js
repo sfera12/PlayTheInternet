@@ -126,7 +126,7 @@ define(["common/ptilist"], function (Ptilist) {
 
         var createPlaylist = function() {
             var name = $input.val()
-            var id = "lPlaylist" + GUID()
+            var id = "lPlaylist" + _.guid()
             var selected = me.getIdsUiSelected(), playlist = selected.length ? selected : me.getIds()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
             $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: _.arrayToString(playlist) })

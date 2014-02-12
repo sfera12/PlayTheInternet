@@ -16,7 +16,7 @@ define(function() {
     var notifications = new Object();
     function notify(links) {
         if (links && links.length) {
-            var notificationId = GUID()
+            var notificationId = _.guid()
             notifications[notificationId] = links
             chrome.notifications.create(notificationId, {
                 type: "basic",
