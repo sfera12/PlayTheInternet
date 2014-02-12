@@ -184,15 +184,19 @@ define(["common/ptilist"], function (Ptilist) {
         }
     }
 
+    Playlist.prototype.getSelectedVideoDiv = function() {
+        return this.jContent.find('.selected')
+    }
+
     Playlist.prototype.getSelectedVideoIndex = function() {
-        return this.jContent.find('.pti-element').index(this.jContent.find('.selected'))
+        return this.getPtiElements().index(this.getSelectedVideoDiv())
     }
 
     Playlist.prototype.getVideoDivAndData = function (video) {
         console.log(video)
         var videoDiv
         var videoData
-        var songs = this.jContent.find('.pti-element');
+        var songs = this.getPtiElements();
         if(video && video.index >= 0) {
             videoDiv = songs[video.index]
             videoData = $(videoDiv).data('data')
@@ -245,10 +249,8 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.playerType = function (boolean) {
-        if (typeof boolean == "undefined") {
-            return this.options.playerType
-        }
-        return (this.options.playerType = boolean)
+        !_.isUndefined(boolean) && (this.options.playerType = boolean)
+        return this.options.playerType
     }
 
     Playlist.prototype.playNextVideo = function () {
@@ -289,16 +291,16 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.scrollToSelected = function() {
-        var selected = this.jContent.find('.selected');
-        var index = selected.index()
-        var songsCount = this.jContent.find('.pti-element').length
+        var selected = this.getSelectedVideoDiv()
+        var index = this.getSelectedVideoIndex()
+        var songsCount = this.getIdsCount().length
         var scrollHeight = this.jContent.prop('scrollHeight')
-        var scrollTo = scrollHeight / songsCount * index - this.jContent.height() / 2 - selected.height() / 2
+        var scrollTo = scrollHeight / songsCount * index - this.jContent.height() / 2 + selected.height() / 2
         this.jContent.slimscroll({scrollTo: scrollTo + 'px'})
     }
 
     Playlist.prototype.selectVideo = function (video, setStorage) {
-        this.jContent.find('.pti-element').removeClass("selected")
+        this.getPtiElements().removeClass("selected")
         var videoObject = this.getVideoDivAndData(video)
         var videoData = videoObject.videoData
         var videoDiv = videoObject.videoDiv
