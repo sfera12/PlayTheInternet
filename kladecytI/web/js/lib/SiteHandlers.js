@@ -6,10 +6,6 @@ function SiteHandlerManager() {
     SiteHandlerManager.prototype.mapping = new Object();
     SiteHandlerManager.prototype.errorTimeout
 
-    SiteHandlerManager.prototype.setVideoFeed = function (videoFeed) {
-        localStorage[videoFeed.id] = JSON.stringify(videoFeed)
-    }
-
     SiteHandlerManager.prototype.reservedKeys = [
         "jStorage",
         "jStorage_update",
@@ -54,28 +50,7 @@ function SiteHandlerManager() {
         }
     }
 
-    SiteHandlerManager.prototype.loadVideoFeed = function (linkContext) {
-        var value
-        if (linkContext.videoFeed && linkContext.videoFeed.template) {
-            value = linkContext.videoFeed
-        } else {
-            var localStorageFeed = localStorage[linkContext.videoFeed.id]
-            localStorageFeed && (value = $.parseJSON(localStorageFeed))
-            //console.log(JSON.stringify(value) + 'FROM CACHE')
-        }
-//      console.log(value)
-        if (value) {
-            linkContext.fromCache = true;
-            linkContext.videoFeed = value;
-            SiteHandlerManager.prototype.fillVideoElement(linkContext);
-        } else {
-            linkContext.videoFeed.template = "rawTemplate"
-            SiteHandlerManager.prototype.fillVideoElement(linkContext);
-            SiteHandlerManager.prototype.getHandler(linkContext.videoFeed.type).loadVideoFeed(linkContext);
-        }
-    }
-
-    SiteHandlerManager.prototype.playVideoFeed = function (videoFeed, playerState) {
+    SiteHandlerManager.prototype.playVideoData = function (videoFeed, playerState) {
             clearTimeout(SiteHandlerManager.prototype.errorTimeout)
             pti.loadVideo(videoFeed.type, videoFeed.id, playerState)
 //            currentPlayingHandler = siteHandler
@@ -88,24 +63,6 @@ function SiteHandlerManager() {
             SiteHandlerManager.prototype.errorTimeout = setTimeout(function () {
                 playlist.playNextVideo()
             }, 2000)
-        }
-    }
-
-    SiteHandlerManager.prototype.fillVideoElement = function (linkContext) {
-        var videoFeed = linkContext.videoFeed;
-        var videoElement = linkContext.videoElement;
-        var handler = SiteHandlerManager.prototype.getHandler(videoFeed.type);
-        if (videoFeed) {
-            videoElement.div.html(handler[videoFeed.template](videoFeed))
-            //todo workaround start
-            if (videoFeed.template == "completeTemplate" || linkContext.fromCache) {
-                typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
-                videoElement.div.data('videoFeed', videoFeed)
-                //todo workaroung end
-            }
-            if (!linkContext.fromCache && linkContext.videoFeed.template == "completeTemplate") {
-                SiteHandlerManager.prototype.setVideoFeed(videoFeed)
-            }
         }
     }
 
@@ -167,7 +124,7 @@ function YoutubeHandler() {
         this.uploader = data.uploader
         this.thumbnail = data.thumbnail.sqDefault
     }
-    YoutubeHandler.prototype.defaultThumbnail = "http://cdn.ndtv.com/tech/images/youtube_logo_120.jpg"
+    YoutubeHandler.prototype.defaultThumbnail = "/css/resources/youtube.jpg"
     YoutubeHandler.prototype.prefix = "y"
     //TODO https://www.youtube.com/embed/?listType=playlist&amp;list=PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju&amp;showinfo=1
     YoutubeHandler.prototype.regex = /(youtu.be(\\?\/|\u00252F)|watch(([^ \'\'<>]+)|(\u0025(25)?3F))v(=|(\u0025(25)?3D))|youtube.com\\?\/embed\\?\/|youtube(\.googleapis)?.com\\?\/v\\?\/|ytimg.com\u00252Fvi\u00252F)([^?\s&\'\'<>\/\\.,#]{11})/
@@ -175,56 +132,6 @@ function YoutubeHandler() {
     YoutubeHandler.prototype.loadVideoDataQueue = new Array()
     YoutubeHandler.prototype.loadVideoDataQueueConcurrent = 0
     YoutubeHandler.prototype.loadVideoDataQueueConcurrentMax = 25
-    YoutubeHandler.prototype.queue = new Array()
-    YoutubeHandler.prototype.queueConcurrent = 0
-    YoutubeHandler.prototype.queueConcurrentMax = 25
-    YoutubeHandler.prototype.queueExecute = function(linkContext) {
-        YoutubeHandler.prototype.queueConcurrent++
-        $.ajax({
-            url: "http://gdata.youtube.com/feeds/api/videos/" + linkContext.videoFeed.id + "?v=2&alt=jsonc",
-            success: function (data) {
-                YoutubeHandler.prototype.queueConcurrent--
-                try {
-                    data.data.type = "y"
-                    var videoFeed = new VideoFeed(data.data)
-                    videoFeed.template = "completeTemplate"
-                    linkContext.videoFeed = videoFeed
-                    SiteHandlerManager.prototype.fillVideoElement(linkContext)
-                } finally {
-                    YoutubeHandler.prototype.queueNext()
-                }
-            },
-            error: function (data) {
-                try {
-                    YoutubeHandler.prototype.queueConcurrent--
-//                console.log(data.responseText)
-                    try {
-                        linkContext.videoFeed.error = $.parseJSON(data.responseText).error.message
-                    } catch (e) {
-                        linkContext.videoFeed.error = data.responseText.replace(/[\r\n]/g, '').replace(/.*((<code>)|(TITLE>))([\w\s]+)((<)|(<\/code>)).*/, "$4")
-                    }
-                    linkContext.videoFeed.template = "errorTemplate"
-                    SiteHandlerManager.prototype.fillVideoElement(linkContext)
-                    if (data.responseText.match(/too_many_recent_calls/)) {
-                        setTimeout(function () {
-                            YoutubeHandler.prototype.loadVideoFeed(linkContext)
-                            console.log("retrying video")
-                            if ($(linkContext.videoElement.div).parent().length > 0) {
-                            } else {
-                                console.log('playlist was emptied, wont continue loading info for this video')
-                            }
-                        }, 35000)
-                    } else {
-                        typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
-                    }
-                } finally {
-                    YoutubeHandler.prototype.queueNext()
-                }
-            },
-            context: linkContext,
-            dataType: 'json'
-        })
-    }
     YoutubeHandler.prototype.loadVideoDataQueueExecute = function(typeId, $ptiElement) {
         YoutubeHandler.prototype.loadVideoDataQueueConcurrent++
         $.ajax({
@@ -267,22 +174,9 @@ function YoutubeHandler() {
             dataType: 'json'
         })
     }
-    YoutubeHandler.prototype.loadVideoFeed = function (linkContext) {
-        YoutubeHandler.prototype.queue.push(linkContext)
-        YoutubeHandler.prototype.queueNext()
-    }
     YoutubeHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
         YoutubeHandler.prototype.loadVideoDataQueue.push([typeId, $ptiElement])
         YoutubeHandler.prototype.loadVideoDataQueueNext()
-    }
-    YoutubeHandler.prototype.queueNext = function() {
-        if (YoutubeHandler.prototype.queue.length && YoutubeHandler.prototype.queueConcurrent < YoutubeHandler.prototype.queueConcurrentMax) {
-            var current = YoutubeHandler.prototype.queue[0]
-            YoutubeHandler.prototype.queue = YoutubeHandler.prototype.queue.splice(1)
-            YoutubeHandler.prototype.queueExecute(current)
-        } else {
-//            console.log('QueueNext end: [QueueLength: ' + YoutubeHandler.prototype.queue.length + '] [QueueConcurrent: ' + YoutubeHandler.prototype.queueConcurrent + ']')
-        }
     }
     YoutubeHandler.prototype.loadVideoDataQueueNext = function() {
         if (YoutubeHandler.prototype.loadVideoDataQueue.length && YoutubeHandler.prototype.loadVideoDataQueueConcurrent < YoutubeHandler.prototype.loadVideoDataQueueConcurrentMax) {
@@ -301,11 +195,7 @@ function SoundCloudHandler() {
 //    %3F
     SoundCloudHandler.prototype.regex = /((soundcloud.com(\\?\/|\u00252F))|(a class="soundTitle__title.*href="))([^.][^\s,?"=&#<]+)/
     SoundCloudHandler.prototype.regexGroup = 5
-    SoundCloudHandler.prototype.loadVideoFeed = function (linksContext) {
-        typeof linksContext.loadVideoFeedCallback == "function" && linksContext.loadVideoFeedCallback();
-    }
     SoundCloudHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
-
     }
 }
 
@@ -325,26 +215,6 @@ function VimeoHandler() {
     VimeoHandler.prototype.prefix = 'v'
     VimeoHandler.prototype.regex = /vimeo.com\\?\/((video\/)|(moogaloop.swf\?.*clip_id=))?(\d+)/
     VimeoHandler.prototype.regexGroup = 4
-    VimeoHandler.prototype.loadVideoFeed = function (linkContext) {
-        $.ajax({
-            url:'https://vimeo.com/api/v2/video/' + linkContext.videoFeed.id + '.json',
-            success:function (data) {
-//                console.log(JSON.stringify(data[0]))
-                data[0].type = VimeoHandler.prototype.prefix
-                linkContext.videoFeed = new VideoFeed(data[0])
-                linkContext.videoFeed.template = "completeTemplate"
-                SiteHandlerManager.prototype.fillVideoElement(linkContext)
-            },
-            error:function (error) {
-                typeof linkContext.loadVideoFeedCallback == "function" && linkContext.loadVideoFeedCallback()
-                console.log('error in vimeoHandler loadVideoFeed start')
-                console.log(error)
-                console.log('error in vimeoHandler loadVideoFeed end')
-            },
-            dataType:'jsonp',
-            timeout:10000
-        })
-    }
     VimeoHandler.prototype.loadVideoData = function (typeId, $ptiElement) {
         $.ajax({
             url:'https://vimeo.com/api/v2/video/' + typeId.id + '.json',
