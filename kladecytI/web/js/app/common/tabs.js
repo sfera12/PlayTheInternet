@@ -1,29 +1,7 @@
 define(['jquery', 'jquery-ui'], function ($) {
     window.tabs = { first: {}, second: {} }
 
-
-    //init common first
-    //refactor this
-    var tabsPlayerContainer = $('#tabs .tabs-player-container')
-    $('#LOUD').click(function () {
-        chrome.extension.getBackgroundPage().pti.volume(100)
-        pti.volume(100)
-    })
-    $('#firstView').on('click', '[href="#tAreaDiv"]', function () {
-        tabs.first.playlist = typeof textParsePlaylist !== "undefined" ? textParsePlaylist : null
-    })
-    $('#firstView').on('click', '#tAreaParseButton', function () {
-        tabs.first.playlist = textParsePlaylist
-    })
-    $('#firstView').on('click', '[href="#parsedDiv"]', function () {
-        tabs.first.playlist = parsedPlaylist
-    })
-    //refactor this
-    tabs.first.getPlaylist = function () {
-        return tabs.first.playlist ? tabs.first.playlist : tabs.second.playing
-    }
-
-    //create tabs first
+//FIRST CREATE TABS START
     $('#tabs').tabs({
         activate: function (event, ui) {
             var newTab = $(ui.newTab);
@@ -48,11 +26,34 @@ define(['jquery', 'jquery-ui'], function ($) {
             }
         }
     })
+
+//first player start
+    var tabsPlayerContainer = $('#tabs .tabs-player-container')
+//first player end
+
+//first options start
+    $('#LOUD').click(function () {
+        chrome.extension.getBackgroundPage().pti.volume(100)
+        pti.volume(100)
+    })
+//first options end
+
+//first playlists start
     $('#tabs').on('click', 'ul>li>a', function() {
         tabs.first.playlist = null
     })
-
-    //first inits, handlers
+    $('#firstView').on('click', '[href="#tAreaDiv"]', function () {
+        tabs.first.playlist = typeof textParsePlaylist !== "undefined" ? textParsePlaylist : null
+    })
+    $('#firstView').on('click', '#tAreaParseButton', function () {
+        tabs.first.playlist = textParsePlaylist
+    })
+    $('#firstView').on('click', '[href="#parsedDiv"]', function () {
+        tabs.first.playlist = parsedPlaylist
+    })
+    tabs.first.getPlaylist = function () {
+        return tabs.first.playlist ? tabs.first.playlist : tabs.second.playing
+    }
     var initFirstPlaylistsClickHandlers = _.once(function () {
         $('#tabs').on('click', '.ui-tabs-active>a[href="#firstPlaylistsDiv"]', selectFirstPlaylists) //selectFirstPlaylists will run
         $('#ulFirstPlaylists').on('click', '.image-div', function () {
@@ -74,14 +75,10 @@ define(['jquery', 'jquery-ui'], function ($) {
         window.playlists = tabs.first.playlists //can remove this
         return tabs.first.playlists
     })
+//first playlists end
+//FIRST CREATE TABS END
 
-
-    //init common second
-    tabs.second.getPlaylist = function () {
-        return tabs.second.playlist ? tabs.second.playlist : tabs.second.playing
-    }
-
-    //create tabs second
+//SECOND CREATE TABS START
     var $secondTabs = $('#secondViewTabs').tabs({
         active: -1,
         activate: function (event, ui) {
@@ -96,11 +93,8 @@ define(['jquery', 'jquery-ui'], function ($) {
             }
         }
     })
-    $('#secondViewTabs').on('click', 'ul>li>a', function() {
-        tabs.second.playlist = null
-    })
 
-    //second inits, handlers
+//second playing start
     var initPlaying = _.once(function (redrawHashAndQRCode, Playlist) {
         var selected = $.jStorage.get("selected_backgroundPageId"), index = selected && selected.index >= 0 && selected.index
         tabs.second.playing = new Playlist("#ulSecond", {
@@ -117,7 +111,15 @@ define(['jquery', 'jquery-ui'], function ($) {
         window.playlist = tabs.second.playing //can remove this
         return tabs.second.playing
     })
+//second playing end
 
+//second playlists start
+    $('#secondViewTabs').on('click', 'ul>li>a', function() {
+        tabs.second.playlist = null
+    })
+    tabs.second.getPlaylist = function () {
+        return tabs.second.playlist ? tabs.second.playlist : tabs.second.playing
+    }
     var initSecondPlaylistsClickHandlers = _.once(function () {
         $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondPlaylistsDiv"]', selectSecondPlaylists) //selectSecondPlaylists will run
         $('#ulSecondPlaylists').on('click', '.image-div', function () {
@@ -139,6 +141,8 @@ define(['jquery', 'jquery-ui'], function ($) {
         window.playlists = tabs.second.playlists //can remove this
         return tabs.second.playlists
     })
+//second playlists end
+//SECOND CREATE TABS END
 
     $secondTabs.tabs("option", 'active', 0)
 })
