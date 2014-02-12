@@ -1,4 +1,4 @@
-define(["playlist", "pti-playlist"], function(a, Playlist) {
+define(["pti-playlist"], function(Playlist) {
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {
 //                    console.log(sender.tab ?

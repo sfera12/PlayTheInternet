@@ -1,4 +1,4 @@
-define(["playlist"], function () {
+define(["pti-playlist"], function (Playlist) {
     var version = localStorage.getItem('version')
     var currVersion = chrome.runtime.getManifest().version
     var release = currVersion.replace(/^(\d+\.\d{2}).*/, '^$1')
