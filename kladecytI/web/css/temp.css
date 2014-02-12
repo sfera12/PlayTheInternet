@@ -99,4 +99,4 @@ a[href="#howDiv"] { position: relative; }
 .pti-element .pti-logo>svg { position: absolute; width: 80%; height: 80%; top: 9px; left: 13px; opacity: 0.7; display: none; }
 .pti-element:hover .pti-logo>svg { display: block; }
 .pti-element .pti-logo>svg>path { fill: aliceblue; }
-.pti-element.ui-selected .pti-logo>svg>path { fill: orange; }
+.pti-element.ui-selected .pti-logo>svg>path { fill: darkorange; }
