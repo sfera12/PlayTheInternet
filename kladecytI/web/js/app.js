@@ -62,12 +62,12 @@ function upgradeRun(module) {
         var deferred = $.Deferred()
         deferred.resolve()
 
-        if(currVersion < 0.632) {
+        if(currVersion < 0.64) {
             var newDeferred = $.Deferred()
             deferred.then(function() {
-                console.log('initializing upgrade from 0.632')
-                require(['app/migrate/0632'], function() {
-                    console.log('done upgrading from 0.632')
+                console.log('initializing upgrade to 0.64')
+                require(['app/migrate/064'], function() {
+                    console.log('done upgrading to 0.64')
                     newDeferred.resolve()
                 })
                 return newDeferred
