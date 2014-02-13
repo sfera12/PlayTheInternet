@@ -2,6 +2,10 @@
     height: 0px;
 }
 
+.nav-pills>div {
+    float: left;
+}
+
 .nav-pills > li > a {
     margin-right: 0px;
     margin-bottom: 0px;

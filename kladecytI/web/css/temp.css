@@ -100,3 +100,5 @@ a[href="#howDiv"] { position: relative; }
 .pti-element:hover .pti-logo>svg { display: block; }
 .pti-element .pti-logo>svg>path { fill: aliceblue; }
 .pti-element.ui-selected .pti-logo>svg>path { fill: darkorange; }
+.temp.dropdown button.dropdown-toggle { line-height: normal; height: 30px; border: none; outline: none; }
+.temp.dropdown .dropdown-menu { padding: 0px; margin-top: 0px; border-radius: 0; left: -59px; }

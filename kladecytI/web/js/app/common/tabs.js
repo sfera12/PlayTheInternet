@@ -1,4 +1,5 @@
-define(['jquery', 'jquery-ui'], function ($) {
+define(['jquery', 'jquery-ui'], function () {
+//define(['jquery', 'jquery-ui', 'bootstrap'], function () {
     window.tabs = { first: {}, second: {} }
 
 //FIRST CREATE TABS START
@@ -24,8 +25,20 @@ define(['jquery', 'jquery-ui'], function ($) {
             if (newTab.text() == "Playlists") {
                 initFirstPlaylistsClickHandlers()
             }
+//            if (newTab.text() == "Local") {
+//                initFirstPlaylistsClickHandlers()
+//            }
         }
     })
+//    $('#tabs div.dropdown').on('click', 'a', function() {
+//        var $button = $(this), buttonText = $button.text()
+//        if (buttonText.match("(Local Playlists)|(Synchronized Playlists)|(Device Playlists)")) {
+//            var index = $('#tabs').find('>ul>li').index($('.playlists'))
+//            $('#tabs').tabs('option', 'active', index)
+//            $('.playlists>a').text(buttonText.replace(/([^\s]+)\s.*/, '$1'))
+//            $('.playlists>a').click()
+//        }
+//    })
 
 //first player start
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
