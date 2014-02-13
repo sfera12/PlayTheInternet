@@ -291,12 +291,7 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.scrollToSelected = function() {
-        var selected = this.getSelectedVideoDiv()
-        var index = this.getSelectedVideoIndex()
-        var songsCount = this.getIdsCount().length
-        var scrollHeight = this.jContent.prop('scrollHeight')
-        var scrollTo = scrollHeight / songsCount * index - this.jContent.height() / 2 + selected.height() / 2
-        this.jContent.slimscroll({scrollTo: scrollTo + 'px'})
+        this.parent.scrollTo.call(this, this.getSelectedVideoIndex())
     }
 
     Playlist.prototype.selectVideo = function (video, setStorage) {

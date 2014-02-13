@@ -307,8 +307,9 @@ define(["slimscroll"], function () {
     }
 
     Ptilist.prototype.scrollTo = function(index) {
-        var elementHeight = this.jContent.prop('scrollHeight') / this.getIdsCount()
-        var scrollTo = elementHeight * index - this.jContent.height() / 2 + elementHeight / 2
+        var rowHeight = this.jContent.prop('scrollHeight') / this.getIdsCount()
+		var elementHeight = this.getPtiElements().height()
+        var scrollTo = rowHeight * (index - (this.jContent.hasClass('pti-split-two') ? index % 2 == 1 ? 1 : 0 : 0)) - this.jContent.height() / 2 + elementHeight / 2
         this.jContent.slimscroll({ scrollTo: scrollTo + 'px' })
     }
 
