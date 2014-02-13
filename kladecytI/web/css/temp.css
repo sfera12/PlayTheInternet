@@ -87,7 +87,7 @@
 .temp-panel-heading-how.selected { background-color: #efeff5; color: #077fff; }
 
 a[href="#howDiv"] { position: relative; }
-.temp-how-extension-updates { position: absolute; top: -1px; right: -6px; -webkit-transform: rotate(45deg); z-index: 10000000000000000; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid orangered; background: none!important; }
+.temp-how-extension-updates { position: absolute; top: -1px; right: -6px; -webkit-transform: rotate(45deg); z-index: 1; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid orangered; background: none!important; }
 
 .temp-create-playlist-yes { color: green!important; }
 .temp-create-playlist-yes:hover { color: aliceblue!important; }

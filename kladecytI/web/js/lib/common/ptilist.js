@@ -182,20 +182,27 @@ define(["slimscroll"], function () {
         }
 
         deferred.resolve()
-        slices.forEach(function(slice) {
-            var thenDeferred = new $.Deferred()
-            deferred.then(function() {
-                _.defer(function() {
-                    slice.forEach(function(dataPtiElement) {
-                        me.drawPtiElement(dataPtiElement.data, dataPtiElement.$ptiElement)
-                    })
-                    thenDeferred.resolve()
-                })
-                return thenDeferred
-            })
-            deferred = thenDeferred
-        })
-
+		var firstSlice = slices.shift()
+		if(firstSlice) {
+			var drawSlice = function(slice) {
+				slice.forEach(function(dataPtiElement) {
+					me.drawPtiElement(dataPtiElement.data, dataPtiElement.$ptiElement)
+				})
+			}
+			drawSlice(firstSlice)
+			slices.forEach(function(slice) {
+				var thenDeferred = new $.Deferred()
+				deferred.then(function() {
+					_.defer(function() {
+						drawSlice(slice)
+						thenDeferred.resolve()
+					})
+					return thenDeferred
+				})
+				deferred = thenDeferred
+			})
+		}
+			
         if(_.default(recalculcate, true)) {
             var recalcDeferred = new $.Deferred()
             deferred.then(function() {
