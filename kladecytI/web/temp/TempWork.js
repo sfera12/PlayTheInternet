@@ -157,3 +157,10 @@ background-color: #cacaf4;
 background-color: #9f9fec;
 
 PTITemplates.prototype.PlaylistCopyAction = _.template('<svg><polygon points="0,0 45,45 0,90"/></svg>')
+
+
+$('.temp-create-playlist-name').eq(1).autocomplete({
+    source: lPlaylists,
+    minLength: 0
+})
+var cf = function() {  $('.temp-create-playlist-name').eq(1).focus().autocomplete("search", "") }
