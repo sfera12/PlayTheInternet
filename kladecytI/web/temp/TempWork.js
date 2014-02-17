@@ -168,3 +168,12 @@ var cf = function() {  $('.temp-create-playlist-name').eq(1).focus().autocomplet
 $('.pti-header').eq(1).click(function(e) {
     e.target == this && playlist.getPtiElements().removeClass('ui-selected')
 })
+
+
+localStorage.jStorage064 = localStorage.jStorage
+localStorage.jStorage_update064 = localStorage.jStorage_update
+
+$.jStorage.deleteKey("manifest_version")
+
+localStorage.jStorage = localStorage.jStorage064
+localStorage.jStorage_update = localStorage.jStorage_update064
