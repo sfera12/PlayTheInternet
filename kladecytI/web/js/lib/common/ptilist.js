@@ -163,7 +163,7 @@ define(["slimscroll"], function () {
         unique && ( elementsData = this.unique(this.getIds(), elementsData) )
 
         elementsData.forEach(function(elementData) {
-            dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement({id: typeof elementData.id !== "undefined" ? elementData.id : elementData, elementClass: me.options.ptiElementClass})).appendTo(me.jContent) })
+            dataPtiElements.push({ data: elementData, $ptiElement: $(PTITemplates.prototype.ptiElement({id: _.default(elementData.id, elementData), elementClass: me.options.ptiElementClass})).appendTo(me.jContent) })
         })
         while(dataPtiElements.length) {
             slices.push(dataPtiElements.splice(0, sliceCap))
