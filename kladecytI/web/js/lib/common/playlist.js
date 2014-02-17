@@ -170,6 +170,7 @@ define(["common/ptilist"], function (Ptilist) {
             },
             delete: function() {
                 $.jStorage.deleteKey(this.key)
+                $.jStorage.deleteKey("selected_" + this.key)
                 return this
             },
             update: function (obj) {
