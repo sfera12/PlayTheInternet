@@ -55,6 +55,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         me.jContent.on('click', '.pti-remove-playlist-yes', function(event, ui) {
             var playlistId = me.getPtiElement(this).attr('id')
             playlist.DAO(playlistId).delete()
+            $.jStorage.deleteKey("selected_" + playlistId)
         })
         me.jContent.on('click', '.pti-remove-playlist-no', function(event, ui) {
             var $button = $(this), $parent = $button.parent();
