@@ -108,7 +108,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                 } else {
                     ids = [ui.draggable[0].id]
                 }
-                playlistDao.addVideos(ids).update({ source: "" }).set()
+                playlistDao.addVideos(ids, { source: "" }).set()
 
 
                 var remove = function() {

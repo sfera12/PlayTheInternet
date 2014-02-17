@@ -163,8 +163,9 @@ define(["common/ptilist"], function (Ptilist) {
         return dao = {
             key: key,
             storageObj: storageObj,
-            addVideos: function(videosArr) {
+            addVideos: function(videosArr, extend) {
                 this.storageObj.data = this.storageObj.data.concat(videosArr)
+                _.isUndefined(extend) ||  _.extend(this.storageObj, extend)
                 return this
             },
             delete: function() {
@@ -277,8 +278,7 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.recalculateJContentImmediate = function(cache) {
         this.parent.recalculateJContentImmediate.call(this, cache)
-        var index = this.getSelectedVideoIndex()
-        index >= 0 && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: index, date: Date.now() })
+        $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: this.getSelectedVideoIndex(), date: Date.now() })
         _.isFunction(this.options.recalculateJContentImmediateCallback) && this.options.recalculateJContentImmediateCallback()
     }
 
