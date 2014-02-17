@@ -158,8 +158,8 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.DAO = function(key) {
-        var storageObj = _.extend({ id: key, data: [] }, $.jStorage.get(key))
-        storageObj && (storageObj.data = _.stringToArray(storageObj.data))
+        var storageObj = _.extend({ id: key }, $.jStorage.get(key))
+        storageObj.data = _.stringToArray(storageObj.data)
         return dao = {
             key: key,
             storageObj: storageObj,
