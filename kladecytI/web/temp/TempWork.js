@@ -164,3 +164,7 @@ $('.temp-create-playlist-name').eq(1).autocomplete({
     minLength: 0
 })
 var cf = function() {  $('.temp-create-playlist-name').eq(1).focus().autocomplete("search", "") }
+
+$('.pti-header').eq(1).click(function(e) {
+    e.target == this && playlist.getPtiElements().removeClass('ui-selected')
+})
