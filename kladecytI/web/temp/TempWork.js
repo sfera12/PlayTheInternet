@@ -170,10 +170,12 @@ $('.pti-header').eq(1).click(function(e) {
 })
 
 
-localStorage.jStorage064 = localStorage.jStorage
-localStorage.jStorage_update064 = localStorage.jStorage_update
+localStorage.jStorageBackup = localStorage.jStorage
+localStorage.jStorage_updateBackup = localStorage.jStorage_update
 
 $.jStorage.deleteKey("manifest_version")
+localStorage.removeItem(localStorage.jStorage)
+localStorage.removeItem(localStorage.jStorage_update)
 
-localStorage.jStorage = localStorage.jStorage064
-localStorage.jStorage_update = localStorage.jStorage_update064
+localStorage.jStorage = localStorage.jStorageBackup
+localStorage.jStorage_update = localStorage.jStorage_updateBackup
