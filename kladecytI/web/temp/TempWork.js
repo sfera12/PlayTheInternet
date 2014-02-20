@@ -174,8 +174,8 @@ localStorage.jStorageBackup = localStorage.jStorage
 localStorage.jStorage_updateBackup = localStorage.jStorage_update
 
 $.jStorage.deleteKey("manifest_version")
-localStorage.removeItem(localStorage.jStorage)
-localStorage.removeItem(localStorage.jStorage_update)
+localStorage.removeItem("jStorage")
+localStorage.removeItem("jStorage_update")
 
 localStorage.jStorage = localStorage.jStorageBackup
 localStorage.jStorage_update = localStorage.jStorage_updateBackup
