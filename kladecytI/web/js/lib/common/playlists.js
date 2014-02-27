@@ -6,10 +6,23 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         _.isUndefined(appendToElementExpression) || this.init(appendToElementExpression, options)
     }
 
+    Playlists.prototype.jStorageTypeMapping = {
+        playlists: {
+            sorted: "playlists",
+            prefix: "lPlaylist"
+        },
+        synchronized: {
+            sorted: "synchronized",
+            prefix: "sPlaylist"
+        }
+    }
+
     Playlists.prototype.init = function (appendToElementExpression, options) {
         var me = this
         me.options = _.extend({}, options)
         me.options.elementSplit = "one"
+        me.options.jStorageType = _.default(me.options.jStorageType, "playlists")
+        me.options.jStorageTypeValues = Playlists.prototype.jStorageTypeMapping[me.options.jStorageType]
         me.parent.init.call(this, appendToElementExpression, me.options)
 
         //jContainer
@@ -85,7 +98,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
 //        me.redrawJContentFromCacheListen = _.debounce(function (key, action) {
 //            me.redrawJContentGeneric(key, action, 'listener redraw playlists from cache', true)
 //        }, 50)
-        me.setIdListen("playlists", "*")
+        me.setIdListen(me.options.jStorageTypeValues.sorted, "*")
     }
 
     Playlists.prototype.drawPtiElement = function (playlistData, $ptiElement) {
@@ -126,10 +139,11 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
     }
 
     Playlists.prototype.redrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
-        if (key.match(/^(playlists)|(lPlaylist.+)$/)) {
+        var pattern = "^(" + this.options.jStorageTypeValues.sorted + ")|(" + this.options.jStorageTypeValues.prefix + ".+)$"
+        if (key.match(pattern)) {  // /^(playlists)|(lPlaylist.+)$/
             var storageObj = this.parent.redrawJContentGetCacheObject.call(this, key, action, functionName, filterOwn)
             if (!_.isUndefined(storageObj)) { //undefined means filtered by source === uid
-                var playlists = { data: filterJStorageBy(typeLocalPlaylist, sortLocalPlaylist) }
+                var playlists = { data: this.filterJStorageBy(this.typeLocalPlaylist, this.sortLocalPlaylist) }
                 return playlists
             }
         }
@@ -145,10 +159,20 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         this.jContainer.addClass('temp-display-none')
     }
 
-    function filterJStorageBy(filter, sort) {
-        var storageObj = $.jStorage.storageObj(), jStorageKeys = Object.keys(storageObj.__proto__), resultArr = new Array(), resultKeys = new Array()
-        resultKeys = jStorageKeys.filter(filter)
-        resultKeys = sort(storageObj, resultKeys)
+    Playlists.prototype.filterJStorageBy = function(filter, sort) {
+        var storageObj = $.jStorage.storageObj(), jStorageKeys = Object.keys(storageObj.__proto__), resultArr = new Array(), resultKeys = new Array(), me = this
+        //filter
+        resultKeys = jStorageKeys.filter(function(key) {
+            return key.match("^" + me.options.jStorageTypeValues.prefix)
+        })
+        //filter end
+        //sort
+//      resultKeys = sort(storageObj, resultKeys)
+        var sortedPlaylistIds, playlistsOrder = storageObj[this.options.jStorageTypeValues.sorted] ? _.stringToArray(storageObj[this.options.jStorageTypeValues.sorted].data) : [], newKeys = _.difference(resultKeys, playlistsOrder)
+        newKeys.reverse()
+        sortedPlaylistIds = newKeys.concat(playlistsOrder)
+        resultKeys = sortedPlaylistIds
+        //sort end
         resultKeys.forEach(function (key) {
             if(storageObj[key]) {
                 var item = _.extend({}, storageObj[key]);
@@ -159,16 +183,16 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         return resultArr
     }
 
-    function typeLocalPlaylist(key) {
-        return key.match(/^lPlaylist/)
-    }
+//    Playlists.prototype.typeLocalPlaylist = function(key) {
+//        return key.match("^" + this.options.jStorageTypeValues.prefix)
+//    }
 
-    function sortLocalPlaylist(storageObj, filteredKeys) {
-        var sortedPlaylistIds, playlistsOrder = storageObj.playlists ? _.stringToArray(storageObj.playlists.data) : [], newKeys = _.difference(filteredKeys, playlistsOrder)
-        newKeys.reverse()
-        sortedPlaylistIds = newKeys.concat(playlistsOrder)
-        return sortedPlaylistIds
-    }
+//    Playlists.prototype.sortLocalPlaylist = function(storageObj, filteredKeys) {
+//        var sortedPlaylistIds, playlistsOrder = storageObj[this.options.jStorageTypeValues.sorted] ? _.stringToArray(storageObj[this.options.jStorageTypeValues.sorted].data) : [], newKeys = _.difference(filteredKeys, playlistsOrder)
+//        newKeys.reverse()
+//        sortedPlaylistIds = newKeys.concat(playlistsOrder)
+//        return sortedPlaylistIds
+//    }
 
     return Playlists
 })

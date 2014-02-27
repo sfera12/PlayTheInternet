@@ -104,6 +104,9 @@ define(['jquery', 'jquery-ui'], function () {
             if (newTab.text() == "Playlists") {
                 initSecondPlaylistsClickHandlers()
             }
+            if (newTab.text() == "Synchronized") {
+                initSecondSynchronizedClickHandlers()
+            }
         }
     })
 
@@ -153,6 +156,26 @@ define(['jquery', 'jquery-ui'], function () {
         })
         window.playlists = tabs.second.playlists //can remove this
         return tabs.second.playlists
+    })
+
+    var initSecondSynchronizedClickHandlers = _.once(function() {
+        $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondSynchronizedDiv"]', selectSecondSynchronized) //selectSecondPlaylists will run
+    })
+    var selectSecondSynchronized = function () {
+        require(["common/playlists"], function(Playlists) {
+            initSecondSynchronized(Playlists).playlistClose()
+        })
+    }
+    var initSecondSynchronized = _.once(function(Playlists) {
+        tabs.second.synchronized = new Playlists("#ulSecondSynchronized", {
+            jStorageType: "synchronized",
+            playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
+            playlistTabsGetPlaylist: function () {
+                this.tabsGetPlaylist = tabs.first.getPlaylist
+            }
+        })
+        window.synchronized = tabs.second.synchronized //can remove this
+        return tabs.second.synchronized
     })
 //second playlists end
 //SECOND CREATE TABS END
