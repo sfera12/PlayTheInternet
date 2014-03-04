@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui'], function () {
+define(['jquery', 'jquery-jobbing'], function () {
 //define(['jquery', 'jquery-ui', 'bootstrap'], function () {
     window.tabs = { first: {}, second: {} }
 
@@ -89,6 +89,12 @@ define(['jquery', 'jquery-ui'], function () {
         return tabs.first.playlists
     })
 //first playlists end
+
+//first dropdown start
+    $.dropdown($('#playlistsDropdown'), $('#tabs').find('.playlistsDropdown>a'))
+    $.dropdown($('#parseDropdown'), $('#tabs').find('.parseDropdown>a'))
+    $.dropdown($('#optionsDropdown'), $('#tabs').find('.optionsDropdown>a'))
+//first dropdown end
 //FIRST CREATE TABS END
 
 //SECOND CREATE TABS START

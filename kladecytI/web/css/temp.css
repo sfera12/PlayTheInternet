@@ -100,5 +100,27 @@ a[href="#howDiv"] { position: relative; }
 .pti-element:hover .pti-logo>svg { display: block; }
 .pti-element .pti-logo>svg>path { fill: aliceblue; }
 .pti-element.ui-selected .pti-logo>svg>path { fill: darkorange; }
-.temp.dropdown button.dropdown-toggle { line-height: normal; height: 30px; border: none; outline: none; }
-.temp.dropdown .dropdown-menu { padding: 0px; margin-top: 0px; border-radius: 0; left: -59px; }
+
+.nav>li.playlistsDropdown, .nav>li.parseDropdown, .nav>li.optionsDropdown { text-align: center; }
+.nav>li.playlistsDropdown>a, .nav>li.parseDropdown>a, .nav>li.optionsDropdown>a { padding-left: 8px; padding-right: 8px; }
+.nav>li.parseDropdown>a { width: 55px; }
+.nav>li.playlistsDropdown>a { width: 91px; }
+.nav>li.optionsDropdown>a { width: 56px; }
+.nav>li>a[href="#tAreaDiv"], .nav>li>a[href="#firstSynchronizedDiv"], .nav>li>a[href="#firstDevicesDiv"], .nav>li>a[href="#howDiv"] { display: none; }
+.pti-dropdown { float: left; position: relative; }
+.pti-dropdown>input { position: absolute; left: -9999px;}
+.pti-dropdown>span[role="status"] { display: none; }
+.pti-dropdown>.dropdown-toggle { padding-left: 10px; padding-right: 10px; background-color: #efeff5; }
+.pti-dropdown>.dropdown-toggle>.caret { border-top-color: #077fff; border-bottom-color: #077fff;  }
+.pti-dropdown>.dropdown-toggle:hover { background-color: royalblue; }
+.pti-dropdown>.dropdown-toggle:hover>.caret { border-top-color: white; border-bottom-color: white;  }
+.pti-dropdown>button.pti-active { background-color: #077fff!important; border-top-color: aliceblue!important; border-bottom-color: aliceblue!important; }
+.pti-dropdown>button.pti-active * { background-color: #077fff!important; border-top-color: aliceblue!important; border-bottom-color: aliceblue!important; }
+.pti-dropdown>.dropdown-menu { position: absolute; top:31px!important; left: auto; right: 0px; padding: 0px; }
+.pti-dropdown>.dropdown-menu, .pti-dropdown>.dropdown-menu * { margin: 0px; border: none; border-radius: 0px; }
+#parseDropdown>.dropdown-menu, #parseDropdown>.dropdown-menu * { min-width: 64px; }
+#playlistsDropdown>.dropdown-menu, #playlistsDropdown>.dropdown-menu * { min-width: 100px; }
+#optionsDropdown>.dropdown-menu, #optionsDropdown>.dropdown-menu * { min-width: 65px; }
+.pti-dropdown>.dropdown-menu>li:hover>a:not(.ui-state-focus) { color: rgb(153, 153, 153); }
+.pti-dropdown>.dropdown-menu>li>a.ui-state-focus { background-color: #077fff; color: white; }
+.pti-dropdown>.dropdown-menu>li>a { padding: 3px 18px 3px 17px; cursor: pointer; }

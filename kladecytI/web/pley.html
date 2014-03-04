@@ -46,13 +46,33 @@
         <div id="tabs" class="leftFull temp-position-relative">
             <ul class="nav nav-pills temp-no-height">
                 <li><a href="#player">Player<div id="podPlayer"></div></a></li>
-                <li><a href="#tAreaDiv">Text<div id="podTa"></div></a></li>
-                <li><a href="#optionsDiv">Options<div id="podOptions"></div></a></li>
-                <li class="ui-state-active"><a href="#parsedDiv">Parsed<div id="podParsed"></div></a></li>
-                <li class="playlists"><a href="#firstPlaylistsDiv">Playlists</a></li>
+                <li class="parseDropdown"><a href="#tAreaDiv">Text<div id="podTa"></div></a></li>
+                <li class="ui-state-active parseDropdown"><a href="#parsedDiv">Parsed<div id="podParsed"></div></a></li>
+                <div id="parseDropdown" class="pti-dropdown">
+                    <input type="button"/>
+                    <button type="button" class="btn btn-primary dropdown-toggle">
+                        <span class="caret"></span>
+                    </button>
+                </div>
+                <li class="playlistsDropdown"><a href="#firstPlaylistsDiv">Playlists</a></li>
+                <li class="playlistsDropdown"><a href="#firstSynchronizedDiv">Synchronized</a></li>
+                <li class="playlistsDropdown"><a href="#firstDevicesDiv">Devices</a></li>
+                <div id="playlistsDropdown" class="pti-dropdown">
+                    <input type="button"/>
+                    <button type="button" class="btn btn-primary dropdown-toggle">
+                        <span class="caret"></span>
+                    </button>
+                </div>
                 <!--<li class="playlists"><a href="#firstPlaylistsDiv">Local</a></li>-->
                 <!--<div class="temp dropdown"><button class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li><a href="#">Local Playlists</a></li><li><a href="#">Synchronized Playlists</a></li><li><a href="#">Device Playlists</a></li></ul></div>-->
-                <li><a href="#howDiv">?<div id="podHow"></div></a></li>
+                <li class="optionsDropdown"><a href="#optionsDiv">Options<div id="podOptions"></div></a></li>
+                <li class="optionsDropdown"><a href="#howDiv">Help<div id="podHow"></div></a></li>
+                <div id="optionsDropdown" class="pti-dropdown">
+                    <input type="button"/>
+                    <button type="button" class="btn btn-primary dropdown-toggle">
+                        <span class="caret"></span>
+                    </button>
+                </div>
             </ul>
             <div id="tAreaDiv" class="temp-popup-nav-content temp-display-none">
                 <textArea id="tArea" class="taArea" placeholder="Paste any text that contains links, for example Skype conversation, etc"></textArea>
@@ -98,6 +118,12 @@
             </div>
             <div id="firstPlaylistsDiv" class="temp-popup-nav-content">
                 <div id="ulFirstPlaylists"></div>
+            </div>
+            <div id="firstSynchronizedDiv" class="temp-popup-nav-content">
+                <div id="ulFirstSynchronized"></div>
+            </div>
+            <div id="firstDevicesDiv" class="temp-popup-nav-content">
+                <div id="ulFirstDevices"></div>
             </div>
             <div id="howDiv" class="temp-popup-nav-content temp-display-none">
                 <div id="howDivContainer">

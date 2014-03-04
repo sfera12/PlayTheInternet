@@ -6,6 +6,7 @@ requirejs.config({
         "bootstrap":"common/bootstrap.min",
         "jquery":"common/jquery-2.0.3.min",
         "jquery-ui":"common/jquery-ui-1.10.4.custom.min",
+        "jquery-jobbing":"common/jquery-jobbing",
         "underscore-core":"common/underscore-min",
         "underscore":"common/underscore-mixin",
         "jstorage":"common/jstorage.min",

@@ -35,3 +35,8 @@
     background-color: royalblue;
     color: white;
 }
+
+.dropdown-menu > li > a:hover {
+    background-color: inherit;
+    background-image: inherit;
+}
