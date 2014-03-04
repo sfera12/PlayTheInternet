@@ -9,9 +9,7 @@ define(["player-widget"], function (PlayerWidget) {
         playerWidget.data.listenObject = backgroundWindow.pti
     })
 
-    require(["app/common/tabs"], function () {
-        $("#tabs").tabs("option", "active", 3);
-    })
+    require(["app/common/tabs"])
     require(["app/popup/parse-content"], function() {
         tabs.first.playlist = parsedPlaylist
     })

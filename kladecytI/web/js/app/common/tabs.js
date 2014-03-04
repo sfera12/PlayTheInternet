@@ -3,7 +3,7 @@ define(['jquery', 'jquery-jobbing'], function () {
     window.tabs = { first: {}, second: {} }
 
 //FIRST CREATE TABS START
-    $('#tabs').tabs({
+    var $firstTabs = $('#tabs').tabs({
         activate: function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {
@@ -95,6 +95,8 @@ define(['jquery', 'jquery-jobbing'], function () {
     $.dropdown($('#parseDropdown'), $('#tabs').find('.parseDropdown>a'))
     $.dropdown($('#optionsDropdown'), $('#tabs').find('.optionsDropdown>a'))
 //first dropdown end
+
+  $firstTabs.tabs("option", "active", 1)
 //FIRST CREATE TABS END
 
 //SECOND CREATE TABS START
