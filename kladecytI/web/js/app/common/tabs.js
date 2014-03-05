@@ -183,6 +183,8 @@ define(['jquery', 'jquery-jobbing'], function () {
             }
         })
         window.synchronized = tabs.second.synchronized //can remove this
+        synchronized.redrawJContentGetCacheObject = synchronized.synchronizedRedrawJContentGetCacheObject
+        synchronized.filterJStorageBy = synchronized.synchronizedFilterJStorageBy
         return tabs.second.synchronized
     })
 //second playlists end

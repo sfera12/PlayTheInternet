@@ -276,8 +276,10 @@ define(["slimscroll"], function () {
     }
 
     Ptilist.prototype.redrawJContentGeneric = function (key, action, functionName, filterOwn, scrollTo) {
-        var storageObject = this.redrawJContentGetCacheObject(key, action, functionName, filterOwn)
-        storageObject && this.redrawJContent(storageObject, scrollTo)
+        var me = this
+        $.when(this.redrawJContentGetCacheObject(key, action, functionName, filterOwn)).then(function(storageObject) {
+            storageObject && me.redrawJContent(storageObject, scrollTo)
+        })
     }
 
     Ptilist.prototype.redrawJContentFromCacheListen = function (key, action) {
