@@ -254,7 +254,7 @@ define(["slimscroll"], function () {
     }
 
     Ptilist.prototype.recalculateJContentBuildStorageObject = function () {
-        var storageObj = { id: this.options.id, source: this.uid, data: _.arrayToString(this.getIds()) }
+        var storageObj = { id: this.options.id, source: this.uid, data: _.arrayToString(this.getIds()), updated: Date.now() }
         return storageObj
     }
 

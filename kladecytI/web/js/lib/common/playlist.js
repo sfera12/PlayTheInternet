@@ -126,10 +126,11 @@ define(["common/ptilist"], function (Ptilist) {
 
         var createPlaylist = function() {
             var name = $input.val()
-            var id = "lPlaylist" + _.guid()
+            var id = "sPlaylist" + _.guid()
             var selected = me.getIdsUiSelected(), playlist = selected.length ? selected : me.getIds()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
-            $.jStorage.set(id, { id: id, name: name, thumbnail: thumbnail, data: _.arrayToString(playlist) })
+            var dao = Playlist.prototype.DAO(id).addVideos(playlist, { name: name, thumbnail: thumbnail})
+            dao.set()
         }
 
         var inputHandler = function(event) {
@@ -165,7 +166,7 @@ define(["common/ptilist"], function (Ptilist) {
             storageObj: storageObj,
             addVideos: function(videosArr, extend) {
                 this.storageObj.data = this.storageObj.data.concat(videosArr)
-                _.isUndefined(extend) ||  _.extend(this.storageObj, extend)
+                _.isUndefined(extend) ||  this.update(extend)
                 return this
             },
             delete: function() {
@@ -173,12 +174,17 @@ define(["common/ptilist"], function (Ptilist) {
                 $.jStorage.deleteKey("selected_" + this.key)
                 return this
             },
-            update: function (obj) {
+            update: function (obj, update) {
+                _.default(update, true) && _.extend(obj, { updated: Date.now() })
                 _.extend(this.storageObj, obj)
                 return this
             },
-            set: function () {
+            serialize: function() {
                 this.storageObj.data = _.arrayToString(this.storageObj.data)
+                return this
+            },
+            set: function (serialize) {
+                _.default(serialize, true) && this.serialize()
                 $.jStorage.set(this.key, this.storageObj)
                 console.log('set', this.storageObj)
                 return this
