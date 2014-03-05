@@ -40,21 +40,12 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
         if (namespace == "sync") {
             chrome.storage.sync.get(function (sync) {
                 var start = Date.now()
-                console.trace("[%s] [chrome.storage.onChanged][sync.get]", start, { sync: sync })
+                console.trace("[%s] [chrome.storage.onChanged][sync.get]", start, { changes: changes, sync: sync })
                 for (key in changes) {
-//                var storageChange = changes[key];
-//                console.log('Storage key "%s" in namespace "%s" changed. ' +
-//                    'Old value was "%s", new value is "%s".',
-//                    key,
-//                    namespace,
-//                    storageChange.oldValue,
-//                    storageChange.newValue);
                     if (key.match(/^((synchronized)|(sPlaylist).*)/)) {
-                        console.trace("[%s] [chrome.storage.onChanged][sync.get][key.match(/^((synchronized)|(sPlaylist).*)/)] [MATCHED %s]", start, key, sync)
                         if (sync[key].device_id != device_id) {
-                            var storageChange = changes[key];
                             var dao = Playlist.prototype.DAO(key)
-                            dao.storageObj = storageChange.newValue
+                            dao.storageObj = sync[key]
                             dao.update({ source: "sync" }, false)
                             dao.set(false)
                             console.trace("[%s] [chrome.storage.onChanged][sync.get][key.match][sync.device_id!=device_id] [SET %s TO JSTORAGE]", start, key, { sync: sync[key], device_id: device_id, dao: dao.storageObj })
