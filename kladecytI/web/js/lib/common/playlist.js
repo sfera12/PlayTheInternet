@@ -285,7 +285,7 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.recalculateJContentImmediate = function(cache) {
         this.parent.recalculateJContentImmediate.call(this, cache)
-        $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: this.getSelectedVideoIndex(), date: Date.now() })
+        this.options.id && $.jStorage.set('selected_' + this.options.id, { source: this.uid, index: this.getSelectedVideoIndex(), date: Date.now() })
         _.isFunction(this.options.recalculateJContentImmediateCallback) && this.options.recalculateJContentImmediateCallback()
     }
 
