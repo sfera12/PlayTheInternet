@@ -149,23 +149,6 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         }
     }
 
-    Playlists.prototype.synchronizedRedrawJContentGetCacheObject = function (key, action, functionName, filterOwn) {
-        var pattern = "^(" + this.options.jStorageTypeValues.sorted + ")|(" + this.options.jStorageTypeValues.prefix + ".+)$"
-        if (key.match(pattern)) {  // /^(playlists)|(lPlaylist.+)$/
-            var defer = $.Deferred(), me = this
-            chrome.storage.sync.get(function (sync) {
-                var storageObj = me.parent.redrawJContentGetCacheObject.call(this, key, action, functionName, filterOwn)
-                if (!_.isUndefined(storageObj)) { //undefined means filtered by source === uid
-                    var playlists = { data: me.filterJStorageBy(me.typeLocalPlaylist, me.sortLocalPlaylist, sync.user_id) }
-                    defer.resolve(playlists)
-                } else {
-                    defer.resolve()
-                }
-            })
-            return defer
-        }
-    }
-
     Playlists.prototype.playlistClose = function() {
         this.jContainer.removeClass('temp-display-none')
     }
@@ -195,30 +178,6 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                 var item = _.extend({}, storageObj[key]);
                 item.data = _.stringToArray(item.data)
                 resultArr.push(item)
-            }
-        })
-        return resultArr
-    }
-
-    Playlists.prototype.synchronizedFilterJStorageBy = function(filter, sort, userId) {
-        var storageObj = $.jStorage.storageObj(), jStorageKeys = Object.keys(storageObj.__proto__), resultArr = new Array(), resultKeys = new Array(), me = this
-        //filter
-        resultKeys = jStorageKeys.filter(function(key) {
-            return key.match("^" + me.options.jStorageTypeValues.prefix)
-        })
-        //filter end
-        //sort
-//      resultKeys = sort(storageObj, resultKeys)
-        var sortedPlaylistIds, playlistsOrder = storageObj[this.options.jStorageTypeValues.sorted] ? _.stringToArray(storageObj[this.options.jStorageTypeValues.sorted].data) : [], newKeys = _.difference(resultKeys, playlistsOrder)
-        newKeys.reverse()
-        sortedPlaylistIds = newKeys.concat(playlistsOrder)
-        resultKeys = sortedPlaylistIds
-        //sort end
-        resultKeys.forEach(function (key) {
-            if(storageObj[key]) {
-                var item = _.extend({}, storageObj[key]);
-                item.data = _.stringToArray(item.data)
-                item.user_id == userId && resultArr.push(item)
             }
         })
         return resultArr

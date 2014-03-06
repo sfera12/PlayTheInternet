@@ -159,7 +159,8 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.DAO = function(key) {
-        var storageObj = _.extend({ id: key }, $.jStorage.get(key))
+        var obj = $.jStorage.get(key)
+        var storageObj = _.extend({ id: key }, obj)
         storageObj.data = _.stringToArray(storageObj.data)
         return dao = {
             key: key,
@@ -173,6 +174,9 @@ define(["common/ptilist"], function (Ptilist) {
                 $.jStorage.deleteKey(this.key)
                 $.jStorage.deleteKey("selected_" + this.key)
                 return this
+            },
+            exists: function() {
+                return Boolean(obj)
             },
             update: function (obj, update) {
                 _.default(update, true) && _.extend(obj, { updated: Date.now() })
