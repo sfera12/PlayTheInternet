@@ -23,8 +23,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
             if (_.keys(upsert).length) {
                 chrome.storage.sync.set(upsert, function () {
                     chrome.runtime.lastError && (console.log(chrome.runtime.lastError) | alert("OH NOES THERE WAS AN ERROR IN CHROME.SYNC.SET"))
-                    _.keys(upsertKeys).length && _jStorageListenerUpsert()
-                    console.trace("[%s] [_jStorageListenerUpsert][sync.set] and postponed %s upsertKeys [SYNCHRONIZED UPSERT TO CHROME.SYNC]", start, _.keys(upsertKeys).length, { upsert: upsert })
+                    console.trace("[%s] [_jStorageListenerUpsert][sync.set] [SYNCHRONIZED UPSERT TO CHROME.SYNC]", start, { upsert: upsert })
                 })
             }
         })
