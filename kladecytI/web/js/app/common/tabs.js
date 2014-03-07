@@ -170,7 +170,13 @@ define(['jquery', 'jquery-jobbing'], function () {
         $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondSynchronizedDiv"]', selectSecondSynchronized) //selectSecondPlaylists will run
     })
     var selectSecondSynchronized = function () {
-        require(["common/playlists"], function(Playlists) {
+        require(["common/playlists", "app/background/synchronization"], function(Playlists, synchronization) {
+            chrome.storage.sync.get(function(sync) {
+                var start = Date.now()
+                for(var key in sync) {
+                    synchronization.syncListenerUpsert(sync, key, start)
+                }
+            })
             initSecondSynchronized(Playlists).playlistClose()
         })
     }

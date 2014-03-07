@@ -10,6 +10,8 @@ define(["pti-playlist", "iframe-observer"], function(Playlist, observer) {
                 fillVideoElement:false,
                 playerType: true
             });
-        require(["app/background/synchronization", "app/background/commands", "app/background/contextMenus"])
+        require(["app/background/synchronization", "app/background/commands", "app/background/contextMenus"], function(synchronization) {
+            synchronization.init()
+        })
     })
 })
