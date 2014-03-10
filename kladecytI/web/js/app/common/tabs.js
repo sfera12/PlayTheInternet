@@ -22,6 +22,17 @@ define(['jquery', 'jquery-jobbing'], function () {
         return selectNav
     }
 
+    function fetchSynch() {
+        require(["app/background/synchronization"], function (synchronization) {
+            chrome.storage.sync.get(function (sync) {
+                var start = Date.now()
+                for (var key in sync) {
+                    synchronization.syncListenerUpsert(sync, key, start)
+                }
+            })
+        })
+    }
+
 //GENERIC END
 
 //FIRST CREATE TABS START
@@ -162,17 +173,6 @@ define(['jquery', 'jquery-jobbing'], function () {
     var selectSecondPlaylists = playlistsFactory($('a[href="#secondPlaylistsDiv"]'), $("#ulSecondPlaylists"), "playlists", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
     var selectSecondSynchronizedPlaylists = playlistsFactory($('a[href="#secondSynchronizedDiv"]'), $("#ulSecondSynchronized"), "synchronized", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
     var selectSecondDevicesPlaylists = playlistsFactory($('a[href="#secondDevicesDiv"]'), $("#ulSecondDevices"), "devices", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
-
-    function fetchSynch() {
-        require(["app/background/synchronization"], function (synchronization) {
-            chrome.storage.sync.get(function (sync) {
-                var start = Date.now()
-                for (var key in sync) {
-                    synchronization.syncListenerUpsert(sync, key, start)
-                }
-            })
-        })
-    }
 
 //second playlists end
 //SECOND CREATE TABS END
