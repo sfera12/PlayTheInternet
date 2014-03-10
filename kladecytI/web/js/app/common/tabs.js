@@ -115,6 +115,9 @@ define(['jquery', 'jquery-jobbing'], function () {
             if (newTab.text() == "Synchronized") {
                 initSecondSynchronizedClickHandlers()
             }
+            if (newTab.text() == "Devices(Read Only)") {
+                initSecondDevicesClickHandlers()
+            }
         }
     })
 
@@ -190,6 +193,32 @@ define(['jquery', 'jquery-jobbing'], function () {
         })
         window.synchronized = tabs.second.synchronized //can remove this
         return tabs.second.synchronized
+    })
+    
+    var initSecondDevicesClickHandlers = _.once(function() {
+        $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondDevicesDiv"]', selectSecondDevices) //selectSecondPlaylists will run
+    })
+    var selectSecondDevices = function () {
+        require(["common/playlists", "app/background/synchronization"], function(Playlists, synchronization) {
+            chrome.storage.sync.get(function(sync) {
+                var start = Date.now()
+                for(var key in sync) {
+                    synchronization.syncListenerUpsert(sync, key, start)
+                }
+            })
+            initSecondDevices(Playlists).playlistClose()
+        })
+    }
+    var initSecondDevices = _.once(function(Playlists) {
+        tabs.second.devices = new Playlists("#ulSecondDevices", {
+            jStorageType: "devices",
+            playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
+            playlistTabsGetPlaylist: function () {
+                this.tabsGetPlaylist = tabs.first.getPlaylist
+            }
+        })
+        window.devices = tabs.second.devices //can remove this
+        return tabs.second.devices
     })
 //second playlists end
 //SECOND CREATE TABS END

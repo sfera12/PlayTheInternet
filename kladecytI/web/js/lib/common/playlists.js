@@ -14,6 +14,10 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
         synchronized: {
             sorted: "synchronized",
             prefix: "sPlaylist"
+        },
+        devices: {
+            sorted: "devices",
+            prefix: "dPlaylist"
         }
     }
 

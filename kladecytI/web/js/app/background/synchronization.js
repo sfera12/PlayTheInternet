@@ -66,8 +66,14 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
             }
         });
 
+        $.jStorage.listenKeyChange('backgroundPageId', function(key, action) {
+            var playingPlaylist = Playlist.prototype.DAO(key), dPlaylistkey = "dPlaylist" + device_id, dPlaylist = Playlist.prototype.DAO(dPlaylistkey)
+            dPlaylist.storageObj = playingPlaylist.storageObj
+            dPlaylist.update({ device_id: device_id }, false).set()
+        })
+
         $.jStorage.listenKeyChange('*', function (key, action) {
-            if (key.match(/^((synchronized)|(sPlaylist).*)/)) {
+            if (key.match(/^((synchronized)|(sPlaylist)|(devices)|(dPlaylist).*)/)) {
                 var dao = Playlist.prototype.DAO(key)
                 if (!dao.exists()) {
                     deleteKeys.push(dao.key)

@@ -4,6 +4,7 @@
 .pti-ptilist .pti-content.pti-view-big>* .image-div { width: 120px; height: 90px; margin-right: 3px; }
 .pti-ptilist .pti-content.pti-view-medium>* .image-div { width: 60px; height: 45px; margin-right: 3px; }
 
+/* .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img { display: block; margin: auto; }  CENTERED IMG */
 .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img { float: left; }
 .pti-ptilist .pti-content.pti-view-big>* .image-div img, .pti-ptilist .pti-content.pti-view-big>* .image-div img { height: 90px; }
 .pti-ptilist .pti-content.pti-view-medium>* .image-div img, .pti-ptilist .pti-content.pti-view-medium>* .image-div img { height: 45px; }

@@ -124,3 +124,6 @@ a[href="#howDiv"] { position: relative; }
 .pti-dropdown>.dropdown-menu>li:hover>a:not(.ui-state-focus) { color: rgb(153, 153, 153); }
 .pti-dropdown>.dropdown-menu>li>a.ui-state-focus { background-color: #077fff; color: white; }
 .pti-dropdown>.dropdown-menu>li>a { padding: 3px 18px 3px 17px; cursor: pointer; }
+
+.nav>li.playlistsDropdown>a, a[href="#secondDevicesDiv"] { text-overflow: ellipsis; white-space: nowrap; } /* Devices(ReadOnly) workaround */
+a[href="#secondDevicesDiv"] { width: 111px; } /* Devices(ReadOnly) workaround */
