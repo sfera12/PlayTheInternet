@@ -1,6 +1,28 @@
 define(['jquery', 'jquery-jobbing'], function () {
-//define(['jquery', 'jquery-ui', 'bootstrap'], function () {
+//GENERIC START
     window.tabs = { first: {}, second: {} }
+
+    function playlistsFactory($nav, $playlistsEl, jStorageType, headerConfigKey, tabs, getPlaylist) {
+        var initPlaylists = _.once(function (Playlists) {
+            tabs[jStorageType] = new Playlists($playlistsEl, {
+                jStorageType: jStorageType,
+                playlistHeaderConfigKey: headerConfigKey,
+                playlistTabsGetPlaylist: function () {
+                    this.tabsGetPlaylist = getPlaylist
+                }
+            })
+            return tabs[jStorageType]
+        })
+        var selectNav = function () {
+            require(["common/playlists"], function (Playlists) {
+                initPlaylists(Playlists).playlistClose()
+            })
+        }
+        $nav.click(selectNav)
+        return selectNav
+    }
+
+//GENERIC END
 
 //FIRST CREATE TABS START
     var $firstTabs = $('#tabs').tabs({
@@ -11,10 +33,6 @@ define(['jquery', 'jquery-jobbing'], function () {
                     redraw()
                 })
             }
-            //        console.log(newTab.text())
-            //            if(newTab.text() == "Calendar") {
-            //                propagateCalendar()
-            //            }
             if (newTab.text() == "Player") {
                 tabsPlayerContainer.removeClass('temp-absolute-off-scren')
                 tabsPlayerContainer.addClass('tabs-player-container')
@@ -23,22 +41,15 @@ define(['jquery', 'jquery-jobbing'], function () {
                 tabsPlayerContainer.removeClass('tabs-player-container')
             }
             if (newTab.text() == "Playlists") {
-                initFirstPlaylistsClickHandlers()
             }
-//            if (newTab.text() == "Local") {
-//                initFirstPlaylistsClickHandlers()
-//            }
+            if (newTab.text() == "Synchronized") {
+                fetchSynch()
+            }
+            if (newTab.text() == "Devices(Read Only)") {
+                fetchSynch()
+            }
         }
     })
-//    $('#tabs div.dropdown').on('click', 'a', function() {
-//        var $button = $(this), buttonText = $button.text()
-//        if (buttonText.match("(Local Playlists)|(Synchronized Playlists)|(Device Playlists)")) {
-//            var index = $('#tabs').find('>ul>li').index($('.playlists'))
-//            $('#tabs').tabs('option', 'active', index)
-//            $('.playlists>a').text(buttonText.replace(/([^\s]+)\s.*/, '$1'))
-//            $('.playlists>a').click()
-//        }
-//    })
 
 //first player start
     var tabsPlayerContainer = $('#tabs .tabs-player-container')
@@ -52,7 +63,7 @@ define(['jquery', 'jquery-jobbing'], function () {
 //first options end
 
 //first playlists start
-    $('#tabs').on('click', 'ul>li>a', function() {
+    $('#tabs').on('click', 'ul>li>a', function () {
         tabs.first.playlist = null
     })
     $('#firstView').on('click', '[href="#tAreaDiv"]', function () {
@@ -64,30 +75,22 @@ define(['jquery', 'jquery-jobbing'], function () {
     $('#firstView').on('click', '[href="#parsedDiv"]', function () {
         tabs.first.playlist = parsedPlaylist
     })
+    $('#ulFirstPlaylists').on('click', '.image-div', function () {
+        tabs.first.playlist = tabs.first.playlists.playlist
+    })
+    $('#ulFirstSynchronized').on('click', '.image-div', function () {
+        tabs.first.playlist = tabs.first.synchronized.playlist
+    })
+    $('#ulFirstDevices').on('click', '.image-div', function () {
+        tabs.first.playlist = tabs.first.devices.playlist
+    })
     tabs.first.getPlaylist = function () {
         return tabs.first.playlist ? tabs.first.playlist : tabs.second.playing
     }
-    var initFirstPlaylistsClickHandlers = _.once(function () {
-        $('#tabs').on('click', '.ui-tabs-active>a[href="#firstPlaylistsDiv"]', selectFirstPlaylists) //selectFirstPlaylists will run
-        $('#ulFirstPlaylists').on('click', '.image-div', function () {
-            tabs.first.playlist = tabs.first.playlists.playlist
-        })
-    })
-    var selectFirstPlaylists = function () {
-        require(["common/playlists"], function(Playlists) {
-            initFirstPlaylists(Playlists).playlistClose()
-        })
-    }
-    var initFirstPlaylists = _.once(function(Playlists) {
-        tabs.first.playlists = new Playlists("#ulFirstPlaylists", {
-            playlistHeaderConfigKey: "lConfigFirstPlaylistsPlaylistHeader",
-            playlistTabsGetPlaylist: function () {
-                this.tabsGetPlaylist = tabs.second.getPlaylist
-            }
-        })
-        window.playlists = tabs.first.playlists //can remove this
-        return tabs.first.playlists
-    })
+
+    var selectFirstPlaylists = playlistsFactory($('a[href="#firstPlaylistsDiv"]'), $("#ulFirstPlaylists"), "playlists", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
+    var selectFirstSynchronized = playlistsFactory($('a[href="#firstSynchronizedDiv"]'), $("#ulFirstSynchronized"), "synchronized", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
+    var selectFirstDevices = playlistsFactory($('a[href="#firstDevicesDiv"]'), $("#ulFirstDevices"), "devices", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
 //first playlists end
 
 //first dropdown start
@@ -96,7 +99,7 @@ define(['jquery', 'jquery-jobbing'], function () {
     $.dropdown($('#optionsDropdown'), $('#tabs').find('.optionsDropdown>a'))
 //first dropdown end
 
-  $firstTabs.tabs("option", "active", 1)
+    $firstTabs.tabs("option", "active", 1)
 //FIRST CREATE TABS END
 
 //SECOND CREATE TABS START
@@ -106,17 +109,16 @@ define(['jquery', 'jquery-jobbing'], function () {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Playing") {
                 require(["app/common/hash-qr", "pti-playlist"], function (redrawHashAndQRCode, Playlist) {
-                    tabs.second.playing = tabs.second.playlist = initPlaying(redrawHashAndQRCode, Playlist)
+                    tabs.second.playlist = initPlaying(redrawHashAndQRCode, Playlist)
                 })
             }
             if (newTab.text() == "Playlists") {
-                initSecondPlaylistsClickHandlers()
             }
             if (newTab.text() == "Synchronized") {
-                initSecondSynchronizedClickHandlers()
+                fetchSynch()
             }
             if (newTab.text() == "Devices(Read Only)") {
-                initSecondDevicesClickHandlers()
+                fetchSynch()
             }
         }
     })
@@ -141,85 +143,37 @@ define(['jquery', 'jquery-jobbing'], function () {
 //second playing end
 
 //second playlists start
-    $('#secondViewTabs').on('click', 'ul>li>a', function() {
+    $('#secondViewTabs').on('click', 'ul>li>a', function () {
         tabs.second.playlist = null
+    })
+    $('#ulSecondPlaylists').on('click', '.image-div', function () {
+        tabs.second.playlist = tabs.second.playlists.playlist
+    })
+    $('#ulSecondSynchronized').on('click', '.image-div', function () {
+        tabs.second.playlist = tabs.second.synchronized.playlist
+    })
+    $('#ulSecondDevices').on('click', '.image-div', function () {
+        tabs.second.playlist = tabs.second.devices.playlist
     })
     tabs.second.getPlaylist = function () {
         return tabs.second.playlist ? tabs.second.playlist : tabs.second.playing
     }
-    var initSecondPlaylistsClickHandlers = _.once(function () {
-        $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondPlaylistsDiv"]', selectSecondPlaylists) //selectSecondPlaylists will run
-        $('#ulSecondPlaylists').on('click', '.image-div', function () {
-            tabs.second.playlist = tabs.second.playlists.playlist
-        })
-    })
-    var selectSecondPlaylists = function () {
-        require(["common/playlists"], function(Playlists) {
-            initSecondPlaylists(Playlists).playlistClose()
-        })
-    }
-    var initSecondPlaylists = _.once(function(Playlists) {
-        tabs.second.playlists = new Playlists("#ulSecondPlaylists", {
-            playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
-            playlistTabsGetPlaylist: function () {
-                this.tabsGetPlaylist = tabs.first.getPlaylist
-            }
-        })
-        window.playlists = tabs.second.playlists //can remove this
-        return tabs.second.playlists
-    })
 
-    var initSecondSynchronizedClickHandlers = _.once(function() {
-        $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondSynchronizedDiv"]', selectSecondSynchronized) //selectSecondPlaylists will run
-    })
-    var selectSecondSynchronized = function () {
-        require(["common/playlists", "app/background/synchronization"], function(Playlists, synchronization) {
-            chrome.storage.sync.get(function(sync) {
+    var selectSecondPlaylists = playlistsFactory($('a[href="#secondPlaylistsDiv"]'), $("#ulSecondPlaylists"), "playlists", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
+    var selectSecondSynchronizedPlaylists = playlistsFactory($('a[href="#secondSynchronizedDiv"]'), $("#ulSecondSynchronized"), "synchronized", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
+    var selectSecondDevicesPlaylists = playlistsFactory($('a[href="#secondDevicesDiv"]'), $("#ulSecondDevices"), "devices", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
+
+    function fetchSynch() {
+        require(["app/background/synchronization"], function (synchronization) {
+            chrome.storage.sync.get(function (sync) {
                 var start = Date.now()
-                for(var key in sync) {
+                for (var key in sync) {
                     synchronization.syncListenerUpsert(sync, key, start)
                 }
             })
-            initSecondSynchronized(Playlists).playlistClose()
         })
     }
-    var initSecondSynchronized = _.once(function(Playlists) {
-        tabs.second.synchronized = new Playlists("#ulSecondSynchronized", {
-            jStorageType: "synchronized",
-            playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
-            playlistTabsGetPlaylist: function () {
-                this.tabsGetPlaylist = tabs.first.getPlaylist
-            }
-        })
-        window.synchronized = tabs.second.synchronized //can remove this
-        return tabs.second.synchronized
-    })
-    
-    var initSecondDevicesClickHandlers = _.once(function() {
-        $('#secondViewTabs').on('click', '.ui-tabs-active>a[href="#secondDevicesDiv"]', selectSecondDevices) //selectSecondPlaylists will run
-    })
-    var selectSecondDevices = function () {
-        require(["common/playlists", "app/background/synchronization"], function(Playlists, synchronization) {
-            chrome.storage.sync.get(function(sync) {
-                var start = Date.now()
-                for(var key in sync) {
-                    synchronization.syncListenerUpsert(sync, key, start)
-                }
-            })
-            initSecondDevices(Playlists).playlistClose()
-        })
-    }
-    var initSecondDevices = _.once(function(Playlists) {
-        tabs.second.devices = new Playlists("#ulSecondDevices", {
-            jStorageType: "devices",
-            playlistHeaderConfigKey: "lConfigSecondPlaylistsPlaylistHeader",
-            playlistTabsGetPlaylist: function () {
-                this.tabsGetPlaylist = tabs.first.getPlaylist
-            }
-        })
-        window.devices = tabs.second.devices //can remove this
-        return tabs.second.devices
-    })
+
 //second playlists end
 //SECOND CREATE TABS END
 

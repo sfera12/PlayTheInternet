@@ -69,7 +69,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
         $.jStorage.listenKeyChange('backgroundPageId', function(key, action) {
             var playingPlaylist = Playlist.prototype.DAO(key), dPlaylistkey = "dPlaylist" + device_id, dPlaylist = Playlist.prototype.DAO(dPlaylistkey)
             dPlaylist.storageObj = playingPlaylist.storageObj
-            dPlaylist.update({ device_id: device_id }, false).set()
+            dPlaylist.update({ id: dPlaylistkey, device_id: device_id }, false).set() //change id is temporary
         })
 
         $.jStorage.listenKeyChange('*', function (key, action) {
