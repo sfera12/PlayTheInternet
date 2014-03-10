@@ -39,7 +39,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
 
 
     function _syncListenerUpsert(sync, key, log) {
-        if (key.match(/^((synchronized)|(sPlaylist).*)/)) {
+        if (key.match(/^((synchronized|devices)|([ds]Playlist).*)/)) {
             var dao = Playlist.prototype.DAO(key)
             if (!sync[key]) {
                 dao.delete()
@@ -73,7 +73,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
         })
 
         $.jStorage.listenKeyChange('*', function (key, action) {
-            if (key.match(/^((synchronized)|(sPlaylist)|(devices)|(dPlaylist).*)/)) {
+            if (key.match(/^((synchronized|devices)|([ds]Playlist).*)/)) {
                 var dao = Playlist.prototype.DAO(key)
                 if (!dao.exists()) {
                     deleteKeys.push(dao.key)
