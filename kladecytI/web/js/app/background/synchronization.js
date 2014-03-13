@@ -22,12 +22,12 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
             }
             if (_.keys(upsert).length) {
                 chrome.storage.sync.set(upsert, function () {
-                    chrome.runtime.lastError && (console.log(chrome.runtime.lastError) | alert("OH NOES THERE WAS AN ERROR IN CHROME.SYNC.SET"))
+                    chrome.runtime.lastError && (console.log(chrome.runtime.lastError) | alert(chrome.runtime.lastError.message + "\r\nOH NOES THERE WAS AN ERROR IN CHROME.SYNC.SET"))
                     console.trace("[%s] [_jStorageListenerUpsert][sync.set] [SYNCHRONIZED UPSERT TO CHROME.SYNC]", start, { upsert: upsert })
                 })
             }
         })
-    }, 7000)
+    }, 8000)
 
     var _jStorageListenerDelete = _.throttle(function () {
         var tempDeleteKeys = deleteKeys
@@ -35,7 +35,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
             console.trace("[%s] [_jStorageListenerDelete] [REMOVED DELETEKEYS FROM CHROME.SYNC]", Date.now(), tempDeleteKeys)
         })
         deleteKeys = []
-    }, 10000)
+    }, 14000)
 
 
     function _syncListenerUpsert(sync, key, log) {

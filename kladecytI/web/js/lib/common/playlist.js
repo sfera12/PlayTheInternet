@@ -53,7 +53,7 @@ define(["common/ptilist"], function (Ptilist) {
 
     Playlist.prototype.createHeader = function () {
         var me = this
-        var $header = $('<div class="pti-header"/>')
+        var $out = $('<div class="pti-header"/><div class="pti-menu temp-display-none"/>'), $header = $out.eq(0), $menu = $out.eq(1)
         var groupToReplace = { '.size-button': /pti-view-[^\s]+/, '.split-button': /pti-split-[^\s]+/ }
         if(me.options.headerConfigKey) {
             var conf = $.jStorage.get(me.options.headerConfigKey)
@@ -94,21 +94,24 @@ define(["common/ptilist"], function (Ptilist) {
             $.jStorage.set(me.options.headerConfigKey, options)
         }
 
+        var createPlaylistDialogToggle = function() {
+            if(!$addPlaylist.hasClass('selected')) {
+                $addPlaylist.addClass('selected')
+                createPlaylistDialog()
+            } else {
+                closeCreatePlaylistDialog()
+            }
+        }
 
         var createPlaylistCloseTimeout
         var createPlaylistDialog = function() {
-            $addPlaylist.addClass('temp-display-none-important')
-            $yes.removeClass('temp-display-none-important')
-            $no.removeClass('temp-display-none-important')
-            $input.removeClass('temp-display-none-important')
+            $menu.removeClass('temp-display-none')
             $input.focus()
         }
         var closeCreatePlaylistDialog = function() {
             clearTimeout(createPlaylistCloseTimeout)
-            $addPlaylist.removeClass('temp-display-none-important')
-            $yes.addClass('temp-display-none-important')
-            $no.addClass('temp-display-none-important')
-            $input.addClass('temp-display-none-important')
+            $addPlaylist.removeClass('selected')
+            $menu.addClass('temp-display-none')
             $input.prop('disabled', false)
             $input.val('')
             $input.css('color', "")
@@ -126,7 +129,9 @@ define(["common/ptilist"], function (Ptilist) {
 
         var createPlaylist = function() {
             var name = $input.val()
-            var id = "sPlaylist" + _.guid()
+            var radio = $menu.find('input[type="radio"]:checked').parent().text()
+            var type = radio.match('Playlist') ? 'l' : 's'
+            var id = type + "Playlist" + _.guid()
             var selected = me.getIdsUiSelected(), playlist = selected.length ? selected : me.getIds()
             var thumbnail = SiteHandlerManager.prototype.getThumbnail( playlist.length ? playlist[0] : "" )
             var dao = Playlist.prototype.DAO(id).addVideos(playlist, { name: name, thumbnail: thumbnail})
@@ -144,14 +149,22 @@ define(["common/ptilist"], function (Ptilist) {
         var listView = $('<div class="set-view-list pti-header-button size-button">S</div>').appendTo($header).click(setSizeActive)
         var splitOne = $('<div class="set-split-one pti-header-button split-button temp-playlist-header-margin-left">1</div>').appendTo($header).click(setSizeActive)
         var splitTwo = $('<div class="set-split-two pti-header-button split-button">2</div>').appendTo($header).click(setSizeActive)
-        var $addPlaylist = $('<div class="pti-header-button temp-playlist-header-margin-left">+</div>').appendTo($header).click(createPlaylistDialog)
-        var $yes = $('<div class="pti-header-button temp-create-playlist-yes temp-playlist-header-margin-left temp-display-none-important">&#x2713;</div>').appendTo($header).click(createPlaylistHandler)
-        var $no = $('<div class="pti-header-button temp-create-playlist-no temp-display-none-important">&#x2573;</div>').appendTo($header).click(closeCreatePlaylistDialog)
-        var $input = $('<input type="text" class="temp-create-playlist-name temp-display-none-important" placeholder="Playlist name to create"/>').appendTo($header).keypress(inputHandler)
+        var $addPlaylist = $('<div class="pti-header-button temp-playlist-header-margin-left">+</div>').appendTo($header).click(createPlaylistDialogToggle)
         $header.find("[class*=set-view-" + me.options.elementSize + "]").addClass('selected')
         $header.find("[class*=set-split-" + me.options.elementSplit + "]").addClass('selected')
 
-        return $header
+        //menu start
+        var createRadio = function(label, group, checked) {
+            var guid = _.guid()
+            return $('<label for="' + guid + '" class="squaredTwo"> <input id="' + guid + '" class="max-width" type="radio" name="' + group + '" checked="' + checked + '"/> <label for="' + guid +'"></label>'+ label +'</label>')
+        }
+        var $input = $('<input type="text" class="create-playlist-name" placeholder="Playlist name to create"/>').appendTo($menu).keypress(inputHandler)
+        var group = _.guid()
+        $menu.append(createRadio('Playlist', group))
+        $menu.append(createRadio('Synchronized', group, "checked"))
+        var $create = $('<input type="button" class="btn btn-primary" value="Create"/>').appendTo($menu).click(createPlaylistHandler)
+
+        return $out
     }
 
     Playlist.prototype.drawPtiElement = function(typeIdText, $ptiElement) {

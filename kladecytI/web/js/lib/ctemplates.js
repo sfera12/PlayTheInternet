@@ -57,7 +57,7 @@ return __p;
 PTITemplates.prototype.SoundCloudPlayerTemplate = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>';
+__p+='<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/15969787" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>';
 }
 return __p;
 }

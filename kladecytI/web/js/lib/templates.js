@@ -7,7 +7,7 @@ PTITemplates.prototype.YoutubeCompleteTemplate = _.template('<div><div class="im
 PTITemplates.prototype.YoutubeErrorTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="/css/resources/youtube-error.png"><div class="pti-logo"></div></div><span class="error-text"><b><a href="http://www.youtube.com/watch?v=<%=id%>" target="_blank"><%=error%></a></b></span></div>');
 
 PTITemplates.prototype.SoundCloudRawTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="/css/resources/sc.jpeg"><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
-PTITemplates.prototype.SoundCloudPlayerTemplate = _.template('<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/timelock/timelock-ace-ventura-inside-us" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>')
+PTITemplates.prototype.SoundCloudPlayerTemplate = _.template('<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/15969787" width="100%" height="465" scrolling="no" frameborder="no"> </iframe>')
 
 PTITemplates.prototype.VimeoRawTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="/css/resources/vimeo.jpg"><div class="pti-logo"></div></div><span class="videoText"><b><%= id %></b></span></div>')
 PTITemplates.prototype.VimeoCompleteTemplate = _.template('<div><div class="image-div pti-sortable-handler"><img src="<%= thumbnail %>"><div class="duration-caption"><%= durationCaption %></div><div class="pti-logo"></div></div><span class="videoText"><b><%= title %></b><br>by <%= uploader %></span></div>')

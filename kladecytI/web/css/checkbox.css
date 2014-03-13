@@ -49,12 +49,12 @@
     opacity: 0.3;
 }
 
-.squaredTwo input[type=checkbox]:checked + label:after {
+.squaredTwo input[type=checkbox]:checked + label:after, .squaredTwo input[type=radio]:checked + label:after {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
 }
 
-.squaredTwo input[type=checkbox] {
+.squaredTwo input[type=checkbox], .squaredTwo input[type=radio] {
     display: none;
 }
