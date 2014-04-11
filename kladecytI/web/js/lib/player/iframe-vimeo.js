@@ -99,7 +99,10 @@ define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti
             vimeo.api('seekTo', seekTo)
         },
         onVolume:function(volume) {
-            typeof vimeo !== "undefined" && vimeo.api('setVolume', volume / 100)
+            try {
+                vimeo.api('setVolume', volume / 100) //throws TypeError: Cannot read property 'postMessage' of null when window.vimeo object exists without video loaded on page
+            } catch (e) {
+            }
         }
     }, 'vimeoContainer')
 })
