@@ -75,33 +75,34 @@ define(['jquery', 'jquery-jobbing'], function () {
 
 //first playlists start
     $('#tabs').on('click', 'ul>li>a', function () {
-        tabs.first.playlist = null
+        window.tabs.first.playlist = null
     })
     $('#firstView').on('click', '[href="#tAreaDiv"]', function () {
-        tabs.first.playlist = typeof textParsePlaylist !== "undefined" ? textParsePlaylist : null
+        window.tabs.first.playlist = typeof textParsePlaylist !== "undefined" ? textParsePlaylist : null
     })
     $('#firstView').on('click', '#tAreaParseButton', function () {
-        tabs.first.playlist = textParsePlaylist
+        window.tabs.first.playlist = textParsePlaylist
     })
     $('#firstView').on('click', '[href="#parsedDiv"]', function () {
-        tabs.first.playlist = parsedPlaylist
+        window.tabs.first.playlist = parsedPlaylist
     })
     $('#ulFirstPlaylists').on('click', '.image-div', function () {
-        tabs.first.playlist = tabs.first.playlists.playlist
+        window.tabs.first.playlist = window.tabs.first.playlists.playlist
     })
     $('#ulFirstSynchronized').on('click', '.image-div', function () {
-        tabs.first.playlist = tabs.first.synchronized.playlist
+        window.tabs.first.playlist = window.tabs.first.synchronized.playlist
     })
     $('#ulFirstDevices').on('click', '.image-div', function () {
-        tabs.first.playlist = tabs.first.devices.playlist
+        window.tabs.first.playlist = window.tabs.first.devices.playlist
     })
-    tabs.first.getPlaylist = function () {
-        return tabs.first.playlist ? tabs.first.playlist : tabs.second.playing
+    firstGetPlaylist = function () {
+        return window.tabs.first.playlist ? window.tabs.first.playlist : window.tabs.second.playing
     }
+    window.tabs.first.getPlaylist = firstGetPlaylist
 
-    var selectFirstPlaylists = playlistsFactory($('a[href="#firstPlaylistsDiv"]'), $("#ulFirstPlaylists"), "playlists", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
-    var selectFirstSynchronized = playlistsFactory($('a[href="#firstSynchronizedDiv"]'), $("#ulFirstSynchronized"), "synchronized", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
-    var selectFirstDevices = playlistsFactory($('a[href="#firstDevicesDiv"]'), $("#ulFirstDevices"), "devices", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, window.tabs.second.getPlaylist)
+    var selectFirstPlaylists = playlistsFactory($('a[href="#firstPlaylistsDiv"]'), $("#ulFirstPlaylists"), "playlists", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, secondGetPlaylist)
+    var selectFirstSynchronized = playlistsFactory($('a[href="#firstSynchronizedDiv"]'), $("#ulFirstSynchronized"), "synchronized", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, secondGetPlaylist)
+    var selectFirstDevices = playlistsFactory($('a[href="#firstDevicesDiv"]'), $("#ulFirstDevices"), "devices", "lConfigFirstPlaylistsPlaylistHeader", window.tabs.first, secondGetPlaylist)
 //first playlists end
 
 //first dropdown start
@@ -120,7 +121,7 @@ define(['jquery', 'jquery-jobbing'], function () {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Playing") {
                 require(["app/common/hash-qr", "pti-playlist"], function (redrawHashAndQRCode, Playlist) {
-                    tabs.second.playlist = initPlaying(redrawHashAndQRCode, Playlist)
+                    window.tabs.second.playlist = initPlaying(redrawHashAndQRCode, Playlist)
                 })
             }
             if (newTab.text() == "Playlists") {
@@ -137,7 +138,7 @@ define(['jquery', 'jquery-jobbing'], function () {
 //second playing start
     var initPlaying = _.once(function (redrawHashAndQRCode, Playlist) {
         var selected = $.jStorage.get("selected_backgroundPageId"), index = selected && selected.index >= 0 && selected.index
-        tabs.second.playing = new Playlist("#ulSecond", {
+        window.tabs.second.playing = new Playlist("#ulSecond", {
                 id: chrome.extension.getBackgroundPage().windowId,
                 scrollTo: index,
                 recalculateJContentImmediateCallback: redrawHashAndQRCode,
@@ -148,31 +149,32 @@ define(['jquery', 'jquery-jobbing'], function () {
                 ]
             }
         )
-        window.playlist = tabs.second.playing //can remove this
-        return tabs.second.playing
+        window.playlist = window.tabs.second.playing //can remove this
+        return window.tabs.second.playing
     })
 //second playing end
 
 //second playlists start
     $('#secondViewTabs').on('click', 'ul>li>a', function () {
-        tabs.second.playlist = null
+        window.tabs.second.playlist = null
     })
     $('#ulSecondPlaylists').on('click', '.image-div', function () {
-        tabs.second.playlist = tabs.second.playlists.playlist
+        window.tabs.second.playlist = window.tabs.second.playlists.playlist
     })
     $('#ulSecondSynchronized').on('click', '.image-div', function () {
-        tabs.second.playlist = tabs.second.synchronized.playlist
+        window.tabs.second.playlist = window.tabs.second.synchronized.playlist
     })
     $('#ulSecondDevices').on('click', '.image-div', function () {
-        tabs.second.playlist = tabs.second.devices.playlist
+        window.tabs.second.playlist = window.tabs.second.devices.playlist
     })
-    tabs.second.getPlaylist = function () {
-        return tabs.second.playlist ? tabs.second.playlist : tabs.second.playing
+    function secondGetPlaylist () {
+        return window.tabs.second.playlist ? window.tabs.second.playlist : window.tabs.second.playing
     }
+    window.tabs.second.getPlaylist = secondGetPlaylist
 
-    var selectSecondPlaylists = playlistsFactory($('a[href="#secondPlaylistsDiv"]'), $("#ulSecondPlaylists"), "playlists", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
-    var selectSecondSynchronizedPlaylists = playlistsFactory($('a[href="#secondSynchronizedDiv"]'), $("#ulSecondSynchronized"), "synchronized", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
-    var selectSecondDevicesPlaylists = playlistsFactory($('a[href="#secondDevicesDiv"]'), $("#ulSecondDevices"), "devices", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, window.tabs.first.getPlaylist)
+    var selectSecondPlaylists = playlistsFactory($('a[href="#secondPlaylistsDiv"]'), $("#ulSecondPlaylists"), "playlists", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, firstGetPlaylist)
+    var selectSecondSynchronizedPlaylists = playlistsFactory($('a[href="#secondSynchronizedDiv"]'), $("#ulSecondSynchronized"), "synchronized", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, firstGetPlaylist)
+    var selectSecondDevicesPlaylists = playlistsFactory($('a[href="#secondDevicesDiv"]'), $("#ulSecondDevices"), "devices", "lConfigSecondPlaylistsPlaylistHeader", window.tabs.second, firstGetPlaylist)
 
 //second playlists end
 //SECOND CREATE TABS END

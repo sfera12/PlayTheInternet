@@ -42,7 +42,7 @@ define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist)
         if (key.match(/^((synchronized|devices)|([ds]Playlist).*)/)) {
             var dao = Playlist.prototype.DAO(key)
             if (!sync[key]) {
-                dao.delete()
+//                dao.delete()
                 console.trace("[%s] [chrome.storage.onChanged][sync.get][key.match][!sync] [REMOVED %s FROM JSTORAGE]", log, key, { sync: sync[key], dao: dao.storageObj })
             } else if (!dao.exists() || (sync[key].device_id != device_id && sync[key].updated > dao.storageObj.updated)) {
                 dao.storageObj = sync[key]
