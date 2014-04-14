@@ -77,12 +77,14 @@ function upgradeRun(module) {
             })
             deferred = newDeferred
         }
-        deferred.then(function() {
-            console.log('ran')
-            var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)(\..*)?/, '$1')
-            $.jStorage.set('manifest_version', manifestVersion)
-            requirejs([module])
-        })
+        setTimeout(function () {
+            try {
+                var manifestVersion = chrome.runtime.getManifest().version.replace(/^(\d+\.\d+)(\..*)?/, '$1')
+                $.jStorage.set('manifest_version', manifestVersion)
+            } catch (e) {
+                alert("Failed to set manifest version\r\n" + e)
+            }
+        }, 0)
     })
 }
 
