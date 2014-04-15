@@ -85,10 +85,10 @@ function upgradeRun(module) {
 				} catch (e) {
 					alert("Failed to set manifest version\r\n" + e)
 				}
+				console.log('ran')
+				requirejs([module])
 			}, 0)
 		})
-		console.log('ran')
-        requirejs([module])
     })
 }
 
