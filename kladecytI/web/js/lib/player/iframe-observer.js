@@ -1,70 +1,50 @@
 define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, c, d) {
-    var iframeContainer = $('#players')
-    var reinitInterval = 120 * 60000
-    var initTimeout = 30000
-    var playerIframe
-    var playerIframeHosts
-    var afterPlayerReady
-
-    function appendIframe() {
-//        var host = "localhost:8888"
-        var host = "0-65.playtheinternet.appspot.com/"
+    //        var host = "localhost:8888"
+    var host = "0-65.playtheinternet.appspot.com/"
 //        var host = "playtheinternet.appspot.com"
 //        var host = "web.playtheinter.net"
-        iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://' + host + '/iframe-player.html?origin=' + window.location.href +  '"></iframe>')
+    var iframeContainer = $('#players'), playerIframeHosts = ["http://" + host], playerIframe, iw
+    var lastReady = 0, reinitInterval = 120 * 60000, initTimeout = 30000
+    var youtubeReady, soundcloudReady
+
+    function appendIframe() {
+        iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://' + host + '/iframe-player.html?origin=' + window.location.href + '"></iframe>')
         playerIframe = iframeContainer.find('iframe')[0].contentWindow
-        playerIframeHosts = ["http://" + host]
 
-        var observerReady = false
-        var readyCallbacks = []
-
-        ready = function ready(callback) {
-            if (_.isUndefined(callback) && observerReady) {
-                for (var i = 0; i < readyCallbacks.length; i++) {
-                    readyCallbacks[i]()
-                }
-            } else {
-                _.isFunction(callback) && readyCallbacks.push(callback) && observerReady && callback()
-            }
-        }
-
-        afterPlayerReady = _.after(2, function () {
-            observerReady = true
-            ready()
-            lastReady = new Date().getTime()
-        })
+        youtubeReady = new $.Deferred()
+        soundcloudReady = new $.Deferred()
     }
 
-    var lastReady = 0
     var initAndListen = _.throttle(function () {
         reinit()
         clearTimeout(initFailTimeout)
         var initFailTimeout = setTimeout(function () {
             console.log('failed to init players in observer, retrying')
             initAndListen()
-        }, initTimeout + 1000)
-        ready(function () {
+        }, initTimeout + 500)
+        $.when(youtubeReady, soundcloudReady).then(function () {
             clearTimeout(initFailTimeout)
             pti.blockPlayback(pti.blockPlayback()) //resend current status to iframe-observable
             var loadVideo = pti.loadVideo()
             iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
+            lastReady = Date.now()
         })
     }, initTimeout, {trailing: false})
-    var lazyLoadVideo = function (thistype, thisoperation, type, videoId, playerState) {
-        var now = new Date().getTime()
-        if (now - lastReady >= reinitInterval) {
+
+    function lazyLoadVideo(thistype, thisoperation, type, videoId, playerState) {
+        if (Date.now() - lastReady >= reinitInterval) {
             initAndListen()
         } else {
             iw.postMessage(thistype, thisoperation, type, videoId, playerState)
         }
     }
 
-    pti = new PTI({
+    var pti = new PTI({
         onBlockPlayback: function (blockPlayback) {
             iw.postMessage(this.type, this.operation, blockPlayback)
         },
         onLoadVideo: function (type, videoId, playerState) {
-            (!_.isUndefined(type) || !_.isUndefined(videoId)) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
+            !_.isUndefined(type) && !_.isUndefined(videoId) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
         },
         onPlayVideo: function () {
             iw.postMessage(this.type, this.operation)
@@ -75,7 +55,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
         onSeekTo: function (seekTo) {
             iw.postMessage(this.type, this.operation, seekTo)
         },
-        onVolume: function(volume) {
+        onVolume: function (volume) {
             iw.postMessage(this.type, this.operation, volume)
         }
     })
@@ -98,7 +78,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
             SiteHandlerManager.prototype.stateChange('ERROR')
         },
         onPlayerReady: function (playerState) {
-            afterPlayerReady()
+            youtubeReady.resolve()
         }
     })
     new pti.Player('s', {
@@ -118,7 +98,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
             }
         },
         onPlayerReady: function (playerState) {
-            afterPlayerReady()
+            soundcloudReady.resolve()
         },
         onError: function (error) {
             SiteHandlerManager.prototype.stateChange('ERROR')
@@ -147,7 +127,7 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
         initIframeWrapper()
     }
 
-    var initIframeWrapper = function () {
+    function initIframeWrapper() {
         instantiateIframeWrapper()
         iw.iframe = playerIframe
     }
@@ -168,9 +148,5 @@ define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI
         initIframeWrapper()
     }
 
-    var pti;
-    var iw;
-    var ready;
-
-    return {pti: pti, iw: iw, ready: ready, init: init, destroy: destroy, reinit: reinit}
+    return { pti: pti, iw: iw, init: init, destroy: destroy, reinit: reinit }
 })
