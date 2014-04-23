@@ -31,7 +31,8 @@ define(["common/ptilist"], function (Ptilist) {
                 var selected = '', $this = $(this), uiselected
                 if ($this.hasClass('ui-selected')) {
                     selected = me.getIdsUiSelected()
-                    uiselected = me.getPtiElementsUiSelected()
+                    uiselected = me.getPtiElementsUiSelected().not($this)
+                    uiselected.remove()
                 } else {
                     selected = [this.id]
                 }
@@ -42,7 +43,6 @@ define(["common/ptilist"], function (Ptilist) {
                     me.recalculateJContentImmediate()
                 }
                 $this.hide(400, remove);
-                uiselected && uiselected.hide(400, remove);
             }
         })
     }
