@@ -1,3 +1,3 @@
-define(["iframe-observable"], function (observable) {
+define(["player/iframe-observable"], function (observable) {
     window.pti = observable.pti
 })

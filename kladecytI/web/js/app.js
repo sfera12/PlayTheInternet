@@ -14,21 +14,12 @@ requirejs.config({
         "playlist":"Utils",
         "pti-playlist":"common/playlist",
         "slimscroll":"common/jquery.slimscroll",
-        "player-widget":"player/player-widget",
         "qrcode":"common/jquery.qrcode",
         "qrcode-core":"common/qrcode-core",
-        "pti-abstract":"player/PTI",
-        "pti":"player/iframe-player",
-        "youtube":"player/iframe-youtube",
         "youtube-api":"https://www.youtube.com/iframe_api?lol",
         "require":"common/require",
-        "soundcloud":"player/iframe-soundcloud",
         "soundcloud-api":"common/sc-api",
-        "vimeo":"player/iframe-vimeo",
         "vimeo-api":"common/vim-froogaloop2.min",
-        "iframe-wrapper":"player/iframeWrapper",
-        "iframe-observer":"player/iframe-observer",
-        "iframe-observable":"player/iframe-observable",
         "datepicker":"common/bootstrap-datepicker",
         "base":"common/base",
         "jasmine":"jasmine/jasmine",
@@ -42,24 +33,15 @@ requirejs.config({
         "playlist":["sitehandlers", "slimscroll", "ctemplates"],
         "pti-playlist":["sitehandlers", "ctemplates"],
         "slimscroll":["jquery-ui"],
-//        "player-widget":["jquery", "underscore"],
         "qrcode":["jquery", "qrcode-core"],
-//        "pti":["pti-abstract", "jquery", "underscore"],
-//        "youtube":["pti", "jquery", "underscore"],
-        "youtube-api":["youtube"],
-//        "soundcloud":["pti", "soundcloud-api", "jquery", "underscore"],
-//        "vimeo":["pti", "vimeo-api", "jquery", "underscore"],
-//        "pti-web":["youtube", "soundcloud", "vimeo", "jquery", "underscore"],
-//        "iframe-wrapper":["underscore"],
-//        "iframe-observer":["iframe-wrapper", "pti-abstract", "jquery", "underscore"],
-//        "iframe-popup":["iframe-observer"],
+        "youtube-api":["player/iframe-youtube"],
         "datepicker":["jquery"],
         "parse":["sitehandlers"]
     }
 });
 
 function upgradeRun(module) {
-    require(['jstorage'], function() {
+    require(["jstorage"], function() {
         var currVersion = parseFloat($.jStorage.get('manifest_version') || 0)
 
         var deferred = $.Deferred()
@@ -69,7 +51,7 @@ function upgradeRun(module) {
             var newDeferred = $.Deferred()
             deferred.then(function() {
                 console.log('initializing upgrade to 0.64')
-                require(['app/migrate/064'], function() {
+                require(["app/migrate/064"], function() {
                     console.log('done upgrading to 0.64')
                     newDeferred.resolve()
                 })

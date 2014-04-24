@@ -1,4 +1,4 @@
-define(["pti", "jquery", "underscore"], function (pti, b, c) {
+define(["player/iframe-player", "jquery", "underscore"], function (pti, b, c) {
     new pti.Player("y", {
         onBeforePlayerReady:function () {
             return [1]

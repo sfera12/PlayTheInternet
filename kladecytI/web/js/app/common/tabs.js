@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-jobbing'], function () {
+define(["jquery", "jquery-jobbing"], function () {
 //GENERIC START
     window.tabs = { first: {}, second: {} }
 

@@ -1,4 +1,4 @@
-define(["pti", "youtube", "soundcloud", "vimeo", "jquery", "underscore"], function (pti) {
+define(["player/iframe-player", "player/iframe-youtube", "player/iframe-soundcloud", "player/iframe-vimeo", "jquery", "underscore"], function (pti) {
     pti.y.options.onAfterPlayerReady = function () {
         playFirstLoaded()
     }

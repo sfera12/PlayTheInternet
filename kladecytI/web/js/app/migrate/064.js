@@ -1,4 +1,4 @@
-require(['jstorage'], function() {
+require(["jstorage"], function() {
     var back = $.jStorage.get("backgroundPageId")
     function arrayToString(arr) {
         return arr.map(function (item) {

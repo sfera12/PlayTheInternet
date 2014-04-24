@@ -1,4 +1,4 @@
-define(['parse', 'jquery', 'underscore'], function (a, b, c) {
+define(["parse", "jquery", "underscore"], function (a, b, c) {
     function parsePage() {
         openWindow(playTheInternetParse());
     }

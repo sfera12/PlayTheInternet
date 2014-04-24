@@ -1,6 +1,6 @@
 define(function() {
     function parseText(concat) {
-        require(['cparse'], function () {
+        require(["cparse"], function () {
             var ids = playTheInternetParse(concat);
             console.log(ids)
             addToPlaylist(ids)

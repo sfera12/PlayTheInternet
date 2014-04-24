@@ -1,4 +1,4 @@
-define(['playlist', 'jquery', 'underscore', 'datepicker'], function (a, b, c, d) {
+define(["playlist", "jquery", "underscore", "datepicker"], function (a, b, c, d) {
     window.calendarPlaylist = new Playlist('#calendarPlaylist', {type:'calendar', dotPlay:true})
 
     $('.datepicker').datepicker()

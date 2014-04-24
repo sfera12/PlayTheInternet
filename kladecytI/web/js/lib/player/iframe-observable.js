@@ -1,4 +1,4 @@
-define(["pti", "iframe-wrapper", "youtube-api", "soundcloud", "vimeo"], function(pti, IframeWrapper) {
+define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/iframe-soundcloud", "player/iframe-vimeo"], function(pti, IframeWrapper) {
 
     function ptiReturnPlayerTypeAndId(sortable) {
         var matchTypeAndId = /(\w+)=(.*)/;

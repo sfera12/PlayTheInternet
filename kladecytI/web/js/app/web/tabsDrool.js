@@ -1,4 +1,4 @@
-define(['app/common/tabs'], function() {
+define(["app/common/tabs"], function() {
     var gimpedAnimation = [
         {nav:"#player", fixed:"#podPlayer"},
         {nav:"#tAreaDiv", fixed:"#podTa"},

@@ -1,4 +1,4 @@
-define(['jquery-ui'], function() {
+define(["jquery-ui"], function() {
     $.dropdown = function($container, $navs) {
         var $source = $navs.map(function (index, item) {
             var $item = $(item)

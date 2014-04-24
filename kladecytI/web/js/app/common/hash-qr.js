@@ -1,4 +1,4 @@
-define(['underscore', 'app/common/tabs'], function (a) {
+define(["underscore", "app/common/tabs"], function (a) {
     function buildQR() {
         if (typeof playlist != "undefined") {
             var playlistHash = playlist.buildHash(), location = 'http://playtheinter.net/play.html'
@@ -35,7 +35,7 @@ define(['underscore', 'app/common/tabs'], function (a) {
             $('#longLinkA').attr('href', 'http://playtheinter.net/play.html' + playlist.buildHash())
         }
         if ($("#tabs").tabs("option", "active") == 6) {
-            require(['qrcode'], function () {
+            require(["qrcode"], function () {
                 buildQR()
             })
         }

@@ -10,11 +10,11 @@ require(["jquery", "underscore"], function () {
         onceLoaded()
     })
 })
-define(["playlist", "app/web/pti-web", "youtube-api", "soundcloud", "vimeo", "player-widget", "parse", "app/web/calendar", "app/web/tabsDrool", "app/common/hash-qr"], function (a, pti, c, d, e, f, g, h, i, redrawHashAndQRCode) {
+define(["playlist", "app/web/pti-web", "youtube-api", "player/iframe-soundcloud", "player/iframe-vimeo", "player/player-widget", "parse", "app/web/calendar", "app/web/tabsDrool", "app/common/hash-qr"], function (a, pti, c, d, e, f, g, h, i, redrawHashAndQRCode) {
     window.pti = pti
     $(document).ready(function () {
         var playerWidget
-        require(['player-widget'], function (PlayerWidget) {
+        require(["player/player-widget"], function (PlayerWidget) {
             playerWidget = new PlayerWidget('#playerWidgetContainer')
             playerWidget.data.listenObject = pti
         })

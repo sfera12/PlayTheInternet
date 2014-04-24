@@ -1,4 +1,4 @@
-define(["pti-abstract", "iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, c, d) {
+define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, c, d) {
     //        var host = "localhost:8888"
     var host = "0-65.playtheinternet.appspot.com/"
 //        var host = "playtheinternet.appspot.com"

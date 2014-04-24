@@ -1,17 +1,15 @@
-define(["player-widget"], function (PlayerWidget) {
+define(["player/player-widget"], function (PlayerWidget) {
     require(["app/common/tooltips"])
 
     require(["app/popup/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
-    require(['player-widget'], function (PlayerWidget) {
-        window.playerWidget = new PlayerWidget('#playerWidgetContainer', true)
-        playerWidget.data.listenObject = backgroundWindow.pti
-    })
+    window.playerWidget = new PlayerWidget('#playerWidgetContainer', true)
+    playerWidget.data.listenObject = backgroundWindow.pti
 
     require(["app/common/tabs"])
     require(["app/popup/parse-content"], function() {
-        tabs.first.playlist = parsedPlaylist
+        window.tabs.first.playlist = parsedPlaylist //TODO move it to tabs
     })
 
     $(document).ready(function () {
@@ -45,7 +43,7 @@ define(["player-widget"], function (PlayerWidget) {
             }
             playerWidget.data.listenObject = pti
         }
-        require(["iframe-observer"], function (observer) {
+        require(["player/iframe-observer"], function (observer) {
             window.observer = observer
             window.pti = observer.pti
             window.playerReady()

@@ -1,4 +1,4 @@
-define(['pti-abstract', 'underscore', 'jquery'], function (PTI, b, c) {
+define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
     var pti = new PTI({
         onBlockPlayback:function (flag) {
             if (flag) {

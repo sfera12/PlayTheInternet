@@ -1,4 +1,4 @@
-define(['jstorage', 'underscore', 'pti-playlist'], function (one, two, Playlist) {
+define(["jstorage", "underscore", "pti-playlist"], function (one, two, Playlist) {
     var device_id = $.jStorage.get('device_id') || $.jStorage.set("device_id", _.guid())
     var upsertKeys = {}, deleteKeys = []
 

@@ -1,4 +1,4 @@
-define(['playlist', 'jquery'], function(a, $) {
+define(["playlist", "jquery"], function(a, $) {
     function calendarSortedStringify(callback) {
         $.ajax({url:'/calendarSorted', success:function (data) {
             console.log(JSON.stringify(data))

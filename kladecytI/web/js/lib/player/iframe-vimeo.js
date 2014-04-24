@@ -1,4 +1,4 @@
-define(["pti", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti, vimeoapi, c, d) {
+define(["player/iframe-player", "vimeo-api", "jquery", "underscore", "ctemplates"], function (pti, vimeoapi, c, d) {
     new pti.Player("v", {
         playerTemplate:PTITemplates.prototype.VimeoPlayerTemplate,
         onPlayerReady:function (playerapiid) {
