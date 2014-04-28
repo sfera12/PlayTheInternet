@@ -246,7 +246,7 @@ define(["common/ptilist"], function (Ptilist) {
     }
 
     Playlist.prototype.listenPlaySelectedVideo = function (key, action) {
-        var storageData = Ptilist.prototype.redrawJContentGetCacheObject(key, action, 'listen play selected video', true)
+        var storageData = this.redrawJContentGetCacheObject(key, action, 'listen play selected video', true)
         storageData && storageData.play && storageData.index >= 0 && this.playVideo({ index: storageData.index }, storageData.playerState, false)
     }
 
