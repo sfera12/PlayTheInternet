@@ -4,6 +4,15 @@ define(["player/iframe-player", "jquery", "underscore"], function (pti, b, c) {
             return [1]
         },
         onPlayerReady:function (playerapiid) {
+            var self = this.scope
+            self.playProgressCallbacks = $.Callbacks()
+            self.temp.playProgress = function() {
+                var duration = youtube.getDuration(),
+                    state = youtube.getPlayerState(),
+                    currentTime = youtube.getCurrentTime(),
+                    duration = youtube.getDuration()
+                self.playProgressCallbacks.fire(state, currentTime, duration)
+            }
 //        console.log(playerapiid)
             console.log('player ready')
         },
@@ -12,80 +21,28 @@ define(["player/iframe-player", "jquery", "underscore"], function (pti, b, c) {
         },
         onPlayerState:function (state) {
             var self = this.scope
-            if (state == 1 && pti.blockPlayback()) {
-                console.log('block YT Payback in onPlayerState')
-                self.stopVideo()
-            } else if (state == 1) {
-                self.duration(youtube.getDuration() + 1)
-                if (self.temp.errorTimeout) {
-                    clearTimeout(self.temp.errorTimeout) & (self.temp.errorTimeout = null)
-                    console.log('no error')
-                }
-                clearInterval(self.temp.playProgressInterval)
-                self.temp.playProgressInterval = setInterval(function () {
-                    if(pti.blockPlayback()) {
-                        console.log('block YT Payback in playProgress')
-                        self.stopVideo()
-                    }
-                    self.currentTime(youtube.getCurrentTime()) //for cursor in playerWidget (this one is necessary)
-                }, 750)
-                _.isFunction(self.temp.seekToOnce) && self.temp.seekToOnce()
-            } else if (state == 0) {
-                console.log('YT NEXT')
-            } else if (!_.isUndefined(state)) {
-                clearInterval(self.temp.playProgressInterval)
+            if (state === 1) {
+                pti.nativeRequestPlaying = true
+            } else if (state === 2) {
+                pti.nativeRequestStop = true
             }
-            console.log(state)
         },
-        onBeforeError:function (error) {
-            return error ? [error.data] : []
-        },
-        onError:function (error) {
-            var scope = this
-            self = this.scope
-            var callback = this.callback
-            clearTimeout(self.temp.errorTimeout)
-            self.temp.errorTimeout = setTimeout(function () {
-                self.temp.errorTimeout = null
-                _.isFunction(callback) && callback.call(scope, error)
-                console.log('ERROR NEXT')
-            }, 15000)
-        },
+//        onBeforeError:function (error) {
+//            return error ? [error.data] : []
+//        },
         onStopVideo:function () {
             var self = this.scope
             self.clearTimeout()
             youtube.stopVideo()
         },
-        onLoadVideo:function (videoId, playerState) {
+        onLoadVideo:function (videoId) {
             var self = this.scope
-            self.showPlayer()
-            if (pti.blockPlayback()) {
-                youtube.stopVideo()
-            } else {
-                self.temp.seekToOnce = null
-                if (playerState) {
-                    self.temp.seekToOnce = _.once(function () {
-                        if (playerState.state == 2) {
-                            clearInterval(self.temp.playProgressInterval) //for cursor in playerWidget
-                            youtube.pauseVideo()
-                            self.currentTime(playerState.start)
-                            //TODO 2013-09-11 create function for duplicate seekToOnce definition
-                            self.temp.seekToOnce = _.once(function () {
-                                youtube.seekTo(playerState.start)
-                            })
-                        } else {
-                            youtube.seekTo(playerState.start)
-                        }
-                    })
-                }
-                youtube.loadVideoById(videoId)
-                self.error({data:'manual'})
-            }
-//        console.log('load video')
+            youtube.loadVideoById(videoId)
+            self.temp.playProgressInterval = setInterval(self.temp.playProgress, 200)
         },
-        onCurrentTime:function (time) {
-//        console.log(time)
-        },
+//        onCurrentTime:function (time) {
+//            console.log(time)
+//        },
         onPlayVideo:function () {
             youtube.playVideo()
         },
@@ -97,7 +54,6 @@ define(["player/iframe-player", "jquery", "underscore"], function (pti, b, c) {
         },
         onClearTimeout:function () {
             var self = this.scope
-            clearTimeout(self.temp.errorTimeout)
             clearInterval(self.temp.playProgressInterval)
         },
         onVolume:function(volume) {

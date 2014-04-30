@@ -7,7 +7,7 @@ requirejs.config({
         "jquery":"common/jquery-2.0.3.min",
         "jquery-ui":"common/jquery-ui-1.10.4.custom.min",
         "jquery-jobbing":"common/jquery-jobbing",
-        "underscore-core":"common/underscore-min",
+        "underscore-core":"common/lodash-min",
         "underscore":"common/underscore-mixin",
         "jstorage":"common/jstorage.min",
         "sitehandlers":"SiteHandlers",

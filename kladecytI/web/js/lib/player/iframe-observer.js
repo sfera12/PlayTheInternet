@@ -1,6 +1,6 @@
 define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, c, d) {
-    //        var host = "localhost:8888"
-    var host = "0-65.playtheinternet.appspot.com/"
+    var host = "localhost:8888"
+//    var host = "0-66.playtheinternet.appspot.com"
 //        var host = "playtheinternet.appspot.com"
 //        var host = "web.playtheinter.net"
     var iframeContainer = $('#players'), playerIframeHosts = ["http://" + host], playerIframe, iw
@@ -24,7 +24,7 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         }, initTimeout + 500)
         $.when(youtubeReady, soundcloudReady).then(function () {
             clearTimeout(initFailTimeout)
-            pti.blockPlayback(pti.blockPlayback()) //resend current status to iframe-observable
+//            pti.playing(pti.playing()) //resend current status to iframe-observable or remove this line
             var loadVideo = pti.loadVideo()
             iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
             lastReady = Date.now()
@@ -40,9 +40,6 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
     }
 
     var pti = new PTI({
-        onBlockPlayback: function (blockPlayback) {
-            iw.postMessage(this.type, this.operation, blockPlayback)
-        },
         onLoadVideo: function (type, videoId, playerState) {
             !_.isUndefined(type) && !_.isUndefined(videoId) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
         },
@@ -57,12 +54,15 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         },
         onVolume: function (volume) {
             iw.postMessage(this.type, this.operation, volume)
+        },
+        onError: function () {
+            SiteHandlerManager.prototype.stateChange('ERROR')
         }
     })
 
     new pti.Player('y', {
-        onLoadVideo: function (videoObject, playerState) {
-            iw.postMessage(this.type, this.operation, videoObject, playerState)
+        onLoadVideo: function (videoObject) {
+            iw.postMessage(this.type, this.operation, videoObject)
         },
         onStopVideo: function () {
             iw.postMessage(this.type, this.operation)
@@ -74,16 +74,13 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
                 SiteHandlerManager.prototype.stateChange('NEXT')
             }
         },
-        onError: function (error) {
-            SiteHandlerManager.prototype.stateChange('ERROR')
-        },
         onPlayerReady: function (playerState) {
             youtubeReady.resolve()
         }
     })
     new pti.Player('s', {
-        onLoadVideo: function (videoId, playerState) {
-            iw.postMessage(this.type, this.operation, videoId, playerState)
+        onLoadVideo: function (videoId) {
+            iw.postMessage(this.type, this.operation, videoId)
         },
         onInitializePlayer: function () {
             iw.postMessage(this.type, this.operation)
@@ -99,14 +96,11 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         },
         onPlayerReady: function (playerState) {
             soundcloudReady.resolve()
-        },
-        onError: function (error) {
-            SiteHandlerManager.prototype.stateChange('ERROR')
         }
     })
     new pti.Player('v', {
-        onLoadVideo: function (videoId, playerState) {
-            iw.postMessage(this.type, this.operation, videoId, playerState)
+        onLoadVideo: function (videoId) {
+            iw.postMessage(this.type, this.operation, videoId)
         },
         onCurrentTime: function (time) {
 //        console.log('from main')
@@ -116,9 +110,6 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
             if (state == 0) {
                 SiteHandlerManager.prototype.stateChange('NEXT')
             }
-        },
-        onError: function (error) {
-            SiteHandlerManager.prototype.stateChange('ERROR')
         }
     })
 

@@ -1,12 +1,13 @@
 define(["underscore", "jquery"], function (a, b) {
     function PTI(options) {
-        options ? this.options = options : this.options = {}
-        this.data = {blockPlayback:false, videoId:null, currentPlayer:null, seekTo:null}
+        this.options = _.default(options, {})
+        this.data = { playing: null, videoId:null, currentPlayer:null, seekTo:null }
         this.players = {}
         var self = this
         this.pti = this && (this.players['pti'] = this)
         this.name = 'pti'
         this.loadVideo = function (type, videoId, playerState) {
+            _.isUndefined(videoId) || (playerState && playerState.state == 2 ? this.playing(false) : this.playing(true))
             var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', type, videoId, playerState);
             !_.isUndefined(output[0]) && (this.data.currentPlayer = output[0]);
             !_.isUndefined(output[1]) && (this.data.videoId = output[1]);
@@ -14,10 +15,12 @@ define(["underscore", "jquery"], function (a, b) {
             return [this.data.currentPlayer, this.data.videoId, this.data.playerState]
         }.bind(this)
         this.playVideo = function () {
+            this.playing(true)
             PTI.prototype.composeAndRunLifeCycle(this, 'playVideo')
             return
         }.bind(this)
         this.pauseVideo = function () {
+            this.playing(false)
             PTI.prototype.composeAndRunLifeCycle(this, 'pauseVideo')
             return
         }.bind(this)
@@ -34,15 +37,13 @@ define(["underscore", "jquery"], function (a, b) {
             }
             return output
         }.bind(this)
-        this.blockPlayback = function (flag) {
-            var output = PTI.prototype.composeAndRunLifeCycle(this, 'blockPlayback', flag)
-            !_.isUndefined(output[0]) && (this.data.blockPlayback = output[0])
-            return this.data.blockPlayback
+        this.playing = function (boolean) {
+            var outputs = PTI.prototype.composeAndRunLifeCycle(this, 'playing', boolean)
+            return this.data.playing = _.default(outputs[0], this.data.playing)
         }.bind(this)
         this.showPlayer = function (name) {
             for (var playerName in this.players) {
                 var player = this.players[playerName];
-                _.isFunction(player.clearTimeout) && player.clearTimeout()
                 if (playerName == name) {
                     var playerContainer = $('#' + player.playerContainer)
                     playerContainer.width('100%')
@@ -53,21 +54,23 @@ define(["underscore", "jquery"], function (a, b) {
                     playerContainer.width('0%')
                     playerContainer.height('0%')
                     playerContainer.css('position', 'relative')
-                    _.isFunction(player.stopVideo) && player.stopVideo()
                 }
             }
         }.bind(this)
         this.volume = function(volume) {
             var output = PTI.prototype.composeAndRunLifeCycle(this, 'volume', volume)
             !_.isUndefined(output[0]) && (this.data.volume = output[0])
-            return this.data.volume
+            return this.data.volume == null ? 100 : this.data.volume //TODO remove this *maybe
+        }.bind(this)
+        this.error = function() {
+            PTI.prototype.composeAndRunLifeCycle(this, 'error')
         }.bind(this)
         this.Player = function (name, options, playerContainer) {
             if (name) {
                 name == "y" && self && (self.yt = this) && (self.y = this) && (self.players['y'] = this)
                 name == "v" && self && (self.vm = this) && (self.v = this) && (self.players['v'] = this)
                 name == "s" && self && (self.sc = this) && (self.s = this) && (self.players['s'] = this)
-                options ? this.options = options : this.options = {}
+                this.options = _.default(options, {})
                 this.name = name
                 this.playerContainer = playerContainer
                 this.data = {currentTime:null,
@@ -94,11 +97,10 @@ define(["underscore", "jquery"], function (a, b) {
                     !_.isUndefined(output[0]) && (this.data.error = output[0])
                     return this.data.error
                 }.bind(this)
-                this.loadVideo = function (id, seekTo) {
-                    var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', id, seekTo)
+                this.loadVideo = function (id) {
+                    var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', id)
                     !_.isUndefined(output[0]) && (this.data.videoId = output[0])
-                    !_.isUndefined(output[1]) && (this.data.seekTo = output[1])
-                    return [this.data.videoId, this.data.seekTo]
+                    return [this.data.videoId]
                 }.bind(this)
                 this.stopVideo = function () {
                     var output = PTI.prototype.composeAndRunLifeCycle(this, 'stopVideo')
@@ -118,9 +120,10 @@ define(["underscore", "jquery"], function (a, b) {
                     var output = PTI.prototype.composeAndRunLifeCycle(this, 'initializePlayer')
                     return
                 }.bind(this)
-                this.soundIndex = function (index) {
-                    var output = PTI.prototype.composeAndRunLifeCycle(this, 'soundIndex', index)
+                this.soundIndex = function (index, invoke) {
+                    var output = PTI.prototype.composeAndRunLifeCycle(this, 'soundIndex', index, invoke)
                     !_.isUndefined(output[0]) && (this.data.soundIndex = output[0])
+                    !_.isUndefined(output[1]) && (this.data.invoke = output[1])
                     return this.data.soundIndex
                 }.bind(this)
                 this.clearTimeout = function () {

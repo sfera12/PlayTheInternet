@@ -1,44 +1,38 @@
-define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/iframe-soundcloud", "player/iframe-vimeo"], function(pti, IframeWrapper) {
-
-    function ptiReturnPlayerTypeAndId(sortable) {
-        var matchTypeAndId = /(\w+)=(.*)/;
-        return {type:sortable.replace(matchTypeAndId, '$1'), id:sortable.replace(matchTypeAndId, '$2')}
-    }
-
+define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/iframe-soundcloud", "player/iframe-vimeo"], function (pti, IframeWrapper) {
 
     var iw = new IframeWrapper(parent, [window.location.href.replace(/.*\?origin=(.*)/, '$1')])
-    iw.listenAllEvents(pti.players) // loadVideo, stopVideo, pti-blockPlayback
+    iw.listenAllEvents(pti.players) // loadVideo, stopVideo, playVideo, pauseVideo, seekTo, volume
+
+    pti.options.onAfterPlaying = function(boolean) {
+        iw.postMessage(this.type, this.operation, boolean)
+    }
+    pti.options.onAfterError = function() {
+        iw.postMessage(this.type, this.operation)
+    }
 
     pti.yt.options.onAfterCurrentTime = function (time, playerState) {
         iw.postMessage(this.type, this.operation, time, playerState)
     }
-
     pti.yt.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
-    }
-    pti.y.options.onErrorCallback = function (error) {
-        iw.postMessage(this.type, this.operation, error)
     }
     pti.y.options.onAfterDuration = function (duration) {
         iw.postMessage(this.type, this.operation, duration)
     }
-    pti.y.options.onPlayerReady = function () {
+    pti.y.options.onAfterPlayerReady = function () {
         iw.postMessage(this.type, this.operation)
     }
 
     pti.s.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
     }
-    pti.s.options.onError = function (error) {
-        iw.postMessage(this.type, this.operation, error)
+    pti.s.options.onAfterCurrentTime = function (time) {
+        iw.postMessage(this.type, this.operation, time / 1000)
     }
-    pti.s.options.onCurrentTime = function (time) {
-        iw.postMessage(this.type, this.operation, time)
-    }
-    pti.s.options.onPlayerReady = function (ready) {
+    pti.s.options.onAfterPlayerReady = function (ready) {
         iw.postMessage(this.type, this.operation, ready)
     }
-    pti.s.options.onSoundIndex = function (index) {
+    pti.s.options.onAfterSoundIndex = function (index) {
         iw.postMessage(this.type, this.operation, index)
     }
     pti.s.options.onAfterDuration = function (duration) {
@@ -48,9 +42,6 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
     pti.v.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
     }
-    pti.v.options.onError = function (error) {
-        iw.postMessage(this.type, this.operation, error)
-    }
     pti.v.options.onCurrentTime = function (time) {
         iw.postMessage(this.type, this.operation, time)
     }
@@ -58,5 +49,5 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
         iw.postMessage(this.type, this.operation, duration)
     }
 
-    return {pti:pti,iw:iw}
+    return { pti: pti, iw: iw }
 })

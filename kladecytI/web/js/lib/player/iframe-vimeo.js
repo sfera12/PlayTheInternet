@@ -12,7 +12,7 @@ define(["player/iframe-player", "vimeo-api", "jquery", "underscore", "ctemplates
             $('#vimeoContainer').empty()
             clearTimeout(self.temp.playTimeout)
         },
-        onLoadVideo:function (videoId, playerState) {
+        onLoadVideo:function (videoId) {
             pti.v.showPlayer()
             var self = this.scope
             var playProgressThrottle = _.throttle(function (playProgress) {

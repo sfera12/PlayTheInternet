@@ -41,16 +41,10 @@ define(["jquery", "underscore"], function (a, b) {
         }
 
         this.jPlayerWidget.on('click', '.play', function () {
-            var jElement = $(this)
-            jElement.removeClass('play')
-            jElement.addClass('pause')
             self.data.listenObject.playVideo()
         })
 
         this.jPlayerWidget.on('click', '.pause', function () {
-            var jElement = $(this)
-            jElement.removeClass('pause')
-            jElement.addClass('play')
             self.data.listenObject.pauseVideo()
         })
         this.jPlayerWidget.on('click', '.prev', function () {
@@ -98,18 +92,18 @@ define(["jquery", "underscore"], function (a, b) {
 //        self.jProgressBarContainer.tooltip({track:true})
 
         this.listenInterval = setInterval(function () {
-            var props = self.data.listenObject.get(['currentTime', 'duration', 'playerState']);
+            var props = self.data.listenObject.get(['currentTime', 'duration']);
             var currentTime = props[0];
             var duration = props[1]
-            var playerState = props[2]
+            var playing = self.data.listenObject.playing()
 //        console.log(currentTime)
             self.trackLength != duration && self.jBackgroundTrackLength.text(_.formatDuration(duration)) | self.jTrackLength.text(_.formatDuration(duration))
             self.trackLength = duration
             self.progressBar(currentTime, self.trackLength)
-            if (playerState == 1) {
+            if (playing) {
                 self.jPlay.removeClass('play')
                 self.jPlay.addClass('pause')
-            } else if (playerState == 2) {
+            } else {
                 self.jPlay.removeClass('pause')
                 self.jPlay.addClass('play')
             }

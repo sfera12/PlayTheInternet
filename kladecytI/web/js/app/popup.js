@@ -19,22 +19,19 @@ define(["player/player-widget"], function (PlayerWidget) {
 
     var popupPlayerMain = _.once(function () {
         window.addEventListener("unload", function (event) {
-            backgroundWindow.playlist.playerType(true)
-            backgroundWindow.pti.blockPlayback(false)
             var selectedVideoIndex = playlist.getSelectedVideoIndex();
-            var currentPtiState = pti.get(['currentTime', 'playerState', 'soundIndex'])
-            var selectedVideoPlayerState = {start: currentPtiState[0], state: currentPtiState[1], index: currentPtiState[2]};
+            var currentPtiState = pti.get(['currentTime', 'soundIndex'])
+            var selectedVideoPlayerState = {start: currentPtiState[0], state: pti.playing() ? 1 : 2, index: currentPtiState[1]};
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.playlist.playVideo({index: selectedVideoIndex}, selectedVideoPlayerState)
         }, true);
         window.playerReady = function () {
             window.backgroundWindow = chrome.extension.getBackgroundPage()
-            backgroundWindow.playlist.playerType(false)
-            backgroundWindow.pti.blockPlayback(true)
             var backgroundSelectedVideoIndex = backgroundWindow.playlist.getSelectedVideoIndex();
-            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'playerState', 'soundIndex'])
-            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundCurrentPtiState[1], index: backgroundCurrentPtiState[2]};
-            //            var backgroundPlayerState = backgroundWindow.siteHandlerManager.getPlayerState();
+            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'soundIndex'])
+            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundWindow.pti.playing() ? 1 : 2, index: backgroundCurrentPtiState[1]};
+            backgroundWindow.playlist.playerType(false)
+            backgroundWindow.pti.pauseVideo()
             playlist.playerType(true)
             if(backgroundSelectedVideoIndex >= 0) {
                 playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)
