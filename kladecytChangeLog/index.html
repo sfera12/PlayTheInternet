@@ -49,6 +49,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 function messageLinesToNodes(msg) {
+	msg = msg.__text || msg
     var msgLines = msg.split('\n')
     var globalLine = _.find(msgLines, function(item) { return item.match('/g ')})
     var globalNodes = lineToNodes(globalLine)

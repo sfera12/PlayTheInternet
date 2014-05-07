@@ -9,7 +9,7 @@ try{
     load('js/rhino/env.rhino.js');
     Envjs.scriptTypes['text/javascript']=true;
     load('js/rhino/jquery.js');
-    load('js/lib/common/underscore-min.js');
+    load('js/lib/common/lodash-min.js');
     load('js/lib/SiteHandlers.js');
     load('js/lib/parse.js');
     load('js/rhino/hello.js');

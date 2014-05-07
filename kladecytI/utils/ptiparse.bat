@@ -1,0 +1,1 @@
+java -Xss2048k -classpath C:\java\lib\rhino1_7R4/js.jar org.mozilla.javascript.tools.shell.Main -opt -1 C:\java\svn\git\PlayTheInternet\kladecytI\utils\parse.js
