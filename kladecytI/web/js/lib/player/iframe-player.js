@@ -87,8 +87,8 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
                 this.data.index = null
                 return
             } else if(this.data.seekTo != null) {
-                this.debounceLodashSeekTo(currentPlayer, this.data.seekTo)
-                if(time > 0.1) {
+                this.debounceSeekTo(currentPlayer, this.data.seekTo)
+                if(time > 0.2) {
                     this.data.seekTo = null
                 }
                 return
@@ -124,7 +124,7 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
     }.bind(pti)
 
     //soundcloud/yt would twitch without throttle
-    pti.debounceLodashSeekTo = _.debounce(function(currentPlayer, seekTo) {
+    pti.debounceSeekTo = _.debounce(function(currentPlayer, seekTo) {
         currentPlayer.seekTo(seekTo)
     }, 300, { leading: true, maxWait: 750, trailing: false })
 

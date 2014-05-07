@@ -7,7 +7,6 @@ define(["underscore", "jquery"], function (a, b) {
         this.pti = this && (this.players['pti'] = this)
         this.name = 'pti'
         this.loadVideo = function (type, videoId, playerState) {
-            _.isUndefined(videoId) || (playerState && playerState.state == 2 ? this.playing(false) : this.playing(true))
             var output = PTI.prototype.composeAndRunLifeCycle(this, 'loadVideo', type, videoId, playerState);
             !_.isUndefined(output[0]) && (this.data.currentPlayer = output[0]);
             !_.isUndefined(output[1]) && (this.data.videoId = output[1]);
@@ -37,8 +36,8 @@ define(["underscore", "jquery"], function (a, b) {
             }
             return output
         }.bind(this)
-        this.playing = function (boolean) {
-            var outputs = PTI.prototype.composeAndRunLifeCycle(this, 'playing', boolean)
+        this.playing = function (boolean, b, c, callSource) {
+            var outputs = PTI.prototype.composeAndRunLifeCycle(this, 'playing', boolean, b, c, callSource)
             return this.data.playing = _.default(outputs[0], this.data.playing)
         }.bind(this)
         this.showPlayer = function (name) {
@@ -162,12 +161,12 @@ define(["underscore", "jquery"], function (a, b) {
         }
     }
 
-    PTI.prototype.composeAndRunLifeCycle = function (scope, operation, data1, data2, data3) {
+    PTI.prototype.composeAndRunLifeCycle = function (scope, operation, data1, data2, data3, callSource) {
         var scope = {scope:scope, type:scope.name, operation:operation}
-        return PTI.prototype.runLifeCycle.call(scope, data1, data2, data3)
+        return PTI.prototype.runLifeCycle.call(scope, data1, data2, data3, callSource)
     }
 
-    PTI.prototype.runLifeCycle = function (data1, data2, data3) {
+    PTI.prototype.runLifeCycle = function (data1, data2, data3, callSource) {
         var operation = this.operation.charAt(0).toUpperCase() + this.operation.slice(1)
         var onBefore = this.scope.options['onBefore' + operation]
         var onBeforeCallback = this.scope.options['onBefore' + operation + 'Callback']
@@ -178,11 +177,11 @@ define(["underscore", "jquery"], function (a, b) {
 
         var inputs = arguments
         this.callback = onBeforeCallback
-        inputs = _.isFunction(onBefore) ? onBefore.call(this, inputs[0], inputs[1], inputs[2]) : inputs
+        inputs = _.isFunction(onBefore) ? onBefore.call(this, inputs[0], inputs[1], inputs[2], callSource) : inputs
         this.callback = onCoreCallback
-        _.isFunction(onCore) && onCore.call(this, inputs[0], inputs[1], inputs[2])
+        _.isFunction(onCore) && onCore.call(this, inputs[0], inputs[1], inputs[2], callSource)
         this.callback = onAfterCallback
-        _.isFunction(onAfter) && onAfter.call(this, inputs[0], inputs[1], inputs[2])
+        _.isFunction(onAfter) && onAfter.call(this, inputs[0], inputs[1], inputs[2], callSource)
         return inputs
     }
     return PTI

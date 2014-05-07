@@ -287,6 +287,7 @@ define(["common/ptilist"], function (Ptilist) {
         var videoObject = this.getVideoDivAndData(video)
         this.selectVideo(videoObject, setStorage)
         if (this.playerType()) {
+            pti.playing(true)
             SiteHandlerManager.prototype.playVideoData(videoObject.videoData, playerState)
         } else {
             console.log('not a player type')
