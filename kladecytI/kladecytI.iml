@@ -10,11 +10,11 @@
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
       </configuration>
-      <facet type="google-app-engine" name="Google App Engine">
-        <configuration>
-          <sdk-home-path>$MODULE_DIR$/../../jdks/appengine-java-sdk-1.7.3</sdk-home-path>
-        </configuration>
-      </facet>
+    </facet>
+    <facet type="google-app-engine" name="Google App Engine">
+      <configuration>
+        <sdk-home-path>$MODULE_DIR$/../../jdks/appengine-java-sdk</sdk-home-path>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
