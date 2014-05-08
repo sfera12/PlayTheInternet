@@ -4,7 +4,7 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
     iw.listenAllEvents(pti.players) // loadVideo, stopVideo, playVideo, pauseVideo, seekTo, volume
 
     pti.options.onAfterPlaying = function(boolean, b, c, callSource) {
-        _.isUndefined(callSource) && iw.postMessage(this.type, this.operation, boolean)
+        arguments[3] !== 'iframe-wrapper' && iw.postMessage(this.type, this.operation, boolean)
     }
     pti.options.onAfterError = function() {
         iw.postMessage(this.type, this.operation)

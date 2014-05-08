@@ -24,7 +24,8 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         }, initTimeout + 500)
         $.when(youtubeReady, soundcloudReady).then(function () {
             clearTimeout(initFailTimeout)
-            pti.playing(pti.playing()) //resend current status to iframe-observable or remove this line
+            pti.playing(pti.playing())
+            pti.volume(pti.volume())
             var loadVideo = pti.loadVideo()
             iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
             lastReady = Date.now()
@@ -43,8 +44,8 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         onLoadVideo: function (type, videoId, playerState) {
             !_.isUndefined(type) && !_.isUndefined(videoId) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
         },
-        onPlaying: function(boolean, b, c, callSource) {
-            _.isUndefined(callSource) && iw && iw.postMessage(this.type, this.operation, boolean)
+        onPlaying: function(boolean) {
+            arguments[3] !== 'iframe-wrapper' && iw && iw.postMessage(this.type, this.operation, boolean)
         },
         onPlayVideo: function () {
             iw.postMessage(this.type, this.operation)
