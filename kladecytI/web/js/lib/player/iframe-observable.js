@@ -42,7 +42,7 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
     pti.v.options.onAfterPlayerState = function (playerState) {
         iw.postMessage(this.type, this.operation, playerState)
     }
-    pti.v.options.onCurrentTime = function (time) {
+    pti.v.options.onAfterCurrentTime = function (time) {
         iw.postMessage(this.type, this.operation, time)
     }
     pti.v.options.onAfterDuration = function (duration) {
