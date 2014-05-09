@@ -21,24 +21,26 @@ define(["player/player-widget"], function (PlayerWidget) {
         window.addEventListener("unload", function (event) {
             var selectedVideoIndex = playlist.getSelectedVideoIndex();
             var currentPtiState = pti.get(['currentTime', 'soundIndex'])
-            var selectedVideoPlayerState = {start: currentPtiState[0], state: pti.playing() ? 1 : 2, index: currentPtiState[1]};
+            var selectedVideoPlayerState = {start: currentPtiState[0], index: currentPtiState[1]};
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.playlist.playVideo({index: selectedVideoIndex}, selectedVideoPlayerState)
+			backgroundWindow.pti.playing(pti.playing())
         }, true);
         window.playerReady = function () {
             window.backgroundWindow = chrome.extension.getBackgroundPage()
             var backgroundSelectedVideoIndex = backgroundWindow.playlist.getSelectedVideoIndex();
             var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'soundIndex'])
-            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], state: backgroundWindow.pti.playing() ? 1 : 2, index: backgroundCurrentPtiState[1]};
-            backgroundWindow.playlist.playerType(false)
-            backgroundWindow.pti.pauseVideo()
+            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], index: backgroundCurrentPtiState[1]};
             playlist.playerType(true)
             if(backgroundSelectedVideoIndex >= 0) {
                 playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)
             } else {
                 playlist.playVideo({videoDiv: playlist.lookupNextSong()})
             }
+			pti.playing(backgroundWindow.pti.playing())
             playerWidget.data.listenObject = pti
+            backgroundWindow.playlist.playerType(false)
+            backgroundWindow.pti.pauseVideo()
         }
         require(["player/iframe-observer"], function (observer) {
             window.observer = observer
