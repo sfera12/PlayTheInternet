@@ -88,7 +88,7 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
                 return
             } else if(this.data.seekTo != null) {
                 this.debounceSeekTo(currentPlayer, this.data.seekTo)
-                if(time > 0.2) {
+                if(time >= this.data.seekTo) {
                     this.data.seekTo = null
                 }
                 return

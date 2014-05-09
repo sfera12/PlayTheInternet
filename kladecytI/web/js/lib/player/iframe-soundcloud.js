@@ -5,15 +5,12 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                 var self = this.scope
                 self.playProgressCallbacks = $.Callbacks()
                 self.temp.playProgress = function() {
-                    var pausedDef = new $.Deferred(), timeDef = new $.Deferred(), durationDef = new $.Deferred(), indexDef = new $.Deferred(), soundIndexDef = new $.Deferred()
+                    var pausedDef = new $.Deferred(), timeDef = new $.Deferred(), durationDef = new $.Deferred(), soundIndexDef = new $.Deferred()
                     scWidget.isPaused(function (isPaused) {
                         pausedDef.resolve(isPaused ? 2 : 1)
                     })
                     scWidget.getPosition(function (position) {
-                        timeDef.resolve(position)
-                    })
-                    scWidget.getCurrentSoundIndex(function (index) {
-                        indexDef.resolve(index)
+                        timeDef.resolve(position / 1000)
                     })
                     scWidget.getDuration(function (duration) {
                         durationDef.resolve(duration)
@@ -21,9 +18,7 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                     scWidget.getCurrentSoundIndex(function (index) {
                         soundIndexDef.resolve(index)
                     })
-                    $.when(pausedDef, timeDef, durationDef, soundIndexDef).then(function(state, currentTime, duration, index) {
-                        self.playProgressCallbacks.fire(state, currentTime / 1000, duration, index) //TODO remove Math.floor
-                    })
+                    $.when(pausedDef, timeDef, durationDef, soundIndexDef).then(self.playProgressCallbacks.fire)
                 }
             },
 //            onPlayerState:function (state) {
