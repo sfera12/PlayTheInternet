@@ -36,8 +36,8 @@ define(["underscore", "jquery"], function (a, b) {
             }
             return output
         }.bind(this)
-        this.playing = function (boolean, b, c, callSource) {
-            var outputs = PTI.prototype.composeAndRunLifeCycle(this, 'playing', boolean, b, c, callSource)
+        this.playing = function (boolean) {
+            var outputs = PTI.prototype.composeAndRunLifeCycle(this, 'playing', boolean, undefined, undefined, arguments[3])
             return this.data.playing = _.default(outputs[0], this.data.playing)
         }.bind(this)
         this.showPlayer = function (name) {

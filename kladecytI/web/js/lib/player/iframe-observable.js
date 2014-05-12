@@ -3,7 +3,7 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
     var iw = new IframeWrapper(parent, [window.location.href.replace(/.*\?origin=(.*)/, '$1')])
     iw.listenAllEvents(pti.players) // loadVideo, stopVideo, playVideo, pauseVideo, seekTo, volume
 
-    pti.options.onAfterPlaying = function(boolean, b, c, callSource) {
+    pti.options.onAfterPlaying = function(boolean) {
         arguments[3] !== 'iframe-wrapper' && iw.postMessage(this.type, this.operation, boolean)
     }
     pti.options.onAfterError = function() {
