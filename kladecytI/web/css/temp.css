@@ -28,18 +28,19 @@
 .temp-options-url-line>*:nth-child(3) { float: right; margin-right: 15px; }
 .temp-options-long-line { top: 48px; }
 .temp-options-short-line { top: 88px; }
-.temp-panel.temp-options-go-mobile-wrapper { height : 327px; margin-top: 1px; }
+.temp-panel.temp-options-go-mobile-wrapper { height : 320px; margin-top: 1px; }
 .temp-options-go-mobile { position: absolute; width: 100%; }
-.temp-alignQRCode { position: relative; top: 6px; }
+.temp-alignQRCode { position: relative; top: 3px; }
 .temp-panel.temp-options-tooltips-wrapper { height: 127px; margin-top: 1px; }
-.temp-options-tooltip { float: left; width: 50%; text-align: center; color: black; }
+.temp-options-tooltip { float: left; width: 50%; text-align: center; color: black; height: 30px; line-height: 30px; }
 .temp-options-tooltip * { margin: 0px!important; }
-.temp-options-tooltip>*:nth-child(1) { float: left; width: 100%; font-size: 13px; font-weight: bold; line-height: 12px; }
+.temp-options-tooltip>*:nth-child(1) { float: left; width: 50%; font-size: 13px; font-weight: bold; line-height: inherit; }
+.temp-options-tooltip>*:nth-child(2) { box-sizing: border-box; width: 50%; height: inherit; text-align: center; }
 .temp-panel.temp-options-tooltips-wrapper>#LOUD { color: white; position: relative; top: -8px; right: -14px; }
 /*.temp-panel { background-color: white; color: white; border: 1px solid #007fff; font-family: "Open Sans", Calibri, Candara, Arial, sans-serif; font-size: 14px; margin-top: 1px; }*/
 #howDivContainer .temp-panel { margin-top: 1px; }
 .temp-panel { background-color: white; color: white; font-family: "Open Sans", Calibri, Candara, Arial, sans-serif; font-size: 14px; margin-top: 0px; }
-.temp-panel-heading { color: white; background-color: #007fff; border-color: #007fff; height: 35px; margin-bottom: 12px; line-height: 35px; padding-left: 15px; }
+.temp-panel-heading { color: white; background-color: #007fff; border-color: #007fff; height: 35px; margin-bottom: 9px; line-height: 35px; padding-left: 15px; }
 .temp-panel>*:nth-child(1n+2) { font-size: 13px; font-weight: bold; color: #007fff; }
 .button>.temp-play-tooltip { display: none; }
 .button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 35px; left: -137px; width: 200px; height: 100px; font-size: 11px; line-height: inherit; z-index: 999; pointer-events: none;}

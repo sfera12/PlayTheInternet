@@ -58,7 +58,7 @@ define(["player/iframe-player", "jquery", "underscore"], function (pti, b, c) {
         },
         onVolume:function(volume) {
             youtube.unMute()
-            youtube.setVolume(volume)
+            _.isUndefined(volume) || youtube.setVolume(volume)
         }
     }, 'youtubeContainer')
 

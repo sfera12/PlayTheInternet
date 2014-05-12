@@ -25,6 +25,7 @@ define(["player/player-widget"], function (PlayerWidget) {
             backgroundWindow.playlist.playerType(true)
             backgroundWindow.playlist.playVideo({index: selectedVideoIndex}, selectedVideoPlayerState)
 			backgroundWindow.pti.playing(pti.playing())
+            backgroundWindow.pti.volume(pti.volume())
         }, true);
         window.playerReady = function () {
             window.backgroundWindow = chrome.extension.getBackgroundPage()
@@ -38,6 +39,7 @@ define(["player/player-widget"], function (PlayerWidget) {
                 playlist.playVideo({videoDiv: playlist.lookupNextSong()})
             }
 			pti.playing(backgroundWindow.pti.playing())
+			pti.volume(backgroundWindow.pti.volume())
             playerWidget.data.listenObject = pti
             backgroundWindow.playlist.playerType(false)
             backgroundWindow.pti.pauseVideo()
