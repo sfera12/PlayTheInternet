@@ -13,7 +13,7 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                         timeDef.resolve(position / 1000)
                     })
                     scWidget.getDuration(function (duration) {
-                        durationDef.resolve(duration)
+                        durationDef.resolve(duration / 1000)
                     })
                     scWidget.getCurrentSoundIndex(function (index) {
                         soundIndexDef.resolve(index)
@@ -35,6 +35,7 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                 var id = videoId.replace(/^\/?(.*)/, '/$1').replace(/\\/g, '')
                 var url = playerUrl + id
                 scWidget.load(url, { callback: function () {
+                    scWidget.skip(0) //because sometimes sc won't start playing
                     self.temp.playProgressInterval = setInterval(self.temp.playProgress, 200)
                 }})
             },
@@ -82,10 +83,10 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                 scWidget.seekTo(seekTo * 1000)
             },
             onBeforeCurrentTime:function (inputs) {
-                return inputs ? [inputs * 1000] : []
+                return inputs ? [inputs] : [0]
             },
             onBeforeDuration:function (inputs) {
-                return inputs ? [inputs / 1000] : []
+                return inputs ? [inputs] : [0]
             },
             onVolume:function (volume) {
                 _.isUndefined(volume) || scWidget.setVolume(volume)

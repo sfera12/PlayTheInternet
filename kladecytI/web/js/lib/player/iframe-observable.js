@@ -27,7 +27,7 @@ define(["player/iframe-player", "player/iframe-wrapper", "youtube-api", "player/
         iw.postMessage(this.type, this.operation, playerState)
     }
     pti.s.options.onAfterCurrentTime = function (time) {
-        iw.postMessage(this.type, this.operation, time / 1000)
+        iw.postMessage(this.type, this.operation, time)
     }
     pti.s.options.onAfterPlayerReady = function (ready) {
         iw.postMessage(this.type, this.operation, ready)

@@ -24,7 +24,7 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
                 })
                 //to show correct progress in player-widget when switching from background to popup player
                 if(playerState) {
-                    self.data.seekTo = playerState.start
+                    self.seekTo(playerState.start)
                     self.data.index = playerState.index ? playerState.index : null
                 } else {
                     self.data.seekTo = null
@@ -42,9 +42,9 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
         onPauseVideo:function () {
             this.scope.playing(false)
         },
-        onSeekTo:function (seekTo) {
-            //let playbackController seek to avoid twitch
-            this.scope.data.seekTo = seekTo
+        onBeforeSeekTo:function (seekTo) {
+            //let playbackController seek to avoid twitch and runLifeCycle to set seekTo
+            return [seekTo > 0 ? seekTo : null]
         },
         onVolume:function (volume) {
             var self = this.scope, player = self.players[self.data.currentPlayer]
@@ -68,7 +68,8 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
         if(this.data.index != null) {
             currentPlayer.soundIndex(this.data.index)
         }
-        if(this.data.seekTo != null) {
+        //check for duration if seekTo was invoked before new playerWidget progress is shown(results in stuck currentTime which is bigger than duration)
+        if(this.data.seekTo != null && duration >= this.data.seekTo) {
             currentPlayer.currentTime(this.data.seekTo)
         } else {
             currentPlayer.currentTime(time)
@@ -126,7 +127,7 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
     //soundcloud/yt would twitch without throttle
     pti.debounceSeekTo = _.debounce(function(currentPlayer, seekTo) {
         currentPlayer.seekTo(seekTo)
-    }, 300, { leading: true, maxWait: 750, trailing: false })
+    }, 300, { leading: true, maxWait: 1000, trailing: false })
 
     return pti
 })
