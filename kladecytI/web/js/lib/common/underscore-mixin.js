@@ -36,6 +36,10 @@ define(["underscore-core"], function() {
                 preNow + S4() + S4() + _.uniqueId()
                 );
         },
+        getPti: function() {
+            var _pti = typeof window.pti === "undefined" ? chrome.extension.getBackgroundPage().pti : window.pti
+            return _pti
+        },
         stringToArray: function (string) {
             var resultArray = string ? string.replace(/\\,/g, "&thisiscomma;").split(/,/).map(function (item) {
                 return item.replace(/&thisiscomma;/g, ',')

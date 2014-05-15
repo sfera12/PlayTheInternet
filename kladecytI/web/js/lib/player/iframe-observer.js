@@ -1,4 +1,4 @@
-define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"], function (PTI, IframeWrapper, c, d) {
+define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore", "jstorage"], function (PTI, IframeWrapper, c, d, e) {
     var host = "localhost:8888"
 //    var host = "0-66.playtheinternet.appspot.com"
 //        var host = "playtheinternet.appspot.com"
@@ -25,7 +25,9 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore"],
         $.when(youtubeReady, soundcloudReady).then(function () {
             clearTimeout(initFailTimeout)
             pti.playing(pti.playing())
-            pti.volume(pti.volume())
+            var storageVolume = $.jStorage.get('volume'), volume = _.isNumber(storageVolume) ? storageVolume : 100
+            $.jStorage.set('volume', volume)
+            pti.volume(volume)
             var loadVideo = pti.loadVideo()
             iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
             lastReady = Date.now()

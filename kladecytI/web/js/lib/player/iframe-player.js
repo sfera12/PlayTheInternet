@@ -96,6 +96,7 @@ define(["player/pti-abstract", "underscore", "jquery"], function (PTI, b, c) {
             } else {
                 //for soundcloud track change
                 currentPlayer.soundIndex(index)
+                this.data.currentPlayer === 's' && currentPlayer.volume(this.volume()) //maybe control volume in playbackController(somewhere here)
             }
         }
         //keep invoking iframe-player play, till it starts

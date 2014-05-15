@@ -6,24 +6,24 @@
     background-color: #077fff;
 }
 
-/* BUTTONS START */
-.playerWidget .button {
+/* CONTROLS START */
+.playerWidget .control {
     margin-left: 1px;
     float: right;
     width: 34px;
     height: 34px;
 }
 
-.playerWidget .button:hover {
+.playerWidget .control:hover {
     background-color: royalblue;
     cursor: pointer;
 }
-.playerWidget .button.mouseDown, .playerWidget .button.mouseDown:hover {
+.playerWidget .control.mouseDown, .playerWidget .control.mouseDown:hover {
     background-color: gray!important;
 }
 
 
-.playerWidget .button.play:before {
+.playerWidget .control.play:before {
     content: '';
     position: absolute;
     top: 0px;
@@ -33,7 +33,7 @@
     border-left: 28px solid aliceblue;
 }
 
-.playerWidget .button.pause:before {
+.playerWidget .control.pause:before {
     content: '';
     position: absolute;
     top: 0px;
@@ -44,7 +44,7 @@
     border-left: 2px solid aliceblue;
     border-right: 2px solid aliceblue;
 }
-.playerWidget .button.pause:after {
+.playerWidget .control.pause:after {
     content: '';
     position: absolute;
     top: 0px;
@@ -56,7 +56,7 @@
     border-right: 2px solid aliceblue;
 }
 
-.playerWidget .button.next:before, .playerWidget .button.prev:before {
+.playerWidget .control.next:before, .playerWidget .control.prev:before {
     content: '';
     position: absolute;
     top: 0px;
@@ -66,7 +66,7 @@
     border-bottom: 10px solid transparent;
     border-left: 20px solid aliceblue;
 }
-.playerWidget .button.next:after, .playerWidget .button.prev:after {
+.playerWidget .control.next:after, .playerWidget .control.prev:after {
     content: '';
     position: absolute;
     top: 0px;
@@ -78,15 +78,36 @@
     border-right: 2px solid aliceblue;
 }
 
-.playerWidget .button.prev {
+.playerWidget .control.prev {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
 }
-/* BUTTONS END */
+.playerWidget .control.volume {
+    -webkit-appearance: none;
+    background-color: #efeff5;
+    position: relative;
+    top: 3px;
+    width: 68px;
+    height:20px;
+}
+.playerWidget .control.volume:hover {
+    background-color: aliceblue;
+}
 
+.playerWidget .control.volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #666;
+    opacity: 0.5;
+    width: 10px;
+    height: 26px;
+}
+.playerWidget .control.volume:hover::-webkit-slider-thumb {
+    background-color: royalblue;
+}
+/* CONTROLS END */
 
 /* PROGRESS BAR START */
 .playerWidget .progressBarContainer {
@@ -94,7 +115,7 @@
     background: #efeff5;
     left: 1px;
     top: 1px;
-    right: 105px;
+    right: 175px;
     padding-right: 2px;
     height: 22px;
     overflow: hidden;

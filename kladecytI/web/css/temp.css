@@ -42,8 +42,8 @@
 .temp-panel { background-color: white; color: white; font-family: "Open Sans", Calibri, Candara, Arial, sans-serif; font-size: 14px; margin-top: 0px; }
 .temp-panel-heading { color: white; background-color: #007fff; border-color: #007fff; height: 35px; margin-bottom: 9px; line-height: 35px; padding-left: 15px; }
 .temp-panel>*:nth-child(1n+2) { font-size: 13px; font-weight: bold; color: #007fff; }
-.button>.temp-play-tooltip { display: none; }
-.button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 35px; left: -137px; width: 200px; height: 100px; font-size: 11px; line-height: inherit; z-index: 999; pointer-events: none;}
+/*.button>.temp-play-tooltip { display: none; }*/
+/*.button:hover>.temp-tooltip-active.temp-play-tooltip { display: block; position: relative; height: 13px; top: 35px; left: -137px; width: 200px; height: 100px; font-size: 11px; line-height: inherit; z-index: 999; pointer-events: none;}*/
 .temp-webkit-grabbing * { cursor: move!important; cursor: -webkit-grabbing!important; cursor: -moz-grabbing!important; }
 .temp-crosshair * { cursor: crosshair!important; }
 

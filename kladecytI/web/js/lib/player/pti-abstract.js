@@ -59,7 +59,7 @@ define(["underscore", "jquery"], function (a, b) {
         this.volume = function(volume) {
             var output = PTI.prototype.composeAndRunLifeCycle(this, 'volume', volume)
             !_.isUndefined(output[0]) && (this.data.volume = output[0])
-            return this.data.volume == null ? 100 : this.data.volume //TODO remove this *maybe
+            return this.data.volume
         }.bind(this)
         this.error = function() {
             PTI.prototype.composeAndRunLifeCycle(this, 'error')

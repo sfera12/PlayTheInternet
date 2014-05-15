@@ -40,8 +40,6 @@ define(["jquery", "jquery-jobbing"], function () {
         activate: function (event, ui) {
             var newTab = $(ui.newTab);
             if (newTab.text() == "Options") {
-                var volume = typeof pti === "undefined" ? chrome.extension.getBackgroundPage().pti.volume() : pti.volume()
-                $('#volume').val(volume)
                 require(["app/common/hash-qr"], function (redraw) {
                     redraw()
                 })
@@ -69,13 +67,6 @@ define(["jquery", "jquery-jobbing"], function () {
 //first player end
 
 //first options start
-    var debounceVolume = _.debounce(function(volume) {
-        typeof pti === "undefined" ? chrome.extension.getBackgroundPage().pti.volume(volume) : pti.volume(volume)
-    }, 200)
-    $('#volume').on('change', function () {
-        var volume = Number($(this).val())
-        volume >= 0 && volume <= 100 && debounceVolume(volume)
-    })
 //first options end
 
 //first playlists start

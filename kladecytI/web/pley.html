@@ -31,9 +31,10 @@
 <!--</script>-->
 <div id="playerWidgetContainer" class="temp-player-widget">
     <div class="playerWidget">
-        <div class="next button"></div>
-        <div class="play button"><div class="temp-panel-heading temp-play-tooltip"><b>To start playing, click on track's thumbnail(icon) in playlist or Next, Previous buttons.</b><br>This tooltip can be disabled in Options tab.</div></div>
-        <div class="prev button"></div>
+        <div class="next control"></div>
+        <div class="play control"></div>
+        <div class="prev control"></div>
+        <input class="volume control" type="range" min="0" max="100" value="100"/>
         <div class="progressBarContainer">
             <div class="progressBar"></div>
         </div>
@@ -100,13 +101,13 @@
                         <div class="temp-alignQRCode" id="qrcode"></div>
                     </div>
                 </div>
-                <div class="temp-panel temp-options-tooltips-wrapper">
-                    <div class="temp-panel-heading">Controls</div>
-                    <div class="temp-options-tooltip">
-                        <div>Volume</div>
-                        <input id="volume" type="number" min="0" max="100" step="5" value="100"/>
-                    </div>
-                </div>
+                <!--<div class="temp-panel temp-options-tooltips-wrapper">-->
+                    <!--<div class="temp-panel-heading">Controls</div>-->
+                    <!--<div class="temp-options-tooltip">-->
+                        <!--<div>Volume</div>-->
+                        <!--<input id="volume" type="number" min="0" max="100" step="5" value="100"/>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
             <div id="parsedDiv" class="temp-popup-nav-content">
                 <div id="parsedPlaylist"></div>
