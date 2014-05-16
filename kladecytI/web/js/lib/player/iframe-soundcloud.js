@@ -26,11 +26,13 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
 //            onError:function (error) {
 //            },
             onStopVideo:function () {
+                this.scope.temp.blockPlayback = true
                 this.scope.clearTimeout()
                 scWidget.pause()
             },
             onLoadVideo:function (videoId) {
                 var self = this.scope
+                self.temp.blockPlayback = false
                 var playerUrl = 'https://w.soundcloud.com/player/?url='
                 var id = videoId.replace(/^\/?(.*)/, '/$1').replace(/\\/g, '')
                 var url = playerUrl + id
@@ -61,6 +63,9 @@ define(["player/iframe-player", "soundcloud-api", "jquery", "underscore", "ctemp
                             })
                         })
                     });
+                })
+                scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, function() {
+                    self.temp.blockPlayback && scWidget.pause()
                 })
                 scWidget.bind(SC.Widget.Events.PLAY, function() {
                         pti.nativeRequestPlaying = true

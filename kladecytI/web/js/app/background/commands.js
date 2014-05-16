@@ -1,11 +1,14 @@
 define(function() {
+    function _getPti() {
+        return (chrome.extension.getViews()[1] && chrome.extension.getViews()[1].observer && chrome.extension.getViews()[1].observer.pti) || observer.pti
+    }
     var actions = {
         "play": function() {
-            var pti = (chrome.extension.getViews()[1] && chrome.extension.getViews()[1].observer && chrome.extension.getViews()[1].observer.pti) || observer.pti
+            var pti = _getPti()
             pti.playVideo()
         },
         "pause": function() {
-            var pti = (chrome.extension.getViews()[1] && chrome.extension.getViews()[1].observer && chrome.extension.getViews()[1].observer.pti) || observer.pti
+            var pti = _getPti()
             pti.pauseVideo()
         },
         "next": function() {
@@ -13,6 +16,10 @@ define(function() {
         },
         "prev": function() {
             playlist.playVideo({videoDiv: playlist.lookupPrevSong()})
+        },
+        "play/pause": function() {
+            var pti = _getPti()
+            pti.playing() ? pti.pauseVideo() : pti.playVideo()
         }
     }
     chrome.commands.onCommand.addListener(function(command) {

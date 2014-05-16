@@ -132,7 +132,7 @@ define(["common/ptilist", "pti-playlist"], function (Ptilist, Playlist) {
                     $(this).remove();
                 }
                 ui.draggable.remove()
-                uiselected && uiselected.hide(400, remove);
+                uiselected && uiselected.remove();
                 console.log('songId, playlistId: ', ids, playlistId)
                 console.log(event)
                 console.log(ui)

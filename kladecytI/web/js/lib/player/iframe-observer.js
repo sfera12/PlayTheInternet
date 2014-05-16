@@ -47,6 +47,17 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore", 
             !_.isUndefined(type) && !_.isUndefined(videoId) && lazyLoadVideo(this.type, this.operation, type, videoId, playerState)
         },
         onPlaying: function(boolean) {
+            if (boolean && this.scope.data.playing == null) {
+                this.scope.data.playing = true
+                var _state = {
+                    selectedVideoIndex: window.playlist.getSelectedVideoIndex(),
+                    playing: true,
+                    volume: $.jStorage.get('volume')
+                }
+                _state.selectedVideoIndex = _state.selectedVideoIndex >= 0 ? _state.selectedVideoIndex : 0
+                window.playlist.playVideo({ index: _state.selectedVideoIndex }, _state.playerState)
+                this.scope.volume(_state.volume)
+            }
             arguments[3] !== 'iframe-wrapper' && iw && iw.postMessage(this.type, this.operation, boolean)
         },
         onPlayVideo: function () {
