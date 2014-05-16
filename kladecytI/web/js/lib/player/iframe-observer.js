@@ -5,7 +5,7 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore", 
 //        var host = "web.playtheinter.net"
     var iframeContainer = $('#players'), playerIframeHosts = ["http://" + host], playerIframe, iw
     var lastReady = 0, reinitInterval = 120 * 60000, initTimeout = 30000
-    var youtubeReady, soundcloudReady
+    var observerReady = new $.Deferred(), youtubeReady, soundcloudReady
 
     function appendIframe() {
         iframeContainer.html('<iframe class="leftFull temp-border-none temp-width-hundred-percent" src="http://' + host + '/iframe-player.html?origin=' + window.location.href + '"></iframe>')
@@ -25,12 +25,12 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore", 
         $.when(youtubeReady, soundcloudReady).then(function () {
             clearTimeout(initFailTimeout)
             pti.playing(pti.playing())
-            var storageVolume = $.jStorage.get('volume'), volume = _.isNumber(storageVolume) ? storageVolume : 100
-            $.jStorage.set('volume', volume)
+            var volume = $.jStorage.get('volume')
             pti.volume(volume)
             var loadVideo = pti.loadVideo()
             iw.postMessage('pti', 'loadVideo', loadVideo[0], loadVideo[1], loadVideo[2])
             lastReady = Date.now()
+            observerReady.resolve()
         })
     }, initTimeout, {trailing: false})
 
@@ -122,6 +122,8 @@ define(["player/pti-abstract", "player/iframe-wrapper", "jquery", "underscore", 
     function init() {
         appendIframe()
         initIframeWrapper()
+        initAndListen()
+        return observerReady
     }
 
     function initIframeWrapper() {

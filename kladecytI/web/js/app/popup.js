@@ -1,12 +1,12 @@
-define(["player/player-widget"], function (PlayerWidget) {
+define(["player/player-widget", "underscore"], function (PlayerWidget) {
     require(["app/popup/playlists"])
 
     var backgroundWindow = chrome.extension.getBackgroundPage()
     window.playerWidget = new PlayerWidget('#playerWidgetContainer', true)
-    playerWidget.data.listenObject = backgroundWindow.pti
+    window.playerWidget.data.listenObject = backgroundWindow.pti
 
     require(["app/common/tabs"])
-    require(["app/popup/parse-content"], function() {
+    require(["app/popup/parse-content"], function () {
         window.tabs.first.playlist = parsedPlaylist //TODO move it to tabs
     })
 
@@ -15,42 +15,73 @@ define(["player/player-widget"], function (PlayerWidget) {
         $('html, body').css('height', '600px')
     })
 
-    var popupPlayerMain = _.once(function () {
-        window.addEventListener("unload", function (event) {
-            var selectedVideoIndex = playlist.getSelectedVideoIndex();
-            var currentPtiState = pti.get(['currentTime', 'soundIndex'])
-            var selectedVideoPlayerState = {start: currentPtiState[0], index: currentPtiState[1]};
-            backgroundWindow.playlist.playerType(true)
-            backgroundWindow.playlist.playVideo({index: selectedVideoIndex}, selectedVideoPlayerState)
-			backgroundWindow.pti.playing(pti.playing())
-            backgroundWindow.pti.volume(pti.volume())
-        }, true);
-        window.playerReady = function () {
-            window.backgroundWindow = chrome.extension.getBackgroundPage()
-            var backgroundSelectedVideoIndex = backgroundWindow.playlist.getSelectedVideoIndex();
-            var backgroundCurrentPtiState = backgroundWindow.pti.get(['currentTime', 'soundIndex'])
-            var backgroundSelectedVideoPlayerState = {start: backgroundCurrentPtiState[0], index: backgroundCurrentPtiState[1]};
-            playlist.playerType(true)
-            if(backgroundSelectedVideoIndex >= 0) {
-                playlist.playVideo({index: backgroundSelectedVideoIndex}, backgroundSelectedVideoPlayerState)
+    var initPlayer = (function () {
+        var _popupPlayerStarted = false
+
+        function _collectState(_playlist, _pti) {
+            var state
+            if (_pti && _pti.data.currentPlayer) { //_pti check is used in startBackground when Playing is null and Play is clickd
+                var ptiState = _pti.get(['currentTime', 'soundIndex'])
+                state = {
+                    selectedVideoIndex: _playlist.getSelectedVideoIndex(),
+                    playerState: { start: ptiState[0], index: ptiState[1] },
+                    playing: _pti.playing(),
+                    volume: _pti.volume()
+                }
             } else {
-                playlist.playVideo({videoDiv: playlist.lookupNextSong()})
+                state = {
+                    selectedVideoIndex: _playlist.getSelectedVideoIndex(),
+                    playing: true,
+                    volume: $.jStorage.get('volume')
+                }
             }
-			pti.playing(backgroundWindow.pti.playing())
-			pti.volume(backgroundWindow.pti.volume())
-            playerWidget.data.listenObject = pti
-            backgroundWindow.playlist.playerType(false)
-            backgroundWindow.pti.pauseVideo()
+            state.selectedVideoIndex = state.selectedVideoIndex >= 0 ? state.selectedVideoIndex : 0
+            return state
         }
-        require(["player/iframe-observer"], function (observer) {
-            window.observer = observer
-            window.pti = observer.pti
-            window.playerReady()
-        })
-    })
-    $('#tabs a[href="#player"]').click(function () {
-        popupPlayerMain();
-    })
+
+        function _startPlayer(_window, _state) {
+            _window.playlist.playerType(true)
+            _window.playlist.playVideo({ index: _state.selectedVideoIndex }, _state.playerState)
+            _window.pti.playing(_state.playing)
+            _window.pti.volume(_state.volume)
+        }
+
+        function startBackgroundPlayer() {
+            if (!_popupPlayerStarted && _.getPti().playing() == null) {
+                _startBackgroundPlayer()
+            }
+        }
+
+        function _startBackgroundPlayer() {
+            var popupState = _collectState(window.playlist, window.pti)
+            _startPlayer(backgroundWindow, popupState);
+        }
+
+        function startPopupPlayer() {
+            if (!_popupPlayerStarted) {
+                _popupPlayerStarted = true
+                window.addEventListener("unload", function (event) {
+                    _startBackgroundPlayer();
+                }, true);
+                require(["player/iframe-observer"], function (observer) {
+                    window.observer = observer
+                    window.pti = observer.pti
+                    observer.init().then(function () {
+                        var backgroundState = _collectState(backgroundWindow.playlist, backgroundWindow.pti)
+                        backgroundWindow.playlist.playerType(false)
+                        _startPlayer(window, backgroundState)
+                        window.playerWidget.data.listenObject = window.pti
+                        backgroundWindow.pti.pauseVideo()
+                    })
+                })
+            }
+        }
+
+        return { startPopupPlayer: startPopupPlayer, startBackgroundPlayer: startBackgroundPlayer }
+    })()
+
+    $('#tabs a[href="#player"]').click(initPlayer.startPopupPlayer)
+    $('#playerWidgetContainer .play').click(initPlayer.startBackgroundPlayer)
 
     require(["app/common/how"])
 })

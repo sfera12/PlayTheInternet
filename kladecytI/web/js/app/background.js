@@ -1,4 +1,4 @@
-define(["pti-playlist", "player/iframe-observer"], function(Playlist, observer) {
+define(["pti-playlist", "player/iframe-observer", "app/common/globals"], function(Playlist, observer, c) {
     $(document).ready(function () {
         window.observer = observer
         window.pti = observer.pti
