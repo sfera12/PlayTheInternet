@@ -1,6 +1,7 @@
 define(function() {
     function _getPti() {
-        return (chrome.extension.getViews()[1] && chrome.extension.getViews()[1].observer && chrome.extension.getViews()[1].observer.pti) || observer.pti
+        var popupWindow = _.without(chrome.extension.getViews(), window)[0]
+        return (popupWindow && popupWindow.observer && popupWindow.observer.pti) || observer.pti
     }
     var actions = {
         "play": function() {
