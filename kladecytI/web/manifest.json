@@ -1,5 +1,4 @@
 {
-    "key": "asdf",
     "name":"PlayTheInternet",
     "version":"0.660.704",
     "description":"Play music/videos from your favorite sites all in one playlist with hotkeys and context buttons! Supports: YouTube,SoundCloud,Vimeo",
@@ -17,7 +16,8 @@
     ],
     "permissions":[
         "storage",
-        "http://*/*", "https://*/*",
+        "http://*/*", 
+		"https://*/*",
         "contextMenus",
         "notifications"
     ],
@@ -52,7 +52,8 @@
             "description": "Next Track"
         },
         "play/pause": {
-            "description": "Play/Pause Toggle"
+            "description": "Play/Pause Toggle",
+			"default": "Alt+G"
         }
     },
 
